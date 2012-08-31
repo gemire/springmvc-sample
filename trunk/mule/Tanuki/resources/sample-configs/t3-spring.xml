@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN 2.0//EN" "http://www.springframework.org/dtd/spring-beans-2.0.dtd">
+
+<beans>
+    	<bean id="targetconnFactory" class="org.apache.activemq.pool.PooledConnectionFactory"
+		destroy-method="stop">
+		<property name="connectionFactory">
+			<bean class="org.apache.activemq.ActiveMQConnectionFactory">
+				<property name="brokerURL">
+					<value>tcp://localhost:61616</value>
+				</property>
+				<property name="redeliveryPolicy" ref="redeliveryBean" />
+			</bean>
+		</property>
+	</bean>
+	<bean name="redeliveryBean" class="org.apache.activemq.RedeliveryPolicy">
+		<property name="maximumRedeliveries" value="1" />
+	</bean>
+	<bean id="jmsTransactionManager"
+		class="org.springframework.jms.connection.JmsTransactionManager">
+		<property name="connectionFactory" ref="targetconnFactory" />
+	</bean>
+
+    
+
+      <bean id="destination"
+            class="org.apache.activemq.command.ActiveMQQueue">
+            <constructor-arg value="defaultQueue" />
+      </bean> 
+
+      <bean id="listenerContainer"
+class="org.springframework.jms.listener.DefaultMessageListenerContainer">
+            <property name="concurrentConsumers" value="5" />
+            <property name="connectionFactory" ref="targetconnFactory" />
+            <property name="destination" ref="destination" />
+            <property name="messageListener" ref="myMessageProcessor" />
+            <property name="transactionManager" ref="jmsTransactionManager" />     
+      </bean>
+ 
+      <bean id="myMessageProcessor"
+            class="test.MyMessageProcessorSimple">
+            <property name="jmsTemplate">
+                  <bean class="org.springframework.jms.core.JmsTemplate">
+                        <property name="connectionFactory" ref="targetconnFactory" />
+                        <property name="defaultDestinationName" value="defaultQueue" />
+                  </bean>
+            </property>
+      </bean>   
+<!-- 
+      <bean id="activeMqConnectionFactory" class="org.apache.activemq.spring.ActiveMQConnectionFactory">
+        <property name="brokerURL" value="tcp://localhost:61616" />
+    </bean>
+ 
+    <bean id="connectionFactory" class="org.springframework.jms.connection.SingleConnectionFactory">
+        <property name="targetConnectionFactory" ref="activeMqConnectionFactory" />
+    </bean>
+ 
+    <bean id="jmsTemplate" class="org.springframework.jms.core.JmsTemplate">
+        <property name="connectionFactory" ref="connectionFactory" />
+        <property name="defaultDestinationName" value="defaultQueue" />
+        <property name="pubSubDomain" value="false" />
+    </bean>
+ 
+      <bean id="queueSender" class="test.SampleSender">
+            <property name="jmsTemplate" ref="jmsTemplate" />
+      </bean>
+       -->
+</beans>

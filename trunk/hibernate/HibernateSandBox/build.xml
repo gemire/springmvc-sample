@@ -1,0 +1,170 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project name="hibernateSandBox" default="generateDDL">
+    <description>DDL generation</description>
+
+    
+    
+    <property name="maven.repository" value="/home/dhenton/maven/localrepos/" />
+    <property name="gen-target" value="target/hibernate3" />
+    <property name="gen-source.dir" value="generated" />
+    <property name="target.classes" value="target/classes" />
+    <property name="source.dir" value="src" />
+    <property name="resources.dir" value="src/main/resources/" />
+    <property name="java.source.dir" value="src/main/java/" />
+    <target name="init">
+        <tstamp />
+
+        <delete dir="${gen-source.dir}" includeemptydirs="true"/>
+        <mkdir dir="${gen-source.dir}" />
+
+    </target>
+
+    <target name="all" depends="generateDDL,pojogen,daogen" />
+	
+    <path id="hibernate.classpath.ref">
+        <path location="${java.source.dir}" />
+        <path location="${source.dir}" />
+        <path location="${resources.dir}" />
+    </path>
+    
+    <path id="tools.lib.base">
+        <path location="${maven.repository}/org/slf4j/slf4j-api/1.5.8/slf4j-api-1.5.8.jar" />
+        <path location="${maven.repository}/antlr/antlr/2.7.6/antlr-2.7.6.jar" />
+        <path location="${maven.repository}/commons-collections/commons-collections/3.1/commons-collections-3.1.jar" />
+        <path location="${maven.repository}/dom4j/dom4j/1.6.1/dom4j-1.6.1.jar" />
+        <path location="${maven.repository}/xml-apis/xml-apis/1.0.b2/xml-apis-1.0.b2.jar" />
+        <path location="${maven.repository}/org/apache/derby/derbyclient/10.5.3.0_1/derbyclient-10.5.3.0_1.jar" />
+        <path location="${maven.repository}/javassist/javassist/3.4.GA/javassist-3.4.GA.jar" />
+        <path location="${maven.repository}/org/slf4j/slf4j-log4j12/1.5.2/slf4j-log4j12-1.5.2.jar" />
+        <path location="${maven.repository}/log4j/log4j/1.2.14/log4j-1.2.14.jar" />
+        <path location="${maven.repository}/org/beanshell/bsh/2.0b4/bsh-2.0b4.jar" />
+        <path location="${maven.repository}/freemarker/freemarker/2.3.8/freemarker-2.3.8.jar" />
+        <path location="${maven.repository}/org/hibernate/jtidy/r8-20060801/jtidy-r8-20060801.jar" />
+        <path location="${maven.repository}/org/hibernate/hibernate/3.2.5.ga/hibernate-3.2.5.ga.jar" />
+        <path location="${maven.repository}/net/sf/ehcache/ehcache/1.2.3/ehcache-1.2.3.jar" />
+        <path location="${maven.repository}/commons-logging/commons-logging/1.0.4/commons-logging-1.0.4.jar" />
+        <path location="${maven.repository}/asm/asm-attrs/1.5.3/asm-attrs-1.5.3.jar" />
+        <path location="${maven.repository}/cglib/cglib/2.1_3/cglib-2.1_3.jar" />
+        <path location="${maven.repository}/asm/asm/1.5.3/asm-1.5.3.jar" />
+        <path location="${maven.repository}/javax/sql/jdbc-stdext/2.0/jdbc-stdext-2.0.jar" />
+        <path location="${maven.repository}/javax/transaction/jta/1.0.1B/jta-1.0.1B.jar" />
+        <path location="${maven.repository}/mysql/mysql-connector-java/5.1.18/mysql-connector-java-5.1.18.jar" />
+    </path>
+    
+
+
+    <path id="toolslib">
+        <path location="${maven.repository}/org/hibernate/hibernate-annotations/3.5.6-Final/hibernate-annotations-3.5.6-Final.jar" />
+        <path location="${maven.repository}/org/hibernate/hibernate-commons-annotations/3.2.0.Final/hibernate-commons-annotations-3.2.0.Final.jar" />
+        <path location="${maven.repository}/org/hibernate/javax/persistence/hibernate-jpa-2.0-api/1.0.0.Final/hibernate-jpa-2.0-api-1.0.0.Final.jar" />
+        <path location="${maven.repository}/org/hibernate/hibernate-tools/3.2.4.GA/hibernate-tools-3.2.4.GA.jar" />
+        <path location="${maven.repository}/org/hibernate/hibernate-entitymanager/3.3.2.GA/hibernate-entitymanager-3.3.2.GA.jar" />
+        <path location="${maven.repository}/org/hibernate/ejb3-persistence/1.0.1.GA/ejb3-persistence-1.0.1.GA.jar" />
+        <path location="${maven.repository}/org/hibernate/hibernate-core/3.5.6-Final/hibernate-core-3.5.6-Final.jar" />
+ 
+        <path refid="tools.lib.base" />
+ 
+        <path location="${java.source.dir}" />
+        <path location="${source.dir}" />
+        <path location="${resources.dir}" />
+    </path>
+    
+    <path id="toolslib-old">
+        <path location="${maven.repository}/org/hibernate/hibernate-commons-annotations/3.2.0.Final/hibernate-commons-annotations-3.2.0.Final.jar" />
+        <path location="${maven.repository}/org/hibernate/javax/persistence/hibernate-jpa-2.0-api/1.0.0.Final/hibernate-jpa-2.0-api-1.0.0.Final.jar" />
+        <path location="${maven.repository}/org/hibernate/hibernate-tools/3.2.4.GA/hibernate-tools-3.2.4.GA.jar" />
+        <path location="${maven.repository}/org/hibernate/hibernate-entitymanager/3.3.2.GA/hibernate-entitymanager-3.3.2.GA.jar" />
+        <path location="${maven.repository}/org/hibernate/ejb3-persistence/1.0.1.GA/ejb3-persistence-1.0.1.GA.jar" />
+  
+        <path refid="tools.lib.base" />
+ 
+        <path location="${java.source.dir}" />
+        <path location="${source.dir}" />
+        <path location="${resources.dir}" />
+    </path>
+    
+
+    <taskdef name="hibernatetool" classname="org.hibernate.tool.ant.HibernateToolTask" classpathref="toolslib" />
+    <taskdef name="hibernatetoolold" classname="org.hibernate.tool.ant.HibernateToolTask" classpathref="toolslib-old" />
+    <target name="generateDDL" depends="init" description="Exports a generated schema to DB and file">
+        <hibernatetool destdir="${gen-source.dir}">
+            
+         <!--  <classpath refid="hibernate.classpath.ref" /> -->
+            <classpath>
+                <path location="${target.classes}" />
+            </classpath>
+			 
+
+            <annotationconfiguration   configurationfile="${resources.dir}/hibernate.cfg.xml" />
+             <!-- configuration element is  for old style xml files -->
+            <hbm2ddl drop="true"   create="true" export="false" outputfilename="schema.sql" delimiter=";" format="true" />
+	
+        </hibernatetool>
+    </target>
+
+    <target name="reverseDB" depends="init" description="creates java code from db">
+        <hibernatetoolold destdir="${gen-source.dir}">
+            <jdbcconfiguration 
+            revengfile="${resources.dir}/hibernate.reveng.xml"
+            packagename="com.dhenton9000.stuff"  
+            detectmanytomany="true"
+            configurationfile="${resources.dir}/hibernatedb.cfg.xml"/>
+            <hbm2java jdk5="true"/>
+        </hibernatetoolold>
+        <!-- this fails because of the incompatible hibernate jars it needs 
+        the older 3.3.2 to work
+        
+        <hibernatetool destdir="${gen-source.dir}">
+		
+			<jdbcconfiguration
+				configurationfile="${resources.dir}/hibernate.cfg.xml"
+				packagename="com.dhenton9000.stuff"  
+				detectmanytomany="true"
+			/>
+			<hbm2hbmxml /> 
+			 <hbm2java jdk5="true"/>
+		</hibernatetool>
+        -->
+        
+        
+    </target>
+
+
+
+
+    <target name="daogen" depends="init" description="Generates daos">
+        <delete dir="${gen-source.dir}/dao" />
+        <mkdir dir="${gen-source.dir}/dao" />
+        <hibernatetool destdir="${gen-source.dir}/dao">
+
+            <classpath>
+                <path location="${target.classes}" />
+            </classpath>
+
+            <annotationconfiguration configurationfile="${resources.dir}/hibernate.cfg.xml" />
+            <hbm2dao />
+
+
+        </hibernatetool>
+    </target>
+    <target name="pojogen" depends="init" description="Generates pojo files">
+        <delete dir="${gen-source.dir}/pojo" />
+        <mkdir dir="${gen-source.dir}/pojo" />
+        <hibernatetool destdir="${gen-source.dir}/pojo">
+
+            <classpath>
+                <path location="${target.classes}" />
+            </classpath>
+
+            <annotationconfiguration configurationfile="${resources.dir}/hibernate.cfg.xml" />
+            <!-- configuration for old style xml files 
+             for annotations the class path must be to the compiled classes
+            -->
+
+            <hbm2java />
+
+
+        </hibernatetool>
+    </target>
+ 
+</project>

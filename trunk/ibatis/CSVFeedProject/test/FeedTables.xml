@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<!DOCTYPE sqlMap
+    PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN"
+    "http://ibatis.apache.org/dtd/sql-map-2.dtd">
+<sqlMap namespace="FeedTables">
+
+ <!-- Use type aliases to avoid typing the full classname every time. -->
+    <typeAlias alias="FeedCustomers" type="com.dhenton9000.ibatis.vo.Customers" />
+
+    <resultMap id="CustomerResult" class="FeedCustomers">
+        <result property="customerNumber"       column="customerNumber" />
+        <result property="customerName"         column="customerName" />
+        <result property="contactLastName"      column="contactLastName" />
+        <result property="contactFirstName"     column="contactFirstName" />
+        <result property="phone"                column="phone" />
+        <result property="addressLine1"         column="addressLine1" />
+        <result property="addressLine2"         column="addressLine2" />
+        <result property="city"                 column="city" />
+        <result property="state"                column="state" />
+        <result property="postalCode"           column="postalCode" />
+        <result property="country"              column="country" />
+        <result property="creditLimit"          column="creditLimit" />
+    </resultMap>
+
+
+    <sql id="customer_fragment">
+        SELECT
+        customerNumber,
+        customerName,
+        contactLastName,
+        contactFirstName,
+        phone,
+        addressLine1,
+        addressLine2,
+        city,
+        state,
+        postalCode ,
+        country,
+        creditLimit
+        FROM classicmodels.CUSTOMERS
+    </sql>
+
+    <select resultMap="CustomerResult" id="getCustomersByZip"
+		parameterClass="java.lang.String" resultClass="FeedCustomers">
+        <include refid="customer_fragment" />
+		WHERE CUSTOMERS.postalCode = #postalCode#
+    </select>
+    <select resultMap="CustomerResult" id="getAllCustomers"
+		 resultClass="FeedCustomers">
+        <include refid="customer_fragment" />
+		
+    </select>
+<!--
+    <select resultMap="CustomerResult" id="selectOrderByDate"
+		parameterClass="java.lang.String" resultClass="EbayOrders">
+        <include refid="order_from" />
+		AND TRUNC(EBAY_ORDERS.EBAY_ORDER_DATE)
+		 <![CDATA[ < ]]>TRUNC(TO_DATE(#orderDate#))
+    </select>
+-->
+
+
+</sqlMap>

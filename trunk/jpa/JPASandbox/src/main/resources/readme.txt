@@ -1,0 +1,1 @@
+http://static.springsource.org/spring-data/data-jpa/docs/current/reference/html/

@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<mule xmlns="http://www.mulesoft.org/schema/mule/core"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:spring="http://www.springframework.org/schema/beans"
+    xmlns:file="http://www.mulesoft.org/schema/mule/file"
+    xmlns:xm="http://www.mulesoft.org/schema/mule/xml"
+    xsi:schemaLocation="
+        http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
+        http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/3.2/mule.xsd
+        http://www.mulesoft.org/schema/mule/file http://www.mulesoft.org/schema/mule/file/3.2/mule-file.xsd
+        http://www.mulesoft.org/schema/mule/xml http://www.mulesoft.org/schema/mule/xml/3.2/mule-xml.xsd">
+
+    <xm:namespace-manager>
+        <xm:namespace prefix="gco" uri="http://checkout.google.com/schema/2"/>
+    </xm:namespace-manager>
+
+    <flow name="XPathExample">
+        <file:inbound-endpoint path="${data.in}" moveToDirectory="${data.processed}">
+            <file:filename-wildcard-filter pattern="*.xml" caseSensitive="false"/>
+            <byte-array-to-string-transformer/>
+        </file:inbound-endpoint>
+        <choice>
+            <when evaluator="xpath" expression="/gco:deliver-order/gco:tracking-data/gco:carrier = 'UPS'">
+                <logger level="INFO" message="UPS order" />
+            </when>
+            <when evaluator="xpath" expression="/gco:deliver-order/gco:tracking-data/gco:carrier = 'FedEx'">
+                <logger level="INFO" message="FedEx order" />
+            </when>
+            <otherwise>
+                <logger level="INFO" message="UNKNOWN order" />
+            </otherwise>
+        </choice>
+    </flow>
+</mule>

@@ -1,0 +1,235 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<mule xmlns="http://www.mulesoft.org/schema/mule/core" 
+      xmlns:jms="http://www.mulesoft.org/schema/mule/jms" 
+      xmlns:doc="http://www.mulesoft.org/schema/mule/documentation" 
+      xmlns:spring="http://www.springframework.org/schema/beans" 
+      xmlns:core="http://www.mulesoft.org/schema/mule/core" 
+      xmlns:http="http://www.mulesoft.org/schema/mule/http" 
+      xmlns:cxf="http://www.mulesoft.org/schema/mule/cxf" 
+      xmlns:vm="http://www.mulesoft.org/schema/mule/vm" 
+      xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+      xmlns:quartz="http://www.mulesoft.org/schema/mule/quartz" 
+      xmlns:mule-ss="http://www.mulesoft.org/schema/mule/spring-security" 
+      version="CE-3.2.1" xsi:schemaLocation="
+http://www.mulesoft.org/schema/mule/jms http://www.mulesoft.org/schema/mule/jms/3.2/mule-jms.xsd 
+http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.0.xsd 
+http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/3.2/mule.xsd 
+http://www.mulesoft.org/schema/mule/http http://www.mulesoft.org/schema/mule/http/3.2/mule-http.xsd 
+http://www.mulesoft.org/schema/mule/vm http://www.mulesoft.org/schema/mule/vm/3.2/mule-vm.xsd 
+http://www.mulesoft.org/schema/mule/cxf http://www.mulesoft.org/schema/mule/cxf/3.2/mule-cxf.xsd 
+http://www.mulesoft.org/schema/mule/quartz http://www.mulesoft.org/schema/mule/quartz/3.2/mule-quartz.xsd 
+http://www.mulesoft.org/schema/mule/spring-security http://www.mulesoft.org/schema/mule/spring-security/3.2/mule-spring-security.xsd ">
+    
+    <description>
+        This is a simple test bed for transactions and jms and mule. The idea
+        here is to configure various scenarios. Each flow corresponds
+        to a scenario
+        
+        To test this scenario
+        
+        
+        
+    </description>
+    
+    <spring:beans>
+        <spring:import resource="remote-activemq-broker.xml" />
+        <spring:bean id="jmsTestBean" class="com.dhenton9000.jms.transactions.JmsTransactionsTestComponent">
+            <spring:property name="doCommit" value="true" />
+        </spring:bean>
+    </spring:beans>
+    
+        
+    <jms:activemq-connector name="jms-connector" specification="1.1"
+                            maxRedelivery="1" durable="true" acknowledgementMode="AUTO_ACKNOWLEDGE"
+                            persistentDelivery="true" numberOfConsumers="4"
+                            connectionFactory-ref="AmqConnectionFactory">
+        
+    </jms:activemq-connector>
+
+
+    <jms:activemq-connector name="jms-connector-secondary" specification="1.1"
+                            maxRedelivery="1" durable="true" acknowledgementMode="AUTO_ACKNOWLEDGE"
+                            persistentDelivery="true" numberOfConsumers="4"
+                            connectionFactory-ref="AmqConnectionFactorySecondary">
+        
+    </jms:activemq-connector>
+    
+    <jms:endpoint  name="primaryEndpoint" connector-ref="jms-connector" address="jms://transactionPrimary.in"/>
+    <!--
+    <flow name="transaction_testing_consumer_1">
+         <description>
+           both of the primary messages for bozo1 and bozo2 end up 
+           on the DLQ for the primary
+        </description> 
+        <jms:inbound-endpoint queue="transactionPrimary.in" connector-ref="jms-connector">
+            <jms:transaction action="ALWAYS_BEGIN" /> 
+        </jms:inbound-endpoint>
+        <component 
+            class="com.dhenton9000.jms.transactions.JmsTransactionsTestComponent"  />
+        <collection-splitter />
+        <component 
+            class="com.dhenton9000.jms.transactions.TransactionErrorTester"  />
+        <jms:outbound-endpoint connector-ref="jms-connector" queue="transactionSecondary.in">
+            <jms:transaction action="ALWAYS_JOIN" />
+        </jms:outbound-endpoint>
+    </flow>
+    
+    
+    <flow name="transaction_testing_consumer_2">
+        <description>
+           both of the primary messages for bozo1 and bozo2 end up 
+           on the DLQ for the primary
+        </description>
+        <jms:inbound-endpoint queue="transactionPrimary.in" connector-ref="jms-connector">
+            <jms:transaction action="ALWAYS_BEGIN" /> 
+        </jms:inbound-endpoint>
+        <component 
+            class="com.dhenton9000.jms.transactions.JmsTransactionsTestComponent"  />
+        <collection-splitter />
+        <component 
+            class="com.dhenton9000.jms.transactions.TransactionErrorTester"  />
+        <jms:outbound-endpoint connector-ref="jms-connector" queue="transactionSecondary.in">
+            <jms:transaction action="NONE" />
+        </jms:outbound-endpoint>
+    </flow>  
+     
+      
+    <flow name="transaction_testing_consumer_3">
+        <description>
+            if the error occurs with bozo2 in the TransactionErrorTester
+            no going to the dlq because
+            of the commit in the jmsTestBean 
+        </description>
+        <jms:inbound-endpoint queue="transactionPrimary.in" connector-ref="jms-connector">
+            <jms:transaction action="ALWAYS_BEGIN" /> 
+        </jms:inbound-endpoint>
+        <component>
+            <spring-object  bean="jmsTestBean" />
+        </component>
+         
+        <collection-splitter />
+      
+        <component 
+            class="com.dhenton9000.jms.transactions.TransactionErrorTester"  />
+        <jms:outbound-endpoint connector-ref="jms-connector" queue="transactionSecondary.in">
+            <jms:transaction action="NONE" />
+        </jms:outbound-endpoint>
+    </flow>  
+    
+    
+    
+    <flow name="transaction_testing_consumer_4">
+       <description>
+           both of the primary messages for bozo1 and bozo2 end up 
+           on the DLQ for the primary
+        </description>
+        <jms:inbound-endpoint queue="transactionPrimary.in" connector-ref="jms-connector">
+            <jms:transaction action="ALWAYS_BEGIN" /> 
+        </jms:inbound-endpoint>
+         <component 
+            class="com.dhenton9000.jms.transactions.JmsTransactionsTestComponent"  />
+       <flow-ref name="subflow_for_4" />
+    </flow>     
+    
+    <flow name="subflow_for_4">
+        <collection-splitter />
+        <component 
+            class="com.dhenton9000.jms.transactions.TransactionErrorTester"  />
+        <jms:outbound-endpoint connector-ref="jms-connector" queue="transactionSecondary.in">
+            <jms:transaction action="NONE" />
+        </jms:outbound-endpoint>
+    </flow>  
+    
+    <flow name="transaction_testing_consumer_5">
+       <description>
+           both of the primary messages for bozo1 and bozo2 end up 
+           on the DLQ for the primary
+        </description>
+        <jms:inbound-endpoint queue="transactionPrimary.in" connector-ref="jms-connector">
+            <jms:transaction action="ALWAYS_BEGIN" /> 
+        </jms:inbound-endpoint>
+         <component>
+            <spring-object  bean="jmsTestBean" />
+        </component>
+        <vm:outbound-endpoint path="subflow5" />
+    </flow>     
+    
+    <flow name="subflow_for_5">
+        <vm:inbound-endpoint path="subflow5" />
+        <collection-splitter />
+        <component 
+            class="com.dhenton9000.jms.transactions.TransactionErrorTester"  />
+        <jms:outbound-endpoint connector-ref="jms-connector" queue="transactionSecondary.in">
+           
+        </jms:outbound-endpoint>
+    </flow>  
+   
+    
+    <flow name="transaction_testing_consumer_6">
+       <description>
+          if an error occur with bozo2 the secondary queue there is no
+          placement of the primary on the DLQ, but messages don't go to the
+          primary
+        </description>
+        <jms:inbound-endpoint queue="transactionPrimary.in" connector-ref="jms-connector">
+        </jms:inbound-endpoint>
+       <component 
+            class="com.dhenton9000.jms.transactions.JmsTransactionsTestComponent"  />
+        <vm:outbound-endpoint path="subflow6" />
+    </flow>     
+    
+    <flow name="subflow_for_6">
+        <vm:inbound-endpoint path="subflow6" />
+        <collection-splitter />
+        <component 
+            class="com.dhenton9000.jms.transactions.TransactionErrorTester"  />
+        <jms:outbound-endpoint connector-ref="jms-connector" queue="transactionSecondary.in">
+           
+        </jms:outbound-endpoint>
+    </flow>  
+   
+    
+     <flow name="transaction_testing_consumer_7">
+         <description>
+          using separate connections
+        </description> 
+        <jms:inbound-endpoint queue="transactionPrimary.in" connector-ref="jms-connector">
+            <jms:transaction action="ALWAYS_BEGIN" /> 
+        </jms:inbound-endpoint>
+        <component 
+            class="com.dhenton9000.jms.transactions.JmsTransactionsTestComponent"  />
+        <collection-splitter />
+        <component 
+            class="com.dhenton9000.jms.transactions.TransactionErrorTester"  />
+        <jms:outbound-endpoint connector-ref="jms-connector-secondary" queue="transactionSecondary.in">
+            <jms:transaction action="NONE" /> 
+        </jms:outbound-endpoint>
+    </flow>
+     --> 
+    
+    <flow name="transaction_testing_consumer_8">
+       <description>
+         This properly consumes the primary message , but batchs and 
+         reverts the secondary, which is primarily the same as scenario 6
+        </description>
+        <jms:inbound-endpoint queue="transactionPrimary.in" connector-ref="jms-connector">
+        </jms:inbound-endpoint>
+       <component 
+            class="com.dhenton9000.jms.transactions.JmsTransactionsTestComponent"  />
+        <vm:outbound-endpoint path="subflow6" />
+    </flow>     
+    
+    <flow name="subflow_for_8">
+        <vm:inbound-endpoint path="subflow6" />
+        <collection-splitter />
+        <component 
+            class="com.dhenton9000.jms.transactions.TransactionErrorTester"  />
+        <jms:outbound-endpoint  connector-ref="jms-connector-secondary" queue="transactionSecondary.in">
+           <jms:transaction action="NONE" /> 
+        </jms:outbound-endpoint>
+    </flow>  
+    
+    
+    
+</mule>

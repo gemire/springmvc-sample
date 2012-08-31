@@ -1,0 +1,36 @@
+This is a listing of all files containing jboss:/transaction-manager/>
+starting for the src directory of the mule 3.2 distribution
+
+integration/jms-muleside-durable-topic-xa-tx.xml:    <jbossts:transaction-manager/>
+integration/jms-consume-all-messages-tx-xa.xml:    <jbossts:transaction-manager/>
+integration/jms-xa-tx-ALWAYS_BEGIN.xml:    <jbossts:transaction-manager/>
+integration/jms-xa-tx-component.xml:    <jbossts:transaction-manager/>
+jbossts-namespacehandler.xml:    <jbossts:transaction-manager>
+jbossts-namespacehandler.xml:    </jbossts:transaction-manager>
+jdbc-mule-3625-flow.xml:    <jbossts:transaction-manager />
+jdbc-mule-3625-service.xml:    <jbossts:transaction-manager />
+links.xml:    <link><item>jbossts:transaction-manager</item><page>JBossTS+Module</page></link>
+META-INF/mule-jbossts.xsd:&lt;jbossts:transaction-manager&gt;
+META-INF/mule-jbossts.xsd:&lt;/jbossts:transaction-manager&gt;
+META-INF/mule-jbossts.xsd:&lt;jbossts:transaction-manager&gt;
+META-INF/mule-jbossts.xsd:&lt;/jbossts:transaction-manager&gt;
+org/mule/config/spring/factories/MuleTransactionManagerFactoryBean.java: * in the context i.e. <code><jbossts:transaction-manager/></code>
+org/mule/test/integration/transaction/jdbc-xatransaction-1479.xml:    <jbossts:transaction-manager/>
+org/mule/test/integration/transaction/vm-xa-transaction-persistent-queue-flow.xml:    <jbossts:transaction-manager />
+org/mule/test/integration/transaction/vm-xa-transaction-persistent-queue-livelock.xml:    <jbossts:transaction-manager/>
+org/mule/test/integration/transaction/xatransactions-with-spring-dao-config.xml:    <jbossts:transaction-manager/>
+org/mule/test/integration/transaction/jdbc-xatransaction-1479-flow.xml:    <jbossts:transaction-manager/>
+org/mule/test/integration/transaction/xabridge-jms-jdbc-mule.xml:    <jbossts:transaction-manager/>
+org/mule/test/integration/transaction/xabridge-jms-jdbc-mule-flow.xml:    <jbossts:transaction-manager/>
+org/mule/test/integration/transaction/xa-transaction-jms-jdbc.xml:    <jbossts:transaction-manager/>
+org/mule/test/integration/transaction/vm-xa-transaction-persistent-queue-service.xml:    <jbossts:transaction-manager/>
+org/mule/test/integration/routing/outbound/multicasting-router-xa-config.xml:    <jbossts:transaction-manager/>
+org/mule/test/integration/transport/jms/scripting/jms-request-from-script-with-xa-transaction-config.xml:    <jbossts:transaction-manager>
+org/mule/test/integration/transport/jms/scripting/jms-request-from-script-with-xa-transaction-config.xml:    </jbossts:transaction-manager>
+org/mule/test/integration/transport/jms/scripting/jms-request-from-script-with-no-transaction-config.xml:    <jbossts:transaction-manager>
+org/mule/test/integration/transport/jms/scripting/jms-request-from-script-with-no-transaction-config.xml:    </jbossts:transaction-manager>
+org/mule/test/config/xa-rollback-config.xml:    <jbossts:transaction-manager/>
+org/mule/test/config/external-transaction-config-service.xml:    <jbossts:transaction-manager/>
+org/mule/test/config/external-transaction-config-flow.xml:    <jbossts:transaction-manager/>
+org/mule/test/config/no-external-transaction-config-service.xml:    <jbossts:transaction-manager/>
+org/mule/test/config/no-external-transaction-config-flow.xml:    <jbossts:transaction-manager/>

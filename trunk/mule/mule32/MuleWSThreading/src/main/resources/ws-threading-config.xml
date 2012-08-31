@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<mule xmlns="http://www.mulesoft.org/schema/mule/core" 
+      xmlns:http="http://www.mulesoft.org/schema/mule/http"
+      xmlns:mule-ss="http://www.mulesoft.org/schema/mule/spring-security"
+      xmlns:ss="http://www.springframework.org/schema/security"
+      xmlns:cxf="http://www.mulesoft.org/schema/mule/cxf" 
+      xmlns:jms="http://www.mulesoft.org/schema/mule/jms"
+      xmlns:file="http://www.mulesoft.org/schema/mule/file" 
+      xmlns:management="http://www.mulesoft.org/schema/mule/management"
+      xmlns:vm="http://www.mulesoft.org/schema/mule/vm" 
+      xmlns:mulexml="http://www.mulesoft.org/schema/mule/xml" 
+      xmlns:doc="http://www.mulesoft.org/schema/mule/documentation"
+      xmlns:spring="http://www.springframework.org/schema/beans" 
+      xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+      version="CE-3.2.1"
+      xsi:schemaLocation="
+http://www.mulesoft.org/schema/mule/http http://www.mulesoft.org/schema/mule/http/3.2/mule-http.xsd 
+http://www.mulesoft.org/schema/mule/cxf http://www.mulesoft.org/schema/mule/cxf/3.2/mule-cxf.xsd 
+http://www.mulesoft.org/schema/mule/file http://www.mulesoft.org/schema/mule/file/3.2/mule-file.xsd 
+http://www.mulesoft.org/schema/mule/jms http://www.mulesoft.org/schema/mule/jms/3.2/mule-jms.xsd
+http://www.mulesoft.org/schema/mule/management http://www.mulesoft.org/schema/mule/management/3.2/mule-management.xsd 
+http://www.mulesoft.org/schema/mule/xml http://www.mulesoft.org/schema/mule/xml/3.2/mule-xml.xsd
+http://www.mulesoft.org/schema/mule/vm http://www.mulesoft.org/schema/mule/vm/3.2/mule-vm.xsd 
+http://www.mulesoft.org/schema/mule/spring-security http://www.mulesoft.org/schema/mule/spring-security/3.2/mule-spring-security.xsd
+http://www.springframework.org/schema/security http://www.springframework.org/schema/security/spring-security-3.0.xsd
+http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.0.xsd 
+http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/3.2/mule.xsd ">
+	
+ <!-- wsdl http://localhost:8081/registration?wsdl -->
+ <!-- this is the web service with basic auth -->
+ <!-- notice that this is marked exchange = one way
+  
+ -->
+ 
+    
+    <http:connector name="httpConnectorDispatcher">
+        <dispatcher-threading-profile poolExhaustedAction="WAIT" maxThreadsActive="40" doThreading="true"  />  
+        
+    </http:connector>
+    
+    <http:connector name="httpConnectorReceiver">
+         
+        <receiver-threading-profile poolExhaustedAction="WAIT" maxThreadsActive="5"  doThreading="true"  />  
+    </http:connector>
+    
+    <flow name="MuleWebFlow" doc:name="MuleWebFlow">
+        <http:inbound-endpoint exchange-pattern="request-response"  connector-ref="httpConnectorReceiver"
+                               address="http://localhost:8081/registration" doc:name="HTTP">
+        </http:inbound-endpoint>
+        <cxf:jaxws-service validationEnabled="true" 
+                        
+			serviceClass="com.dhenton9000.registration.components.ws.RegistrationServiceWSDLImpl"
+                           enableMuleSoapHeaders="true">
+
+            <cxf:outFaultInterceptors>
+                <spring:bean id="outfault"
+                             class="com.dhenton9000.cxf.interceptors.SoapFaultInterceptor" />
+            </cxf:outFaultInterceptors>
+
+        </cxf:jaxws-service>
+        <component>
+            <singleton-object class="com.dhenton9000.registration.components.ws.RegistrationServiceWSDLImpl" />
+        </component>
+        <default-exception-strategy>
+            <component class="com.dhenton9000.ws.sandbox.ExceptionHandler" />
+        </default-exception-strategy>
+    </flow>
+     <!-- csv file input to the web service -->
+    <flow name="inputCSVFileFlow">
+        <file:inbound-endpoint
+            path="${FILE_FOLDER_ROOT}csvinput"
+            connector-ref="inputConnector"
+            moveToPattern="#[header:originalFilename]--#[function:datestamp]-csv-working.csv" />
+                    
+        <component> 
+            <spring-object   bean="csvProcessor" />
+        </component>
+        <collection-splitter />
+        <flow-ref  name="registrationWebClientFlow"/>
+        <default-exception-strategy>
+            <component class="com.dhenton9000.ws.sandbox.ExceptionHandler" />
+        </default-exception-strategy>
+    </flow>
+     
+    
+    <flow name="registrationWebClientFlow">
+        <http:outbound-endpoint    connector-ref="httpConnectorDispatcher"
+            address="http://localhost:8081/registration">
+            <cxf:jaxws-client
+                serviceClass="com.dhenton9000.registration.components.ws.RegistrationServiceWSDL"
+                operation="register" />
+        </http:outbound-endpoint>
+    </flow>
+    <flow name="ActivityMonitor">
+        <jms:inbound-endpoint  queue="testQueue.in"  connector-ref="jmsConnector" transformer-refs="stringToRegisterInput" />
+        <!-- <component class="com.dhenton9000.registration.components.RegistrationBusComponent" /> -->
+         <flow-ref  name="registrationWebClientFlow"/>
+    </flow>
+    
+    <flow name="DLQInputMonitor">
+        <jms:inbound-endpoint queue="DLQ.testQueue.in" connector-ref="jmsConnector" />
+        <log-component />
+    </flow>
+    
+</mule>

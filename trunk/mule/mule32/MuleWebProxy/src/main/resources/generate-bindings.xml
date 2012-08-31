@@ -1,0 +1,48 @@
+<?xml version="1.0"?>
+
+<project name="cxf wsdl2java" default="cxfWSDLToJava" basedir="./../../..">
+	<property name="cxf.home" location="/home/dhenton/Downloads/apache-cxf-2.5.1" />
+
+	<path id="cxf.classpath">
+		<fileset dir="${cxf.home}/lib">
+			<include name="*.jar" />
+		</fileset>
+	</path>
+ 
+	<target name="WSDLToJava">
+		<java classname="org.apache.cxf.tools.wsdlto.WSDLToJava" fork="true">
+			<arg value="-p" />
+			<arg value="com.dhenton9000.registration.components.ws" />
+			<arg value="-d" />
+			<arg value="src/main/java" />
+			<arg value="-b" />
+			<arg value="src/main/resources/binding.xml" />
+			<arg value="-impl" />
+			<arg value="src/main/resources/RegistrationService.wsdl" />
+			<classpath>
+				<path refid="cxf.classpath" />
+			</classpath>
+		</java>
+	</target>
+    
+     <!--
+      <target name="JavaToWSDL">
+      <java classname="org.apache.cxf.tools.java2wsdl.JavaToWSDL" fork="true">
+         <arg value="-o"/>
+         <arg value="demo.wsdl"/>
+         <arg value="-d" />
+	 <arg value="docs" />
+         <arg value="-cp"/>
+         <arg value="classes" />
+         <arg value="-verbose" />
+         <classpath>
+            <path refid="cxf.classpath"/>
+         </classpath>
+      </java>
+   </target>
+ -->
+        
+        
+</project>
+
+

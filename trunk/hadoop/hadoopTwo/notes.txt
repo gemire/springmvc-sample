@@ -1,0 +1,1 @@
+in the HUE parameters the fully qualified class name needs to start the parameter list

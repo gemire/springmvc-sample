@@ -1,0 +1,13 @@
+this doesn't run on jboss 6x , probably because cxf is already in the jboss/lib directory
+and does not find the class for the spring listener listed in the web.xml file.
+
+A possible answer is to move the spring libraries to the lib file. Otherwise this 
+technique is busted for 6x, but will work for Jboss 4-5x. 
+
+The issue to investigate is if the built in cxf for jboss 6 will support contract first.
+
+jboss 6 comes with its own cxf style generators see 
+http://docs.jboss.org/jbossas/6/WebServices_Guide/en-US/html_single/index.html. This
+system will support code first and client first web services.
+
+So for jboss 6 and onward, you would use the built-in webservice system.

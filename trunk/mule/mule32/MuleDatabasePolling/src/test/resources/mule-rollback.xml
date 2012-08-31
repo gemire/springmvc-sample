@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<mule xmlns="http://www.mulesoft.org/schema/mule/core" 
+      xmlns:jdbc="http://www.mulesoft.org/schema/mule/jdbc" 
+      xmlns:vm="http://www.mulesoft.org/schema/mule/vm" 
+      xmlns:doc="http://www.mulesoft.org/schema/mule/documentation" 
+      xmlns:spring="http://www.springframework.org/schema/beans" 
+      xmlns:core="http://www.mulesoft.org/schema/mule/core" 
+      xmlns:jbossts="http://www.mulesoft.org/schema/mule/jbossts"
+      xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+      version="CE-3.2.1" xsi:schemaLocation="
+http://www.mulesoft.org/schema/mule/jdbc 
+http://www.mulesoft.org/schema/mule/jdbc/3.2/mule-jdbc.xsd 
+http://www.mulesoft.org/schema/mule/jbossts 
+http://www.mulesoft.org/schema/mule/jbossts/3.2/mule-jbossts.xsd
+http://www.mulesoft.org/schema/mule/vm 
+http://www.mulesoft.org/schema/mule/vm/3.2/mule-vm.xsd 
+http://www.springframework.org/schema/beans 
+http://www.springframework.org/schema/beans/spring-beans-3.0.xsd 
+http://www.mulesoft.org/schema/mule/core 
+http://www.mulesoft.org/schema/mule/core/3.2/mule.xsd ">
+    
+    <spring:beans>
+        
+        <spring:bean id="jdbcDataSource" class="org.enhydra.jdbc.standard.StandardXADataSource" destroy-method="shutdown">
+            <!-- this transaction manager is now available for spring injection -->
+            <spring:property name="transactionManager" ref="muleTM"/>  
+            <spring:property name="driverName" value="org.apache.derby.jdbc.ClientDriver"/>
+            <spring:property name="url" value="jdbc:derby://localhost:1527/poll"/> 
+        </spring:bean>
+    
+    <!-- pooled xa datasource -->
+        <spring:bean id="derbyDataIn" class="org.enhydra.jdbc.pool.StandardXAPoolDataSource" destroy-method="shutdown">
+            <spring:property name="dataSource" ref="jdbcDataSource"/>
+            <spring:property name="maxSize" value="10"/>
+            <spring:property name="user" value="poll" />
+            <spring:property name="password" value="poll" /> 
+        </spring:bean>
+        
+        <spring:bean id="errorTestComponent" class="com.dhenton9000.jdbc.test.ErrorThrowingComponent">
+           
+        </spring:bean>
+        <spring:bean id="muleTM" class="org.mule.config.spring.factories.MuleTransactionManagerFactoryBean"/>
+    </spring:beans>
+    
+   
+
+    <jbossts:transaction-manager     />
+
+     
+    
+    
+    <jdbc:connector name="jdbcConnectorIn"  dataSource-ref="derbyDataIn" pollingFrequency="5000">
+        <jdbc:query key="pollQuery" value="SELECT poll_table_id,target_table_id FROM 
+        poll.poll_table WHERE poll_table.status = 'PENDING'"/>
+        <jdbc:query key="pollQuery.ack"  value="UPDATE poll.poll_table SET 
+        status='IN PROGRESS' 
+        WHERE poll_table_id=#[map-payload:poll_table_id]"/>
+        <jdbc:query key="markComplete"  value="UPDATE poll.poll_table SET 
+        status='COMPLETE' 
+        WHERE poll_table_id=#[map-payload:poll_table_id]"/>  
+        <jdbc:query key="markError"  value="UPDATE poll.poll_table SET 
+        status='ERROR' 
+        WHERE poll_table_id=#[map-payload:poll_table_id]"/>  
+    </jdbc:connector>
+    
+    
+    
+    
+    <flow name="dataBasePollingFlow">
+        <jdbc:inbound-endpoint queryKey="pollQuery" 
+                               connector-ref="jdbcConnectorIn" exchange-pattern="one-way">
+            <jdbc:transaction action="ALWAYS_BEGIN"/>  
+        </jdbc:inbound-endpoint>
+    
+        <component>
+            <spring-object bean="errorTestComponent" />
+        </component>
+   
+        <jdbc:outbound-endpoint queryKey="markComplete" 
+                                          connector-ref="jdbcConnectorIn" exchange-pattern="one-way">
+            <jdbc:transaction action="ALWAYS_BEGIN"/>  
+        </jdbc:outbound-endpoint>
+   
+        <default-exception-strategy>
+            <commit-transaction  exception-pattern="*"/>  
+            <processor-chain>
+                <expression-transformer evaluator="groovy" expression="payload.getPayload()"/>   
+                <jdbc:outbound-endpoint queryKey="markError" 
+                                        connector-ref="jdbcConnectorIn" exchange-pattern="one-way">    
+                    <jdbc:transaction action="ALWAYS_BEGIN"/>  
+                </jdbc:outbound-endpoint>
+            </processor-chain>
+        </default-exception-strategy>
+      
+    </flow>
+    
+    
+     
+
+</mule>

@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<con:soapui-project name="RegistrationChoice" resourceRoot="" soapui-version="3.6.1" abortOnError="false" runType="SEQUENTIAL" xmlns:con="http://eviware.com/soapui/config"><con:settings/><con:interface xsi:type="con:WsdlInterface" wsaVersion="NONE" name="RegistrationServiceWSDLSOAP" type="wsdl" bindingName="{uri:dhenton9000:registrationService}RegistrationServiceWSDLSOAP" soapVersion="1_1" anonymous="optional" definition="http://127.0.0.1:8081/services/registration?wsdl" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:settings/><con:definitionCache type="TEXT" rootPart="http://127.0.0.1:8081/services/registration?wsdl"><con:part><con:url>http://127.0.0.1:8081/services/registration?wsdl</con:url><con:content><![CDATA[<wsdl:definitions name="RegistrationServiceWSDL" targetNamespace="uri:dhenton9000:registrationService" xmlns:ref="uri:dhenton9000:registrationService:ref" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:tns="uri:dhenton9000:registrationService" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <wsdl:types>
+    <xsd:schema targetNamespace="uri:dhenton9000:registrationService">
+      <xsd:import namespace="uri:dhenton9000:registrationService:ref" schemaLocation="http://127.0.0.1:8081/services/registration?xsd=RegistrationServices.xsd"/>
+    </xsd:schema>
+  </wsdl:types>
+  <wsdl:message name="RegistrationResponse">
+    <wsdl:part element="ref:RegisterResponse" name="outputParameter"></wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="RegistrationRequest">
+    <wsdl:part element="ref:RegisterInput" name="inputParameter"></wsdl:part>
+  </wsdl:message>
+  <wsdl:portType name="RegistrationServiceWSDL">
+    <wsdl:operation name="Register">
+      <wsdl:input message="tns:RegistrationRequest"></wsdl:input>
+      <wsdl:output message="tns:RegistrationResponse"></wsdl:output>
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:binding name="RegistrationServiceWSDLSOAP" type="tns:RegistrationServiceWSDL">
+    <soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+    <wsdl:operation name="Register">
+      <soap:operation soapAction="uri:dhenton9000:registrationService/Register"/>
+      <wsdl:input>
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="RegistrationServiceWSDL">
+    <wsdl:port binding="tns:RegistrationServiceWSDLSOAP" name="RegistrationServiceWSDLSOAP">
+      <soap:address location="http://127.0.0.1:8081/services/registration"/>
+    </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>]]></con:content><con:type>http://schemas.xmlsoap.org/wsdl/</con:type></con:part><con:part><con:url>http://127.0.0.1:8081/services/registration?xsd=RegistrationServices.xsd</con:url><con:content><![CDATA[<schema elementFormDefault="qualified" targetNamespace="uri:dhenton9000:registrationService:ref" xmlns="http://www.w3.org/2001/XMLSchema" xmlns:tns="uri:dhenton9000:registrationService:ref">
+  <element name="RegisterInput">
+    <complexType>
+      <sequence>
+        <element name="name" type="string"/>
+        <element name="password" type="string"/>
+        <element ref="tns:registrationDetails"/>
+        <element name="registrationDate" type="dateTime"/>
+      </sequence>
+    </complexType>
+  </element>
+  <element name="registrationDetails">
+    <complexType>
+      <sequence>
+        <element name="paymentPlan" type="string"/>
+        <element name="months" type="integer"/>
+      </sequence>
+    </complexType>
+  </element>
+  <element name="RegisterResponse">
+    <complexType>
+      <sequence>
+        <element name="responseInformation" type="string"/>
+        <element name="currentTime" type="dateTime"/>
+        <element name="totalCost" type="decimal"/>
+        <element name="paymentDepartment" type="string"/>
+      </sequence>
+    </complexType>
+  </element>
+</schema>]]></con:content><con:type>http://www.w3.org/2001/XMLSchema</con:type></con:part></con:definitionCache><con:endpoints><con:endpoint>http://127.0.0.1:8081/services/registration</con:endpoint></con:endpoints><con:operation isOneWay="false" action="uri:dhenton9000:registrationService/Register" name="Register" bindingOperationName="Register" type="Request-Response" inputName="" receivesAttachments="false" sendsAttachments="false" anonymous="optional"><con:settings/><con:call name="Request 1"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting></con:settings><con:encoding>UTF-8</con:encoding><con:endpoint>http://127.0.0.1:8081/services/registration</con:endpoint><con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:uri="uri:dhenton9000:registrationService:ref">
+   <soapenv:Header/>
+   <soapenv:Body>
+      <uri:RegisterInput>
+         <uri:name>fred</uri:name>
+         <uri:password>fred</uri:password>
+         <uri:registrationDetails>
+            <uri:paymentPlan>affdfd</uri:paymentPlan>
+            <uri:months>24</uri:months>
+         </uri:registrationDetails>
+         <uri:registrationDate>2010-01-01T12:00:00+01:00</uri:registrationDate>
+      </uri:RegisterInput>
+   </soapenv:Body>
+</soapenv:Envelope>]]></con:request><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:wsaConfig mustUnderstand="NONE" version="200508" action="uri:dhenton9000:registrationService/Register"/><con:wsrmConfig version="1.2"/></con:call></con:operation></con:interface><con:testSuite name="RegistrationServiceWSDLSOAP TestSuite"><con:settings/><con:runType>SEQUENTIAL</con:runType><con:testCase failOnError="true" failTestCaseOnErrors="true" keepSession="false" maxResults="0" name="Register TestCase" searchProperties="true"><con:settings/><con:testStep type="request" name="Register"><con:settings/><con:config xsi:type="con:RequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:interface>RegistrationServiceWSDLSOAP</con:interface><con:operation>Register</con:operation><con:request name="Register"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting></con:settings><con:encoding>UTF-8</con:encoding><con:endpoint>http://127.0.0.1:8081/services/registration</con:endpoint><con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:uri="uri:dhenton9000:registrationService:ref">
+   <soapenv:Header/>
+   <soapenv:Body>
+      <uri:RegisterInput>
+         <uri:name>fred</uri:name>
+         <uri:password>fred</uri:password>
+         <uri:registrationDetails>
+            <uri:paymentPlan>affdfd</uri:paymentPlan>
+            <uri:months>24</uri:months>
+         </uri:registrationDetails>
+         <uri:registrationDate>2010-01-01T12:00:00+01:00</uri:registrationDate>
+      </uri:RegisterInput>
+   </soapenv:Body>
+</soapenv:Envelope>]]></con:request><con:assertion type="Schema Compliance" name="Schema Compliance"><con:configuration><definition/></con:configuration></con:assertion><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:wsaConfig action="uri:dhenton9000:registrationService/Register" mustUnderstand="NONE" version="200508"/><con:wsrmConfig version="1.2"/></con:request></con:config></con:testStep><con:properties/></con:testCase><con:properties/></con:testSuite><con:properties/><con:wssContainer/></con:soapui-project>

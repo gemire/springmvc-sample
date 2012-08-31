@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Context antiJARLocking="true" path="/JmsTest">
+    
+    <Resource auth="Container"
+          name="jms/ConnectionFactory"
+          type="org.apache.activemq.ActiveMQConnectionFactory"
+          description="JMS Connection Factory"
+          factory="org.apache.activemq.jndi.JNDIReferenceFactory"
+          brokerURL="tcp://127.0.0.1:61616"
+          brokerName="MyActiveMQBroker"/>
+ 
+    <Resource auth="Container"
+          name="jms/TomcatQueue"
+          type="org.apache.activemq.command.ActiveMQQueue"
+          description="JMS queue"
+          factory="org.apache.activemq.jndi.JNDIReferenceFactory"
+          physicalName="Tomcat.QUEUE"/>
+  
+    <ResourceLink global="jms/ConnectionFactory" name="jms/ConnectionFactory" type="javax.jms.ConnectionFactory"/>
+    <ResourceLink global="jms/TomcatQueue" name="jms/TomcatQueue" type="javax.jms.Queue"/>
+
+</Context>
+    
+    

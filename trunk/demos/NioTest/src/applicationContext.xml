@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:p="http://www.springframework.org/schema/p"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.5.xsd">
+
+    <!--  be sure to reserve a thread for the queue monitor in the consumer -->
+	<bean id="producerThreads"
+		class="org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor">
+		<property name="corePoolSize" value="8" />
+		<property name="maxPoolSize" value="20" />
+		<property name="queueCapacity" value="25" />
+	</bean>
+	
+	
+	
+	<bean id="consumerThreads"
+		class="org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor">
+		<property name="corePoolSize" value="7" />
+		<property name="maxPoolSize" value="20" />
+		<property name="queueCapacity" value="25" />
+	</bean>
+
+	<bean id="sheepProducer" name="producer"
+		class="com.dhenton9000.demo.threads.sheep.producer.SheepProducer">
+		<property name="sheepExcecutor" ref="producerThreads" />
+		<property name="initialThreadCount" value="5" />
+		<property name="maxDelay" value="700" />
+		<property name="minDelay" value="400" />
+		<property name="sheepQueue" ref="blockQueue" />
+		<property name="consumer" ref="consumer" />
+	</bean>
+
+	
+	<bean id="sheepConsumer" name="consumer"
+		class="com.dhenton9000.demo.threads.sheep.consumer.SheepConsumer">
+		<property name="sheepExcecutor" ref="consumerThreads" />
+		<property name="initialThreadCount" value="5" />
+		<property name="maxDelay" value="350" />
+		<property name="minDelay" value="200" />
+		<property name="sheepQueue" ref="blockQueue" />
+	</bean>
+
+	<bean id="nonQueue" class="com.dhenton9000.demo.threads.sheep.queues.NonConcurrentSheepQueue" />
+	<bean id="blockQueue" class="com.dhenton9000.demo.threads.sheep.queues.ConcurrentSheepQueue" />
+
+ 
+
+
+</beans>

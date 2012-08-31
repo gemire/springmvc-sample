@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="windows-1252" ?>
+<!-- modified to work in this environment -->
+
+<project name="hbmtasks" basedir=".">
+
+	<property name="maven-repository" value="/myprogs/mavenrep" />
+	<property name="gen-target" value="target/hibernate3" />
+	<property name="gen-source.dir" value="generated" />
+	<property name="source.dir" value="." />
+	<property name="java.source.dir" value="src/main/java" />
+	<target name="init">
+		<tstamp />
+
+		<delete dir="${gen-source.dir}" includeemptydirs="true"/>
+		<mkdir dir="${gen-source.dir}" />
+
+	</target>
+
+	<target name="all" depends="schemaexport,pojogen,daogen" />
+	
+	  <path id="hibernate.classpath.ref">
+		<path location="${java.source.dir}" />
+		<path location="${source.dir}" />
+	  </path>
+
+
+	<path id="toolslib">
+		<path location="${maven-repository}/org/hibernate/hibernate-tools/3.2.3.GA/hibernate-tools-3.2.3.GA.jar" />
+		<path location="${maven-repository}/org/hibernate/hibernate-core/3.5.2-Final/hibernate-core-3.5.2-Final.jar" />
+		<path location="${maven-repository}/freemarker/freemarker/2.3.8/freemarker-2.3.8.jar" />
+		<path location="${maven-repository}/org/apache/derby/derbyclient/10.5.3.0_1/derbyclient-10.5.3.0_1.jar" />
+		<path location="${maven-repository}/org/slf4j/slf4j-log4j12/1.5.6/slf4j-log4j12-1.5.6.jar" />
+		<path location="${maven-repository}/org/slf4j/slf4j-api/1.5.6/slf4j-api-1.5.6.jar" />
+		<path location="${maven-repository}/log4j/log4j/1.2.15/log4j-1.2.15.jar" />
+		<path location="${maven-repository}/dom4j/dom4j/1.6.1/dom4j-1.6.1.jar" />
+		<path location="${maven-repository}/commons-logging/commons-logging/1.1.1/commons-logging-1.1.1.jar" />
+
+	</path>
+
+	<taskdef name="hibernatetool" classname="org.hibernate.tool.ant.HibernateToolTask" classpathref="toolslib" />
+	<target name="schemaexport" depends="init" description="Exports a generated schema to DB and file">
+		<hibernatetool destdir="${gen-source.dir}">
+
+			<classpath refid="hibernate.classpath.ref" />
+				 
+
+			<configuration configurationfile="${source.dir}/hibernate.cfg.xml" />
+
+			<hbm2ddl drop="false" create="false" export="false" outputfilename="schema.sql" delimiter=";" format="true" />
+	
+		</hibernatetool>
+	</target>
+
+
+	<target name="daogen" depends="init" description="Generates daos">
+		<delete dir="${gen-source.dir}/dao" />
+		<mkdir dir="${gen-source.dir}/dao" />
+		<hibernatetool destdir="${gen-source.dir}/dao">
+
+			<classpath refid="hibernate.classpath.ref" />
+
+			<configuration configurationfile="${source.dir}/hibernate.cfg.xml" />
+
+
+			<hbm2dao />
+
+
+		</hibernatetool>
+	</target>
+	<target name="pojogen" depends="init" description="Generates pojo files">
+		<delete dir="${gen-source.dir}/pojo" />
+		<mkdir dir="${gen-source.dir}/pojo" />
+		<hibernatetool destdir="${gen-source.dir}/pojo">
+
+			<classpath refid="hibernate.classpath.ref" />
+
+			<configuration configurationfile="${source.dir}/hibernate.cfg.xml" />
+
+
+			<hbm2java />
+
+
+		</hibernatetool>
+	</target>
+
+</project>

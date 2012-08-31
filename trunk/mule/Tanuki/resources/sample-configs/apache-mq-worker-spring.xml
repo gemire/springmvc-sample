@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:amq="http://activemq.apache.org/schema/core"
+	xsi:schemaLocation="
+	http://activemq.apache.org/schema/core 
+	http://activemq.apache.org/schema/core/activemq-core.xsd
+	http://www.springframework.org/schema/beans 
+	http://www.springframework.org/schema/beans/spring-beans.xsd">
+	<bean id="targetconnFactory" class="org.apache.activemq.pool.PooledConnectionFactory"
+		destroy-method="stop">
+		<property name="connectionFactory">
+			<bean class="org.apache.activemq.ActiveMQConnectionFactory">
+				<property name="brokerURL">
+					<value>tcp://localhost:61616</value>
+				</property>
+				<property name="redeliveryPolicy" ref="redeliveryBean" />
+			</bean>
+		</property>
+	</bean>
+	<bean id="redeliveryBean" class="org.apache.activemq.RedeliveryPolicy">
+		<property name="initialRedeliveryDelay" value="3000" />
+		<property name="maximumRedeliveries" value="2" />
+		<property name="useExponentialBackOff" value="true" />
+		<property name="backOffMultiplier" value="2" />
+	</bean>
+	<bean id="workQueue" class="org.apache.activemq.command.ActiveMQQueue">
+		<constructor-arg index="0" value="jms/workQueue" />
+	</bean>
+	<!--
+		<bean id="jmsTransactionManager"
+		class="org.springframework.jms.connection.JmsTransactionManager">
+		<property name="connectionFactory" ref="targetconnFactory" /> </bean>
+		<bean scope="prototype" id="workerBean"
+		class="com.dhenton9000.worker.TestWorker"> <property
+		name="jmsWorkQueueTemplate" ref="workQueueTemplate" /> </bean> <bean
+		scope="prototype" id="workQueueTemplate"
+		class="org.springframework.jms.core.JmsTemplate"> <property
+		name="connectionFactory" ref="targetconnFactory" /> <property
+		name="receiveTimeout" value="0" /> <property name="defaultDestination"
+		ref="workQueue" /> </bean> <bean id="workerMDP"
+		class="com.dhenton9000.worker.SampleMDP" /> <bean
+		id="workerMessageContainer"
+		class="org.springframework.jms.listener.DefaultMessageListenerContainer">
+		<property name="connectionFactory" ref="targetconnFactory" />
+		<property name="destination" ref="workQueue" /> <property
+		name="messageListener" ref="workerMDP" /> <property
+		name="transactionManager" ref="jmsTransactionManager" /> </bean>
+	-->
+	<bean id="jmsContainer"
+		class="org.springframework.jms.listener.SimpleMessageListenerContainer">
+		<property name="connectionFactory" ref="targetconnFactory" />
+		<property name="destination" ref="workQueue" />
+		<property name="messageListener" ref="messageListener" />
+	 
+		<property name="sessionTransacted" value="false" />
+	</bean>
+	
+	
+	 
+	
+	<!--  these beans represent worker specific information -->
+	<bean id="testMessageConverter" class="com.dhenton9000.worker.delegate.SampleConverter" />
+	<bean id="messageListener"
+		class="org.springframework.jms.listener.adapter.MessageListenerAdapter">
+		<constructor-arg>
+			<bean class="com.dhenton9000.worker.delegate.TextMessageProcessor" />
+		</constructor-arg>
+		<property name="defaultListenerMethod" value="receive" />
+		<property name="messageConverter" ref="testMessageConverter" />
+	</bean>
+</beans>

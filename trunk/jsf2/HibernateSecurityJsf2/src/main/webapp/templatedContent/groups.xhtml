@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets">
+<h:body>
+
+	<ui:composition template="/template/common/basicTableLayout.xhtml">
+		<ui:param name="currentPageTitle" value="Groups" />
+
+		<ui:define name="leftSide">
+
+
+			<h:panelGrid id="navContainer" border="0"
+				columnClasses="alignleft,alignright" width="500px" columns="2">
+				<h:outputText
+					value="Item #{groupsBean.firstItem + 1} .. #{groupsBean.lastItem} of  #{groupsBean.groupsCount}" />
+				<h:panelGrid border="0" cellpadding="5" cellspacing="5" columns="2">
+					<h:commandLink action="#{groupsBean.prevGroup}"
+						value="Prev: #{groupsBean.batchSize} "
+						rendered="#{groupsBean.hasPreviousPage}" />
+					<h:commandLink action="#{groupsBean.nextGroup}"
+						value="Next: #{groupsBean.batchSize}"
+						rendered="#{groupsBean.hasNextPage}" />
+				</h:panelGrid>
+			</h:panelGrid>
+
+			<h:commandButton value="Add New Group"
+				action="#{groupsBean.resetToAddMode}" />
+
+			<h:dataTable id="groupsTable"
+				columnClasses="tableCellId,tableCellName,tableCellButton,tableCellButton"
+				width="100%" var="app" value="#{groupsBean.allGroups}">
+				<h:column headerClass="headerClass">
+					<f:facet name="header">
+						<h:outputText value="Group Id" />
+					</f:facet>
+					<h:outputText value="#{app.id}" />
+				</h:column>
+				<h:column headerClass="headerClass">
+					<f:facet name="header">
+						<h:outputText value="Group Name" />
+					</f:facet>
+					<h:outputText value="#{app.groupName}" />
+				</h:column>
+				<h:column headerClass="headerClass">
+					<f:facet name="header">
+						<h:outputText value="Edit" />
+					</f:facet>
+					<h:commandButton id="editLine" action="#{groupsBean.setUpEdit}"
+						value="Edit" />
+				</h:column>
+				<h:column headerClass="headerClass">
+					<f:facet name="header">
+						<h:outputText value="Delete" />
+					</f:facet>
+					<h:commandButton id="deleteLine" action="#{groupsBean.setUpDelete}"
+						value="Delete" />
+				</h:column>
+			</h:dataTable>
+
+
+		</ui:define>
+
+		<ui:define name="rightSide">
+		
+		
+		
+		 <h:panelGrid columns="1">
+
+                        <h:outputText styleClass="headerClass" value="Group Item" />
+                        <h:panelGrid columns="2">
+                            <h:outputText rendered="#{!groupsBean.addMode}"  value="Group Id:"/>
+
+                            <h:outputText  rendered="#{!groupsBean.addMode}"  value="#{groupsBean.currentGroup.id}" />
+
+
+                            <h:outputText value="Group Name:"/>
+                            <h:inputText  rendered="#{!groupsBean.deleteMode}" value="#{groupsBean.currentGroup.groupName}" id="groupName" size="20" />
+                            <h:outputText rendered="#{groupsBean.deleteMode}" value="#{groupsBean.currentGroup.groupName}"   />
+
+
+                            <h:commandButton  id="deleteConfirm"   rendered="#{groupsBean.deleteMode}" action="#{groupsBean.performDelete}" value="Confirm Delete" />
+                            <h:commandButton  id="editConfirm"   rendered="#{groupsBean.editMode}"  action="#{groupsBean.performEdit}" value="Confirm Edit" />
+                            <h:commandButton  id="addConfirm"   rendered="#{groupsBean.addMode}"  action="#{groupsBean.performAdd}" value="Confirm Add" />
+                            <h:commandButton value="Cancel"   rendered="#{!groupsBean.addMode}" action="#{groupsBean.resetToAddMode}"   />
+                        </h:panelGrid>
+
+
+                    </h:panelGrid>
+		
+		
+		
+		
+		</ui:define>
+
+	</ui:composition>
+
+
+
+</h:body>
+
+</html>

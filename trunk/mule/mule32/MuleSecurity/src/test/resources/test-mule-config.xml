@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<mule xmlns="http://www.mulesoft.org/schema/mule/core" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:spring="http://www.springframework.org/schema/beans"
+	xmlns:jersey="http://www.mulesoft.org/schema/mule/jersey" xmlns:jms="http://www.mulesoft.org/schema/mule/jms"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:management="http://www.mulesoft.org/schema/mule/management"
+	xmlns:quartz="http://www.mulesoft.org/schema/mule/quartz" xmlns:https="http://www.mulesoft.org/schema/mule/https"
+	xmlns:http="http://www.mulesoft.org/schema/mule/http" xmlns:cxf="http://www.mulesoft.org/schema/mule/cxf"
+	xmlns:mule-ss="http://www.mulesoft.org/schema/mule/spring-security"
+	xmlns:ss="http://www.springframework.org/schema/security"
+	xsi:schemaLocation="
+    http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.5.xsd
+    http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/3.2/mule.xsd
+    http://www.mulesoft.org/schema/mule/jms http://www.mulesoft.org/schema/mule/jms/3.2/mule-jms.xsd
+    http://www.mulesoft.org/schema/mule/https http://www.mulesoft.org/schema/mule/https/3.2/mule-https.xsd
+    http://www.mulesoft.org/schema/mule/http http://www.mulesoft.org/schema/mule/http/3.2/mule-http.xsd
+    http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-3.0.xsd
+    http://www.mulesoft.org/schema/mule/cxf http://www.mulesoft.org/schema/mule/cxf/3.2/mule-cxf.xsd
+    http://www.mulesoft.org/schema/mule/quartz http://www.mulesoft.org/schema/mule/quartz/3.2/mule-quartz.xsd
+    http://www.mulesoft.org/schema/mule/management http://www.mulesoft.org/schema/mule/management/3.2/mule-management.xsd
+   	http://www.mulesoft.org/schema/mule/spring-security http://www.mulesoft.org/schema/mule/spring-security/3.2/mule-spring-security.xsd
+    http://www.springframework.org/schema/security http://www.springframework.org/schema/security/spring-security-3.0.xsd">
+   
+   
+   
+    <spring:beans>
+        <ss:authentication-manager alias="authenticationManager">
+            <ss:authentication-provider>
+                <ss:user-service id="userService">
+                    <ss:user name="username" password="password" authorities="ROLE_ADMIN"/> 
+                </ss:user-service>
+            </ss:authentication-provider> 
+    
+        </ss:authentication-manager>
+    </spring:beans>
+    <mule-ss:security-manager>
+        <mule-ss:delegate-security-provider
+            name="memory-dao"
+            delegate-ref="authenticationManager"/> 
+    </mule-ss:security-manager>
+    <!--
+    <model name="httpModel">
+        <service name="httpService">
+            <inbound>
+                <http:inbound-endpoint
+                address="http://localhost:9081/services/security" exchange-pattern="request-response">
+                    <mule-ss:http-security-filter  realm="mule-realm"/>
+                </http:inbound-endpoint> 
+            </inbound>
+           <component class="com.dhenton9000.mule.security.SecurityComponent" /> 
+       
+        </service>
+    </model>
+    -->
+   
+    <flow name="httpService">
+            
+        <http:inbound-endpoint
+             path="services/security" host="localhost" port="9081" exchange-pattern="request-response">
+         <!--   <mule-ss:http-security-filter  realm="mule-realm"/> -->
+        </http:inbound-endpoint> 
+          
+        <component class="com.dhenton9000.mule.security.SecurityComponent" /> 
+       
+    </flow>
+   
+   <!--
+   <http:connector name="httpConnector">
+		<service-overrides sessionHandler="org.mule.session.NullSessionHandler" />
+   </http:connector>
+    <spring:beans>
+     
+        <ss:authentication-manager alias="authenticationManager">
+            <ss:authentication-provider	user-service-ref="userAuthService">
+                <ss:password-encoder hash="md5" />
+            </ss:authentication-provider>
+        </ss:authentication-manager>
+        
+        <spring:bean id="userAuthService"
+			class="com.dhenton9000.mule.security.UserAuthService" />
+        
+        <ss:global-method-security
+			jsr250-annotations="enabled" />
+    </spring:beans>  
+   
+    <mule-ss:security-manager>
+        <mule-ss:delegate-security-provider
+			name="security-provider" delegate-ref="authenticationManager" />
+    </mule-ss:security-manager>
+    <flow name="securityFlow" >
+        <http:inbound-endpoint connector-ref="httpConnector"  exchange-pattern="request-response" host="localhost" 
+        port="9081" path="services/security" encoding="UTF-8">
+            <mule-ss:http-security-filter realm="mule-realm" /> 
+        </http:inbound-endpoint>
+        <component class="com.dhenton9000.mule.security.SecurityComponent" />
+    </flow>
+</mule>
+
+ 
+
+
+<bean id="authenticationManager" class="org.springframework.security.authentication.ProviderManager">
+        <property name="providers">
+            <list>
+                <bean class="org.springframework.security.authentication.AnonymousAuthenticationProvider">
+                    <property name="key" value="***"/>
+                </bean>
+                <bean class="org.springframework.security.authentication.dao.DaoAuthenticationProvider">
+                    <property name="saltSource">
+                        <bean class="org.springframework.security.authentication.dao.ReflectionSaltSource">
+                            <property name="userPropertyToUse" value="salt"/>
+                        </bean>
+                    </property>
+                    <property name="userDetailsService" ref="myUserDetailsService"/>
+                    <property name="passwordEncoder" ref="passwordEncoder"/>
+                </bean>
+            </list>
+        </property>
+    </bean>
+-->
+
+</mule>

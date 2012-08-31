@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:lang="http://www.springframework.org/schema/lang"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.0.xsd            http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-2.0.xsd            http://www.springframework.org/schema/lang http://www.springframework.org/schema/lang/spring-lang-2.0.xsd            http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-2.0.xsd">
+  <!--
+  wsdl is served up at
+  http://localhost:8084/<netbeansprojectname>/spring-ws/QuantityService.wsdl
+  or
+  http://localhost:8084/<netbeansprojectname>/QuantityService.wsdl
+
+  the uri of the service is http://localhost:8084/<netbeansprojectname>/services
+ http://localhost:8084/SpringWebService6_9/QuantityService.wsdl
+
+  -->
+
+<bean class="org.springframework.ws.server.endpoint.mapping.PayloadRootQNameEndpointMapping">
+    <property name="mappings">
+        <props>
+            <prop key="{http://dhenton9000.com/QuantityService/wsdl}QuantityRequest">quantityEndpoint</prop>
+            <prop key="{http://dhenton9000.com/QuantityService/wsdl}InventoryRequest">inventoryEndpoint</prop>
+        </props>
+    </property>
+    <property name="interceptors">
+        <list>
+        <bean class="org.springframework.ws.server.endpoint.interceptor.PayloadLoggingInterceptor"/>
+        <ref local="validatingInterceptor"/>
+        </list>
+    </property>
+</bean>
+
+
+ <bean id="quantitySchema" class="org.springframework.xml.xsd.SimpleXsdSchema">
+        <description>
+            the classpath location of the quantity schema
+        </description>
+        <property name="xsd" value="classpath:QuantityServiceSchema.xsd"/>
+    </bean>
+
+
+<bean id="quantityEndpoint"  class="com.dhenton9000.spring.webservice.QuantityServiceImpl" />
+<bean id="inventoryEndpoint" class="com.dhenton9000.spring.webservice.InventoryServiceImpl" />
+        
+
+<bean id="QuantityService" class="org.springframework.ws.wsdl.wsdl11.SimpleWsdl11Definition">
+    <constructor-arg value="/WEB-INF/wsdl/QuantityService.wsdl"/>
+</bean>
+
+<bean id="validatingInterceptor"
+        class="org.springframework.ws.soap.server.endpoint.interceptor.PayloadValidatingInterceptor">
+      <description>
+         This interceptor validates both incoming and outgoing message contents according to the 'QuantityServiceSchema.xsd' XML
+         Schema file.
+      </description>
+      <property name="xsdSchema" ref="quantitySchema"/>
+      <property name="validateRequest" value="true"/>
+      <property name="validateResponse" value="true"/>
+   </bean>
+
+
+</beans>

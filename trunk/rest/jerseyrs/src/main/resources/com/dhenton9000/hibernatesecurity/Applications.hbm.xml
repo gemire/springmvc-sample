@@ -1,0 +1,21 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<!-- Generated Jul 5, 2010 7:03:40 AM by Hibernate Tools 3.2.1.GA -->
+<hibernate-mapping>
+    <class name="com.dhenton9000.hibernatesecurity.Applications" table="applications" catalog="sec">
+        <id name="id" type="java.lang.Integer">
+            <column name="id" />
+            <generator class="identity" />
+        </id>
+        <property name="applicationName" type="string">
+            <column name="application_name" length="120" unique="true" />
+        </property>
+        <set name="applicationGroupses" inverse="true">
+            <key>
+                <column name="application_id" not-null="true" />
+            </key>
+            <one-to-many class="com.dhenton9000.hibernatesecurity.ApplicationGroups" />
+        </set>
+    </class>
+</hibernate-mapping>

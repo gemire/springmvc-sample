@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<RegisterInput xmlns="uri:dhenton9000:registrationService:ref">
+    <name>name</name>
+    <password>password</password>
+    <registrationDetails>
+        <paymentPlan>American</paymentPlan>
+        <months>10</months>
+    </registrationDetails>
+    <registrationDate>2012-04-09T08:02:51.739-05:00</registrationDate>
+</RegisterInput>

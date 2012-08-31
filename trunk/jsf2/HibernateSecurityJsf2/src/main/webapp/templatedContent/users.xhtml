@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets">
+<h:body>
+
+	<ui:composition template="/template/common/basicTableLayout.xhtml">
+		<ui:param name="currentPageTitle" value="Users" />
+
+		<ui:define name="leftSide">
+		
+		                        <h:panelGrid id="navContainer" border="0" columnClasses="alignleft,alignright" width="500px" columns="2">
+                            <h:outputText value="Item #{usersBean.firstItem + 1} .. #{usersBean.lastItem} of  #{usersBean.usersCount}"/>
+                            <h:panelGrid border="0" cellpadding="5" cellspacing="5" columns="2">
+                                <h:commandLink action="#{usersBean.prevUser}"
+                                               value="Prev: #{usersBean.batchSize} "
+                                               rendered="#{usersBean.hasPreviousPage}"  />
+                                <h:commandLink action="#{usersBean.nextUser}"
+                                               value="Next: #{usersBean.batchSize}"
+                                               rendered="#{usersBean.hasNextPage}"  />
+                            </h:panelGrid>
+                        </h:panelGrid>
+
+                        <h:commandButton value="Add New User" action="#{usersBean.resetToAddMode}"   />
+
+                        <h:dataTable id="usersTable" columnClasses="tableCellId,tableCellName,tableCellButton,tableCellButton"  width="100%" var="app" value="#{usersBean.allUsers}">
+                            <h:column  headerClass="headerClass"  >
+                                <f:facet  name="header">
+                                    <h:outputText value="User Id" />
+                                </f:facet>
+                                <h:outputText value="#{app.userId}" />
+                            </h:column>
+                            <h:column headerClass="headerClass" >
+                                <f:facet name="header">
+                                    <h:outputText value="User Name" />
+                                </f:facet>
+                                <h:outputText   value="#{app.username}" />
+                            </h:column>
+                            <h:column headerClass="headerClass" >
+                                <f:facet name="header">
+                                    <h:outputText value="Edit" />
+                                </f:facet>
+                                <h:commandButton id="editLine" action="#{usersBean.setUpEdit}" value="Edit" />
+                            </h:column>
+                            <h:column headerClass="headerClass" >
+                                <f:facet name="header">
+                                    <h:outputText value="Delete" />
+                                </f:facet>
+                                <h:commandButton id="deleteLine" action="#{usersBean.setUpDelete}" value="Delete" />
+                            </h:column>
+                        </h:dataTable>
+                   
+		
+		
+		
+		</ui:define>
+		
+		<ui:define name="rightSide">
+		
+		
+		 <h:panelGrid columns="1">
+
+                        <h:outputText styleClass="headerClass" value="User Item" />
+                        <h:panelGrid columns="2">
+                            <h:outputText   value="User Id:"/>
+
+                            <h:outputText  rendered="#{usersBean.deleteMode}"  value="#{usersBean.currentUser.userId}" />
+                            <h:inputText   rendered="#{!usersBean.deleteMode}"  value="#{usersBean.currentUser.userId}" id="userId" size="20" />
+
+
+                            <h:outputText value="User Name:"/>
+                            <h:inputText  rendered="#{!usersBean.deleteMode}" value="#{usersBean.currentUser.username}" id="userName" size="20" />
+                            <h:outputText rendered="#{usersBean.deleteMode}" value="#{usersBean.currentUser.username}"   />
+
+
+                            <h:commandButton  id="deleteConfirm"   rendered="#{usersBean.deleteMode}" action="#{usersBean.performDelete}" value="Confirm Delete" />
+                            <h:commandButton  id="editConfirm"   rendered="#{usersBean.editMode}"  action="#{usersBean.performEdit}" value="Confirm Edit" />
+                            <h:commandButton  id="addConfirm"   rendered="#{usersBean.addMode}"  action="#{usersBean.performAdd}" value="Confirm Add" />
+                            <h:commandButton value="Cancel"   rendered="#{!usersBean.addMode}" action="#{usersBean.resetToAddMode}"   />
+                        </h:panelGrid>
+
+
+         </h:panelGrid>
+		
+		</ui:define>
+		
+		</ui:composition>
+		
+		
+		
+</h:body>
+
+</html>		

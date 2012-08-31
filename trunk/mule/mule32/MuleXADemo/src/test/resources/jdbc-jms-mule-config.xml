@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="UTF-8"?>
+ <!--
+ 
+ This will be a file that demonstrates the coordination of JDBC and JMS
+ via XA transactions
+ in the UMO
+ write out records
+ post jms that announces that those records were written
+ wait by spinning in thread
+ 
+ listen on queue for the announcement 
+ use info on message to look up the announced records
+ if the messages go out before db commit, that's a problem signaled
+ by no record found
+ 
+ -->
+<mule xmlns="http://www.mulesoft.org/schema/mule/core" 
+      xmlns:jms="http://www.mulesoft.org/schema/mule/jms" 
+      xmlns:spring="http://www.springframework.org/schema/beans"
+      xmlns:jbossts="http://www.mulesoft.org/schema/mule/jbossts"
+      xmlns:core="http://www.mulesoft.org/schema/mule/core" 
+      xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+      version="CE-3.2.1" xsi:schemaLocation="
+http://www.mulesoft.org/schema/mule/jbossts http://www.mulesoft.org/schema/mule/jbossts/3.2/mule-jbossts.xsd
+http://www.mulesoft.org/schema/mule/jms http://www.mulesoft.org/schema/mule/jms/3.2/mule-jms.xsd 
+http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.1.xsd 
+http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/3.2/mule.xsd ">
+    <spring:beans>
+        
+        <spring:import resource="embedded-activemq-broker.xml" /> 
+        <spring:import resource="db-connection-beans.xml" />
+    </spring:beans>
+     <!-- this must be here under the mule element -->
+    <jbossts:transaction-manager     /> 
+     <jms:activemq-xa-connector name="jmsXAConnector"
+                            
+                            specification="1.1"
+                            maxRedelivery="0"
+                            eagerConsumer="false"
+                            connectionFactory-ref="AmqXAConnectionFactory"
+                            disableTemporaryReplyToDestinations="true"
+                            persistentDelivery="true" />
+   
+    <flow name="XAdatabaseWrite">
+        <jms:inbound-endpoint queue="jdbc-input" connector-ref="jmsXAConnector" >
+            <xa-transaction   action="ALWAYS_BEGIN"/>
+        </jms:inbound-endpoint>
+        <component>
+            <spring-object bean="jdbcXAComponent" />
+        </component>
+       
+        <jms:outbound-endpoint queue="jdbc-output" connector-ref="jmsXAConnector">
+           <xa-transaction   action="ALWAYS_BEGIN"/>
+        </jms:outbound-endpoint>
+        <default-exception-strategy>
+            <log-component />
+        </default-exception-strategy>
+    
+    </flow>
+    
+    <flow name="ActivityMonitor">
+        <jms:inbound-endpoint  queue="jdbc-output"  connector-ref="jmsXAConnector">
+            <xa-transaction   action="ALWAYS_BEGIN"/>
+        </jms:inbound-endpoint>
+        <component>
+            <spring-object bean="jdbcMonitorComponent" />
+        </component>
+        <log-component/>
+    </flow>
+    
+    <flow name="DLQInputMonitor">
+        <jms:inbound-endpoint queue="DLQ.jdbc-input" connector-ref="jmsXAConnector">
+             <xa-transaction   action="ALWAYS_BEGIN"/>
+        </jms:inbound-endpoint>
+        <log-component />
+    </flow>
+    <flow name="DLQOutputMonitor">
+        <jms:inbound-endpoint queue="DLQ.jdbc-output" connector-ref="jmsXAConnector">
+             <xa-transaction   action="ALWAYS_BEGIN"/>
+        </jms:inbound-endpoint>
+        <log-component />
+    </flow>
+ 
+</mule>

@@ -1,0 +1,5 @@
+Be sure in your web file to mark the ejbbeans jar as "PROVIDED" if it shows up in WEB-INF/lib
+it will cause a class cast exception when using the JNDI lookup
+
+see http://community.jboss.org/wiki/ClassLoadingOverview there should only be one copy of the
+jar file and that is provided by the ear pom

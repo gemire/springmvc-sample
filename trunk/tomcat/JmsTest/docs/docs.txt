@@ -1,0 +1,32 @@
+=====================================================================
+Add resource ref to web.xml
+    <resource-ref>
+        <res-ref-name>jms/ConnectionFactory</res-ref-name>
+        <res-type>javax.jms.ConnectionFactory</res-type>
+        <res-auth>Container</res-auth>
+        <res-sharing-scope>Shareable</res-sharing-scope>
+    </resource-ref>	
+    <resource-ref>
+        <res-ref-name>jms/TomcatQueue</res-ref-name>
+        <res-type>javax.jms.Queue</res-type>
+        <res-auth>Container</res-auth>
+        <res-sharing-scope>Shareable</res-sharing-scope>
+    </resource-ref>
+======================================================================
+added to the META-INF/context.xml file
+
+    <Resource auth="Container"
+          name="jms/ConnectionFactory"
+          type="org.apache.activemq.ActiveMQConnectionFactory"
+          description="JMS Connection Factory"
+          factory="org.apache.activemq.jndi.JNDIReferenceFactory"
+          brokerURL="tcp://127.0.0.1:61616"
+          brokerName="MyActiveMQBroker"/>
+ 
+    <Resource auth="Container"
+          name="jms/TomcatQueue"
+          type="org.apache.activemq.command.ActiveMQQueue"
+          description="JMS queue"
+          factory="org.apache.activemq.jndi.JNDIReferenceFactory"
+          physicalName="Tomcat.QUEUE"/>
+===========================================================================

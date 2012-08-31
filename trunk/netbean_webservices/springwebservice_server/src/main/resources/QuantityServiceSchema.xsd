@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+            targetNamespace="http://dhenton9000.com/QuantityService/wsdl"
+            xmlns:tns="http://dhenton9000.com/QuantityService/wsdl"
+            elementFormDefault="qualified">
+
+
+    <xsd:complexType name="StyleDataType">
+        <xsd:sequence>
+            <xsd:element name="style">
+                <xsd:simpleType>
+                    <xsd:restriction base="xsd:string"/>
+                </xsd:simpleType>
+            </xsd:element>
+            <xsd:element name="color">
+                <xsd:simpleType>
+                    <xsd:restriction base="xsd:string"/>
+                </xsd:simpleType>
+            </xsd:element>
+        </xsd:sequence>
+    </xsd:complexType>
+
+
+    <xsd:element name="InventoryRequest">
+        <xsd:complexType>
+            <xsd:sequence>
+                <xsd:element name="StyleData" type="tns:StyleDataType" />
+            </xsd:sequence>
+        </xsd:complexType>
+    </xsd:element>
+
+
+    <xsd:element name="InventoryResponse">
+        <xsd:complexType>
+            <xsd:sequence>
+                <xsd:element name="InventoryResponseAck" type="tns:SimpleWebServiceResponseType" />
+            </xsd:sequence>
+        </xsd:complexType>
+    </xsd:element>
+
+    <xsd:complexType name="SimpleWebServiceResponseType">
+        <xsd:sequence>
+            <xsd:element name="success" type="xsd:boolean"></xsd:element>
+            <xsd:element name="Message">
+                <xsd:simpleType>
+                    <xsd:restriction base="xsd:string"/>
+                </xsd:simpleType>
+            </xsd:element>
+        </xsd:sequence>
+    </xsd:complexType>
+
+
+    <xsd:complexType name="QuantityRequestType">
+        <xsd:sequence>
+            <xsd:element name="skuId">
+                <xsd:simpleType>
+                    <xsd:restriction base="xsd:string"/>
+                </xsd:simpleType>
+            </xsd:element>
+        </xsd:sequence>
+    </xsd:complexType>
+    <xsd:complexType name="QuantityResponseType">
+        <xsd:sequence>
+            <xsd:element name="quantity">
+                <xsd:simpleType>
+                    <xsd:restriction base="xsd:integer"/>
+                </xsd:simpleType>
+            </xsd:element>
+        </xsd:sequence>
+    </xsd:complexType>
+    <xsd:element name="QuantityRequest" type="tns:QuantityRequestType"></xsd:element>
+    <xsd:element name="QuantityResponse" type="tns:QuantityResponseType"></xsd:element>
+    <xsd:element name="InventoryFaultDetail">
+        <xsd:complexType>
+            <xsd:sequence>
+                <xsd:element name="code">
+                    <xsd:simpleType>
+                        <xsd:restriction base="xsd:string"/>
+                    </xsd:simpleType>
+                </xsd:element>
+                <xsd:element name="message">
+                    <xsd:simpleType>
+                        <xsd:restriction base="xsd:string"/>
+                    </xsd:simpleType>
+                </xsd:element>
+            </xsd:sequence>
+        </xsd:complexType>
+    </xsd:element>
+</xsd:schema>
+
+

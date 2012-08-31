@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans 
+       http://www.springframework.org/schema/beans/spring-beans-3.0.xsd">
+   
+    <bean id="sessionFactory"
+		class="org.springframework.orm.hibernate3.annotation.AnnotationSessionFactoryBean">
+        <property name="dataSource" ref="dataSource"/>
+        <property name="packagesToScan">
+            <list>
+		<value>com.dhenton9000.hibernate.join.**.*</value>
+            </list>
+	 
+        </property>
+         
+        <property name="hibernateProperties">
+        <props>
+
+            <prop key="hibernate.dialect">org.hibernate.dialect.DerbyDialect</prop>
+            <prop key="hibernate.show_sql">true</prop>
+            <prop key="hibernate.format_sql">true</prop>
+            <prop key="hibernate.hbm2ddl.auto">false</prop>
+        </props>
+    </property>
+
+    </bean>
+
+    <bean id="transactionManager"
+        class="org.springframework.orm.hibernate3.HibernateTransactionManager">
+        <property name="sessionFactory" ref="sessionFactory" />
+    </bean>
+           
+    <bean id="dataSource" class="org.springframework.jdbc.datasource.DriverManagerDataSource">
+        <property name="driverClassName" value="org.apache.derby.jdbc.ClientDriver"/>        
+        <property name="url" value="jdbc:derby://localhost:1527/sandbox"/>  
+        <property name="username" value="sandbox" />
+        <property name="password" value="sandbox" />
+    </bean>
+    <bean id="networkAssetDAO" class="com.dhenton9000.hibernate.join.inheritance.dao.NetworkAssetDAOImpl">
+        <property name="sessionFactory">
+            <ref bean="sessionFactory" />
+        </property>
+        <property name="transactionManager">
+            <ref bean="transactionManager" />
+        </property>
+    </bean>
+    <bean id="personalComputerDAO" class="com.dhenton9000.hibernate.join.inheritance.dao.PersonalComputerDAOImpl">
+        <property name="sessionFactory">
+            <ref bean="sessionFactory" />
+        </property>
+        <property name="transactionManager">
+            <ref bean="transactionManager" />
+        </property>
+    </bean>
+    <bean id="switchDAO" class="com.dhenton9000.hibernate.join.inheritance.dao.SwitchDAOImpl">
+        <property name="sessionFactory">
+            <ref bean="sessionFactory" />
+        </property>
+        <property name="transactionManager">
+            <ref bean="transactionManager" />
+        </property>
+    </bean>
+    <bean id="studentsDAO" class="com.dhenton9000.hibernate.join.inheritance.dao.StudentsDAOImpl">
+        <property name="sessionFactory">
+            <ref bean="sessionFactory" />
+        </property>
+        <property name="transactionManager">
+            <ref bean="transactionManager" />
+        </property>
+    </bean>
+        <bean id="classesDAO" class="com.dhenton9000.hibernate.join.inheritance.dao.ClassesDAOImpl">
+        <property name="sessionFactory">
+            <ref bean="sessionFactory" />
+        </property>
+        <property name="transactionManager">
+            <ref bean="transactionManager" />
+        </property>
+    </bean>
+</beans>

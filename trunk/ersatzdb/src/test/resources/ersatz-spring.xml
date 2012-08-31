@@ -1,0 +1,188 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:lang="http://www.springframework.org/schema/lang" xmlns:util="http://www.springframework.org/schema/util"
+	xmlns:p="http://www.springframework.org/schema/p"
+
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
+          http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-3.0.xsd
+          http://www.springframework.org/schema/lang http://www.springframework.org/schema/lang/spring-lang-3.0.xsd
+          http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util-3.0.xsd
+       http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-3.0.xsd"
+	xmlns:aop="http://www.springframework.org/schema/aop">
+
+
+
+    <bean id="mockCustomerDAO" class="com.dhenton9000.ersatzdb.demo.dao.CustomerDAOImpl">
+        <property name="customerGenerator" ref="customerGenerator" />
+    </bean>
+
+    <bean id="nullClassGenerator" class="com.dhenton9000.ersatzdb.generators.CustomerGenerator">
+        <constructor-arg type="java.util.HashMap" index="0">
+            <util:map map-class="java.util.HashMap">
+                <entry key="allCustomers" value-ref="allCustomers" />
+                <entry key="badCustomers" value-ref="badCustomers" />
+            </util:map>
+        </constructor-arg>
+        <!-- set the class that will be produced -->
+        
+    </bean>
+    <bean id="jaxbProblemGenerator" class="com.dhenton9000.ersatzdb.generators.CustomerGenerator">
+        <constructor-arg type="java.util.HashMap" index="0">
+            <util:map map-class="java.util.HashMap">
+                <entry key="allCustomers" value-ref="allCustomers" />
+                <entry key="badCustomers" value-ref="badCustomers" />
+            </util:map>
+        </constructor-arg>
+        <!-- set the class that will be produced -->
+        <property name="className" value="java.lang.String" />
+    </bean>
+    <bean id="badClassGenerator" class="com.dhenton9000.ersatzdb.generators.CustomerGenerator">
+        <constructor-arg type="java.util.HashMap" index="0">
+            <util:map map-class="java.util.HashMap">
+                <entry key="allCustomers" value-ref="allCustomers" />
+                <entry key="badCustomers" value-ref="badCustomers" />
+            </util:map>
+        </constructor-arg>
+        <!-- set the class that will be produced -->
+        <property name="className" value="java.lang.String" />
+    </bean>    <bean id="customerGenerator" class="com.dhenton9000.ersatzdb.generators.CustomerGenerator">
+        <constructor-arg type="java.util.HashMap" index="0">
+            <util:map map-class="java.util.HashMap">
+                <entry key="allCustomers" value-ref="allCustomers" />
+                <entry key="badCustomers" value-ref="badCustomers" />
+            </util:map>
+        </constructor-arg>
+        <!-- set the class that will be produced -->
+        <property name="className" value="com.dhenton9000.ersatzdb.vo.Customers" />
+    </bean>
+  
+    <bean id="allCustomers" class="java.util.ArrayList">
+        <constructor-arg>
+            <util:list>
+                <ref bean="customer1" />
+                <ref bean="customer2" />
+                <ref bean="customer3" />
+            </util:list>
+        </constructor-arg>
+    </bean>
+      
+    <bean id="badCustomers" class="java.util.ArrayList">
+        <constructor-arg>
+            <util:list>
+                <ref bean="customerwithEmptyNumber" />
+                <ref bean="customerwithBadName" />
+            </util:list>
+        </constructor-arg>
+    </bean>
+
+    <bean id="customer1" class="java.lang.String">
+        <constructor-arg type="java.lang.String" index="0">
+            <value>
+                <![CDATA[
+
+                <customers>
+                    <addressLine1>5677 Strong St.</addressLine1>
+                    <city>San Rafael</city>
+                    <contactFirstName>Susan</contactFirstName>
+                    <contactLastName>Nelson</contactLastName>
+                    <country>USA</country>
+                    <creditLimit>210500.0</creditLimit>
+                    <customerName>Mini Gifts Distributors Ltd.</customerName>
+                    <customerNumber>124</customerNumber>
+                    <phone>4155551450</phone>
+                    <postalCode>97562</postalCode>
+                    <state>CA</state>
+                </customers>
+            ]]>
+
+            </value>
+        </constructor-arg>
+    </bean>
+    <bean id="customer2" class="java.lang.String">
+        <constructor-arg type="java.lang.String" index="0">
+            <value>
+                <![CDATA[
+                <customers>
+                    <addressLine1>67, rue des Cinquante Otages</addressLine1>
+                    <city>Nantes</city>
+                    <contactFirstName>Janine </contactFirstName>
+                    <contactLastName>Labrune</contactLastName>
+                    <country>France</country>
+                    <creditLimit>118200.0</creditLimit>
+                    <customerName>La Rochelle Gifts</customerName>
+                    <customerNumber>119</customerNumber>
+                    <phone>40.67.8555</phone>
+                    <postalCode>44000</postalCode>
+                </customers>
+            ]]>
+
+            </value>
+        </constructor-arg>
+    </bean>
+    <bean id="customer3" class="java.lang.String">
+        <constructor-arg type="java.lang.String" index="0">
+            <value>
+                <![CDATA[
+                <customers>
+                    <addressLine1>100 N South St</addressLine1>
+                    <city>Blasting Cap</city>
+                    <contactFirstName>Elmo</contactFirstName>
+                    <contactLastName>Zumwalt</contactLastName>
+                    <country>USA</country>
+                    <creditLimit>50000.00</creditLimit>
+                    <customerName>Blasting Caps Armor and Guns</customerName>
+                    <customerNumber>256</customerNumber>
+                    <phone>515-333-4444</phone>
+                    <postalCode>40450</postalCode>
+                </customers>
+            ]]>
+
+            </value>
+        </constructor-arg>
+    </bean>
+    <bean id="customerwithEmptyNumber" class="java.lang.String">
+        <constructor-arg type="java.lang.String" index="0">
+            <value>
+                <![CDATA[
+                <customers>
+                    <addressLine1>100 N South St</addressLine1>
+                    <city>Blasting Cap</city>
+                    <contactFirstName>Elmo</contactFirstName>
+                    <contactLastName>Zumwalt</contactLastName>
+                    <country>USA</country>
+                    <creditLimit>50000.00</creditLimit>
+                    <customerName>Blasting Caps Armor and Guns</customerName>
+                    <customerNumber></customerNumber>
+                    <phone>515-333-4444</phone>
+                    <postalCode>40450</postalCode>
+                </customers>
+            ]]>
+
+            </value>
+        </constructor-arg>
+    </bean>    
+    
+    <bean id="customerwithBadName" class="java.lang.String">
+        <constructor-arg type="java.lang.String" index="0">
+            <value>
+                <![CDATA[
+                <customers>
+                    <addressLine1>100 N South St</addressLine1>
+                    <city>Blasting Cap</city>
+                    <contactFirstName>Elmo</contactFirstName>
+                    <contactLastName>&lt;Zumwalt&gt;</contactLastName>
+                    <country>USA</country>
+                    <creditLimit>50000.00</creditLimit>
+                    <customerName>Blasting Caps Armor and Guns</customerName>
+                    <customerNumber>256</customerNumber>
+                    <phone>515-333-4444</phone>
+                    <postalCode>40450</postalCode>
+                </customers>
+            ]]>
+
+            </value>
+        </constructor-arg>
+    </bean>    
+    
+</beans>

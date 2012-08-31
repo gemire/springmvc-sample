@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:util="http://www.springframework.org/schema/util"
+       xmlns:p="http://www.springframework.org/schema/p"
+
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
+          http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-3.0.xsd
+          http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util-3.0.xsd
+">
+
+<bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource"
+		destroy-method="close">
+		<property name="driverClassName" value="com.mysql.jdbc.Driver" />
+		<property name="url" value="jdbc:mysql://localhost:3306/config" />
+		<property name="username" value="root" />
+		<property name="password" value="root" />
+		<property name="maxActive" value="50" />
+		<property name="maxIdle" value="0" />
+		<property name="maxWait" value="10000" />
+		<property name="initialSize" value="3" />
+	</bean>
+        
+        <bean id="testString" class="java.lang.String">
+            <constructor-arg>
+                <value>Fred</value>
+            </constructor-arg>
+        </bean>
+
+<!-- use this to call setup functions on the objects that will go into JNDI -->
+
+	<bean
+		class="org.springframework.beans.factory.config.MethodInvokingFactoryBean"
+		lazy-init="false">
+		<property name="targetObject" ref="dataSource" />
+		<property name="targetMethod" value="addConnectionProperty" />
+		<property name="arguments">
+			<list>
+				<value>autoReconnect</value>
+				<value>true</value>
+			</list>
+		</property>
+	</bean>
+
+	
+<!-- this creates the jndi context -->
+	<bean id="jndi" class="org.mule.config.spring.jndi.SpringInitialContextFactory"
+		factory-method="makeInitialContext" scope="singleton">
+		<property name="entries">
+			<map>
+				<entry key="jdbc/dataSource" value-ref="dataSource" />
+				<entry key="string/sampleString" value-ref="testString" />
+				 
+			</map>
+		</property>
+	</bean>
+
+
+</beans>

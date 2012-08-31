@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans
+        http://www.springframework.org/schema/beans/spring-beans.xsd">
+   
+    <bean class="com.dhenton9000.orders.persistence.PersistenceServiceImpl"
+	id="dbInsertService">
+	<property name="dataSource" ref="dataSourceBean" />
+	
+    </bean>
+    
+    <bean class="com.dhenton9000.orders.ws.WebServiceOrderImpl"
+        id="wsOrdersService">
+    </bean>
+   
+    <bean id="setterDownloader"  
+    class="com.dhenton9000.orders.OrderDownloader">
+        <property name="dbPersistence" ref="dbInsertService" />
+        <property name="wsDownloader"  ref="wsOrdersService" />
+    </bean>
+   
+    <bean id="constructorDownloader"
+    class="com.dhenton9000.orders.OrderDownloader">
+        <constructor-arg index="0" ref="wsOrdersService" />
+        <constructor-arg index="1" ref="dbInsertService" />
+    </bean>
+
+	<bean id="dataSourceBean" class="com.mysql.jdbc.jdbc2.optional.MysqlDataSource">
+		<property name="user"><value>root</value></property>
+		<property name="password"><value></value></property>
+		<property name="serverName"><value>localhost</value></property>
+		<property name="port"><value>3306</value></property>
+		<property name="databaseName"><value>businessdb</value></property>
+	</bean>
+    
+</beans>

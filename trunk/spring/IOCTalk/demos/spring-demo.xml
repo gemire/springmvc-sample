@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans
+        http://www.springframework.org/schema/beans/spring-beans.xsd">
+   
+    <bean id="cat1" class="com.dhenton9000.spring.demos.demobeans.Cat" />
+    <bean id="dog1" class="com.dhenton9000.spring.demos.demobeans.Dog" />
+    
+    <bean id="animal1" class="com.dhenton9000.spring.demos.demobeans.Animal">
+    	<property name="name" value="dog" />
+    	<property name="sound" value="woof" />
+    </bean>
+
+   <bean id="animal2" class="com.dhenton9000.spring.demos.demobeans.Animal">
+    	<property name="name" value="snake" />
+    	<property name="sound" value="hiss" />
+   </bean>
+
+  <bean id="animal3" class="com.dhenton9000.spring.demos.demobeans.Animal">
+    	<property name="name" value="horse" />
+    	<property name="sound" value="nay" />
+  </bean>
+   
+  <bean id="zookeeper" class="com.dhenton9000.spring.demos.demobeans.Zookeeper">
+    	<constructor-arg index="0" value="Jim" />
+        <constructor-arg index="1" value="It's Time for lunch." />
+  </bean> 
+    
+   <bean id="Zoo" class="com.dhenton9000.spring.demos.demobeans.Zoo">
+    <property name="creatures">
+    <list>
+    	 <ref bean="animal1" />
+    	 <ref bean="animal2" />
+    	 <ref bean="animal3" />
+    	 <ref bean="dog1" />
+    	 <ref bean="cat1" />
+    	 <ref bean="zookeeper" />
+    </list>
+    </property>
+   
+   
+   </bean>
+    
+    
+</beans>

@@ -1,0 +1,26 @@
+DIV.imageContainerDiv {
+	POSITION: absolute; TOP: 5%; LEFT: 60%
+}
+#countDownText {
+	POSITION: absolute; TEXT-ALIGN: center; FONT-SIZE: 90px; TOP: 40%; LEFT: 40%; v-align: center
+}
+#controlContainerDiv {
+	POSITION: absolute; TOP: 80%; LEFT: 0%
+}
+IMG.displayImagePosition {
+	POSITION: absolute; TOP: 0px; LEFT: 0px
+}
+IMG.displayImagePositionBottom {
+	POSITION: absolute; TOP: 0px; LEFT: 450px
+}
+IMG.onTop {
+	Z-INDEX: 55
+}
+IMG.onBottom {
+	Z-INDEX: -55
+}
+
+select
+{
+  width: 50px;
+}

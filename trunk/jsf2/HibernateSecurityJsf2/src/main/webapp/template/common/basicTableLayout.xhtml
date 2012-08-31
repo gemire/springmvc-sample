@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"   
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      >
+
+	<h:head>
+		<h:outputStylesheet name="sinfo.css" library="css"  target="head" />
+		<h:outputStylesheet name="layout.css" library="css"  target="head" />
+		<h:outputScript name="jquery.js" library="scripts" target="head"  />
+		<h:outputScript name="jsprocs.js" library="scripts" target="head"  />
+	</h:head>
+    
+    <h:body>
+
+	<div id="page">
+		
+		<div class="menuLeft" id="menu">
+			<ui:insert name="menu" >
+				<ui:include src="/template/common/commonMenu.xhtml" />
+			</ui:insert>
+	    </div>
+	    
+	 
+	    
+	    
+	    <div id="content"  class="contentDiv" >
+	    <h:panelGrid  cellpadding="5"   columns="2">
+                <p class="Header">Security System Maintenance: #{currentPageTitle}</p>
+                <h:messages errorClass="errors" layout="table" />
+       </h:panelGrid>
+		   
+		   
+			<h:form id="applicationForm">
+
+			<h:panelGrid id="mainGrid" styleClass="mainGridStyle"
+				columnClasses="mainOne,mainTwo" columns="2" width="100%" border="0">
+
+
+				<h:panelGrid id="leftSideOfMainGrid" border="0" width="100%"
+					cellpadding="5" cellspacing="5" columns="1">
+                     <ui:insert name="leftSide" />
+
+				</h:panelGrid>
+				
+				
+				<h:panelGrid id="rightSideOfMainGrid" columns="1">
+				<ui:insert name="rightSide" />
+				</h:panelGrid>
+				
+			</h:panelGrid>
+		</h:form>   
+		   
+		   
+		   
+		   
+	    </div>
+		    
+	     
+    	
+    </div>
+    
+    </h:body>
+
+</html>
