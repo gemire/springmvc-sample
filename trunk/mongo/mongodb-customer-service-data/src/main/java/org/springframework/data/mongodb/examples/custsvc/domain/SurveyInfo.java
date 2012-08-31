@@ -1,8 +1,9 @@
 package org.springframework.data.mongodb.examples.custsvc.domain;
 
 import java.util.Map;
+import java.io.Serializable;
 
-public class SurveyInfo {
+public class SurveyInfo implements Serializable {
 	
 	private Map<String, String> questionsAndAnswers;
 
