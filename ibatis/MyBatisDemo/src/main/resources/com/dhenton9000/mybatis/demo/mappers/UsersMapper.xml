@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+ 
+<mapper namespace="com.dhenton9000.mybatis.demo.mappers.UsersMapper">
+ 
+    <resultMap id="usersResult" type="Users">
+        <result property="userId" column="USERID"/>
+        <result property="userName" column="USERNAME"/>
+        <collection property="groups" column="USERID" javaType="ArrayList" ofType="Groups"
+                    select="selectGroups" resultMap="groupsResult"/>
+    </resultMap>
+ 
+    <select id="getUser"  parameterType="java.lang.String" resultMap="usersResult">
+        SELECT * FROM USERS WHERE USERID = #{id}
+    </select>
+    
+    
+    <resultMap id="groupsResult" type="Groups">
+        <result property="id" column="groups_id_for_users"/>
+        <result property="groupName" column="groups_name_for_users"/>
+         
+    </resultMap>
+    
+    <select id="selectGroups" parameterType="java.lang.String" resultMap="groupsResult">
+        SELECT  GROUPS.ID as groups_id_for_users,
+        GROUPS.GROUP_NAME as groups_name_for_users 
+        FROM GROUPS 
+        LEFT OUTER JOIN GROUP_ASSIGNMENTS ON GROUP_ASSIGNMENTS.GROUP_ID = GROUPS.ID
+        WHERE GROUP_ASSIGNMENTS.USER_ID = #{id}
+    </select>
+    
+ <!--
+    <select id="getById" parameterType="int" resultMap="result">
+        SELECT * FROM CONTACT WHERE CONTACT_ID = #{id}
+    </select>
+ 
+    <delete id="deleteById" parameterType="int">
+        DELETE from CONTACT WHERE CONTACT_ID = #{id};
+    </delete>
+ 
+    <insert id="insert" parameterType="Contact">
+    INSERT INTO CONTACT (CONTACT_EMAIL, CONTACT_NAME, CONTACT_PHONE)
+        VALUES (#{name}, #{phone}, #{email});
+      <selectKey keyProperty="id" resultType="int" order="AFTER">
+        select last_insert_id() as id
+      </selectKey>
+    </insert>
+ 
+    <update id="update" parameterType="Contact">
+        UPDATE CONTACT
+        SET
+            CONTACT_EMAIL = #{email},
+            CONTACT_NAME = #{name},
+            CONTACT_PHONE = #{phone}
+        WHERE CONTACT_ID = #{id};
+  </update>
+ -->
+</mapper>

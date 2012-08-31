@@ -1,0 +1,1 @@
+remember to name the config file mule-config.xml

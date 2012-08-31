@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets">
+<h:body>
+
+	<ui:composition template="/template/common/basicTableLayout.xhtml">
+		<ui:param name="currentPageTitle" value="Applications" />
+
+		<ui:define name="leftSide">
+
+			<h:panelGrid id="navContainer" border="0"
+				columnClasses="alignleft,alignright" width="500px" columns="2">
+				<h:outputText
+					value="Item #{applicationsBean.firstItem + 1} .. #{applicationsBean.lastItem} of  #{applicationsBean.applicationsCount}" />
+				<h:panelGrid border="0" cellpadding="5" cellspacing="5" columns="2">
+					<h:commandLink action="#{applicationsBean.prevApplication}"
+						value="Prev: #{applicationsBean.batchSize} "
+						rendered="#{applicationsBean.hasPreviousPage}" />
+					<h:commandLink action="#{applicationsBean.nextApplication}"
+						value="Next: #{applicationsBean.batchSize}"
+						rendered="#{applicationsBean.hasNextPage}" />
+				</h:panelGrid>
+			</h:panelGrid>
+
+			<h:commandButton value="Add New Application"
+				action="#{applicationsBean.resetToAddMode}" />
+
+			<h:dataTable border="0" id="applicationsTable"
+				columnClasses="tableCellId,tableCellName,tableCellButton,tableCellButton"
+				width="100%" var="app" value="#{applicationsBean.allApplications}">
+				<h:column headerClass="headerClass">
+					<f:facet name="header">
+						<h:outputText value="Application Id" />
+					</f:facet>
+					<h:outputText value="#{app.id}" />
+				</h:column>
+				<h:column headerClass="headerClass">
+					<f:facet name="header">
+						<h:outputText value="Application Name" />
+					</f:facet>
+					<h:outputText value="#{app.applicationName}" />
+				</h:column>
+				<h:column headerClass="headerClass">
+					<f:facet name="header">
+						<h:outputText value="Edit" />
+					</f:facet>
+					<h:commandButton id="editLine"
+						action="#{applicationsBean.setUpEdit}" value="Edit" />
+				</h:column>
+				<h:column headerClass="headerClass">
+					<f:facet name="header">
+						<h:outputText value="Delete" />
+					</f:facet>
+					<h:commandButton id="deleteLine"
+						action="#{applicationsBean.setUpDelete}" value="Delete" />
+				</h:column>
+			</h:dataTable>
+
+
+
+		</ui:define>
+
+
+
+
+
+		<ui:define name="rightSide">
+
+
+			<h:outputText styleClass="headerClass" value="Application Item" />
+			<h:panelGrid columns="2">
+				<h:outputText rendered="#{!applicationsBean.addMode}"
+					value="Application Id:" />
+
+
+
+				<h:outputText rendered="#{!applicationsBean.addMode}"
+					value="#{applicationsBean.currentApp.id}" />
+
+
+				<h:outputText value="Application Name:" />
+				<h:inputText rendered="#{!applicationsBean.deleteMode}"
+					value="#{applicationsBean.currentApp.applicationName}"
+					id="applicationName" size="20" />
+				<h:outputText rendered="#{applicationsBean.deleteMode}"
+					value="#{applicationsBean.currentApp.applicationName}" />
+
+
+				<h:commandButton id="deleteConfirm"
+					rendered="#{applicationsBean.deleteMode}"
+					action="#{applicationsBean.performDelete}" value="Confirm Delete" />
+				<h:commandButton id="editConfirm"
+					rendered="#{applicationsBean.editMode}"
+					action="#{applicationsBean.performEdit}" value="Confirm Edit" />
+				<h:commandButton id="addConfirm"
+					rendered="#{applicationsBean.addMode}"
+					action="#{applicationsBean.performAdd}" value="Confirm Add" />
+				<h:commandButton value="Cancel"
+					rendered="#{!applicationsBean.addMode}"
+					action="#{applicationsBean.resetToAddMode}" />
+			</h:panelGrid>
+
+
+		</ui:define>
+
+
+
+	</ui:composition>
+
+</h:body>
+
+</html>

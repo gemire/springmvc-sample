@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:aop="http://www.springframework.org/schema/aop/spring-aop-2.5.xsd"
+       xmlns:context="http://www.springframework.org/schema/context/spring-context-2.5.xsd"
+       xmlns:jee="http://www.springframework.org/schema/jee/spring-jee-2.5.xsd"
+       xmlns:tx="http://www.springframework.org/schema/tx/spring-tx-2.5.xsd"
+       xmlns:util="http://www.springframework.org/schema/util/spring-util-2.5.xsd"
+       xmlns:p="http://www.springframework.org/schema/p"
+
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
+          http://www.springframework.org/schema/aop/spring-aop-2.5.xsd http://www.springframework.org/schema/aop/spring-aop-2.5.xsd/spring-spring-aop-2.5.xsd-3.0.xsd
+          http://www.springframework.org/schema/context/spring-context-2.5.xsd http://www.springframework.org/schema/context/spring-context-2.5.xsd/spring-spring-context-2.5.xsd-3.0.xsd
+          http://www.springframework.org/schema/jee/spring-jee-2.5.xsd http://www.springframework.org/schema/jee/spring-jee-2.5.xsd/spring-spring-jee-2.5.xsd-3.0.xsd
+          http://www.springframework.org/schema/tx/spring-tx-2.5.xsd http://www.springframework.org/schema/tx/spring-tx-2.5.xsd/spring-spring-tx-2.5.xsd-3.0.xsd
+          http://www.springframework.org/schema/util/spring-util-2.5.xsd http://www.springframework.org/schema/util/spring-util-2.5.xsd/spring-spring-util-2.5.xsd-3.0.xsd
+">
+    <!-- configure the factory  for an ldap connection-->
+    <bean id="jndiTempate" class="org.springframework.jndi.JndiTemplate">
+        <property name="environment">
+            <props>
+                <prop key="java.naming.factory.initial">com.sun.jndi.ldap.LdapCtxFactory</prop>
+                <prop key="java.naming.provider.url">ldap://localhost:389</prop>
+                <prop key="java.naming.security.principal">cn=admin,dc=my,dc=ldap,dc=domain</prop>
+                <prop key="java.naming.security.credentials">admin</prop>
+            </props>
+        </property>
+    </bean>
+<!-- retrieve the properties object stored in LDAP via JNDI -->
+    <bean id="propertiesBean"  class="org.springframework.jndi.JndiObjectFactoryBean">
+        <property name="jndiTemplate">
+            <ref bean="jndiTempate" />
+        </property>
+        <property name="jndiName">
+            <value>cn=properties,cn=javaContainer,dc=my,dc=ldap,dc=domain</value>
+        </property>
+    </bean>
+
+ <!-- configure a placeholder that uses the properties object from LDAP -->
+    <bean id="property-placeholder"
+          class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
+        <property name="placeholderPrefix" value="#(" />
+        <property name="placeholderSuffix" value=")" />
+        <property name="properties"  ref="propertiesBean" />
+    </bean>
+<!-- set a property on a bean from the placeholder -->
+    <bean id="sampleBean" class="com.dhenton9000.ldap.jndi.PropertiesSample">
+        <property name="message">
+            <value>#(wisdom)</value>
+        </property>
+    </bean>
+ 
+</beans>

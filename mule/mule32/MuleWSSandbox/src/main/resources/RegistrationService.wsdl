@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<wsdl:definitions xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" 
+xmlns:tns="uri:dhenton9000:registrationService" 
+xmlns:ref="uri:dhenton9000:registrationService:ref" 
+xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" 
+xmlns:xsd="http://www.w3.org/2001/XMLSchema" 
+name="RegistrationServiceWSDL" targetNamespace="uri:dhenton9000:registrationService">
+  
+  <wsdl:types>
+		<xsd:schema
+			targetNamespace="uri:dhenton9000:registrationService"
+			xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+			<xsd:import namespace="uri:dhenton9000:registrationService:ref"
+				schemaLocation="RegistrationServicesNew.xsd" />
+			 
+		</xsd:schema>
+	</wsdl:types>
+  
+ 
+  <wsdl:message name="RegistrationRequest">
+    <wsdl:part element="ref:RegisterInput" name="inputParameter"/>
+  </wsdl:message>
+  <wsdl:message name="RegistrationResponse">
+    <wsdl:part element="ref:RegisterResponse" name="outputParameter"/>
+  </wsdl:message>
+  <wsdl:portType name="RegistrationServiceWSDL">
+    <wsdl:operation name="Register">
+      <wsdl:input message="tns:RegistrationRequest"/>
+      <wsdl:output message="tns:RegistrationResponse"/>
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:binding name="RegistrationServiceWSDLSOAP" type="tns:RegistrationServiceWSDL">
+    <soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+    <wsdl:operation name="Register">
+      <soap:operation soapAction="uri:dhenton9000:registrationService/Register"/>
+      <wsdl:input>
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="RegistrationServiceWSDL">
+    <wsdl:port binding="tns:RegistrationServiceWSDLSOAP" name="RegistrationServiceWSDLSOAP">
+      <soap:address location="uri:dhenton9000:RegistrationService"/>
+    </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>

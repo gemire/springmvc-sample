@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<mule xmlns="http://www.mulesoft.org/schema/mule/core" xmlns:vm="http://www.mulesoft.org/schema/mule/vm" 
+      xmlns:http="http://www.mulesoft.org/schema/mule/http" 
+      xmlns:doc="http://www.mulesoft.org/schema/mule/documentation" 
+      xmlns:spring="http://www.springframework.org/schema/beans" 
+      xmlns:core="http://www.mulesoft.org/schema/mule/core" 
+      xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+      version="CE-3.2.1" xsi:schemaLocation="
+http://www.mulesoft.org/schema/mule/vm http://www.mulesoft.org/schema/mule/vm/3.2/mule-vm.xsd 
+http://www.mulesoft.org/schema/mule/http http://www.mulesoft.org/schema/mule/http/3.2/mule-http.xsd 
+http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.0.xsd 
+http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/3.2/mule.xsd ">
+    <queued-asynchronous-processing-strategy name="Queued_Asynchronous_Processing_Strategy" 
+                                             maxThreads="5" minThreads="2" threadTTL="2000" 
+                                             poolExhaustedAction="WAIT" threadWaitTimeout="2000" 
+                                             queueTimeout="2000" maxQueueSize="2000">
+        <default-in-memory-queue-store/>
+    </queued-asynchronous-processing-strategy>
+    
+    <spring:beans>
+        <spring:bean id="reporter" 
+                     class="com.dhenton9000.splitter.reporter.Reporter"  
+                     scope="singleton" />
+        <spring:bean id="alphaProcessor" 
+                     class="com.dhenton9000.splitter.reporter.ItemProcessor"  
+                     scope="singleton">
+            <spring:property name="workType" value="ALPHA" />
+        </spring:bean>
+        <spring:bean id="betaProcessor" 
+                     class="com.dhenton9000.splitter.reporter.ItemProcessor"  
+                     scope="singleton">
+            <spring:property name="workType" value="BETA" />           
+        </spring:bean>
+        
+    </spring:beans>
+    
+    
+    <flow name="splitterFlow">
+        <!-- parameter is counter 
+         http://localhost:8081/splitter?count=4
+         -->
+        <composite-source>
+            <http:inbound-endpoint exchange-pattern="request-response" 
+                                   host="localhost" port="8081" path="splitter">
+                <http:body-to-parameter-map-transformer/>
+            </http:inbound-endpoint>
+            <vm:inbound-endpoint path="startTest" exchange-pattern="one-way"  />
+        </composite-source>
+        <component class="com.dhenton9000.splitter.reporter.Initializer"/>
+        <async processingStrategy="Queued_Asynchronous_Processing_Strategy">
+            <component class="com.dhenton9000.splitter.reporter.work.WorkGenerator" />
+            <collection-splitter  />
+            <choice>
+                <when expression="workType = 'ALPHA'" evaluator="bean"> 
+                    <component>
+                        <spring-object bean="alphaProcessor" />
+                    </component>
+                </when>  
+                <when expression="workType = 'BETA'"  evaluator="bean">  
+                    <component>
+                        <spring-object bean="betaProcessor" />
+                    </component>
+                </when>  
+                <otherwise>
+                    <log-component  />
+                </otherwise>    
+                
+            </choice>
+            
+            <component>
+                <spring-object bean="reporter" />
+            </component>
+        </async>
+    </flow>
+
+</mule>
+

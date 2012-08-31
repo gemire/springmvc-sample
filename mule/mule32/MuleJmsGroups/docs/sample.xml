@@ -1,0 +1,15 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<orders>
+	<order>
+		<type>Volvo</type>
+		<description>Volvo V70</description>
+	</order>
+	<order>
+		<type>Volvo</type>
+		<description>Volvo C30</description>
+	</order>
+	<order>
+		<type>Saab</type>
+		<description>Saab 9-5</description>
+	</order>
+</orders>

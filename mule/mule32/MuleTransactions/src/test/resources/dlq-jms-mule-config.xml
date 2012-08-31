@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8"?>
+ <!--
+ 
+ This file illustrates a error handling policy that sends
+ the erro message to a DLQ.
+ An error is thrown in the component of the message contains
+ "BOZO" and that message is lost
+ 
+ see http://www.mulesoft.org/documentation/display/MULE3USER/Exception+Strategy+Most+Common+Use+Cases
+ 
+ -->
+<mule xmlns="http://www.mulesoft.org/schema/mule/core" 
+xmlns:jms="http://www.mulesoft.org/schema/mule/jms" 
+xmlns:doc="http://www.mulesoft.org/schema/mule/documentation" 
+xmlns:spring="http://www.springframework.org/schema/beans"
+xmlns:jbossts="http://www.mulesoft.org/schema/mule/jbossts"
+xmlns:core="http://www.mulesoft.org/schema/mule/core" 
+xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+version="CE-3.2.1" xsi:schemaLocation="
+http://www.mulesoft.org/schema/mule/jbossts http://www.mulesoft.org/schema/mule/jbossts/3.2/mule-jbossts.xsd
+http://www.mulesoft.org/schema/mule/jms http://www.mulesoft.org/schema/mule/jms/3.2/mule-jms.xsd 
+http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.1.xsd 
+http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/3.2/mule.xsd ">
+    <spring:beans>
+        
+        <!--  <spring:import resource="embedded-activemq-broker.xml" /> -->
+        <spring:import resource="remote-activemq-broker.xml" />
+        <spring:import resource="db-connection-beans.xml" />
+        <spring:import resource="mule-spring-beans.xml" />
+        <spring:bean  class="com.dhenton9000.test.DLQComponent" id="dlqComponent">
+            <spring:property name="dataSource" ref="jdbcDataSourceXA" />
+        </spring:bean>
+     </spring:beans>
+     
+    <jbossts:transaction-manager     />
+    <jms:activemq-connector name="jmsConnector"
+                          specification="1.1"
+                          connectionFactory-ref="AmqConnectionFactory"
+                          disableTemporaryReplyToDestinations="true"
+                          persistentDelivery="true" />
+   
+    <flow name="JMSTx" doc:name="JMSTx">
+        <jms:inbound-endpoint queue="input" connector-ref="jmsConnector" doc:name="JMS Inbound">
+            <jms:transaction action="ALWAYS_BEGIN"/>
+        </jms:inbound-endpoint>
+        <component>
+              <spring-object bean="dlqComponent" />
+         </component>
+            
+        <jms:outbound-endpoint queue="output" connector-ref="jmsConnector" doc:name="JMS Outbound">
+            <jms:transaction action="ALWAYS_JOIN"/>
+        </jms:outbound-endpoint>
+        <default-exception-strategy>
+        <commit-transaction exception-pattern="*"/> <!-- [1] -->
+        <processor-chain>
+            <expression-transformer evaluator="groovy" expression="payload.getPayload()"/> <!-- [2] -->
+            <jms:outbound-endpoint queue="dead.letter"> <!-- [3] -->
+                <jms:transaction action="ALWAYS_JOIN" />
+            </jms:outbound-endpoint>
+        </processor-chain>
+    </default-exception-strategy>
+    </flow>
+    
+    <flow name="JMSOutputConsumer" doc:name="JMSOutputConsumer">
+        <jms:inbound-endpoint queue="output" connector-ref="jmsConnector" doc:name="Output listner">
+            <jms:transaction action="ALWAYS_BEGIN"/>
+        </jms:inbound-endpoint>
+        <echo-component />
+    </flow>
+    
+    
+</mule>

@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<mule xmlns="http://www.mulesoft.org/schema/mule/core"
+      xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+      xmlns:spring="http://www.springframework.org/schema/beans"
+      xmlns:file="http://www.mulesoft.org/schema/mule/file"
+      xmlns:test="http://www.mulesoft.org/schema/mule/test" 
+      xmlns:vm="http://www.mulesoft.org/schema/mule/vm"
+      xmlns:jms="http://www.mulesoft.org/schema/mule/jms"
+      xsi:schemaLocation="
+        http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
+        http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/3.2/mule.xsd
+        http://www.mulesoft.org/schema/mule/test http://www.mulesoft.org/schema/mule/test/3.2/mule-test.xsd
+        http://www.mulesoft.org/schema/mule/file http://www.mulesoft.org/schema/mule/file/3.2/mule-file.xsd
+        http://www.mulesoft.org/schema/mule/jms http://www.mulesoft.org/schema/mule/jms/3.2/mule-jms.xsd
+        http://www.mulesoft.org/schema/mule/vm http://www.mulesoft.org/schema/mule/vm/3.2/mule-vm.xsd">
+
+    <description>A demonstration of using grouping jms</description>
+      
+    <spring:beans>
+        
+        <spring:import resource="embedded-activemq-broker.xml" /> 
+         
+    </spring:beans>
+    
+    <jms:activemq-connector name="amqConnector"
+                            specification="1.1"
+                            maxRedelivery="0" 
+                            connectionFactory-ref="AmqConnectionFactory"
+                            persistentDelivery="false">
+                             
+        <service-overrides sessionHandler="org.mule.session.NullSessionHandler"/>
+		
+    </jms:activemq-connector>                        
+                             
+    <file:connector name="input" pollingFrequency="100" 
+                    moveToDirectory="./target/carorders/processed" 
+                    moveToPattern="#[header:originalFilename]"/>                         
+                             
+    <flow name="messageGroupsProducer">
+        <file:inbound-endpoint connector-ref="input" path="./target/carorders/input"  />
+        <object-to-string-transformer/>
+        <splitter evaluator="xpath" expression="/orders/order"/>
+        <jms:outbound-endpoint queue="orders.car" connector-ref="amqConnector">
+            <message-properties-transformer scope="outbound">
+                <add-message-property key="JMSXGroupID" value="#[xpath://type]"/>
+            </message-properties-transformer>
+            <expression-transformer>
+                <return-argument evaluator="xpath" expression="//description"/>
+            </expression-transformer>
+        </jms:outbound-endpoint>
+ 
+        <!-- Route unexpected errors to separate error handler -->
+        <default-exception-strategy>
+            <vm:outbound-endpoint path="systemErrorHandler" exchange-pattern="one-way"/>
+        </default-exception-strategy>
+    </flow>
+
+ 
+    <flow name="messageGroupsConsumer">
+        <jms:inbound-endpoint queue="orders.car">
+            <jms:transaction action="ALWAYS_BEGIN" />
+        </jms:inbound-endpoint>
+        <choice>
+            <when evaluator="groovy" expression="payload == 'Volvo V70'">
+                <echo-component />
+                <test:component throwException="true"/>
+            </when>
+            <otherwise>
+                <echo-component />
+            </otherwise>
+        </choice>
+        <default-exception-strategy>
+            <commit-transaction exception-pattern="org.mule.transport.jms.redelivery.MessageRedeliveredException"/>
+        </default-exception-strategy>
+    </flow>
+    
+    
+    <!-- Handle any unexpected errors. Errors could also be routed elsewhere,
+        e.g. into an error file, send via email to a list, stored in a database, etc. -->
+    <flow name="SystemErrorHandler">
+        <vm:inbound-endpoint path="systemErrorHandler" exchange-pattern="request-response"/>
+        <outbound-endpoint address="stdio://ERR" exchange-pattern="one-way"/>
+    </flow>
+</mule>

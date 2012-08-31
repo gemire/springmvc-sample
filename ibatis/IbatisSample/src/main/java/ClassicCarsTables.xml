@@ -1,0 +1,192 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<!DOCTYPE sqlMap
+    PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN"
+    "http://ibatis.apache.org/dtd/sql-map-2.dtd">
+<sqlMap namespace="ClassicCarsTables">
+
+	<!-- Use type aliases to avoid typing the full classname every time. -->
+	<typeAlias alias="Office" type="com.dhenton9000.classiccars.vo.Office" />
+	<typeAlias alias="Employee" type="com.dhenton9000.classiccars.vo.Employee" />
+	<typeAlias alias="OfficeWithEmployees"
+		type="com.dhenton9000.classiccars.vo.OfficeWithEmployees" />
+	<typeAlias alias="Customer" type="com.dhenton9000.classiccars.vo.Customer" />
+
+
+	<resultMap id="OfficeResult" class="Office">
+
+		<result property="addressline1" column="addressline1" />
+		<result property="addressline2" column="addressline2" />
+		<result property="city" column="city" jdbcType="String" />
+		<result property="country" column="country" jdbcType="String" />
+		<result property="officecode" column="officecode" />
+		<result property="phone" column="phone" />
+		<result property="postalcode" column="postalcode" />
+		<result property="territory" column="territory" />
+		<result property="state" column="state" />
+
+
+	</resultMap>
+
+	<resultMap id="employeeMap" class="Employee">
+		<result property="email" column="email" />
+		<result property="employeenumber" column="employeenumber" />
+		<result property="extension" column="extension" />
+		<result property="firstname" column="firstname" />
+		<result property="jobtitle" column="jobtitle" />
+		<result property="lastname" column="lastname" />
+		<result property="reportsto" column="reportsto" />
+		<result property="officecode" column="officecode" />
+	</resultMap>
+
+	<!--
+		groupBy hooks employeeMap and OfficeResultWithEmployees if you take it
+		out you get a "too many results" error when using queryForObject it
+		also deals with the N + 1 problem, so is the preferred
+	-->
+	<resultMap groupBy="officecode" id="OfficeResultWithEmployees"
+		extends="OfficeResult" class="OfficeWithEmployees">
+
+		<result property="employees" resultMap="ClassicCarsTables.employeeMap" />
+
+	</resultMap>
+
+	<!--
+		the :VARCHAR below is needed to handle nulls IBATIS needs to know what
+		type the NULL will be
+	-->
+
+	<insert id="officeInsert" parameterClass="Office">
+		INSERT INTO
+		CLASSICCARS.OFFICE
+		(addressline1,addressline2,city,country,officecode,
+		phone,postalcode,territory,state)
+		VALUES
+		(#addressline1:VARCHAR#,#addressline2:VARCHAR#,#city:VARCHAR#,#country:VARCHAR#,#officecode:VARCHAR#,
+		#phone:VARCHAR#,#postalcode:VARCHAR#,#territory:VARCHAR#,#state:VARCHAR#)
+
+	</insert>
+
+	<delete id="officeDelete" parameterClass="java.lang.String">
+		DELETE FROM
+		CLASSICCARS.OFFICE WHERE officecode = #officecode#
+	
+	</delete>
+
+	<resultMap id="CustomerResult" class="Customer">
+		<result property="customernumber" column="customerNumber"
+			javaType="java.lang.Integer" />
+		<result property="customername" column="customerName" />
+		<result property="contactlastname" column="contactLastName" />
+		<result property="contactfirstname" column="contactFirstName" />
+		<result property="phone" column="phone" />
+		<result property="addressline1" column="addressLine1" />
+		<result property="addressline2" column="addressLine2" />
+		<result property="city" column="city" />
+		<result property="state" column="state" />
+		<result property="postalcode" column="postalCode" />
+		<result property="country" column="country" />
+		<result property="creditlimit" column="creditLimit" />
+		<result property="salesrepemployeenumber" column="salesrepemployeenumber" />
+		<result property="salesrep" column="salesrepemployeenumber"
+			select="singleEmployee" />
+
+	</resultMap>
+
+
+	<select resultMap="employeeMap" id="singleEmployee"
+		parameterClass="java.lang.String" resultClass="Employee">
+		select * from
+		classiccars.employee where employeenumber = #salesrepemployeenumber#
+	</select>
+
+	<sql id="customer_fragment">
+		SELECT
+		customerNumber,
+		customerName,
+		contactLastName,
+		contactFirstName,
+		addressLine1,
+		addressLine2,
+		city,
+		country,
+		phone,
+		postalcode as postalCode,
+		state,
+		creditLimit,
+		salesrepemployeenumber
+	</sql>
+
+
+	<sql id="office_fragment">
+		SELECT
+		addressLine1,
+		addressLine2,
+		city,
+		country,
+		officecode,
+		phone,
+		postalcode ,
+		territory,
+		state
+		FROM classiccars.office
+    </sql>
+
+	<select resultMap="CustomerResult" id="getCustomerByCountryState"
+		parameterClass="com.dhenton9000.classiccars.parms.CountryStateParameter"
+		resultClass="Customer">
+		<include refid="customer_fragment" />
+		FROM classiccars.customer
+		WHERE country = #country# and state = #state#
+	</select>
+
+
+	<select resultMap="OfficeResult" id="getOfficeByCode"
+		parameterClass="java.lang.String" resultClass="Office">
+		<include refid="office_fragment" />
+		WHERE office.officecode = #officeCode#
+	</select>
+
+
+	<select resultMap="OfficeResultWithEmployees" id="getOfficeByCodeWithEmployees"
+		parameterClass="java.lang.String" resultClass="OfficeWithEmployees">
+		SELECT
+		office.addressLine1,
+		office.addressLine2,
+		office.city,
+		office.country,
+		office.officecode ,
+		office.phone,
+		office.postalcode ,
+		office.territory,
+		office.state ,
+		employee.email,
+		employee.employeenumber,
+		employee.extension,
+		employee.firstname,
+		employee.lastname,
+		employee.jobtitle,
+		employee.reportsto
+
+		FROM classiccars.office,
+		classiccars.employee
+		WHERE
+		office.officecode =
+		#officeCode#
+		AND
+		office.officecode =
+		employee.officecode
+	</select>
+	<select resultMap="OfficeResult" id="getAllOffices" resultClass="Office">
+		<include refid="office_fragment" />
+
+	</select>
+	<!--
+		<select resultMap="CustomerResult" id="selectOrderByDate"
+		parameterClass="java.lang.String" resultClass="EbayOrders"> <include
+		refid="order_from" /> AND TRUNC(EBAY_ORDERS.EBAY_ORDER_DATE) <![CDATA[
+		< ]]>TRUNC(TO_DATE(#orderDate#)) </select>
+	-->
+
+
+</sqlMap>

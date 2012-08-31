@@ -1,0 +1,30 @@
+<?xml version="1.0"?>
+<!--  jdk1.6.0_10 for this to work -->
+<!--  cxf 
+<project name="cxf wsdl2java" default="cxfWSDLToJava" basedir=".">
+	<property name="cxf.home" location="${APACHECXF_HOME}" />
+
+	<path id="cxf.classpath">
+		<fileset dir="${cxf.home}/lib">
+			<include name="*.jar" />
+		</fileset>
+	</path>
+
+	<target name="cxfWSDLToJava">
+		<java classname="org.apache.cxf.tools.wsdlto.WSDLToJava" fork="true">
+			<arg value="-p" />
+			<arg value="com.dhenton9000.football.generated" />
+			<arg value="-d" />
+			<arg value="src/main/java" />
+			<!-- <arg value="-b" />
+			<arg value="src/main/resources/wsdl/binding.xml" /> -->
+			<arg value="-impl" />
+                        <arg value="-server" />
+                         <arg value="-client" />
+			<arg value="src/main/resources/football.wsdl" />
+			<classpath>
+				<path refid="cxf.classpath" />
+			</classpath>
+		</java>
+	</target>
+</project>

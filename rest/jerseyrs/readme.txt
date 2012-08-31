@@ -1,0 +1,1 @@
+rest services demonstration using jersey. Illustrates resources and subresource

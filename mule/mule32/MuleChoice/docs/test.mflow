@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<mule-configuration xmlns="http://www.mulesoft.com/tooling/messageflow" name="test">
+    <flow SubFlow="false" name="testFlow1">
+        <properties>
+            <property name="processingStrategy2"/>
+            <property name="processingStrategy"/>
+        </properties>
+        <lane entity-id="ab05a588-4c4b-46d7-93d9-9f6929258cc3">
+            <endpoint message-exchange-pattern="OneWay" direction="Inbound" type="http://www.mulesoft.org/schema/mule/http/endpoint" name="HTTP" entity-id="5f210a49-e338-41d9-81e1-cd5cc6f0325d">
+                <properties>
+                    <property value="one-way" name="exchange-pattern"/>
+                    <property value="request-response" name="exchange-pattern"/>
+                    <property value="http://www.mulesoft.org/schema/mule/http/endpoint" name="org.mule.tooling.ui.modules.core.widgets.meta.ModeAttribute"/>
+                    <property name="httpLabel"/>
+                    <property value="127.0.0.1" name="host"/>
+                    <property value="8081" name="port"/>
+                    <property value="services/registration" name="path"/>
+                    <property name="method"/>
+                    <property name="address"/>
+                    <property name="responseTimeout"/>
+                    <property value="UTF-8" name="encoding"/>
+                    <property name="disableTransportTransformer"/>
+                    <property name="mimeType"/>
+                    <property name="followRedirects"/>
+                    <property name="ref"/>
+                    <property name="connector-ref"/>
+                    <property name="transformer-refs"/>
+                    <property name="responseTransformer-refs"/>
+                    <property name="user"/>
+                    <property name="password"/>
+                    <property name="contentType"/>
+                    <property name="keep-alive"/>
+                </properties>
+            </endpoint>
+            <pattern type="http://www.mulesoft.org/schema/mule/cxf/soapComponent" name="SOAP" entity-id="d7d5e6ac-adc6-4eb1-8efd-3f1fffd6d208">
+                <properties>
+                    <property name="configuration-ref"/>
+                    <property value="http://www.mulesoft.org/schema/mule/cxf/jaxws-service" name="org.mule.tooling.ui.modules.core.widgets.meta.ModeAttribute"/>
+                    <property name="configuration-ref"/>
+                    <property name="bindingId"/>
+                    <property name="port"/>
+                    <property name="namespace"/>
+                    <property name="service"/>
+                    <property value="com.dhenton9000.registration.components.ws.RegistrationServiceWSDLImpl" name="serviceClass"/>
+                    <property name="validationEnabled"/>
+                    <property name="mtomEnabled"/>
+                    <property value="RegistrationService.wsdl" name="wsdlLocation"/>
+                    <property value="false" name="enableMuleSoapHeaders"/>
+                </properties>
+            </pattern>
+            <splitter type="org.mule.tooling.ui.modules.core.pattern.cbr" name="Choice" entity-id="f21f8a83-d29a-4c57-ad68-80b567db00a2">
+                <properties>
+                    <property-collection name="879272f1-efb1-45d2-ade8-bbcfd61cc46b">
+                        <property value="true" name="choice.otherwise"/>
+                    </property-collection>
+                    <property-collection name="22b83565-6437-4a7c-9959-848d4375e32a">
+                        <property value="name = 'ted'" name="choice.expression"/>
+                        <property value="bean" name="choice.evaluator"/>
+                    </property-collection>
+                    <property-collection name="a751bfeb-6561-41b6-bad6-ae8b945a3e3a">
+                        <property value="name = 'fred'" name="choice.expression"/>
+                        <property value="bean" name="choice.evaluator"/>
+                    </property-collection>
+                </properties>
+                <description>This choice router will look for 'ted' or 'fred' in the name property of the submitted Registration and route to the given transformer</description>
+                <pattern type="org.mule.tooling.ui.modules.core.pattern.cbr" name="Choice" entity-id="ab53a301-a90d-40ae-bd89-7ccf4c9dd496"/>
+                <compartment entity-id="9c469a70-a67b-4868-b62d-2be99e64cb41">
+                    <lane entity-id="a751bfeb-6561-41b6-bad6-ae8b945a3e3a">
+                        <pattern type="org.mule.tooling.ui.modules.core.pattern.customTransformer" name="Java" entity-id="afa37e1a-72c6-4828-a5b6-c3059f57ab56">
+                            <properties>
+<property name="returnClass"/>
+<property name="ignoreBadInput"/>
+<property name="encoding"/>
+<property name="mimeType"/>
+<property value="com.dhenton9000.registration.components.FredRegistrationTransformer" name="class"/>
+                            </properties>
+                        </pattern>
+                    </lane>
+                    <lane entity-id="22b83565-6437-4a7c-9959-848d4375e32a">
+                        <pattern type="org.mule.tooling.ui.modules.core.pattern.customTransformer" name="Java" entity-id="f18afe9d-9d2d-4427-b30c-8c84a6b66165">
+                            <properties>
+<property name="returnClass"/>
+<property name="ignoreBadInput"/>
+<property name="encoding"/>
+<property name="mimeType"/>
+<property value="com.dhenton9000.registration.components.TedRegistrationTransformer" name="class"/>
+                            </properties>
+                        </pattern>
+                    </lane>
+                    <lane entity-id="879272f1-efb1-45d2-ade8-bbcfd61cc46b">
+                        <pattern type="org.mule.tooling.ui.modules.core.pattern.customTransformer" name="Java" entity-id="88b22395-5ea2-42c7-bf98-f8466f306665">
+                            <properties>
+<property name="returnClass"/>
+<property name="ignoreBadInput"/>
+<property name="encoding"/>
+<property name="mimeType"/>
+<property value="com.dhenton9000.registration.components.RegistrationTransformer" name="class"/>
+                            </properties>
+                        </pattern>
+                    </lane>
+                </compartment>
+            </splitter>
+            <pattern type="http://www.mulesoft.org/schema/mule/core/component" name="Java" entity-id="deac3591-2b93-40ac-a1f4-25f6b780ab5b">
+                <properties>
+                    <property value="com.dhenton9000.registration.components.ws.RegistrationServiceWSDLImpl" name="class"/>
+                </properties>
+            </pattern>
+        </lane>
+    </flow>
+    <description></description>
+</mule-configuration>

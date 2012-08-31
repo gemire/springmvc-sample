@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<ns1:RegisterInput xmlns:ns1="uri:dhenton9000:registrationService:ref" xmlns="http://www.w3.org/2001/XMLSchema">
+<ns1:name>fred</ns1:name>
+<ns1:password>ted</ns1:password>
+<ns1:registrationDetails>
+<ns1:paymentPlan>Ukranian</ns1:paymentPlan>
+<ns1:months>25</ns1:months>
+</ns1:registrationDetails>
+<ns1:registrationDate>2011-10-02T10:00:00</ns1:registrationDate>
+</ns1:RegisterInput>

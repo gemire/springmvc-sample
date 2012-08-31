@@ -1,0 +1,12 @@
+http://wiki.fasterxml.com/StaxMateHome
+
+this is a library for processing xmlstreamreaders to strings
+it seems that if you ask for validation=true, you never get payload=body
+to return a String, so you will have to use something like this
+
+if you look at the test-mule-client-proxy-validate, you will see that 
+adding 'validationEnabled="true"' in the cxf:proxy-service
+produces a stream that doesn't allow for getting a string,
+ but test-mule-client-proxy-novalidate will produce a stream that can be 
+read as a string using getpayloadasstring.
+

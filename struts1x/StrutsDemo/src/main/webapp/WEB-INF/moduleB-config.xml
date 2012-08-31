@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE struts-config PUBLIC "-//Apache Software Foundation//DTD Struts Configuration 1.2//EN" "http://struts.apache.org/dtds/struts-config_1_2.dtd">
+
+<struts-config>
+	<data-sources />
+	<form-beans />
+	<global-exceptions />
+	<global-forwards>
+		<forward name="global.step1.tiles" path="/pages/tiles_forms/tiles_step1.jsp"></forward>
+		<forward name="global.step2.tiles" path="/pages/tiles_forms/tiles_step2.jsp"></forward>
+		<forward name="global.step3.tiles" path="/pages/tiles_forms/tiles_step3.jsp"></forward>
+		 
+	</global-forwards>
+	<action-mappings>
+	
+	<action path="/mainB" parameter="tiles.mainpage"
+			type="org.apache.struts.actions.ForwardAction" />
+	
+
+		<action path="/nestedTilesDemos" parameter="tiles.moduleb.nestedTiles"
+			type="org.apache.struts.actions.ForwardAction" />
+
+
+        <action path="/body4" parameter="/pages/putList/body4.jsp"
+			type="org.apache.struts.actions.ForwardAction" />
+
+
+
+
+		<action path="/errorPageDemo"
+			type="com.dhenton9000.strutsdemo.controllers.actions.ErrorAction">
+			<forward name="success" path="/pages/mainTiles.jsp" />
+
+		</action>
+
+	</action-mappings>
+
+	<controller processorClass="org.apache.struts.tiles.TilesRequestProcessor" />
+
+
+	<message-resources parameter="com.dhenton9000.strutsdemo.ApplicationResources" />
+
+
+	<plug-in className="org.apache.struts.tiles.TilesPlugin">
+		<set-property property="definitions-config" value="/WEB-INF/tiles-defs-moduleB.xml,/WEB-INF/tiles-defs.xml" />
+		<set-property property="moduleAware" value="true" />
+		<set-property property="definitions-parser-validate"
+			value="true" />
+	</plug-in>
+
+
+</struts-config>
+

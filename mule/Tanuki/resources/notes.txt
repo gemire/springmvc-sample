@@ -1,0 +1,7 @@
+mq register an agent with jmx jconsole
+http://activemq.apache.org/total-ordering.html
+http://activemq.apache.org/what-is-the-prefetch-limit-for.html
+http://codedependents.com/2010/07/14/connectionfactories-and-caching-with-spring-and-activemq/
+http://codedependents.com/2009/10/16/efficient-lightweight-jms-with-spring-and-activemq/
+http://activemq.apache.org/message-groups.html
+http://activemq.apache.org/destination-options.html

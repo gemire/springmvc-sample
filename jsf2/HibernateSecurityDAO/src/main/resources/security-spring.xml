@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:tx="http://www.springframework.org/schema/tx"
+       xmlns:aop="http://www.springframework.org/schema/aop" xmlns:lang="http://www.springframework.org/schema/lang"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.0.xsd            http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-2.0.xsd            http://www.springframework.org/schema/lang http://www.springframework.org/schema/lang/spring-lang-2.0.xsd            http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-2.0.xsd">
+
+    <bean id="transactionManager" class="org.springframework.orm.hibernate3.HibernateTransactionManager">
+        <property name="sessionFactory"><ref bean="sessionFactory"/></property>
+    </bean>
+
+
+    <bean id="springSecurityDAO" class="org.springframework.transaction.interceptor.TransactionProxyFactoryBean">
+        <property name="transactionManager"><ref bean="transactionManager"/></property>
+        <property name="target"><ref bean="springSecurityDAOTarget"/></property>
+        <property name="transactionAttributes">
+            <props>
+                <prop key="create*">PROPAGATION_REQUIRED</prop>
+                <prop key="*">PROPAGATION_REQUIRED</prop>
+            </props>
+        </property>
+    </bean>
+
+
+
+
+
+
+    <bean id="springSecurityDAOTarget" class="com.dhenton9000.hibernatesecurity.springdao.SecuritySpringDAO">
+        <property name="sessionFactory"><ref bean="sessionFactory"/></property>
+
+    </bean>
+
+    <bean id="hibernateTemplate"
+          class="org.springframework.orm.hibernate3.HibernateTemplate">
+        <property name="sessionFactory" ref="sessionFactory" />
+    </bean>
+
+    <bean id="sessionFactory"
+          class="org.springframework.orm.hibernate3.LocalSessionFactoryBean">
+        <property name="dataSource" ref="myDataSource" />
+
+        <property name="mappingResources">
+            <list>
+                <value>com/dhenton9000/hibernatesecurity/Applications.hbm.xml</value>
+                <value>com/dhenton9000/hibernatesecurity/Groups.hbm.xml</value>
+                <value>com/dhenton9000/hibernatesecurity/ApplicationGroups.hbm.xml</value>
+                <value>com/dhenton9000/hibernatesecurity/Users.hbm.xml</value>
+                <value>com/dhenton9000/hibernatesecurity/GroupAssignments.hbm.xml</value>
+            </list>
+        </property>
+        <property name="hibernateProperties">
+            <props>
+                <prop key="hibernate.dialect">org.hibernate.dialect.MySQLDialect</prop>
+            </props>
+        </property>
+    </bean>
+    <!--  
+    <bean name="myDataSource"
+          class="com.mysql.jdbc.jdbc2.optional.MysqlDataSource"
+          destroy-method="destroy">
+        <property name="url">
+            <value>jdbc:mysql://localhost:3306/security</value>
+        </property>
+        <property name="user">
+            <value>root</value>
+        </property>
+    </bean>
+-->
+<bean id="myDataSource" destroy-method="close" class="org.apache.commons.dbcp.BasicDataSource">
+<property name="driverClassName" value="com.mysql.jdbc.Driver"/>
+<property name="url" value="jdbc:mysql://localhost:3306/security"/>
+<property name="username" value="root"/>
+<property name="initialSize" value="3"/>
+</bean>
+
+</beans>

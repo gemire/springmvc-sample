@@ -1,0 +1,4 @@
+http://www.learntechnology.net/content/ejb/maven-ejb3.jsp this is a parent pom for these maven
+files.
+configuring nonstandard ports on JBOSS and netbeans
+http://mochamatari.wordpress.com/category/jboss/

@@ -1,0 +1,6 @@
+Currently, the web service call is async, make it sync so that some component can 
+say 'file x' produced soap fault X.
+
+Place the cxf client inside the http endpoint to have it return a response object, right now it will return a releasing input stream.
+
+also, place default strategies everywhere.

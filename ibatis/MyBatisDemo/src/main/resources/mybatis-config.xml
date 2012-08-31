@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<beans default-lazy-init="true" xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:util="http://www.springframework.org/schema/util" xmlns:security="http://www.springframework.org/schema/security" xmlns:tx="http://www.springframework.org/schema/tx"
+       xmlns:mvc="http://www.springframework.org/schema/mvc" xmlns:p="http://www.springframework.org/schema/p" xmlns:task="http://www.springframework.org/schema/task" xmlns:aop="http://www.springframework.org/schema/aop"
+       xsi:schemaLocation="
+			http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
+			http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-3.0.xsd
+			http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util-3.0.xsd
+			http://www.springframework.org/schema/security http://www.springframework.org/schema/security/spring-security-3.0.xsd
+			http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-3.0.xsd
+			http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc-3.0.xsd
+			http://www.springframework.org/schema/task http://www.springframework.org/schema/task/spring-task-3.0.xsd
+			http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-3.0.xsd">
+
+    <description><![CDATA[Main entry point for spring configuration]]>
+    </description>
+ 
+     
+    <!-- 
+         http://www.mybatis.org/spring/factorybean.html 
+         http://www.mybatis.org/spring/sqlsession.html
+         http://loianegroner.com/category/ibatis-mybatis/
+         
+         inheritance mybatis style (Argh!!)
+         http://java.dzone.com/articles/ibatis-mybatis-discriminator
+         code 
+         https://github.com/loiane/ibatis-discriminator
+    -->
+ 
+    <bean id="dataSource" class="com.mchange.v2.c3p0.ComboPooledDataSource" destroy-method="close">
+        <property name="driverClass" value="org.apache.derby.jdbc.ClientDriver"/>
+        <property name="jdbcUrl" value="jdbc:derby://localhost:1527/sec"/>
+        <property name="user" value="sec"/>
+        <property name="password" value="sec"/>
+    </bean>
+     
+    <bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
+        <property name="dataSource" ref="dataSource" />
+        <property name="configLocation" value="classpath:SecConfig.xml" />
+        <property name="mapperLocations" value="classpath:com/dhenton9000/mybatis/demo/model/**/*.xml" />
+    </bean>
+    <!-- need to keep the mapper files separate -->
+    <bean id="sqlMapperSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
+        <property name="dataSource" ref="dataSource" />
+        <property name="configLocation" value="classpath:SecConfig.xml" />
+        <property name="mapperLocations" value="classpath:com/dhenton9000/mybatis/demo/mappers/**/*.xml" />
+    </bean>
+  
+    <bean id="transactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+        <property name="dataSource" ref="dataSource" />
+    </bean>
+    
+    <bean id="sqlSession" class="org.mybatis.spring.SqlSessionTemplate">
+        <constructor-arg index="0" ref="sqlSessionFactory" />
+    </bean>
+    
+    <!-- 1 this assembles a Dao in a simple manner -->
+    <bean id="applicationsDao" class="com.dhenton9000.mybatis.demo.dao.ApplicationsDaoImpl">
+        <property name="sqlSession" ref="sqlSession" />
+    </bean>
+    
+    <!-- 2 this uses DaoSupport -->
+    <bean id="applicationsDaoSupport" class="com.dhenton9000.mybatis.demo.dao.ApplicationsSupportDaoImpl">
+        <property name="sqlSessionFactory" ref="sqlSessionFactory" />
+    </bean>
+    
+    <!-- 3 using the MapperFactoryBean which creates proxies -->
+    <bean id="applicationsMapper" class="org.mybatis.spring.mapper.MapperFactoryBean">
+        <property name="mapperInterface" value="com.dhenton9000.mybatis.demo.mappers.ApplicationsMapper" />
+        <property name="sqlSessionFactory" ref="sqlMapperSessionFactory" />
+    </bean>
+ 
+    <bean id="groupsMapper" class="org.mybatis.spring.mapper.MapperFactoryBean">
+        <property name="mapperInterface" value="com.dhenton9000.mybatis.demo.mappers.GroupsMapper" />
+        <property name="sqlSessionFactory" ref="sqlMapperSessionFactory" />
+    </bean>
+
+    <bean id="usersMapper" class="org.mybatis.spring.mapper.MapperFactoryBean">
+        <property name="mapperInterface" value="com.dhenton9000.mybatis.demo.mappers.UsersMapper" />
+        <property name="sqlSessionFactory" ref="sqlMapperSessionFactory" />
+    </bean>
+
+ 
+</beans>

@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<schema xmlns="http://www.w3.org/2001/XMLSchema" targetNamespace="uri:dhenton9000:registrationService:ref"
+	xmlns:tns="uri:dhenton9000:registrationService:ref" elementFormDefault="qualified">
+
+	<element name="RegisterInput">
+		<complexType>
+			<sequence>
+				<element name="name" type="tns:basicString" />
+				<element name="password" type="tns:basicString"  />
+				<element ref="tns:registrationDetails" />
+				<element name="registrationDate" type="dateTime" />
+			</sequence>
+		</complexType>
+	</element>
+	<element name="registrationDetails">
+		<complexType>
+			<sequence>
+				<element name="paymentPlan" type="string"  />
+				<element name="months" type="integer" />
+			</sequence>
+		</complexType>
+	</element>
+	<element name="RegisterResponse">
+		<complexType>
+			<sequence>
+				<element name="responseInformation" type="string" />
+				<element  name="currentTime" type="dateTime" />
+				<element name="totalCost" type="decimal" />
+				<element name="paymentDepartment" type="string"/>
+			</sequence>
+		</complexType>
+	</element>
+    <simpleType name="basicString">
+        <restriction  base="string">
+            <maxLength value="10"/>
+            <minLength value="1"/>
+        </restriction>
+   </simpleType>
+</schema>
+ 

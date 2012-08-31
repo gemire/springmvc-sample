@@ -1,0 +1,176 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+
+	<groupId>com.dhenton9000.hibernate.concurrency</groupId>
+	<artifactId>HibernateConcurrency</artifactId>
+	<version>0.0.1-SNAPSHOT</version>
+	<packaging>jar</packaging>
+
+	<name>HibernateConcurrency</name>
+	<url>http://maven.apache.org</url>
+
+	<properties>
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+	</properties>
+
+	<dependencies>
+
+		<dependency>
+			<groupId>junit</groupId>
+			<artifactId>junit</artifactId>
+			<version>3.8.1</version>
+			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.hibernate</groupId>
+			<artifactId>hibernate-core</artifactId>
+			<version>3.5.2-Final</version>
+		</dependency>
+		<dependency>
+			<groupId>org.apache.derby</groupId>
+			<artifactId>derbyclient</artifactId>
+			<version>10.5.3.0_1</version>
+		</dependency>
+		<dependency>
+			<groupId>log4j</groupId>
+			<artifactId>log4j</artifactId>
+			<version>1.2.12</version>
+		</dependency>
+		<dependency>
+			<groupId>javassist</groupId>
+			<artifactId>javassist</artifactId>
+			<version>3.4.GA</version>
+		</dependency>
+		<dependency>
+			<groupId>org.slf4j</groupId>
+			<artifactId>slf4j-log4j12</artifactId>
+			<version>1.5.2</version>
+		</dependency>
+		<dependency>
+			<groupId>org.hibernate</groupId>
+			<artifactId>hibernate-tools</artifactId>
+			<version>3.2.3.GA</version>
+		</dependency>
+		
+		<!--  
+		<dependency>
+			<groupId>org.codehaus.mojo</groupId>
+			<artifactId>hibernate3-maven-plugin</artifactId>
+			<version>2.2</version>
+			<classifier>maven-plugin</classifier>
+		</dependency>
+-->
+
+
+
+	</dependencies>
+
+
+	<repositories>
+		<repository>
+			<id>glassfish-maven2-repository.dev.java.net</id>
+			<name>Java.net Maven 2 Repository for GlassFish</name>
+			<url>http://download.java.net/maven/glassfish/</url>
+			<layout>default</layout>
+		</repository>
+		<repository>
+			<id>maven2-repository.dev.java.net</id>
+			<name>Java.net Maven 2 Repository</name>
+			<url>http://download.java.net/maven/2/</url>
+			<layout>default</layout>
+		</repository>
+		<repository>
+			<id>maven-repository.dev.java.net</id>
+			<name>Java.net Maven 1 Repository (legacy)</name>
+			<url>http://download.java.net/maven/1</url>
+			<layout>legacy</layout>
+		</repository>
+		
+		      <repository>
+                    <id>Codehaus Snapshots</id>
+                    <url>http://snapshots.repository.codehaus.org/</url>
+                    <snapshots>
+                        <enabled>true</enabled>
+                    </snapshots>
+                    <releases>
+                        <enabled>false</enabled>
+                    </releases>
+                </repository>
+		
+		
+	</repositories>
+
+	<build>
+		<plugins>
+
+
+
+			<plugin>
+				<groupId>org.codehaus.mojo</groupId>
+				<artifactId>hibernate3-maven-plugin</artifactId>
+				<version>2.2</version>
+				<configuration>
+					<executions>
+						<execution>
+							<phase>process-classes</phase>
+							<goals>
+								<goal>hbm2ddl</goal>
+							</goals>
+						</execution>
+					</executions>
+					<verbose>true</verbose>
+					<components>
+						<component>
+							<name>hbm2ddl</name>
+							<implementation>jdbcconfiguration</implementation>
+						</component>
+						<component>
+							<name>hbm2hbmxml</name>
+							<outputDirectory>src/main/resources</outputDirectory>
+						</component>
+					</components>
+					<componentProperties>
+						<drop>true</drop>
+						<create>true</create>
+						<jdk5>true</jdk5>
+						<format>true</format>
+						<export>false</export>
+						<configurationfile>/src/main/resources/hibernate.cfg.xml</configurationfile>
+						<outputfilename>schema.sql</outputfilename>
+					</componentProperties>
+				</configuration>
+
+
+				<dependencies>
+
+
+					<dependency>
+						<groupId>org.apache.derby</groupId>
+						<artifactId>derbyclient</artifactId>
+						<version>10.5.3.0_1</version>
+					</dependency>
+
+
+				</dependencies>
+
+
+
+
+			</plugin>
+
+
+
+			<!--
+				<plugin> <groupId>org.codehaus.mojo</groupId>
+				<artifactId>hibernate3-maven-plugin</artifactId>
+				<version>2.2</version> <configuration> <componentProperties>
+				<outputfilename>schema.sql</outputfilename> </componentProperties>
+				</configuration> </plugin>
+			-->
+
+		</plugins>
+	</build>
+
+
+</project>

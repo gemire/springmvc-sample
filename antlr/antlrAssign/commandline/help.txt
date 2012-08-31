@@ -1,0 +1,2 @@
+
+C:\Users\Don\workspace\antlrAssign\commandline>java -cp c:/users/don/workspace/antlrAssign/lib//antlr-3.3-complete.jar org.antlr.Tool  

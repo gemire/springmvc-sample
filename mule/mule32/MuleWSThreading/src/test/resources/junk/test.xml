@@ -1,0 +1,25 @@
+<uri:RegisterInput>
+         <uri:name>ted</uri:name>
+         <uri:password>ted</uri:password>
+         <uri:registrationDetails>
+            <uri:paymentPlan>affdfd</uri:paymentPlan>
+            <uri:months>24</uri:months>
+         </uri:registrationDetails>
+         <uri:registrationDate>2010-01-01T12:00:00+01:00</uri:registrationDate>
+      </uri:RegisterInput>
+      
+      
+      <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:uri="uri:dhenton9000:registrationService:ref">
+   <soapenv:Header/>
+   <soapenv:Body>
+      <uri:RegisterInput>
+         <uri:name>ted</uri:name>
+         <uri:password>ted</uri:password>
+         <uri:registrationDetails>
+            <uri:paymentPlan>affdfd</uri:paymentPlan>
+            <uri:months>24</uri:months>
+         </uri:registrationDetails>
+         <uri:registrationDate>2010-01-01T12:00:00+01:00</uri:registrationDate>
+      </uri:RegisterInput>
+   </soapenv:Body>
+</soapenv:Envelope>

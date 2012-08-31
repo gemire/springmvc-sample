@@ -1,0 +1,446 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+            targetNamespace="http://dhenton9000.inventory/schema/InventoryBusSchema"
+            xmlns:tns="http://dhenton9000.inventory/schema/InventoryBusSchema"
+            elementFormDefault="qualified">
+    
+    
+    <!--  Inventory Elements -->
+
+    <xsd:complexType name="ItemAttributesType">
+        <xsd:sequence>
+            
+            <xsd:element minOccurs="1" maxOccurs="1" name="Sku"  type="tns:TextContentType">
+                <xsd:annotation>
+                    <xsd:documentation>
+                        Generally a sku or sku level identifier, not a style
+                    </xsd:documentation>
+                </xsd:annotation>
+                
+                
+                
+            </xsd:element>
+            <xsd:element minOccurs="1" maxOccurs="1" name="Width"  type="tns:TextContentType">
+                <xsd:annotation>
+                    <xsd:documentation>
+                        width indicator universal and generic will be translated
+                        elsewhere
+                    </xsd:documentation>
+                </xsd:annotation>
+            </xsd:element>
+            <xsd:element minOccurs="1" maxOccurs="1" name="Length"  type="tns:TextContentType">
+                <xsd:annotation>
+                    <xsd:documentation>
+                        length indicator universal and generic will be translated
+                        elsewhere
+                    </xsd:documentation>
+                </xsd:annotation>
+            </xsd:element>
+            <xsd:element  minOccurs="1" maxOccurs="1" name="ManufacturerName"  type="tns:TextContentType">
+                <xsd:annotation>
+                    <xsd:documentation>
+                        the name of the manufacturer
+                    </xsd:documentation>
+                </xsd:annotation>
+                
+                
+            </xsd:element>
+            <xsd:element name="ManufacterModel" maxOccurs="1"  minOccurs="0"  type="tns:TextContentType">
+                <xsd:annotation>
+                    <xsd:documentation>
+                        manufacturer part number or identifier
+                    </xsd:documentation>
+                </xsd:annotation>
+                
+                
+            </xsd:element>
+            <xsd:element name="UPC" maxOccurs="1" minOccurs="1"  type="tns:TextContentType">
+                <xsd:annotation>
+                    <xsd:documentation>
+                        universal product code
+                    </xsd:documentation>
+                </xsd:annotation>
+            </xsd:element>
+            <xsd:element minOccurs="1" maxOccurs="1"  name="Brand"  type="tns:TextContentType">
+                <xsd:annotation>
+                    <xsd:documentation>
+                        The distinctive name or trademark under which the product is marketed.
+                    </xsd:documentation>
+                </xsd:annotation>
+            </xsd:element>
+            
+            
+            
+            <xsd:element minOccurs="1" maxOccurs="1" name="ShortDescription"  type="tns:TextContentType">
+                <xsd:annotation>
+                    <xsd:documentation>
+                        Short descriptive item, possibly used as text for a link
+                        or a title
+                    </xsd:documentation>
+                </xsd:annotation>
+                
+                
+            </xsd:element>
+            <xsd:element minOccurs="1" maxOccurs="1"  name="TextLongDescription">
+                <xsd:annotation>
+                    <xsd:documentation>
+                        sales copy no html
+                    </xsd:documentation>
+                </xsd:annotation>
+                
+                <xsd:simpleType>
+                    <xsd:restriction base="xsd:string"/>
+                </xsd:simpleType>
+            </xsd:element>
+            <xsd:element minOccurs="1" maxOccurs="1" name="HtmlLongDescription"  type="tns:TextContentType">
+                <xsd:annotation>
+                    <xsd:documentation>
+                        sales copy with html
+                    </xsd:documentation>
+                </xsd:annotation>
+                
+                
+            </xsd:element>
+            
+            <xsd:element minOccurs="1" maxOccurs="1" name="MerchantCategories" type="tns:MerchantCategoriesType">
+                <xsd:annotation>
+                    <xsd:documentation>
+                        the categories to which this product belongs
+                        eg Mens Casual Oxford in order of exclusivity 1 being
+                        the broadest category
+                    </xsd:documentation>
+                </xsd:annotation>
+                
+                
+            </xsd:element>
+            
+            
+        </xsd:sequence>
+    </xsd:complexType>
+    
+    <xsd:complexType name="MerchantCategoriesType">
+        <xsd:annotation>
+            <xsd:documentation>
+                1 to N categories to assign to this item in descending order
+                for example Mens -- Casual -- Oxford in order of exclusivity
+            </xsd:documentation>
+        </xsd:annotation>
+        <xsd:sequence>
+            <xsd:element minOccurs="1" name="MerchantCategory" maxOccurs="unbounded" type="tns:MerchantCategoryType">
+                
+            </xsd:element>
+        </xsd:sequence>
+    </xsd:complexType>
+    
+    <xsd:complexType name='MerchantCategoryType' mixed="true">
+        
+        <xsd:attribute name='order' type='xsd:integer' use="required" />
+    </xsd:complexType>
+    
+    <xsd:complexType name="ColorDescriptionType">
+        <xsd:annotation>
+            <xsd:documentation>
+                These are color descriptors
+            </xsd:documentation>
+        </xsd:annotation>
+        <xsd:sequence>
+            <xsd:element minOccurs="1" maxOccurs="1" name="MainColor"   type="tns:TextContentType" />
+            <xsd:element name="ParentColor" maxOccurs="1" minOccurs="0" type="tns:TextContentType" />
+            
+        </xsd:sequence>
+        
+    </xsd:complexType>
+    
+    <xsd:complexType name="ItemPricingType">
+        <xsd:sequence>
+            <xsd:element minOccurs="1" maxOccurs="unbounded" name="priceData"   type="tns:PriceDataType" />
+        </xsd:sequence>
+    </xsd:complexType>
+    <!-- end main descriptor -->
+
+
+
+    <xsd:complexType name="PriceDataType">
+        <xsd:sequence>
+            <xsd:element name='value' minOccurs="0" maxOccurs="1" type='tns:AmountType'/>
+        </xsd:sequence>
+        <xsd:attribute name="pricingType">
+            <xsd:annotation/>
+            <xsd:simpleType>
+                <xsd:restriction base="xsd:string">
+                    <xsd:enumeration value="current"/>
+                    <xsd:enumeration value="deal_of_the_day"/>
+                    <xsd:enumeration value="list"/>
+                    <xsd:enumeration value="msrp"/>
+                </xsd:restriction>
+            </xsd:simpleType>
+        </xsd:attribute>
+        
+    </xsd:complexType>
+    <xsd:complexType name="ItemQuantityType">
+        <xsd:sequence>
+            <xsd:element name="currentQuantity" minOccurs="0" maxOccurs="1">
+                <xsd:simpleType>
+                    <xsd:restriction base="xsd:integer"/>
+                </xsd:simpleType>
+            </xsd:element>
+        </xsd:sequence>
+    </xsd:complexType>
+    
+    <xsd:complexType name="StyleType">
+        <xsd:annotation>
+            <xsd:documentation>
+                The style type which is the collection of all sku/items
+                for a style, the style owns the color and has its own
+                pricing element
+            </xsd:documentation>
+        </xsd:annotation>
+        
+        <xsd:sequence>
+            <xsd:element minOccurs="1" maxOccurs="1" name="StyleID"  type="xsd:string">
+                <xsd:annotation>
+                    <xsd:documentation>
+                        The identifier of the the style eg 90014
+                    </xsd:documentation>
+                </xsd:annotation>
+                
+            </xsd:element>
+            <xsd:element name="ColorDescription" type="tns:ColorDescriptionType"></xsd:element>
+            <xsd:element name="StylePricing" type="tns:ItemPricingType"></xsd:element>
+            <xsd:element name="Items" type="tns:ItemsType" minOccurs="1" maxOccurs="1"/>
+        </xsd:sequence>
+    </xsd:complexType>
+    <xsd:complexType name="ItemsType">
+        <xsd:annotation>
+            <xsd:documentation>
+                collection of items for a style
+            </xsd:documentation>
+        </xsd:annotation>
+        <xsd:sequence>
+            <xsd:element name="Item" minOccurs="0" maxOccurs="unbounded" type="tns:ItemType" />
+        </xsd:sequence>
+    </xsd:complexType>
+    <xsd:complexType name="ItemType">
+        
+        <xsd:annotation>
+            <xsd:documentation>
+                the sku or item, with its associated information
+            </xsd:documentation>
+        </xsd:annotation>
+        
+        
+        <xsd:sequence>
+            <xsd:element name="Attributes" type="tns:ItemAttributesType" minOccurs="1"></xsd:element>
+            <xsd:element name="Pricing" type="tns:ItemPricingType"></xsd:element>
+            <xsd:element name="Quantity" type="tns:ItemQuantityType"></xsd:element>
+        </xsd:sequence>
+    </xsd:complexType>
+    <xsd:element name="MasonInventoryElement">
+        <xsd:annotation>
+            <xsd:documentation>
+                the main element used for the webservice
+            </xsd:documentation>
+        </xsd:annotation>
+        
+        
+        <xsd:complexType>
+            <xsd:sequence>
+                <xsd:element name="RoutingInformation" type="tns:RoutingInformationType"></xsd:element>
+                <xsd:element name="Style" type="tns:StyleType"></xsd:element>
+            </xsd:sequence>
+        </xsd:complexType>
+        
+        <xsd:unique name="uniqueSku">
+            <xsd:selector xpath="./Style/Items/Item/Attributes" />
+            <xsd:field xpath="Sku"/>
+        </xsd:unique>
+        
+    </xsd:element>
+    
+    
+    <!--   Inventory Elements -->
+<!-- Inventory Routing Elements -->
+    <xsd:complexType name="BatchInformationType">
+        <xsd:annotation>
+            <xsd:documentation>
+                optional element used to describe the participation of this
+                style in a batch process
+            </xsd:documentation>
+        </xsd:annotation>
+        
+        
+        <xsd:sequence>
+            <xsd:element name="BatchId" type="tns:nonZeroInteger"></xsd:element>
+            <xsd:element name="BatchPosition" type="tns:nonZeroInteger"></xsd:element>
+            <xsd:element name="Total" type="tns:nonZeroInteger"></xsd:element>
+        </xsd:sequence>
+    </xsd:complexType>
+    <xsd:complexType name="RoutingInformationType">
+        <xsd:sequence>
+            <xsd:element name="SourceId" type="xsd:integer"></xsd:element>
+            <xsd:element name="ProcessId" type="xsd:integer"></xsd:element>
+            <xsd:element name="ServiceRequests" type="tns:ServiceRequestsType"></xsd:element>
+            <xsd:element name="BatchInformation" type="tns:BatchInformationType" minOccurs="0" maxOccurs="1"></xsd:element>
+        </xsd:sequence>
+    </xsd:complexType>
+    
+    <xsd:complexType name="RoutingRequestType">
+        <xsd:sequence>
+            <xsd:element name="SourceId" type="xsd:integer"></xsd:element>
+            <xsd:element name="ProcessId" type="xsd:integer"></xsd:element>
+            <xsd:element name="BatchInformation" type="tns:BatchInformationType" minOccurs="0" maxOccurs="1"></xsd:element>
+        </xsd:sequence>
+    </xsd:complexType>
+    
+    
+    
+    
+    <xsd:complexType name="ServiceRequestsType">
+        <xsd:sequence>
+            <xsd:element minOccurs="0" maxOccurs="unbounded"  type="tns:RequestedServicesType" name="RequestedService">
+                <xsd:annotation>
+                    <xsd:documentation>
+                        0 to 4 of Quantity, Images, Attributes, or Price service requests
+                        this is the actions that are being requested for each sku of the
+                        style
+                    </xsd:documentation>
+                </xsd:annotation>
+                
+               
+                
+                
+            </xsd:element>
+        </xsd:sequence>
+        
+        
+        
+    </xsd:complexType>
+    
+    
+    
+    <!-- Inventory Routing Elements -->
+
+<!--  mason simple types -->
+
+    <xsd:simpleType name="StyleIdentifierType">
+        <xsd:annotation>
+            <xsd:documentation>
+                the type used to identify a style or parent of skus
+            </xsd:documentation>
+        </xsd:annotation>
+        
+        <xsd:restriction base="xsd:string">
+            
+            <xsd:minLength value='1'/>
+        </xsd:restriction>
+    </xsd:simpleType>
+    <xsd:simpleType name="TextContentType">
+        <xsd:annotation>
+            <xsd:documentation>
+                Required text type
+            </xsd:documentation>
+        </xsd:annotation>
+        <xsd:restriction base="xsd:string">
+            <xsd:minLength value='1'/>
+        </xsd:restriction>
+    </xsd:simpleType>
+    
+    <xsd:simpleType name="AmountType">
+        <xsd:annotation>
+            <xsd:documentation>
+                pricing amount type, non negative and monetary format
+            </xsd:documentation>
+        </xsd:annotation>
+        
+        <xsd:restriction base="xsd:decimal">
+            
+            <xsd:minInclusive value="00.00"/>
+            <xsd:maxInclusive value="9999.99"/>
+            
+        </xsd:restriction>
+    </xsd:simpleType>
+    <xsd:simpleType name="nonZeroInteger">
+        <xsd:annotation>
+            <xsd:documentation>
+                a non zero integer type
+            </xsd:documentation>
+        </xsd:annotation>
+        
+        <xsd:restriction base="xsd:integer">
+            
+            <xsd:minInclusive value="1"/>
+            <xsd:maxInclusive value="9999999999999999"/>
+            
+        </xsd:restriction>
+    </xsd:simpleType>
+    
+    <xsd:complexType name="SimpleWebServiceResponseType">
+        <xsd:sequence>
+            <xsd:element name="success" type="xsd:boolean"></xsd:element>
+            <xsd:element name="Message">
+                <xsd:simpleType>
+                    <xsd:restriction base="xsd:string"/>
+                </xsd:simpleType>
+            </xsd:element>
+        </xsd:sequence>
+    </xsd:complexType>
+    
+    
+    <!--  mason simple types -->
+
+    <xsd:complexType name="InventoryRequestParametersType">
+        
+        <xsd:annotation>
+            <xsd:documentation>The actual parameters of the web call</xsd:documentation>
+        </xsd:annotation>
+        <xsd:sequence>
+            <xsd:element name="RoutingInformation" type="tns:RoutingRequestType"></xsd:element>
+            <xsd:element name="Style" type="tns:StyleIdentifierType"></xsd:element>
+            <xsd:element name="ServiceRequests" minOccurs="0" maxOccurs="1" type="tns:ServiceRequestsType"></xsd:element>
+        </xsd:sequence>
+        
+    </xsd:complexType>
+    <xsd:element name="InventoryProcessResponse">
+        <xsd:complexType>
+            <xsd:sequence>
+                <xsd:element name="InventoryProcessResponseAck" type="tns:SimpleWebServiceResponseType" />
+            </xsd:sequence>
+        </xsd:complexType>
+    </xsd:element>
+    <xsd:element name="InventoryProcessRequest" >
+        
+        <xsd:complexType>
+            <xsd:sequence>
+                <xsd:element name="InventoryProcessRequestContents" type="tns:InventoryRequestParametersType" />
+            </xsd:sequence>
+        </xsd:complexType>
+        
+        
+    </xsd:element>
+    <xsd:element name="InventoryProcessResponseContents" type="tns:InventoryRequestParametersType" />
+    <xsd:complexType name="RequestedServicesType">
+        
+        <xsd:attribute use="required" name="serviceName">
+        
+        <xsd:annotation/>
+            <xsd:simpleType>
+                <xsd:restriction base="xsd:string">
+                    <xsd:enumeration value="Attributes"/>
+                    <xsd:enumeration value="Pricing"/>
+                    <xsd:enumeration value="Quantity"/>
+                    <xsd:enumeration value="Images"/>
+                </xsd:restriction>
+            </xsd:simpleType>
+        
+        </xsd:attribute>
+    </xsd:complexType>
+</xsd:schema>
+
+
+
+
+
+
+
+

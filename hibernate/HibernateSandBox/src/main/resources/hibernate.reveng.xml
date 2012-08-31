@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-reverse-engineering PUBLIC "-//Hibernate/Hibernate Reverse Engineering DTD 3.0//EN" "http://hibernate.sourceforge.net/hibernate-reverse-engineering-3.0.dtd">
+<hibernate-reverse-engineering>
+  <schema-selection match-catalog="mydb"/>
+  <table-filter match-name="transmission_report"/>
+  <table-filter match-name="internal_field_name"/>
+  <table-filter match-name="participants"/>
+  <table-filter match-name="submitted_field_text"/>
+  <table-filter match-name="transmission_report_identifier"/>
+  <table-filter match-name="data_type_codes"/>
+  <table-filter match-name="transmission_data_field"/>
+  <table-filter match-name="transmission_report_assignment"/>
+  <table-filter match-name="transmissions"/>
+</hibernate-reverse-engineering>

@@ -1,0 +1,64 @@
+ .alignright
+{
+    text-align: right;
+}
+
+ .alignleft
+{
+    text-align: left;
+}
+
+.errors
+{
+    color: red;
+    font-family: Arial,Helvetica,sans-serif;
+    font-style: normal;
+    font-size: small;
+    
+}
+
+body
+{
+    font-family: Arial,Helvetica,sans-serif;
+    font-style: normal;
+}
+.headerClass
+{
+    font-weight: bold;
+    font-variant: normal;
+    color: white;
+    background-color: #3333ff;
+    text-align: left;
+}
+
+.tableCellId
+{
+    border: thin solid #3333ff;
+    width:30%;
+
+}
+.tableCellName
+{
+    border: thin solid #3333ff;
+     width:40%;
+
+}
+.tableCellButton
+{
+    border: thin solid #3333ff;
+    width:15%;
+    text-align:center;
+ 
+}
+
+.Header
+{
+   font-family: Arial,Helvetica,sans-serif;
+   font-style: normal;
+   font-weight: bold;
+   font-size: 24px;
+   background-color: #3333ff;
+   color: white;
+}
+
+

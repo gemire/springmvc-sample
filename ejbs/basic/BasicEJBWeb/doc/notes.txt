@@ -1,0 +1,3 @@
+The spring version must be at least 3.0.5 for the autowire interceptor to work.
+The database connection has been commented out from the ejb-jar.xml in the 
+ejb file as well as from the web.xml file
