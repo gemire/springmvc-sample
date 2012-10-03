@@ -18,7 +18,8 @@ abstract class TweetSet {
    *  in the original set for which the predicate is true.
    */
   def filter(p: Tweet => Boolean): TweetSet = {
-   createUnion(this, new Empty, p) 
+    //createUnion(this, new Empty, p) 
+    filter0(p, new Empty)
   }
 
   /**
@@ -41,8 +42,9 @@ abstract class TweetSet {
 
   def union(that: TweetSet): TweetSet =
     {
-     
+
       createUnion(that, createUnion(this, new Empty, t =>{ true}), t =>{ true})
+      
     }
 
   // Hint: the method "remove" on TweetSet will be very useful.
@@ -95,7 +97,15 @@ class Empty extends TweetSet {
 
 class NonEmpty(elem: Tweet, left: TweetSet, right: TweetSet) extends TweetSet {
 
-  def filter0(p: Tweet => Boolean, accu: TweetSet): TweetSet = ???
+  def filter0(p: Tweet => Boolean, accu: TweetSet): TweetSet =
+    {
+      if (!this.isEmpty && p(this.head)) {
+
+        this.tail.filter0(p, accu.incl(new Tweet(this.head.user, this.head.text, this.head.retweets)))
+      } else
+        accu
+
+    }
 
   // The following methods are provided for you, and do not have to be changed
   // -------------------------------------------------------------------------
