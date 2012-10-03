@@ -48,8 +48,21 @@ abstract class TweetSet {
     }
 
   // Hint: the method "remove" on TweetSet will be very useful.
-  def ascendingByRetweet: Trending = ???
-
+  def ascendingByRetweet: Trending = {
+       def ascending0(currList:TweetSet,trendListAccum:Trending):Trending
+    = {
+      if(currList.isEmpty)
+      {
+        trendListAccum
+      }
+      else
+      {
+         ascending0( currList.remove(currList.findMin).tail,trendListAccum + currList.findMin)
+      }
+    }
+    
+    ascending0(this,new EmptyTrending)
+  }
   // The following methods are provided for you, and do not have to be changed
   // -------------------------------------------------------------------------
   def incl(x: Tweet): TweetSet
