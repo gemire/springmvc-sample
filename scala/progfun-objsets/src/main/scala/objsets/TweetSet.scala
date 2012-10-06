@@ -18,8 +18,8 @@ abstract class TweetSet {
    *  in the original set for which the predicate is true.
    */
   def filter(p: Tweet => Boolean): TweetSet = {
-    //createUnion(this, new Empty, p) 
-    filter0(p, new Empty)
+    createUnion(this, new Empty, p) 
+    //filter0(p, new Empty)
   }
 
   /**
@@ -43,25 +43,21 @@ abstract class TweetSet {
   def union(that: TweetSet): TweetSet =
     {
 
-      createUnion(that, createUnion(this, new Empty, t =>{ true}), t =>{ true})
-      
+      createUnion(that, createUnion(this, new Empty, t => { true }), t => { true })
+
     }
 
   // Hint: the method "remove" on TweetSet will be very useful.
   def ascendingByRetweet: Trending = {
-       def ascending0(currList:TweetSet,trendListAccum:Trending):Trending
-    = {
-      if(currList.isEmpty)
-      {
+    def ascending0(currList: TweetSet, trendListAccum: Trending): Trending = {
+      if (currList.isEmpty) {
         trendListAccum
-      }
-      else
-      {
-         ascending0( currList.remove(currList.findMin).tail,trendListAccum + currList.findMin)
+      } else {
+        ascending0(currList.remove(currList.findMin), trendListAccum + currList.findMin)
       }
     }
-    
-    ascending0(this,new EmptyTrending)
+
+    ascending0(this, new EmptyTrending)
   }
   // The following methods are provided for you, and do not have to be changed
   // -------------------------------------------------------------------------
@@ -112,9 +108,12 @@ class NonEmpty(elem: Tweet, left: TweetSet, right: TweetSet) extends TweetSet {
 
   def filter0(p: Tweet => Boolean, accu: TweetSet): TweetSet =
     {
-      if (!this.isEmpty && p(this.head)) {
-
-        this.tail.filter0(p, accu.incl(new Tweet(this.head.user, this.head.text, this.head.retweets)))
+      if (!this.isEmpty) {
+        if (p(this.head))
+        	this.tail.filter0(p, accu.incl(new Tweet(this.head.user, this.head.text, this.head.retweets)))
+        else
+          this.tail.filter0(p,accu)
+        
       } else
         accu
 
@@ -186,12 +185,19 @@ object GoogleVsApple {
 
   val apple = List("ios", "iOS", "iphone", "iPhone", "ipad", "iPad")
 
-  val googleTweets: TweetSet = ???
+  def findTweets(searchItems: List[String], accum: TweetSet): TweetSet =
+    {
+       if (searchItems.isEmpty) accum
+        else findTweets(searchItems.tail,accum.union(TweetReader.allTweets.filter(tw => tw.text.toUpperCase().contains(searchItems.head.toUpperCase()))))
+        
+    }
 
-  val appleTweets: TweetSet = ???
+  val googleTweets: TweetSet = findTweets(google, new Empty)
+
+  val appleTweets: TweetSet = findTweets(apple, new Empty)
 
   // Q: from both sets, what is the tweet with highest #retweets?
-  val trending: Trending = ???
+  val trending: Trending = null
 }
 
 object Main extends App {
