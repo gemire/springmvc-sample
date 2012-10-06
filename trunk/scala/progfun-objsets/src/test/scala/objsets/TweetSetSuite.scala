@@ -22,10 +22,16 @@ class TweetSetSuite extends FunSuite {
     if (set.isEmpty) 0
     else 1 + size(set.tail)
   }
- 
+
   test("filter: on empty set") {
     new TestSets {
       assert(size(set1.filter(tw => tw.user == "a")) === 0)
+    }
+  }
+
+  test("filter: a and contains") {
+    new TestSets {
+      assert(size(set5.filter(tw => tw.text.contains("a"))) === 1)
     }
   }
 
@@ -40,16 +46,15 @@ class TweetSetSuite extends FunSuite {
       assert(size(set5.filter(tw => tw.retweets == 20)) === 2)
     }
   }
-  
-   test("ascending: set5") {
+
+  test("ascending: set5") {
     new TestSets {
       val trends = set5.ascendingByRetweet
       assert(!trends.isEmpty)
       assert(trends.head.user === "c")
     }
   }
-  
- 
+
   test("union: set4c and set4d") {
     new TestSets {
       assert(size(set4c.union(set4d)) === 4)
@@ -68,12 +73,23 @@ class TweetSetSuite extends FunSuite {
     }
   }
 
- 
- 
-   test("union: mytest") {
+  test("union: mytest") {
     new TestSets {
       assert(size(set1.union(set2)) === 1)
     }
   }
-  
+
+  test("google test") {
+
+    def testF(tw: Tweet, item: String): Boolean = {
+
+      tw.text.toUpperCase().indexOf(item.toUpperCase()) > -1
+    }
+    assert(size(TweetReader.allTweets.filter(tw => tw.text.contains("the"))) === 179)
+    assert(size(GoogleVsApple.googleTweets) === 38)
+    new TestSets {
+      assert(size(set3.filter(tw => testF(tw, "body"))) === 2)
+    }
+  }
+
 }
