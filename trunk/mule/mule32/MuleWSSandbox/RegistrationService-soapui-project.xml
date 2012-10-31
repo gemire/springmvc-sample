@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<con:soapui-project name="RegistrationService" resourceRoot="" soapui-version="3.6.1" abortOnError="false" runType="SEQUENTIAL" xmlns:con="http://eviware.com/soapui/config"><con:settings/><con:interface xsi:type="con:WsdlInterface" wsaVersion="NONE" name="RegistrationServiceWSDLSOAP" type="wsdl" bindingName="{uri:dhenton9000:registrationService}RegistrationServiceWSDLSOAP" soapVersion="1_1" anonymous="optional" definition="http://localhost:9091/registration?wsdl" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:settings/><con:definitionCache type="TEXT" rootPart="http://localhost:9091/registration?wsdl"><con:part><con:url>http://localhost:9091/registration?wsdl</con:url><con:content><![CDATA[<wsdl:definitions name="RegistrationServiceWSDL" targetNamespace="uri:dhenton9000:registrationService" xmlns:ref="uri:dhenton9000:registrationService:ref" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:tns="uri:dhenton9000:registrationService" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+<con:soapui-project activeEnvironment="Default" name="registration" resourceRoot="" soapui-version="4.5.1" abortOnError="false" runType="SEQUENTIAL" xmlns:con="http://eviware.com/soapui/config"><con:settings/><con:interface xsi:type="con:WsdlInterface" wsaVersion="NONE" name="RegistrationServiceWSDLSOAP" type="wsdl" bindingName="{uri:dhenton9000:registrationService}RegistrationServiceWSDLSOAP" soapVersion="1_1" anonymous="optional" definition="http://localhost:9091/registration?wsdl" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:settings/><con:definitionCache type="TEXT" rootPart="http://localhost:9091/registration?wsdl"><con:part><con:url>http://localhost:9091/registration?wsdl</con:url><con:content><![CDATA[<wsdl:definitions name="RegistrationServiceWSDL" targetNamespace="uri:dhenton9000:registrationService" xmlns:ref="uri:dhenton9000:registrationService:ref" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:tns="uri:dhenton9000:registrationService" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
   <wsdl:types>
     <xsd:schema targetNamespace="uri:dhenton9000:registrationService">
       <xsd:import namespace="uri:dhenton9000:registrationService:ref" schemaLocation="http://localhost:9091/registration?xsd=RegistrationServicesNew.xsd"/>
@@ -69,17 +69,51 @@
       <minLength value="1"/>
     </restriction>
   </simpleType>
-</schema>]]></con:content><con:type>http://www.w3.org/2001/XMLSchema</con:type></con:part></con:definitionCache><con:endpoints><con:endpoint>http://localhost:9091/registration</con:endpoint></con:endpoints><con:operation isOneWay="false" action="uri:dhenton9000:registrationService/Register" name="Register" bindingOperationName="Register" type="Request-Response" inputName="" receivesAttachments="false" sendsAttachments="false" anonymous="optional"><con:settings/><con:call name="Request 1"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting></con:settings><con:encoding>UTF-8</con:encoding><con:endpoint>http://localhost:9091/registration</con:endpoint><con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:uri="uri:dhenton9000:registrationService:ref">
+</schema>]]></con:content><con:type>http://www.w3.org/2001/XMLSchema</con:type></con:part></con:definitionCache><con:endpoints><con:endpoint>http://localhost:9091/registration</con:endpoint></con:endpoints><con:operation isOneWay="false" action="uri:dhenton9000:registrationService/Register" name="Register" bindingOperationName="Register" type="Request-Response" inputName="" receivesAttachments="false" sendsAttachments="false" anonymous="optional"><con:settings/><con:call name="Simple Sample"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting></con:settings><con:encoding>UTF-8</con:encoding><con:endpoint>http://localhost:9091/registration</con:endpoint><con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:uri="uri:dhenton9000:registrationService:ref">
    <soapenv:Header/>
    <soapenv:Body>
       <uri:RegisterInput>
-         <uri:name>zzzzzzzzzzzzzfred</uri:name>
-         <uri:password>zed</uri:password>
+         <uri:name>John</uri:name>
+         <uri:password>bonzo</uri:password>
          <uri:registrationDetails>
-            <uri:paymentPlan>ted</uri:paymentPlan>
-            <uri:months>24</uri:months>
+            <uri:paymentPlan>Alpha</uri:paymentPlan>
+            <uri:months>55</uri:months>
          </uri:registrationDetails>
-         <uri:registrationDate>2010-10-12T00:00:00</uri:registrationDate>
+         <uri:registrationDate>2002-03-01T10:10:10</uri:registrationDate>
       </uri:RegisterInput>
    </soapenv:Body>
-</soapenv:Envelope>]]></con:request><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:wsaConfig mustUnderstand="NONE" version="200508" action="uri:dhenton9000:registrationService/Register"/><con:wsrmConfig version="1.2"/></con:call></con:operation></con:interface><con:properties/><con:wssContainer/></con:soapui-project>
+</soapenv:Envelope>]]></con:request><con:credentials><con:authType>Global HTTP Settings</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:wsaConfig mustUnderstand="NONE" version="200508" action="uri:dhenton9000:registrationService/Register"/><con:wsrmConfig version="1.2"/></con:call></con:operation></con:interface><con:testSuite name="RegistrationTests"><con:settings/><con:runType>SEQUENTIAL</con:runType><con:testCase failOnError="true" failTestCaseOnErrors="true" keepSession="false" maxResults="0" name="Increment Test" searchProperties="true" id="05c979d7-9bd3-4d5c-b290-3939b9bfd600"><con:settings/><con:testStep type="groovy" name="Increment Month Counter"><con:settings/><con:config><script>import java.text.*;
+def valueVar = context.expand( '${#TestSuite#incrementValue}' )
+valueVar =  (valueVar.toInteger() + 1)
+testRunner.testCase.testSuite.setPropertyValue('incrementValue', ''+valueVar)
+log.info("New  number is " + context.expand( '${#TestSuite#incrementValue}' ))
+
+def dateVar = new Date();
+
+SimpleDateFormat sf = new SimpleDateFormat("yyyy-MM-dd'T'kk:mm:ss")
+def dateStr = sf.format(dateVar)
+testRunner.testCase.setPropertyValue('dateValue',dateStr)
+log.info("date "+dateStr)
+return "Plan request "+valueVar
+//2002-03-01T10:10:10</script></con:config></con:testStep><con:testStep type="transfer" name="Transfer Counter to Props"><con:settings/><con:config xsi:type="con:PropertyTransfersStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:transfers setNullOnMissingSource="true" transferTextContent="true" failOnError="true" ignoreEmpty="false" transferToAll="false" useXQuery="false" entitize="false" transferChildNodes="false"><con:name>main transfer</con:name><con:sourceType>dateValue</con:sourceType><con:sourceStep>#TestCase#</con:sourceStep><con:targetType>dateItem</con:targetType><con:targetStep>Message Properties</con:targetStep></con:transfers></con:config></con:testStep><con:testStep type="properties" name="Message Properties"><con:settings/><con:config xsi:type="con:PropertiesStep" saveFirst="true" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:properties><con:property><con:name>planItem</con:name><con:value>Plan request 113</con:value></con:property><con:property><con:name>dateItem</con:name><con:value>2012-10-31T14:34:55</con:value></con:property></con:properties></con:config></con:testStep><con:testStep type="request" name="Main Request"><con:settings/><con:config xsi:type="con:RequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:interface>RegistrationServiceWSDLSOAP</con:interface><con:operation>Register</con:operation><con:request name="Main Request"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting></con:settings><con:encoding>UTF-8</con:encoding><con:endpoint>http://localhost:9091/registration</con:endpoint><con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:uri="uri:dhenton9000:registrationService:ref">
+   <soapenv:Header/>
+   <soapenv:Body>
+      <uri:RegisterInput>
+         <uri:name>John </uri:name>
+         <uri:password>fred</uri:password>
+         <uri:registrationDetails>
+            <uri:paymentPlan>${planItem}</uri:paymentPlan>
+            <uri:months>${#TestSuite#incrementValue}</uri:months>
+         </uri:registrationDetails>
+         <uri:registrationDate>${#TestCase#dateValue}</uri:registrationDate>
+      </uri:RegisterInput>
+   </soapenv:Body>
+</soapenv:Envelope>]]></con:request><con:assertion type="SOAP Response"/><con:assertion type="Schema Compliance"><con:configuration/></con:assertion><con:assertion type="SOAP Fault Assertion"/><con:assertion type="XQuery Match" name="Assert ReponseInformation"><con:configuration><path>declare namespace soap='http://schemas.xmlsoap.org/soap/envelope/';
+declare namespace ns1='uri:dhenton9000:registrationService:ref';
+//ns1:responseInformation/text()</path><content>&lt;xml-fragment>${#TestSuite#incrementValue}&lt;/xml-fragment></content><allowWildcards>true</allowWildcards></con:configuration></con:assertion><con:assertion type="XQuery Match" name="Assert Payment Department"><con:configuration><path>declare namespace soap='http://schemas.xmlsoap.org/soap/envelope/';
+declare namespace ns1='uri:dhenton9000:registrationService:ref';
+//ns1:paymentDepartment/text()</path><content>&lt;xml-fragment>${planItem}&lt;/xml-fragment></content><allowWildcards>true</allowWildcards></con:configuration></con:assertion><con:credentials><con:authType>Global HTTP Settings</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:wsaConfig mustUnderstand="NONE" version="200508"/><con:wsrmConfig version="1.2"/></con:request></con:config></con:testStep><con:testStep type="transfer" name="Grab Date"><con:settings/><con:config xsi:type="con:PropertyTransfersStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:transfers setNullOnMissingSource="false" transferTextContent="true" failOnError="true" ignoreEmpty="false" transferToAll="false" useXQuery="false" entitize="false" transferChildNodes="true"><con:name>grabDate</con:name><con:sourceType>Response</con:sourceType><con:sourceStep>Main Request</con:sourceStep><con:sourcePath>declare namespace soap='http://schemas.xmlsoap.org/soap/envelope/';
+declare namespace ns1='uri:dhenton9000:registrationService:ref';
+//ns1:currentTime/text()</con:sourcePath><con:targetType>responseDate</con:targetType><con:targetStep>Date Properties</con:targetStep></con:transfers></con:config></con:testStep><con:testStep type="properties" name="Date Properties"><con:settings/><con:config xsi:type="con:PropertiesStep" saveFirst="true" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:properties><con:property><con:name>responseDate</con:name><con:value>2012-10-31T14:34:56.005-05:00</con:value></con:property></con:properties></con:config></con:testStep><con:testStep type="groovy" name="processDateScript"><con:settings/><con:config><script>def dateItem = context.expand( '${responseDate}' )
+
+log.info("the date is "+dateItem);</script></con:config></con:testStep><con:properties><con:property><con:name>dateValue</con:name><con:value>2012-10-31T14:34:55</con:value></con:property></con:properties></con:testCase><con:properties><con:property><con:name>incrementValue</con:name><con:value>128</con:value></con:property></con:properties></con:testSuite><con:properties/><con:wssContainer/></con:soapui-project>
