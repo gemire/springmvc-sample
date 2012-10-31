@@ -74,11 +74,12 @@ public class RegistrationServiceWSDLImpl implements RegistrationServiceWSDL, Mul
 
 
         RegisterResponse _return = new RegisterResponse();
-        _return.setResponseInformation(replyString);
+       // _return.setResponseInformation(replyString);
+         _return.setResponseInformation(inputParameter.getRegistrationDetails().getMonths().toString());
         _return.setCurrentTime(Calendar.getInstance());
         BigDecimal dd = BigDecimal.valueOf(100.25d);
         _return.setTotalCost(dd);
-        _return.setPaymentDepartment("This is a response");
+        _return.setPaymentDepartment(inputParameter.getRegistrationDetails().getPaymentPlan());
         logger.info("about to return "+_return);
         return _return;
 
