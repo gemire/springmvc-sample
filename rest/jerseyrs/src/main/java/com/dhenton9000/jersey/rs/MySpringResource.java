@@ -11,6 +11,15 @@ import javax.ws.rs.core.Context;
 import javax.ws.rs.core.UriInfo;
 import com.sun.jersey.api.core.ResourceContext;
 
+/**
+ * In this case the root is :
+ * http://localhost:9090/jerseyrs/resources/
+ * then add 'spring/myresource' because of the path
+ * 
+ * http://localhost:9090/jerseyrs/resources/spring/myresource
+ * 
+ * @author dhenton
+ */
 @Path("/spring/myresource/")
 public class MySpringResource {
 
@@ -21,6 +30,12 @@ public class MySpringResource {
     @Context
     protected ResourceContext resourceContext;
 
+    
+    
+    /**
+     * To get here, use this, since this is serving at the root of the path
+     * http://localhost:9090/jerseyrs/resources/spring/myresource
+    */
     @GET
     @Produces("text/html")
     public String getIt() {
@@ -28,6 +43,11 @@ public class MySpringResource {
                 + getWireClass().getMessage() + " " + appDAO.toString() + "</h1></html></body>";
     }
 
+    /**
+     * http://localhost:9090/jerseyrs/resources/spring/myresource/xml/2
+     * @param id
+     * @return 
+     */
     @GET
     @Path("xml/{id}/")
     @Produces("application/xml")
@@ -35,8 +55,13 @@ public class MySpringResource {
         return appDAO.findApplicationsWithGroupsAndUsers(id);
     }
 
-    // nothing added here so as to delegate to the various methods in the
-    // subresource class of TestChain
+    /**
+     * nothing added here so as to delegate to the various methods in the
+     * subresource class of TestChain
+     * http://localhost:9090/jerseyrs/resources/spring/myresource/chain/55
+     * @param id
+     * @return 
+     */
     @Path("chain/{id}/")
     public TestChain getChain(@PathParam("id") Integer id) {
 

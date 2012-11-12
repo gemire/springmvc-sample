@@ -30,7 +30,7 @@ zzzzzzzzzzzzzzzzzzzzzzz
 
     <appender name="FILE" class="org.apache.log4j.FileAppender">
         <param name="threshold" value="DEBUG"/>
-        <param name="File" value="/temp/weblog.txt"/>
+        <param name="File" value="./weblog.txt"/>
         <layout class="org.apache.log4j.PatternLayout">
             <param name="ConversionPattern" value="%d | %-5p  | %c | %4L | %m%n"/>
         </layout>
