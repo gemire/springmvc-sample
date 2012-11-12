@@ -11,7 +11,8 @@ public class MyResource{
 * 
 * http://localhost:9090/jerseyrs/resources/myresource to see this in 
 * action
-* the jerseyrs comes from the project name resources is from the web.xml,
+* the jerseyrs comes from the project name;
+* resources is from the web.xml url-pattern
 * in this case the jetty instance loaded in the pom file
 * and the myresource is in the Path tag above
 * 
