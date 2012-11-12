@@ -34,6 +34,9 @@ public class MySpringResource {
     
     /**
      * To get here, use this, since this is serving at the root of the path
+     * This also tests bean injected via xml for the WireClass sample, which
+     * is created and primed in the spring-beans.xml file. That in turn is 
+     * loaded by stuff in the web.xml
      * http://localhost:9090/jerseyrs/resources/spring/myresource
     */
     @GET
