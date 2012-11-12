@@ -91,7 +91,7 @@
 						<name>Test Realm</name> <config>etc/realm.properties</config> </userRealm> 
 						</userRealms> -->
 					<requestLog implementation="org.mortbay.jetty.NCSARequestLog">
-						<filename>/temp/yyyy_mm_dd.request.log</filename>
+						<filename>/home/dhenton/logs/yyyy_mm_dd.request.log</filename>
 						<retainDays>90</retainDays>
 						<append>true</append>
 						<extended>false</extended>
