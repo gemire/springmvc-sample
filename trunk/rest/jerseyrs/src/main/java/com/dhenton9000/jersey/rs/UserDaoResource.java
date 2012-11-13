@@ -5,6 +5,7 @@
 package com.dhenton9000.jersey.rs;
 
 import com.dhenton9000.hibernatesecurity.Users;
+import com.dhenton9000.hibernatesecurity.converters.UsersConverter;
 import com.dhenton9000.hibernatesecurity.dao.UsersDAO;
 import com.sun.jersey.api.core.ResourceContext;
 import javax.ws.rs.Consumes;
@@ -35,12 +36,15 @@ public class UserDaoResource {
     @PUT
     @Path("putitem/")
     @Consumes(MediaType.APPLICATION_XML)
-    public Response putUser(Users u) {
+    public Response putUser(UsersConverter u) {
         Response res;
         if (userDAO.findById(u.getUserId()) != null) {
             res = Response.noContent().build();
         } else {
-            userDAO.save(u);
+            Users uNew = new Users();
+            uNew.setUserId(u.getUserId());
+            uNew.setUsername(u.getUsername());
+            userDAO.save(uNew);
             res = Response.created(uriInfo.getAbsolutePath()).build();
         }
         return res;

@@ -1,10 +1,13 @@
 package com.dhenton9000.hibernatetest.marshal;
+import com.dhenton9000.hibernatesecurity.Users;
 import com.dhenton9000.hibernatetest.dataaccess.*;
 
 import com.dhenton9000.hibernatesecurity.converters.ApplicationsConverter;
 import com.dhenton9000.hibernatesecurity.converters.GroupsConverter;
+import com.dhenton9000.hibernatesecurity.converters.UsersConverter;
 import com.dhenton9000.hibernatesecurity.dao.ApplicationsDAO;
 import com.dhenton9000.hibernatesecurity.dao.GroupsDAO;
+import com.dhenton9000.hibernatesecurity.dao.UsersDAO;
 import com.dhenton9000.jaxb.utils.MarshallUtil;
 import static org.junit.Assert.*;
 
@@ -58,10 +61,10 @@ public class MarshalTestCase {
                     
         
         String Obj2XML = MarshallUtil.Obj2XML(k);
-        log.debug("\n"+Obj2XML);
+        //log.debug("\n"+Obj2XML);
     }
      
-    @Test
+   // @Test
     public void testfindApplicationsMarshall() throws Exception
     {
        
@@ -71,8 +74,21 @@ public class MarshalTestCase {
                     
         
         String Obj2XML = MarshallUtil.Obj2XML(k);
-        log.debug("\n"+Obj2XML);
+       // log.debug("\n"+Obj2XML);
     }   
      
-  
+    @Test
+    public void testfindUserMarshall() throws Exception
+    {
+       
+        UsersDAO gDAO = (UsersDAO) ctx.getBean("usersDAO");
+        Users k = gDAO.findById("ted");
+        log.debug("$$$$$$$$$$$$$$$$$$$$ "+k);
+        UsersConverter kConvert = new UsersConverter(k);
+         
+                    
+        
+         String Obj2XML = MarshallUtil.Obj2XML(kConvert);
+         log.debug("\n"+Obj2XML);
+    }   
 }///////////////////////////////////////////////////////////////////////
