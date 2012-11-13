@@ -8,10 +8,7 @@ import com.dhenton9000.hibernatesecurity.Users;
 import com.dhenton9000.hibernatesecurity.converters.UsersConverter;
 import com.dhenton9000.hibernatesecurity.dao.UsersDAO;
 import com.sun.jersey.api.core.ResourceContext;
-import javax.ws.rs.Consumes;
-import javax.ws.rs.PUT;
-import javax.ws.rs.Path;
-import javax.ws.rs.PathParam;
+import javax.ws.rs.*;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
@@ -39,7 +36,7 @@ public class UserDaoResource {
     public Response putUser(UsersConverter u) {
         Response res;
         if (userDAO.findById(u.getUserId()) != null) {
-            res = Response.noContent().build();
+            res = Response.notModified().build();
         } else {
             Users uNew = new Users();
             uNew.setUserId(u.getUserId());
@@ -51,20 +48,19 @@ public class UserDaoResource {
 
     }
 
-    
-    
     /**
      * http://localhost:9090/jerseyrs/resources/spring/users/put/fred/ted/
+     *
      * @param username
      * @param userId
-     * @return 
+     * @return
      */
     @PUT
     @Path("put/{username}/{userid}/")
     public Response putUser(@PathParam("username") String username, @PathParam("userid") String userId) {
         Response res;
         if (userDAO.findById(userId) != null) {
-            res = Response.noContent().build();
+            res = Response.notModified().build();
         } else {
             Users u = new Users();
             u.setUserId(userId);
@@ -72,6 +68,27 @@ public class UserDaoResource {
             userDAO.save(u);
             res = Response.created(uriInfo.getAbsolutePath()).build();
         }
+        return res;
+    }
+
+    @DELETE
+    @Path("delete/{userid}/")
+    public Response deleteUser(@PathParam("userid") String userId) {
+        Response res;
+        Users u = userDAO.findById(userId);
+
+        if (u == null) {
+            logger.debug("hit found in delete for " + userId);
+            res = Response.notModified().build();
+        } else {
+            logger.debug("hit delete for " + userId);
+            userDAO.delete(u);
+
+            res = Response.created(uriInfo.getAbsolutePath()).build();
+        }
+
+
+
         return res;
     }
 
