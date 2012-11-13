@@ -30,5 +30,10 @@
         <property name="wireClass" ref="jobBean" />
         <property name="appDAO" ref="applicationsDAO" />
     </bean>
+    
+      <bean id="userDaoResource" class="com.dhenton9000.jersey.rs.UserDaoResource">
+          <property name="userDAO" ref="usersDAO" />
+    </bean>
+    
            
 </beans>
