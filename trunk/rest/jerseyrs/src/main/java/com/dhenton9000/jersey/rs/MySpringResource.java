@@ -72,6 +72,9 @@ public class MySpringResource {
         t.setId(id);
         return t;
     }
+    
+    
+    
 
     /**
      * @return the wireClass
