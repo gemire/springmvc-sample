@@ -15,7 +15,7 @@ import javax.ws.rs.core.MediaType;
  *
  * @author dhenton
  */
-@Path("/post/resource/")
+@Path("post/resource/")
 public class PostResource {
 
     @POST

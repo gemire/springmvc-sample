@@ -31,9 +31,11 @@
         <property name="appDAO" ref="applicationsDAO" />
     </bean>
     
-      <bean id="userDaoResource" class="com.dhenton9000.jersey.rs.UserDaoResource">
+    <bean id="userDaoResource" class="com.dhenton9000.jersey.rs.UserDaoResource">
           <property name="userDAO" ref="usersDAO" />
     </bean>
-    
+      <bean id="jsonResource" class="com.dhenton9000.jersey.rs.JsonResource">
+          <property name="userDAO" ref="usersDAO" />
+    </bean>
            
 </beans>
