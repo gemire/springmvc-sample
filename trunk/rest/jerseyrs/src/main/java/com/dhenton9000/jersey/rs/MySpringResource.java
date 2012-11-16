@@ -20,7 +20,7 @@ import com.sun.jersey.api.core.ResourceContext;
  * 
  * @author dhenton
  */
-@Path("/spring/myresource/")
+@Path("spring/myresource/")
 public class MySpringResource {
 
     private WireClass wireClass = null;

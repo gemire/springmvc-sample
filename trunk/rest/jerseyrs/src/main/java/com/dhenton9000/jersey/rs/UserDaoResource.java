@@ -20,7 +20,7 @@ import org.apache.log4j.Logger;
  *
  * @author dhenton
  */
-@Path("/spring/users/")
+@Path("spring/users/")
 public class UserDaoResource {
 
     private UsersDAO userDAO = null;
