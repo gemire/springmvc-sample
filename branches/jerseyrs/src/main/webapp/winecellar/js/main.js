@@ -14,7 +14,7 @@ var AppRouter = Backbone.Router.extend({
     },
 
 	routes: {
-		""			: "list",
+		""		: "list",
 		"wines/new"	: "newWine",
 		"wines/:id"	: "wineDetails"
 	},
@@ -25,6 +25,7 @@ var AppRouter = Backbone.Router.extend({
 
 	wineDetails: function(id) {
         this.before(function() {
+            console.log('wine details 2')
 			var wine = app.wineList.get(id);
 		    app.showView( '#content', new WineView({model: wine}) );
         });

@@ -3,12 +3,14 @@ window.WineView = Backbone.View.extend({
     tagName: "div", // Not required since 'div' is the default if no el or tagName specified
 
     initialize: function() {
+        console.log('dhh details init')
         this.template = _.template(tpl.get('wine-details'));
 		this.model.bind("change", this.render, this);
     },
 
     render: function(eventName) {
 		$(this.el).html(this.template(this.model.toJSON()));
+                console.log('dhh '+this.model.toJSON())
 		return this;
     },
 
