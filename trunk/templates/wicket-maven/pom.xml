@@ -88,8 +88,8 @@
               						<name>Test Realm</name> <config>etc/realm.properties</config> </userRealm> 
               						</userRealms> -->
                     <requestLog implementation="org.mortbay.jetty.NCSARequestLog">
-                        <filename>./yyyy_mm_dd.request.log</filename>
-                        <retainDays>90</retainDays>
+                        <filename>./web_request.log</filename>
+                        <retainDays>1</retainDays>
                         <append>true</append>
                         <extended>false</extended>
                         <logTimeZone>GMT</logTimeZone>
