@@ -22,7 +22,7 @@ import org.apache.wicket.request.mapper.parameter.PageParameters;
 import org.apache.wicket.util.string.Strings;
 
 /**
- * Base class for all example pages.
+ * Base class for all pages.
  * 
  * @author Jonathan Locke
  */

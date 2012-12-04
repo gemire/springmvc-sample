@@ -6,11 +6,20 @@
             <p><b>Home Page</b></p>
             <h3>Samples At:</h3>
                     <br>http://www.wicket-library.com/wicket-examples-6.0.x/index.html</br>
-
-            <p>
-                <!-- <span wicket:id="panel1">contents here</span> -->
-            </p>
-
+                    
+                    <p>
+                        This content is from the HomePage.html in com.dhenton900.wicket
+                        HomePage.java which derives from TemplatePage.java. The
+                        TemplatePage.html uses its wicket:child tag to look
+                        for the extend tag here and replace the content of that
+                        child tag with this extend tag content.
+                    </p>
+                    <p>TemplatePage.html is the layout to which markup is 
+                        'substituted' by the classes that inherit from its corresponding
+                        java class. The wicket:child tag has to be here, and
+                        the html files for the child must have a wicket:extend
+                        tag for substitution to take place
+                    
         </wicket:extend>
 
     </body>

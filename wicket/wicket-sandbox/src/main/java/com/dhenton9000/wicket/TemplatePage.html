@@ -1,41 +1,33 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:wicket="http://wicket.apache.org">
-<head>
-    <title wicket:id="title">title comes here</title>
-    <link rel="stylesheet" type="text/css" href="styles/main.css"/>
-    <link rel="stylesheet" type="text/css" href="styles/template/style.css"/>
-</head>
-<body>
-     
+    <head>
+        <title wicket:id="title">title comes here</title>
+        <link rel="stylesheet" type="text/css" href="styles/main.css"/>
+        <link rel="stylesheet" type="text/css" href="styles/template/style.css"/>
+    </head>
+    <body>
 
-	<div id="header" class="borderedBlock">
-	 Header
-	</div>
 
-	<table width="100%">
+        <div id="header" class="borderedBlock">
+            Header
+        </div>
 
-	  <tr>
-              
-             <td wicket:id="navPanel">fred</td>
-		<td id="content" class="borderedBlock">
-			<wicket:child />
-		</td>  
-	    <!--
-             <td id="left" class="borderedBlock">
-		 <ul>
-                  <li><a href="#" wicket:id="homeLink">Home</a></li>   
-		  <li><a href="#" wicket:id="page1Link">Page 1</a></li>
-		  <li><a href="#" wicket:id="page2Link">Page 2</a></li>
-		 </ul>
-		</td>
-             -->
-	  </tr>
+        <table width="100%">
 
-	</table>
+            <tr>
 
-	<div id="footer" class="borderedBlock">
-	 footer
-	</div>
+                <td style="vertical-align: top"   wicket:id="navPanel"></td>
+                <td id="content" class="borderedBlock">
+                    <wicket:child />
+                </td>  
 
-</body>
+            </tr>
+
+        </table>
+
+        <div id="footer" class="borderedBlock">
+            footer
+        </div>
+
+    </body>
 </html>
