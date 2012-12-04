@@ -8,17 +8,16 @@ import org.apache.wicket.model.PropertyModel;
 import org.apache.wicket.request.mapper.parameter.PageParameters;
 
 public class UserPage extends TemplatePage {
-
+    
     private User user = new User();
     
-
     public UserPage(final PageParameters parameters) {
-
+        
         
         
         this.setPageTitle("Wicket PropertyModel Example - UserPage.html");
         add(new FeedbackPanel("feedback"));
-
+        
         final TextField<String> tName = new TextField<String>("name",
                 new PropertyModel<String>(user, "name"));
         final TextField<Integer> tAge = new TextField<Integer>("age",
@@ -34,23 +33,50 @@ public class UserPage extends TemplatePage {
         Form<?> form = new Form<Void>("userForm") {
             @Override
             protected void onSubmit() {
-
-                PageParameters pageParameters = new PageParameters();
-                pageParameters.add("name", user.getName());
-                pageParameters.add("age", Integer.toString(user.getAge()));
-                pageParameters.add("nickName", user.getNickName());
-
-                setResponsePage(SuccessPage.class, pageParameters);
-
-            }
+                
+                
+                if (isABozo(user.getName())) {
+                    
+                    // the final parameter is the default message if no
+                    // properties file found
+                    String errMsg = getLocalizer().getString(
+                            "bozo.errors.isABozo", UserPage.this,
+                            "No bozos allowed default");
+                    
+                    error(errMsg);
+                    
+                    
+                } else {
+                    PageParameters pageParameters = new PageParameters();
+                    pageParameters.add("name", user.getName());
+                    pageParameters.add("age", Integer.toString(user.getAge()));
+                    pageParameters.add("nickName", user.getNickName());
+                    
+                    setResponsePage(SuccessPage.class, pageParameters);
+                }
+                
+            } // end on submit
         };
-
+        
         add(form);
         form.add(tName);
         form.add(tAge);
         form.add(tNickname);
-
+        
     }
-
-   
+    
+    private boolean isABozo(String name) {
+        
+        if (name == null) {
+            return false;
+        }
+        String test = name.trim().toUpperCase();
+        
+        
+        if (test.indexOf("BOZO") > -1) {
+            return true;
+        } else {
+            return false;
+        }
+    }
 }

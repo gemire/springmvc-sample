@@ -10,6 +10,9 @@ import org.apache.wicket.markup.html.form.TextField;
 import org.apache.wicket.markup.html.panel.FeedbackPanel;
 import org.apache.wicket.model.CompoundPropertyModel;
 import org.apache.wicket.request.mapper.parameter.PageParameters;
+import org.apache.wicket.validation.IValidatable;
+import org.apache.wicket.validation.ValidationError;
+import org.apache.wicket.validation.validator.StringValidator;
 
 /**
  * This class demonstrates the use of a
@@ -23,6 +26,8 @@ public final class CompoundUserPage extends TemplatePage {
     private User user = new User();
 
     public CompoundUserPage(final PageParameters params) {
+        
+        StringValidator bozoValidator = new BozoValidator();
         this.setPageTitle("Compound Example - UserPage.html");
         add(new FeedbackPanel("feedback"));
         final TextField<String> tName = new TextField<String>("name");
@@ -33,6 +38,7 @@ public final class CompoundUserPage extends TemplatePage {
         tName.setConvertEmptyInputStringToNull(false);
         tName.setRequired(false);
         tName.setRequired(false);
+        tName.add(bozoValidator);
 
         Form<User> form = new Form<User>("compoundUserForm",
                 new CompoundPropertyModel<User>(user)) {
@@ -55,4 +61,14 @@ public final class CompoundUserPage extends TemplatePage {
         form.add(tNickname);
 
     }
+    
+    class BozoValidator extends StringValidator {
+       public ValidationError decorate(ValidationError error, 
+               IValidatable<String> validatable) {
+       error.addKey("mystringerror");
+       return error;
+    }
+}
+    
+    
 }
