@@ -33,7 +33,6 @@ public class UserPage extends TemplatePage {
         // using a Range Validator
         tAge.setRequired(true);
         tAge.add(new RangeValidator<Integer>(21, 125));
-         
         //////////////////////////////////////////////
         
         
@@ -41,7 +40,7 @@ public class UserPage extends TemplatePage {
             @Override
             protected void onSubmit() {
                 
-                
+                // this is a custom error validation item
                 if (isABozo(user.getName())) {
                     
                     // the final parameter is the default message if no
