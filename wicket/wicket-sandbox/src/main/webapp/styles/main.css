@@ -59,6 +59,15 @@ h1,h2 {
 	font-weight: bold;
 }
 
+ 
+label {
+	background-color: #eee;
+	padding: 4px;
+}
+
+ 
+
+
 .feedbackPanelINFO {
 	color: green;
 	list-style: circle;
