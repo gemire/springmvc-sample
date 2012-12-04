@@ -1,6 +1,7 @@
 package com.dhenton9000.wicket.form.sample;
 
 import com.dhenton9000.wicket.TemplatePage;
+import com.dhenton9000.wicket.validators.NoHTMLValidator;
 import org.apache.wicket.markup.html.form.Form;
 import org.apache.wicket.markup.html.form.TextField;
 import org.apache.wicket.markup.html.panel.FeedbackPanel;
@@ -28,7 +29,8 @@ public class UserPage extends TemplatePage {
                 new PropertyModel<String>(user, "nickName"));
         tNickname.setConvertEmptyInputStringToNull(false);
         tName.setConvertEmptyInputStringToNull(false);
-        tName.setRequired(false);
+        tName.setRequired(true);
+        tName.add(new NoHTMLValidator());
         tNickname.setRequired(false);
         // using a Range Validator
         tAge.setRequired(true);

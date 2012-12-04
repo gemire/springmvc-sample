@@ -4,54 +4,51 @@
  */
 package com.dhenton9000.wicket.validators;
 
-import java.io.Serializable;
-import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-import org.apache.wicket.validation.IErrorMessageSource;
 import org.apache.wicket.validation.IValidatable;
-import org.apache.wicket.validation.IValidationError;
 import org.apache.wicket.validation.IValidator;
+import org.apache.wicket.validation.ValidationError;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
- * A validator for scrubbing HTML
+ * A validator for HTML, right now the 
+ * test would be the entire entry is '<html>'
  *
  * @author dhenton
  */
 public class NoHTMLValidator implements IValidator {
 
+    private Logger logger = LoggerFactory.getLogger(NoHTMLValidator.class);
+    private final Pattern pattern;
+    
+    public NoHTMLValidator()
+    {
+        pattern = Pattern.compile("<(\"[^\"]*\"|'[^']*'|[^'\">])*>");
+    }
+    
     @Override
     public void validate(IValidatable validatable) {
 
-        String data = "";
-        Pattern pattern = Pattern.compile(".*<[-\\w]+[^>]+>.*", Pattern.DOTALL);
+        String data = validatable.getValue().toString();
+        logger.debug("this data is "+data);
         Matcher matcher = pattern.matcher(data);
         if (matcher.matches()) {
-            validatable.error(new NoHTMLError());
+            logger.debug("hit match");
+            error(validatable, "no.html");
         }
 
     }
     
     
-    public class NoHTMLError implements IValidationError
-    {
-
-        @Override
-        public Serializable getErrorMessage(IErrorMessageSource messageSource) {
-            throw new UnsupportedOperationException("Not supported yet.");
-        }
-        
-    }
     
-    public class ErrorMessageSource implements IErrorMessageSource
-    {
-
-        @Override
-        public String getMessage(String key, Map<String, Object> vars) {
-            throw new UnsupportedOperationException("Not supported yet.");
-        }
-        
-    }
+   // this entry should be in the message properties file
+   // NoHTMLValidator.no.html=No html characters allowed in ${label}
     
-    
+    private void error(IValidatable<String> validatable, String errorKey) {
+		ValidationError error = new ValidationError();
+		error.addKey(getClass().getSimpleName() + "." + errorKey);
+		validatable.error(error);
+	}
 }
