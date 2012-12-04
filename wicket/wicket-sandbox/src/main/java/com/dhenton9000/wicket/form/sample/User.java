@@ -5,7 +5,7 @@ import java.io.Serializable;
 public class User implements Serializable{
 
 	private String name = "";
-        private String nickName = "";
+        private String nickName = "fred";
 	private int age = 0;
 
 	public String getName() {
@@ -26,7 +26,7 @@ public class User implements Serializable{
 
 	@Override
 	public String toString() {
-		return "User [name=" + name + ", age=" + age + "]";
+		return "User [name=" + name + ", age=" + age +", nick="+nickName+"]";
 	}
 
     /**
@@ -42,6 +42,8 @@ public class User implements Serializable{
     public void setNickName(String nickName) {
         this.nickName = nickName;
     }
+
+     
 
      
 

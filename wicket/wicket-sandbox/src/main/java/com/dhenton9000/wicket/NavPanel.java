@@ -4,6 +4,7 @@
  */
 package com.dhenton9000.wicket;
 
+import com.dhenton9000.wicket.form.sample.CompoundUserPage;
 import com.dhenton9000.wicket.form.sample.UserPage;
 import org.apache.wicket.markup.html.link.BookmarkablePageLink;
 import org.apache.wicket.model.IModel;
@@ -40,5 +41,7 @@ public final class NavPanel extends TemplatePanel {
         add(new BookmarkablePageLink<Void>("page2Link", Page2.class));
         add(new BookmarkablePageLink<Void>("homeLink", HomePage.class));
         add(new BookmarkablePageLink<Void>("userFormLink", UserPage.class));
+        add(new BookmarkablePageLink<Void>("compoundFormLink", CompoundUserPage.class));
+        
     }
 }

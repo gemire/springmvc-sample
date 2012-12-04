@@ -28,7 +28,7 @@ public class UserPage extends TemplatePage {
         tNickname.setConvertEmptyInputStringToNull(false);
         tName.setConvertEmptyInputStringToNull(false);
         tName.setRequired(false);
-        tName.setRequired(false);
+        tNickname.setRequired(false);
         
         
         Form<?> form = new Form<Void>("userForm") {
@@ -38,7 +38,7 @@ public class UserPage extends TemplatePage {
                 PageParameters pageParameters = new PageParameters();
                 pageParameters.add("name", user.getName());
                 pageParameters.add("age", Integer.toString(user.getAge()));
-                pageParameters.add("nickname", user.getNickName());
+                pageParameters.add("nickName", user.getNickName());
 
                 setResponsePage(SuccessPage.class, pageParameters);
 
