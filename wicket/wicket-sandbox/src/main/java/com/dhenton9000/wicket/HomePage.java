@@ -6,12 +6,14 @@
 
 package com.dhenton9000.wicket;           
 
-import org.apache.wicket.markup.html.basic.Label;
+import org.apache.wicket.markup.html.WebPage;
 
-public class HomePage extends BasePage {
+
+public class HomePage extends TemplatePage {
 
     public HomePage() {
-        add(new Label("message", "Hello, World!"));
+       
+          setPageTitle("Template example, Home Page - page inheritance");
     }
 
 }

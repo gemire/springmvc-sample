@@ -79,7 +79,7 @@
               						OR, as of jetty6.1.6rc0, you can use the webAppConfig element instead -->
 
                     <webAppConfig>
-                        <contextPath>/wicket-maven</contextPath>
+                        <contextPath>/wicket-sandbox</contextPath>
                         <tempDirectory>${project.build.directory}/work</tempDirectory>
                         <!-- <defaultsDescriptor>src/main/resources/webdefault.xml</defaultsDescriptor> 
                  							<overrideDescriptor>src/main/resources/override-web.xml</overrideDescriptor> -->
@@ -144,7 +144,7 @@
             <version>${wicket.version}</version>
         </dependency>
 
- 
+        
         <dependency>
             <groupId>javax.servlet</groupId>
             <artifactId>jstl</artifactId>

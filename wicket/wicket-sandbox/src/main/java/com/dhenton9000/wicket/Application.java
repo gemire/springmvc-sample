@@ -19,11 +19,11 @@ public class Application extends WebApplication {
     private final Logger logger = LoggerFactory.getLogger(Application.class);
 
     public Application() {
-        logger.debug("Get a job!!!!");
+       
     }
 
     public Class getHomePage() {
-        logger.debug("Get a job!!!! 2");
+        
         return HomePage.class;
     }
 }
