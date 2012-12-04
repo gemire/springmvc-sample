@@ -6,6 +6,8 @@ import org.apache.wicket.markup.html.form.TextField;
 import org.apache.wicket.markup.html.panel.FeedbackPanel;
 import org.apache.wicket.model.PropertyModel;
 import org.apache.wicket.request.mapper.parameter.PageParameters;
+import org.apache.wicket.validation.validator.RangeValidator;
+import org.apache.wicket.validation.validator.StringValidator;
 
 public class UserPage extends TemplatePage {
     
@@ -28,6 +30,11 @@ public class UserPage extends TemplatePage {
         tName.setConvertEmptyInputStringToNull(false);
         tName.setRequired(false);
         tNickname.setRequired(false);
+        // using a Range Validator
+        tAge.setRequired(true);
+        tAge.add(new RangeValidator<Integer>(21, 125));
+         
+        //////////////////////////////////////////////
         
         
         Form<?> form = new Form<Void>("userForm") {
