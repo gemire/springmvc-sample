@@ -1,0 +1,221 @@
+08:44:43,821 | DEBUG  | com.dhenton9000.jpa.dao.tests.ApplicationsTests |   56 | get a job
+08:44:43,829 | DEBUG  | com.dhenton9000.jpa.dao.hibernate.HibernateGenericDao |   80 | begin save
+08:44:43,831 | DEBUG  | com.dhenton9000.jpa.dao.hibernate.HibernateGenericDao |   85 | in auto generated for save
+08:44:44,086 | TRACE  | org.hibernate.type.StringType |  153 | binding 'Fred' to parameter: 1
+08:44:44,152 | TRACE  | org.hibernate.type.IntegerType |  153 | binding '2004' to parameter: 1
+08:44:44,160 | TRACE  | org.hibernate.type.StringType |  195 | returning 'Fred' as column: APPLICAT2_2_0_
+08:44:44,177 | TRACE  | org.hibernate.type.IntegerType |  153 | binding '2004' to parameter: 1
+08:44:44,184 | TRACE  | org.hibernate.type.StringType |  195 | returning 'Fred' as column: APPLICAT2_2_0_
+08:50:03,470 | TRACE  | org.hibernate.type.StringType |  153 | binding 'gaw' to parameter: 1
+08:50:03,562 | TRACE  | org.hibernate.type.StringType |  195 | returning 'George Wolefenstein' as column: USERNAME0_0_
+08:50:03,636 | TRACE  | org.hibernate.type.StringType |  153 | binding 'gaw' to parameter: 1
+08:50:03,640 | TRACE  | org.hibernate.type.IntegerType |  195 | returning '3' as column: ID1_0_
+08:50:03,642 | TRACE  | org.hibernate.type.StringType |  195 | returning 'ItemUsers' as column: GROUP2_1_0_
+08:50:03,643 | TRACE  | org.hibernate.type.StringType |  195 | returning 'gaw' as column: user2_0_1_
+08:50:03,644 | TRACE  | org.hibernate.type.IntegerType |  195 | returning '3' as column: group1_1_
+08:50:03,645 | TRACE  | org.hibernate.type.IntegerType |  195 | returning '7' as column: ID1_0_
+08:50:03,645 | TRACE  | org.hibernate.type.StringType |  195 | returning 'PowerUsers' as column: GROUP2_1_0_
+08:50:03,646 | TRACE  | org.hibernate.type.StringType |  195 | returning 'gaw' as column: user2_0_1_
+08:50:03,647 | TRACE  | org.hibernate.type.IntegerType |  195 | returning '7' as column: group1_1_
+08:50:03,655 | TRACE  | org.hibernate.type.StringType |  153 | binding 'gaw' to parameter: 1
+08:50:03,657 | TRACE  | org.hibernate.type.StringType |  195 | returning 'George Wolefenstein' as column: USERNAME0_0_
+08:50:03,659 | TRACE  | org.hibernate.type.StringType |  153 | binding 'gaw' to parameter: 1
+08:50:03,661 | TRACE  | org.hibernate.type.IntegerType |  195 | returning '3' as column: ID1_0_
+08:50:03,662 | TRACE  | org.hibernate.type.StringType |  195 | returning 'ItemUsers' as column: GROUP2_1_0_
+08:50:03,663 | TRACE  | org.hibernate.type.StringType |  195 | returning 'gaw' as column: user2_0_1_
+08:50:03,664 | TRACE  | org.hibernate.type.IntegerType |  195 | returning '3' as column: group1_1_
+08:50:03,664 | TRACE  | org.hibernate.type.IntegerType |  195 | returning '7' as column: ID1_0_
+08:50:03,665 | TRACE  | org.hibernate.type.StringType |  195 | returning 'PowerUsers' as column: GROUP2_1_0_
+08:50:03,666 | TRACE  | org.hibernate.type.StringType |  195 | returning 'gaw' as column: user2_0_1_
+08:50:03,666 | TRACE  | org.hibernate.type.IntegerType |  195 | returning '7' as column: group1_1_
+08:50:03,667 | DEBUG  | com.dhenton9000.jpa.dao.tests.DaoTest |   81 | Group: PowerUsers
+08:50:03,702 | TRACE  | org.hibernate.type.IntegerType |  153 | binding '7' to parameter: 1
+08:50:03,715 | TRACE  | org.hibernate.type.IntegerType |  195 | returning '10' as column: ID2_0_
+08:50:03,715 | TRACE  | org.hibernate.type.StringType |  195 | returning 'ColorParent' as column: APPLICAT2_2_0_
+08:50:03,716 | TRACE  | org.hibernate.type.IntegerType |  195 | returning '7' as column: group2_1_1_
+08:50:03,717 | TRACE  | org.hibernate.type.IntegerType |  195 | returning '10' as column: applicat1_1_
+08:50:03,718 | TRACE  | org.hibernate.type.IntegerType |  195 | returning '11' as column: ID2_0_
+08:50:03,718 | TRACE  | org.hibernate.type.StringType |  195 | returning 'HeelHeights' as column: APPLICAT2_2_0_
+08:50:03,719 | TRACE  | org.hibernate.type.IntegerType |  195 | returning '7' as column: group2_1_1_
+08:50:03,723 | TRACE  | org.hibernate.type.IntegerType |  195 | returning '11' as column: applicat1_1_
+08:50:03,724 | TRACE  | org.hibernate.type.IntegerType |  195 | returning '12' as column: ID2_0_
+08:50:03,725 | TRACE  | org.hibernate.type.StringType |  195 | returning 'HeelHeightRange' as column: APPLICAT2_2_0_
+08:50:03,726 | TRACE  | org.hibernate.type.IntegerType |  195 | returning '7' as column: group2_1_1_
+08:50:03,726 | TRACE  | org.hibernate.type.IntegerType |  195 | returning '12' as column: applicat1_1_
+08:50:03,727 | TRACE  | org.hibernate.type.IntegerType |  195 | returning '13' as column: ID2_0_
+08:50:03,728 | TRACE  | org.hibernate.type.StringType |  195 | returning 'ItemSubstyles' as column: APPLICAT2_2_0_
+08:50:03,728 | TRACE  | org.hibernate.type.IntegerType |  195 | returning '7' as column: group2_1_1_
+08:50:03,729 | TRACE  | org.hibernate.type.IntegerType |  195 | returning '13' as column: applicat1_1_
+08:50:03,731 | TRACE  | org.hibernate.type.IntegerType |  195 | returning '14' as column: ID2_0_
+08:50:03,735 | TRACE  | org.hibernate.type.StringType |  195 | returning 'ItemLifestyle' as column: APPLICAT2_2_0_
+08:50:03,736 | TRACE  | org.hibernate.type.IntegerType |  195 | returning '7' as column: group2_1_1_
+08:50:03,737 | TRACE  | org.hibernate.type.IntegerType |  195 | returning '14' as column: applicat1_1_
+08:50:03,737 | TRACE  | org.hibernate.type.IntegerType |  195 | returning '32' as column: ID2_0_
+08:50:03,738 | TRACE  | org.hibernate.type.StringType |  195 | returning 'Departments' as column: APPLICAT2_2_0_
+08:50:03,739 | TRACE  | org.hibernate.type.IntegerType |  195 | returning '7' as column: group2_1_1_
+08:50:03,739 | TRACE  | org.hibernate.type.IntegerType |  195 | returning '32' as column: applicat1_1_
+08:50:03,744 | TRACE  | org.hibernate.type.IntegerType |  195 | returning '33' as column: ID2_0_
+08:50:03,748 | TRACE  | org.hibernate.type.StringType |  195 | returning 'Discounts' as column: APPLICAT2_2_0_
+08:50:03,751 | TRACE  | org.hibernate.type.IntegerType |  195 | returning '7' as column: group2_1_1_
+08:50:03,752 | TRACE  | org.hibernate.type.IntegerType |  195 | returning '33' as column: applicat1_1_
+08:50:03,756 | TRACE  | org.hibernate.type.IntegerType |  195 | returning '34' as column: ID2_0_
+08:50:03,758 | TRACE  | org.hibernate.type.StringType |  195 | returning 'ApparelSizeCategory' as column: APPLICAT2_2_0_
+08:50:03,758 | TRACE  | org.hibernate.type.IntegerType |  195 | returning '7' as column: group2_1_1_
+08:50:03,759 | TRACE  | org.hibernate.type.IntegerType |  195 | returning '34' as column: applicat1_1_
+08:50:03,760 | TRACE  | org.hibernate.type.IntegerType |  195 | returning '35' as column: ID2_0_
+08:50:03,761 | TRACE  | org.hibernate.type.StringType |  195 | returning 'ImageSeqs' as column: APPLICAT2_2_0_
+08:50:03,761 | TRACE  | org.hibernate.type.IntegerType |  195 | returning '7' as column: group2_1_1_
+08:50:03,762 | TRACE  | org.hibernate.type.IntegerType |  195 | returning '35' as column: applicat1_1_
+08:50:03,762 | TRACE  | org.hibernate.type.IntegerType |  195 | returning '36' as column: ID2_0_
+08:50:03,763 | TRACE  | org.hibernate.type.StringType |  195 | returning 'ImageSizes' as column: APPLICAT2_2_0_
+08:50:03,768 | TRACE  | org.hibernate.type.IntegerType |  195 | returning '7' as column: group2_1_1_
+08:50:03,768 | TRACE  | org.hibernate.type.IntegerType |  195 | returning '36' as column: applicat1_1_
+08:50:03,769 | TRACE  | org.hibernate.type.IntegerType |  195 | returning '37' as column: ID2_0_
+08:50:03,769 | TRACE  | org.hibernate.type.StringType |  195 | returning 'Itemgender' as column: APPLICAT2_2_0_
+08:50:03,770 | TRACE  | org.hibernate.type.IntegerType |  195 | returning '7' as column: group2_1_1_
+08:50:03,771 | TRACE  | org.hibernate.type.IntegerType |  195 | returning '37' as column: applicat1_1_
+08:50:03,771 | TRACE  | org.hibernate.type.IntegerType |  195 | returning '38' as column: ID2_0_
+08:50:03,780 | TRACE  | org.hibernate.type.StringType |  195 | returning 'ItemXMatrixes' as column: APPLICAT2_2_0_
+08:50:03,781 | TRACE  | org.hibernate.type.IntegerType |  195 | returning '7' as column: group2_1_1_
+08:50:03,785 | TRACE  | org.hibernate.type.IntegerType |  195 | returning '38' as column: applicat1_1_
+08:50:03,785 | TRACE  | org.hibernate.type.IntegerType |  195 | returning '39' as column: ID2_0_
+08:50:03,790 | TRACE  | org.hibernate.type.StringType |  195 | returning 'ItemXParent' as column: APPLICAT2_2_0_
+08:50:03,791 | TRACE  | org.hibernate.type.IntegerType |  195 | returning '7' as column: group2_1_1_
+08:50:03,792 | TRACE  | org.hibernate.type.IntegerType |  195 | returning '39' as column: applicat1_1_
+08:50:03,796 | TRACE  | org.hibernate.type.IntegerType |  195 | returning '40' as column: ID2_0_
+08:50:03,804 | TRACE  | org.hibernate.type.StringType |  195 | returning 'ItemXParentMatches' as column: APPLICAT2_2_0_
+08:50:03,804 | TRACE  | org.hibernate.type.IntegerType |  195 | returning '7' as column: group2_1_1_
+08:50:03,805 | TRACE  | org.hibernate.type.IntegerType |  195 | returning '40' as column: applicat1_1_
+08:50:03,806 | TRACE  | org.hibernate.type.IntegerType |  195 | returning '41' as column: ID2_0_
+08:50:03,806 | TRACE  | org.hibernate.type.StringType |  195 | returning 'ItemXS' as column: APPLICAT2_2_0_
+08:50:03,808 | TRACE  | org.hibernate.type.IntegerType |  195 | returning '7' as column: group2_1_1_
+08:50:03,821 | TRACE  | org.hibernate.type.IntegerType |  195 | returning '41' as column: applicat1_1_
+08:50:03,822 | TRACE  | org.hibernate.type.IntegerType |  195 | returning '42' as column: ID2_0_
+08:50:03,826 | TRACE  | org.hibernate.type.StringType |  195 | returning 'ItemXSumSizes' as column: APPLICAT2_2_0_
+08:50:03,827 | TRACE  | org.hibernate.type.IntegerType |  195 | returning '7' as column: group2_1_1_
+08:50:03,827 | TRACE  | org.hibernate.type.IntegerType |  195 | returning '42' as column: applicat1_1_
+08:50:03,828 | TRACE  | org.hibernate.type.IntegerType |  195 | returning '43' as column: ID2_0_
+08:50:03,828 | TRACE  | org.hibernate.type.StringType |  195 | returning 'ItemYMatrixes' as column: APPLICAT2_2_0_
+08:50:03,833 | TRACE  | org.hibernate.type.IntegerType |  195 | returning '7' as column: group2_1_1_
+08:50:03,836 | TRACE  | org.hibernate.type.IntegerType |  195 | returning '43' as column: applicat1_1_
+08:50:03,843 | TRACE  | org.hibernate.type.IntegerType |  195 | returning '44' as column: ID2_0_
+08:50:03,845 | TRACE  | org.hibernate.type.StringType |  195 | returning 'ItemYParent' as column: APPLICAT2_2_0_
+08:50:03,846 | TRACE  | org.hibernate.type.IntegerType |  195 | returning '7' as column: group2_1_1_
+08:50:03,849 | TRACE  | org.hibernate.type.IntegerType |  195 | returning '44' as column: applicat1_1_
+08:50:03,852 | TRACE  | org.hibernate.type.IntegerType |  195 | returning '45' as column: ID2_0_
+08:50:03,853 | TRACE  | org.hibernate.type.StringType |  195 | returning 'ItemYS' as column: APPLICAT2_2_0_
+08:50:03,860 | TRACE  | org.hibernate.type.IntegerType |  195 | returning '7' as column: group2_1_1_
+08:50:03,862 | TRACE  | org.hibernate.type.IntegerType |  195 | returning '45' as column: applicat1_1_
+08:50:03,863 | TRACE  | org.hibernate.type.IntegerType |  195 | returning '46' as column: ID2_0_
+08:50:03,863 | TRACE  | org.hibernate.type.StringType |  195 | returning 'ItemYSumSize' as column: APPLICAT2_2_0_
+08:50:03,864 | TRACE  | org.hibernate.type.IntegerType |  195 | returning '7' as column: group2_1_1_
+08:50:03,866 | TRACE  | org.hibernate.type.IntegerType |  195 | returning '46' as column: applicat1_1_
+08:50:03,866 | TRACE  | org.hibernate.type.IntegerType |  195 | returning '47' as column: ID2_0_
+08:50:03,867 | TRACE  | org.hibernate.type.StringType |  195 | returning 'MatrixLayouts' as column: APPLICAT2_2_0_
+08:50:03,869 | TRACE  | org.hibernate.type.IntegerType |  195 | returning '7' as column: group2_1_1_
+08:50:03,871 | TRACE  | org.hibernate.type.IntegerType |  195 | returning '47' as column: applicat1_1_
+08:50:03,874 | TRACE  | org.hibernate.type.IntegerType |  195 | returning '48' as column: ID2_0_
+08:50:03,875 | TRACE  | org.hibernate.type.StringType |  195 | returning 'MatrixTypes' as column: APPLICAT2_2_0_
+08:50:03,876 | TRACE  | org.hibernate.type.IntegerType |  195 | returning '7' as column: group2_1_1_
+08:50:03,877 | TRACE  | org.hibernate.type.IntegerType |  195 | returning '48' as column: applicat1_1_
+08:50:03,881 | TRACE  | org.hibernate.type.IntegerType |  195 | returning '49' as column: ID2_0_
+08:50:03,888 | TRACE  | org.hibernate.type.StringType |  195 | returning 'SalesVentures' as column: APPLICAT2_2_0_
+08:50:03,892 | TRACE  | org.hibernate.type.IntegerType |  195 | returning '7' as column: group2_1_1_
+08:50:03,893 | TRACE  | org.hibernate.type.IntegerType |  195 | returning '49' as column: applicat1_1_
+08:50:03,895 | TRACE  | org.hibernate.type.IntegerType |  195 | returning '50' as column: ID2_0_
+08:50:03,896 | TRACE  | org.hibernate.type.StringType |  195 | returning 'SourceCodeTypes' as column: APPLICAT2_2_0_
+08:50:03,898 | TRACE  | org.hibernate.type.IntegerType |  195 | returning '7' as column: group2_1_1_
+08:50:03,900 | TRACE  | org.hibernate.type.IntegerType |  195 | returning '50' as column: applicat1_1_
+08:50:03,901 | TRACE  | org.hibernate.type.IntegerType |  195 | returning '51' as column: ID2_0_
+08:50:03,902 | TRACE  | org.hibernate.type.StringType |  195 | returning 'StatusCodes' as column: APPLICAT2_2_0_
+08:50:03,909 | TRACE  | org.hibernate.type.IntegerType |  195 | returning '7' as column: group2_1_1_
+08:50:03,914 | TRACE  | org.hibernate.type.IntegerType |  195 | returning '51' as column: applicat1_1_
+08:50:03,915 | TRACE  | org.hibernate.type.IntegerType |  195 | returning '52' as column: ID2_0_
+08:50:03,920 | TRACE  | org.hibernate.type.StringType |  195 | returning 'TitleTypes' as column: APPLICAT2_2_0_
+08:50:03,921 | TRACE  | org.hibernate.type.IntegerType |  195 | returning '7' as column: group2_1_1_
+08:50:03,925 | TRACE  | org.hibernate.type.IntegerType |  195 | returning '52' as column: applicat1_1_
+08:50:03,927 | TRACE  | org.hibernate.type.IntegerType |  195 | returning '53' as column: ID2_0_
+08:50:03,932 | TRACE  | org.hibernate.type.StringType |  195 | returning 'ItemYParentMatches' as column: APPLICAT2_2_0_
+08:50:03,935 | TRACE  | org.hibernate.type.IntegerType |  195 | returning '7' as column: group2_1_1_
+08:50:03,936 | TRACE  | org.hibernate.type.IntegerType |  195 | returning '53' as column: applicat1_1_
+08:50:03,940 | TRACE  | org.hibernate.type.IntegerType |  195 | returning '54' as column: ID2_0_
+08:50:03,944 | TRACE  | org.hibernate.type.StringType |  195 | returning 'SwatchSizes' as column: APPLICAT2_2_0_
+08:50:03,947 | TRACE  | org.hibernate.type.IntegerType |  195 | returning '7' as column: group2_1_1_
+08:50:03,948 | TRACE  | org.hibernate.type.IntegerType |  195 | returning '54' as column: applicat1_1_
+08:50:03,953 | TRACE  | org.hibernate.type.IntegerType |  195 | returning '55' as column: ID2_0_
+08:50:03,961 | TRACE  | org.hibernate.type.StringType |  195 | returning 'AcceptableBO' as column: APPLICAT2_2_0_
+08:50:03,965 | TRACE  | org.hibernate.type.IntegerType |  195 | returning '7' as column: group2_1_1_
+08:50:03,966 | TRACE  | org.hibernate.type.IntegerType |  195 | returning '55' as column: applicat1_1_
+08:50:03,969 | DEBUG  | com.dhenton9000.jpa.dao.tests.DaoTest |   86 | 	AcceptableBO
+08:50:03,981 | DEBUG  | com.dhenton9000.jpa.dao.tests.DaoTest |   86 | 	ItemXS
+08:50:03,988 | DEBUG  | com.dhenton9000.jpa.dao.tests.DaoTest |   86 | 	ColorParent
+08:50:03,996 | DEBUG  | com.dhenton9000.jpa.dao.tests.DaoTest |   86 | 	ItemXParentMatches
+08:50:03,997 | DEBUG  | com.dhenton9000.jpa.dao.tests.DaoTest |   86 | 	ItemYParentMatches
+08:50:03,998 | DEBUG  | com.dhenton9000.jpa.dao.tests.DaoTest |   86 | 	ImageSeqs
+08:50:03,999 | DEBUG  | com.dhenton9000.jpa.dao.tests.DaoTest |   86 | 	ItemXParent
+08:50:04,000 | DEBUG  | com.dhenton9000.jpa.dao.tests.DaoTest |   86 | 	ItemYSumSize
+08:50:04,001 | DEBUG  | com.dhenton9000.jpa.dao.tests.DaoTest |   86 | 	HeelHeights
+08:50:04,006 | DEBUG  | com.dhenton9000.jpa.dao.tests.DaoTest |   86 | 	TitleTypes
+08:50:04,008 | DEBUG  | com.dhenton9000.jpa.dao.tests.DaoTest |   86 | 	MatrixTypes
+08:50:04,010 | DEBUG  | com.dhenton9000.jpa.dao.tests.DaoTest |   86 | 	SwatchSizes
+08:50:04,011 | DEBUG  | com.dhenton9000.jpa.dao.tests.DaoTest |   86 | 	Discounts
+08:50:04,013 | DEBUG  | com.dhenton9000.jpa.dao.tests.DaoTest |   86 | 	StatusCodes
+08:50:04,015 | DEBUG  | com.dhenton9000.jpa.dao.tests.DaoTest |   86 | 	ItemYS
+08:50:04,016 | DEBUG  | com.dhenton9000.jpa.dao.tests.DaoTest |   86 | 	MatrixLayouts
+08:50:04,017 | DEBUG  | com.dhenton9000.jpa.dao.tests.DaoTest |   86 | 	ItemYMatrixes
+08:50:04,019 | DEBUG  | com.dhenton9000.jpa.dao.tests.DaoTest |   86 | 	SalesVentures
+08:50:04,022 | DEBUG  | com.dhenton9000.jpa.dao.tests.DaoTest |   86 | 	ItemSubstyles
+08:50:04,022 | DEBUG  | com.dhenton9000.jpa.dao.tests.DaoTest |   86 | 	Itemgender
+08:50:04,028 | DEBUG  | com.dhenton9000.jpa.dao.tests.DaoTest |   86 | 	ItemYParent
+08:50:04,029 | DEBUG  | com.dhenton9000.jpa.dao.tests.DaoTest |   86 | 	SourceCodeTypes
+08:50:04,032 | DEBUG  | com.dhenton9000.jpa.dao.tests.DaoTest |   86 | 	Departments
+08:50:04,032 | DEBUG  | com.dhenton9000.jpa.dao.tests.DaoTest |   86 | 	ImageSizes
+08:50:04,033 | DEBUG  | com.dhenton9000.jpa.dao.tests.DaoTest |   86 | 	ItemLifestyle
+08:50:04,036 | DEBUG  | com.dhenton9000.jpa.dao.tests.DaoTest |   86 | 	HeelHeightRange
+08:50:04,040 | DEBUG  | com.dhenton9000.jpa.dao.tests.DaoTest |   86 | 	ApparelSizeCategory
+08:50:04,040 | DEBUG  | com.dhenton9000.jpa.dao.tests.DaoTest |   86 | 	ItemXMatrixes
+08:50:04,041 | DEBUG  | com.dhenton9000.jpa.dao.tests.DaoTest |   86 | 	ItemXSumSizes
+08:50:04,042 | DEBUG  | com.dhenton9000.jpa.dao.tests.DaoTest |   81 | Group: ItemUsers
+08:50:04,048 | TRACE  | org.hibernate.type.IntegerType |  153 | binding '3' to parameter: 1
+08:50:04,062 | TRACE  | org.hibernate.type.IntegerType |  195 | returning '16' as column: ID2_0_
+08:50:04,063 | TRACE  | org.hibernate.type.StringType |  195 | returning 'BrandParents' as column: APPLICAT2_2_0_
+08:50:04,064 | TRACE  | org.hibernate.type.IntegerType |  195 | returning '3' as column: group2_1_1_
+08:50:04,065 | TRACE  | org.hibernate.type.IntegerType |  195 | returning '16' as column: applicat1_1_
+08:50:04,066 | TRACE  | org.hibernate.type.IntegerType |  195 | returning '17' as column: ID2_0_
+08:50:04,074 | TRACE  | org.hibernate.type.StringType |  195 | returning 'Brands' as column: APPLICAT2_2_0_
+08:50:04,075 | TRACE  | org.hibernate.type.IntegerType |  195 | returning '3' as column: group2_1_1_
+08:50:04,077 | TRACE  | org.hibernate.type.IntegerType |  195 | returning '17' as column: applicat1_1_
+08:50:04,078 | DEBUG  | com.dhenton9000.jpa.dao.tests.DaoTest |   86 | 	Brands
+08:50:04,079 | DEBUG  | com.dhenton9000.jpa.dao.tests.DaoTest |   86 | 	BrandParents
+08:50:04,185 | DEBUG  | com.dhenton9000.jpa.dao.tests.DaoTest |   56 | get a job
+08:50:04,192 | DEBUG  | com.dhenton9000.jpa.dao.hibernate.HibernateGenericDao |   80 | begin save
+08:50:04,195 | DEBUG  | com.dhenton9000.jpa.dao.hibernate.HibernateUtil |  115 | isEntityIdManuallyAssigned
+08:50:04,200 | DEBUG  | com.dhenton9000.jpa.dao.hibernate.HibernateUtil |  118 | primary key is getUserid going to manually assigned check
+08:50:04,200 | DEBUG  | com.dhenton9000.jpa.dao.hibernate.HibernateUtil |  133 | in isManuallyAssigned checking id generated annotation is null returns true
+08:50:04,201 | DEBUG  | com.dhenton9000.jpa.dao.hibernate.HibernateGenericDao |   92 | in manually assigned for save
+08:50:04,238 | TRACE  | org.hibernate.type.StringType |  153 | binding 'bozo K clown' to parameter: 1
+08:50:04,240 | TRACE  | org.hibernate.type.StringType |  153 | binding 'bozo' to parameter: 2
+08:50:04,248 | TRACE  | org.hibernate.type.StringType |  153 | binding 'bozo' to parameter: 1
+08:50:04,249 | TRACE  | org.hibernate.type.StringType |  195 | returning 'bozo K clown' as column: USERNAME0_0_
+08:50:04,263 | TRACE  | org.hibernate.type.StringType |  153 | binding 'bozo' to parameter: 1
+08:50:04,265 | TRACE  | org.hibernate.type.StringType |  195 | returning 'bozo K clown' as column: USERNAME0_0_
+08:50:04,272 | DEBUG  | com.dhenton9000.jpa.dao.tests.DaoTest |   80 | get a job
+08:50:04,273 | DEBUG  | com.dhenton9000.jpa.dao.hibernate.HibernateGenericDao |   80 | begin save
+08:50:04,277 | DEBUG  | com.dhenton9000.jpa.dao.hibernate.HibernateUtil |  115 | isEntityIdManuallyAssigned
+08:50:04,278 | DEBUG  | com.dhenton9000.jpa.dao.hibernate.HibernateUtil |  118 | primary key is getUserid going to manually assigned check
+08:50:04,279 | DEBUG  | com.dhenton9000.jpa.dao.hibernate.HibernateUtil |  133 | in isManuallyAssigned checking id generated annotation is null returns true
+08:50:04,279 | DEBUG  | com.dhenton9000.jpa.dao.hibernate.HibernateGenericDao |   92 | in manually assigned for save
+08:50:04,281 | TRACE  | org.hibernate.type.StringType |  153 | binding 'bozo K clown' to parameter: 1
+08:50:04,286 | TRACE  | org.hibernate.type.StringType |  153 | binding 'bozo' to parameter: 2
+08:50:04,294 | TRACE  | org.hibernate.type.StringType |  153 | binding 'bozo' to parameter: 1
+08:50:04,299 | TRACE  | org.hibernate.type.StringType |  195 | returning 'bozo K clown' as column: USERNAME0_0_
+08:50:04,303 | TRACE  | org.hibernate.type.StringType |  153 | binding 'bozo' to parameter: 1
+08:50:04,304 | TRACE  | org.hibernate.type.StringType |  195 | returning 'bozo K clown' as column: USERNAME0_0_
+08:50:04,402 | DEBUG  | com.dhenton9000.jpa.dao.tests.ApplicationsTest |   56 | get a job
+08:50:04,406 | DEBUG  | com.dhenton9000.jpa.dao.hibernate.HibernateGenericDao |   80 | begin save
+08:50:04,407 | DEBUG  | com.dhenton9000.jpa.dao.hibernate.HibernateGenericDao |   85 | in auto generated for save
+08:50:04,416 | TRACE  | org.hibernate.type.StringType |  153 | binding 'Fred' to parameter: 1
+08:50:04,422 | TRACE  | org.hibernate.type.IntegerType |  153 | binding '2005' to parameter: 1
+08:50:04,424 | TRACE  | org.hibernate.type.StringType |  195 | returning 'Fred' as column: APPLICAT2_2_0_
+08:50:04,428 | TRACE  | org.hibernate.type.IntegerType |  153 | binding '2005' to parameter: 1
+08:50:04,429 | TRACE  | org.hibernate.type.StringType |  195 | returning 'Fred' as column: APPLICAT2_2_0_
