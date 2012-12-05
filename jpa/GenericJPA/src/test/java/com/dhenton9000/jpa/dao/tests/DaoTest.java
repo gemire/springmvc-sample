@@ -27,9 +27,9 @@ import org.springframework.transaction.annotation.Transactional;
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(locations = {"classpath*:test-jpa-config.xml"})
 @Transactional
-public class DaoTests {
+public class DaoTest {
 
-    private static final Logger logger = LoggerFactory.getLogger(DaoTests.class);
+    private static final Logger logger = LoggerFactory.getLogger(DaoTest.class);
     @PersistenceContext
     private EntityManager entityManager;
     @Autowired
