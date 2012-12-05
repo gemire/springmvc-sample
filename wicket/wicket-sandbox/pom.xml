@@ -112,7 +112,11 @@
         </plugins>
     </build>
     <dependencies>
-
+        <dependency>
+            <groupId>com.dhenton9000</groupId>
+            <artifactId>SecurityJPAProject</artifactId>
+            <version>1.0-SNAPSHOT</version>
+        </dependency>
         <dependency>
             <groupId>org.apache.wicket</groupId>
             <artifactId>wicket-core</artifactId>
@@ -184,6 +188,17 @@
                 </exclusion>
             </exclusions>
         </dependency>
-
+        <dependency>
+            <groupId>org.apache.wicket</groupId>
+            <artifactId>wicket-guice</artifactId>
+            <version>6.0.0</version>
+            <type>jar</type>
+        </dependency>
+        <dependency>
+            <groupId>com.dhenton9000</groupId>
+            <artifactId>GenericJPA</artifactId>
+            <version>1.0-SNAPSHOT</version>
+            <type>jar</type>
+        </dependency>
     </dependencies>
 </project>
