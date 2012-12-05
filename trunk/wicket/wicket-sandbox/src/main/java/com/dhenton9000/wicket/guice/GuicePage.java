@@ -16,6 +16,7 @@
  */
 package com.dhenton9000.wicket.guice;
 
+import com.dhenton9000.jpa.entities.Applications;
 import com.dhenton9000.wicket.TemplatePage;
 import com.dhenton9000.wicket.dao.IApplicationsDao;
 import com.google.inject.Inject;
@@ -47,6 +48,10 @@ public class GuicePage extends TemplatePage {
                 if (service != null) {
 
                     labelValue = service.getClass().getName();
+                    Applications app = new Applications();
+                    app.setId(new Integer(1));
+                    Applications a = service.get(app);
+                    labelValue = a.getApplicationName();
                 }
                 else
                 {

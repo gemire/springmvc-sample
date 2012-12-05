@@ -5,6 +5,8 @@
  */
 package com.dhenton9000.wicket;
 
+import com.dhenton9000.wicket.jpa.JPAServiceStarter;
+import com.google.inject.Injector;
 import org.apache.wicket.guice.GuiceComponentInjector;
 import org.apache.wicket.protocol.http.WebApplication;
 import org.slf4j.Logger;
@@ -35,9 +37,11 @@ public class Application extends WebApplication {
     {
         super.init();
         
-        getComponentInstantiationListeners().add(new GuiceComponentInjector(this));
+       // getComponentInstantiationListeners().add(new GuiceComponentInjector(this));
         
-        
+        Injector injector = (Injector)getServletContext().getAttribute(Injector.class.getName());
+        getComponentInstantiationListeners().add(new GuiceComponentInjector(this,injector));
+        injector.getInstance(JPAServiceStarter.class);
     }
     
 }
