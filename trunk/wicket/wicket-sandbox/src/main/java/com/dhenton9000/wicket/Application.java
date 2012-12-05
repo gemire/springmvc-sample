@@ -5,6 +5,7 @@
  */
 package com.dhenton9000.wicket;
 
+import org.apache.wicket.guice.GuiceComponentInjector;
 import org.apache.wicket.protocol.http.WebApplication;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -22,8 +23,21 @@ public class Application extends WebApplication {
        
     }
 
+    @Override
     public Class getHomePage() {
         
         return HomePage.class;
     }
+    // Injector.get().inject(this) -- use this is a class constructor 
+    // to get it to be wired by Guice, cannot use constructor injection 
+    @Override
+    public void init()
+    {
+        super.init();
+        
+        getComponentInstantiationListeners().add(new GuiceComponentInjector(this));
+        
+        
+    }
+    
 }
