@@ -5,7 +5,7 @@
 package com.dhenton9000.wicket.dao.impl;
 
 
-import com.dhenton9000.jpa.dao.hibernate.HibernateGenericDao;
+ 
 import com.dhenton9000.jpa.entities.Applications;
 import com.dhenton9000.wicket.dao.IApplicationsDao;
 import com.google.inject.Singleton;

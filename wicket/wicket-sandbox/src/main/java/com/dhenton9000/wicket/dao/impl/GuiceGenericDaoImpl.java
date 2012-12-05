@@ -9,7 +9,7 @@ package com.dhenton9000.wicket.dao.impl;
 
 import com.dhenton9000.jpa.dao.hibernate.HibernateUtil;
 import static com.dhenton9000.jpa.dao.hibernate.HibernateUtil.isEntityIdManuallyAssigned;
-import com.dhenton9000.jpa.dao.hibernate.NamedQueryUtilHibernate;
+//import com.dhenton9000.jpa.dao.hibernate.NamedQueryUtilHibernate;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -32,6 +32,7 @@ import com.google.inject.persist.Transactional;
 
 import com.dhenton9000.jpa.dao.support.GenericDao;
 import com.dhenton9000.jpa.dao.support.NamedQueryUtil;
+import com.dhenton9000.jpa.dao.support.NamedQueryUtilHibernate;
 import com.dhenton9000.jpa.dao.support.SearchTemplate;
 import com.dhenton9000.jpa.domain.Identifiable;
 import com.google.inject.Inject;
@@ -45,7 +46,7 @@ public abstract class GuiceGenericDaoImpl <E extends Identifiable<PK>, PK extend
         GenericDao<E, PK> {
 
     private Class<E> type;
-    private final static org.slf4j.Logger logger = LoggerFactory.getLogger(com.dhenton9000.jpa.dao.hibernate.HibernateGenericDao.class);
+    private final static org.slf4j.Logger logger = LoggerFactory.getLogger(GuiceGenericDaoImpl.class);
 
     /**
      * This constructor needs the real type of the generic type E so it can be
