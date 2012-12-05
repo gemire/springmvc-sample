@@ -19,7 +19,6 @@ import org.hibernate.impl.AbstractQueryImpl;
 import org.springframework.orm.hibernate3.SessionFactoryUtils;
 import org.springframework.stereotype.Service;
 
-import java.util.Calendar;
 import java.util.Collection;
 import java.util.List;
 
