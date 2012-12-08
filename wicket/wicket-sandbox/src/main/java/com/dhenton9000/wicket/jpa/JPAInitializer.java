@@ -5,7 +5,8 @@
 package com.dhenton9000.wicket.jpa;
 
 /**
- *
+ * According to this page http://code.google.com/p/google-guice/wiki/JPA
+ * this will enable session-in-view because of the PersistFilter
  * @author dhenton
  */
  

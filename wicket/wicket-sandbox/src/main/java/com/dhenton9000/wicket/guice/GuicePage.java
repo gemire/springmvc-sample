@@ -39,6 +39,8 @@ public class GuicePage extends TemplatePage {
      * Constructor
      */
     public GuicePage() {
+        
+        this.setPageTitle("Simple Guice Demo");
         add(new Link<Void>("link") {
             /**
              * @see org.apache.wicket.markup.html.link.Link#onClick()
