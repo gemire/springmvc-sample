@@ -14,6 +14,6 @@ public class EnumCodeUserType extends GenericEnumUserType {
         super("toCode", "fromCode");
     }
 
-    public static final String FQN = "com.dhenton9000.springfuse.dao.hibernate.EnumCodeUserType";
+    public static final String FQN = "com.dhenton9000.jpa.dao.hibernate.EnumCodeUserType";
 
 }
