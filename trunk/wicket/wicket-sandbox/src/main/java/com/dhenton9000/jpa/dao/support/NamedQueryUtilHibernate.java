@@ -26,9 +26,7 @@ import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 
 //import com.dhenton9000.springfuse.context.AccountContext;
-import com.dhenton9000.jpa.dao.support.OrderBy;
-import com.dhenton9000.jpa.dao.support.NamedQueryUtil;
-import com.dhenton9000.jpa.dao.support.SearchTemplate;
+import com.google.inject.Inject;
 
 /**
  * Convenient hibernate named query manipulation class.<br>
@@ -47,6 +45,7 @@ public class NamedQueryUtilHibernate implements NamedQueryUtil {
 
     private static final String NAMED_PARAMETER_NOW = "now";
 
+    @Inject
     @PersistenceContext
     private EntityManager entityManager;
 

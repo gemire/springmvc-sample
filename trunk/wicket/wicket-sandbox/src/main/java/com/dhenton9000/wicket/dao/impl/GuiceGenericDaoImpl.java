@@ -42,7 +42,7 @@ import org.slf4j.LoggerFactory;
  * Partial Hibernate implementation of the {@link GenericDao} interface.<br> The
  * exceptions are converted to generic spring unchecked exceptions.
  */
-public abstract class GuiceGenericDaoImpl <E extends Identifiable<PK>, PK extends Serializable> implements
+public abstract class GuiceGenericDaoImpl<E extends Identifiable<PK>, PK extends Serializable> implements
         GenericDao<E, PK> {
 
     private Class<E> type;
@@ -67,6 +67,22 @@ public abstract class GuiceGenericDaoImpl <E extends Identifiable<PK>, PK extend
         }
 
         Serializable id = entity.getPrimaryKey();
+        if (id == null) {
+            return null;
+        }
+
+        E entityFound = getEntityManager().find(type, id);
+
+        if (entityFound == null) {
+            logger.warn("get returned null with pk=" + id);
+        }
+
+        return entityFound;
+    }
+
+    @Transactional
+    @Override
+    public E findById(Serializable id) {
         if (id == null) {
             return null;
         }
@@ -118,9 +134,9 @@ public abstract class GuiceGenericDaoImpl <E extends Identifiable<PK>, PK extend
     @SuppressWarnings("unchecked")
     @Transactional
     @Override
-    public List<E> find(E entity, SearchTemplate searchTemplate) {
+    public List<E> find(E entity, SearchTemplate parameterSample) {
         Validate.notNull(entity, "The passed entity cannot be null");
-        SearchTemplate localSearchTemplate = getLocalSearchTemplate(searchTemplate);
+        SearchTemplate localSearchTemplate = getLocalSearchTemplate(parameterSample);
 
         if (localSearchTemplate.hasNamedQuery()) {
             return (List<E>) getNamedQueryUtil().findByNamedQuery(localSearchTemplate, entity);
@@ -346,7 +362,8 @@ public abstract class GuiceGenericDaoImpl <E extends Identifiable<PK>, PK extend
     // ------------------------------------------
     // Dependencies
     // ------------------------------------------
-    private NamedQueryUtil namedQueryUtil = new NamedQueryUtilHibernate();
+    @Inject
+    private NamedQueryUtil namedQueryUtil ;
     @Inject
     private EntityManager entityManager;
 
@@ -359,7 +376,6 @@ public abstract class GuiceGenericDaoImpl <E extends Identifiable<PK>, PK extend
         return entityManager;
     }
 
-    
     public void setNamedQueryUtil(NamedQueryUtil namedQueryUtil) {
         this.namedQueryUtil = namedQueryUtil;
     }
