@@ -363,9 +363,8 @@ public abstract class GuiceGenericDaoImpl<E extends Identifiable<PK>, PK extends
     // Dependencies
     // ------------------------------------------
     @Inject
-    private NamedQueryUtil namedQueryUtil ;
-    @Inject
     private EntityManager entityManager;
+    private NamedQueryUtil namedQueryUtil = null;
 
     @PersistenceContext
     public void setEntityManager(EntityManager entityManager) {
@@ -376,11 +375,11 @@ public abstract class GuiceGenericDaoImpl<E extends Identifiable<PK>, PK extends
         return entityManager;
     }
 
-    public void setNamedQueryUtil(NamedQueryUtil namedQueryUtil) {
-        this.namedQueryUtil = namedQueryUtil;
-    }
-
     public NamedQueryUtil getNamedQueryUtil() {
+        if (namedQueryUtil == null) {
+            namedQueryUtil = new NamedQueryUtilHibernate(entityManager);
+        }
+
         return namedQueryUtil;
     }
     // ------------------------------------------

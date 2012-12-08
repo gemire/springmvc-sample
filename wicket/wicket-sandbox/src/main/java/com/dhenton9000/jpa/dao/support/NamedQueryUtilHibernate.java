@@ -25,8 +25,6 @@ import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 
-//import com.dhenton9000.springfuse.context.AccountContext;
-import com.google.inject.Inject;
 
 /**
  * Convenient hibernate named query manipulation class.<br>
@@ -45,7 +43,6 @@ public class NamedQueryUtilHibernate implements NamedQueryUtil {
 
     private static final String NAMED_PARAMETER_NOW = "now";
 
-    @Inject
     @PersistenceContext
     private EntityManager entityManager;
 
@@ -66,6 +63,7 @@ public class NamedQueryUtilHibernate implements NamedQueryUtil {
      * @param searchTemplate
      * @return the resulting number
      */
+    @Override
     public Number numberByNamedQuery(SearchTemplate searchTemplate) {
         return numberByNamedQuery(searchTemplate, null);
     }
@@ -77,6 +75,7 @@ public class NamedQueryUtilHibernate implements NamedQueryUtil {
      * @param model a value bean to be used
      * @return the resulting integer
      */
+    @Override
     public Number numberByNamedQuery(SearchTemplate searchTemplate, Object model) {
         Object number = objectByNamedQuery(searchTemplate, model);
         Validate.notNull(number, "Named query " + searchTemplate.getNamedQuery() + " returned null");
@@ -91,6 +90,7 @@ public class NamedQueryUtilHibernate implements NamedQueryUtil {
      * @param searchTemplate the search template
      * @return the resulting object, it can be a List or any type given your named query definition
      */
+    @Override
     public Object objectByNamedQuery(SearchTemplate searchTemplate) {
         return objectByNamedQuery(searchTemplate, null);
     }
@@ -102,6 +102,7 @@ public class NamedQueryUtilHibernate implements NamedQueryUtil {
      * @param model a value bean to be used
      * @return the resulting object, it can be a List or any type given your named query definition
      */
+    @Override
     public Object objectByNamedQuery(SearchTemplate searchTemplate, Object model) {
         if (searchTemplate == null || !searchTemplate.hasNamedQuery()) {
             logger.warn("Invalid search template provided");
@@ -147,6 +148,7 @@ public class NamedQueryUtilHibernate implements NamedQueryUtil {
      * @param searchTemplate the searchTemplate to handle
      * @return the resulting List
      */
+    @Override
     public List<Object> findByNamedQuery(SearchTemplate searchTemplate) {
         return findByNamedQuery(searchTemplate, null);
     }
@@ -159,6 +161,7 @@ public class NamedQueryUtilHibernate implements NamedQueryUtil {
      * @return the resulting List
      */
     @SuppressWarnings("all")
+    @Override
     public List<Object> findByNamedQuery(SearchTemplate searchTemplate, Object model) {
         if (searchTemplate == null || !searchTemplate.hasNamedQuery()) {
             logger.warn("Invalid search template provided");
