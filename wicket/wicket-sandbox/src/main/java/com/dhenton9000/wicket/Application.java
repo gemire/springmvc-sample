@@ -41,6 +41,7 @@ public class Application extends WebApplication {
         
         Injector injector = (Injector)getServletContext().getAttribute(Injector.class.getName());
         getComponentInstantiationListeners().add(new GuiceComponentInjector(this,injector));
+        // start the JPA session thing
         injector.getInstance(JPAServiceStarter.class);
     }
     
