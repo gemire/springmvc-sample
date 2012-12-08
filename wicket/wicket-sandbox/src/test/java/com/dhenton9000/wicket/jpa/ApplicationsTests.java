@@ -7,6 +7,7 @@ package com.dhenton9000.wicket.jpa;
 
 import com.dhenton9000.jpa.entities.Applications;
 import com.dhenton9000.wicket.dao.IApplicationsDao;
+import java.util.List;
 import org.junit.Test;
 import static org.junit.Assert.*;
 import org.junit.Before;
@@ -32,5 +33,11 @@ public class ApplicationsTests extends BaseTest {
         Applications t = service.get(app);
         assertEquals("ColorParentMatches", t.getApplicationName());
 
+    }
+
+    @Test
+    public void testAllApps() {
+        List<Applications> t = service.getAllApplications();
+        assertEquals(57, t.size());
     }
 }

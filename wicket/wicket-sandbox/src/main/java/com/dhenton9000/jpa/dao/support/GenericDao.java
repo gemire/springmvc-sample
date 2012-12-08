@@ -36,6 +36,10 @@ public interface GenericDao<E extends Identifiable<PK>, PK extends Serializable>
      */
     E get(E entity);
 
+    
+    E findById(Serializable id);
+    
+    
     /**
      * Refresh the passed entity with up to date data.
      * Does nothing if the passed entity is a new entity (not yet managed).
