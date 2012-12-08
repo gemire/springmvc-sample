@@ -7,13 +7,11 @@
  */
 package com.dhenton9000.jpa.dao.support;
 
-import com.google.inject.ImplementedBy;
 import java.util.List;
 
 /**
  * Convenient named query manipulation class.
  */
-@ImplementedBy(NamedQueryUtilHibernate.class)
 public interface NamedQueryUtil {
     /**
      * Returns a list given a named query
