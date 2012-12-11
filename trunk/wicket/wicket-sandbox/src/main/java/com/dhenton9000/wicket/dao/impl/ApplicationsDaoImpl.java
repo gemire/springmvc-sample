@@ -6,6 +6,7 @@ package com.dhenton9000.wicket.dao.impl;
 
 import com.dhenton9000.jpa.dao.support.SearchTemplate;
 import com.dhenton9000.jpa.entities.Applications;
+import com.dhenton9000.jpa.entities.Users;
 import com.dhenton9000.wicket.dao.IApplicationsDao;
 import com.google.inject.Singleton;
 import java.util.List;
@@ -33,5 +34,12 @@ public class ApplicationsDaoImpl
         // if the named query is parameterized.
         return this.find(new Applications(), t);
 
+    }
+
+    @Override
+    public List<Users> findUsersForApplications(Applications app) {
+        Integer appKey = app.getId();
+         SearchTemplate t = new SearchTemplate();
+          return null;
     }
 }
