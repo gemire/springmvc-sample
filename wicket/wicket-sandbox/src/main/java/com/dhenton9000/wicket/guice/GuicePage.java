@@ -40,7 +40,7 @@ public class GuicePage extends TemplatePage {
      */
     public GuicePage() {
         
-        this.setPageTitle("Simple Guice Demo");
+        this.setPageTitle(this.getClass().getSimpleName());
         add(new Link<Void>("link") {
             /**
              * @see org.apache.wicket.markup.html.link.Link#onClick()

@@ -5,6 +5,7 @@
 package com.dhenton9000.wicket;
 
 import com.dhenton9000.wicket.guice.GuicePage;
+import com.dhenton9000.wicket.guice.repeater.ApplicationsUsers;
 import com.dhenton9000.wicket.guice.repeater.GuiceRepeaterOne;
 import com.dhenton9000.wicket.pages.form.sample.CompoundUserPage;
 import com.dhenton9000.wicket.pages.form.sample.UserPage;
@@ -46,6 +47,7 @@ public final class NavPanel extends TemplatePanel {
         add(new BookmarkablePageLink<Void>("compoundFormLink", CompoundUserPage.class));
         add(new BookmarkablePageLink<Void>("guicePageLink", GuicePage.class));
         add(new BookmarkablePageLink<Void>("guiceRepeaterOnePageLink", GuiceRepeaterOne.class));
+        add(new BookmarkablePageLink<Void>("applicationsUsersLink", ApplicationsUsers.class));
         
     }
 }

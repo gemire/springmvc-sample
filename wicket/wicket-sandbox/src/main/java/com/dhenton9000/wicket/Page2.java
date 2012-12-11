@@ -15,7 +15,7 @@ public class Page2 extends TemplatePage {
 
     public Page2() {
         super();
-        setPageTitle("Template example, page 2 - page inheritance");
+        this.setPageTitle(this.getClass().getSimpleName());
     }
     
     

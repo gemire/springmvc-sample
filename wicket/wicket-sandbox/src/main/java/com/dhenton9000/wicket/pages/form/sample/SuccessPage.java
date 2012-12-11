@@ -8,7 +8,7 @@ public class SuccessPage extends TemplatePage {
 
 	public SuccessPage(final PageParameters parameters) {
 
-                this.setPageTitle("Wicket PropertyModel Example - SuccessPage.html");
+                this.setPageTitle(this.getClass().getSimpleName());
 		String username = parameters.get("name").toString("");
 		String age = parameters.get("age").toString("");
 		String nickname =  parameters.get("nickName").toString("");

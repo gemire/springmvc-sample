@@ -13,7 +13,7 @@ public class HomePage extends TemplatePage {
 
     public HomePage() {
        
-          setPageTitle("Template example, Home Page - page inheritance");
+          this.setPageTitle(this.getClass().getSimpleName());
     }
 
 }

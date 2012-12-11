@@ -19,6 +19,7 @@ package com.dhenton9000.wicket;
 import org.apache.wicket.markup.html.basic.Label;
 import org.apache.wicket.markup.html.link.BookmarkablePageLink;
 import org.apache.wicket.model.PropertyModel;
+import org.apache.wicket.request.mapper.parameter.PageParameters;
 
 /**
  * Base page that serves as a template for pages that inherit from it. Doesn't
@@ -34,16 +35,18 @@ public abstract class TemplatePage extends WicketBasePage {
      */
     private String pageTitle = "(no title)";
 
+    
+    
+    public TemplatePage(PageParameters param)
+    {
+        setup();
+    }
+    
     /**
      * Constructor
      */
     public TemplatePage() {
-        // derived classes set use the title setter to actually set 
-        // the title
-        add(new Label("title", new PropertyModel<String>(this, "pageTitle")));
-        // add the panel to the java graph, its location is found
-        // in TemplatePage.html with wicket:id = 'navPanel'
-        add(new NavPanel("navPanel"));
+        setup();
  
     }
 
@@ -63,5 +66,14 @@ public abstract class TemplatePage extends WicketBasePage {
      */
     public final void setPageTitle(String title) {
         pageTitle = title;
+    }
+
+    private void setup() {
+        // derived classes set use the title setter to actually set 
+        // the title
+        add(new Label("title", new PropertyModel<String>(this, "pageTitle")));
+        // add the panel to the java graph, its location is found
+        // in TemplatePage.html with wicket:id = 'navPanel'
+        add(new NavPanel("navPanel"));
     }
 }

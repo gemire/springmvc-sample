@@ -28,7 +28,7 @@ public final class CompoundUserPage extends TemplatePage {
     public CompoundUserPage(final PageParameters params) {
         
         StringValidator bozoValidator = new BozoValidator();
-        this.setPageTitle("Compound Example - UserPage.html");
+        this.setPageTitle(this.getClass().getSimpleName());
         add(new FeedbackPanel("feedback"));
         final TextField<String> tName = new TextField<String>("name");
         final TextField<Integer> tAge = new TextField<Integer>("age");
