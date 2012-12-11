@@ -7,6 +7,7 @@ package com.dhenton9000.wicket.dao;
 import com.dhenton9000.wicket.dao.impl.ApplicationsDaoImpl;
 import com.dhenton9000.jpa.dao.support.GenericDao;
 import com.dhenton9000.jpa.entities.Applications;
+import com.dhenton9000.jpa.entities.Users;
 import com.google.inject.ImplementedBy;
 import java.util.List;
 
@@ -18,5 +19,7 @@ import java.util.List;
 public interface IApplicationsDao extends GenericDao<Applications, Integer>{
     
     List<Applications> getAllApplications();
+
+    public List<Users> findUsersForApplications(Applications app);
     
 }
