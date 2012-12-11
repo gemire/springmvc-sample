@@ -30,7 +30,7 @@ public final class GuiceRepeaterOne extends TemplatePage {
     public GuiceRepeaterOne() {
 
 
-        this.setPageTitle("Simple Repeater Demo");
+        this.setPageTitle(this.getClass().getSimpleName());
         addApplicationsListViewModule();
         add(new ApplicationsDropDownChoice("applicationsSelect"));
 
@@ -120,7 +120,7 @@ public final class GuiceRepeaterOne extends TemplatePage {
          */
         @Override
         protected boolean wantOnSelectionChangedNotifications() {
-            // we want roundtrips when a the user selects another item
+            // we dont want roundtrips when a the user selects another item
             return false;
         }
     }

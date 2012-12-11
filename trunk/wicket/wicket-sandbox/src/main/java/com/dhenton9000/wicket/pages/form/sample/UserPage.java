@@ -18,7 +18,7 @@ public class UserPage extends TemplatePage {
         
         
         
-        this.setPageTitle("Wicket PropertyModel Example - UserPage.html");
+        this.setPageTitle(this.getClass().getSimpleName());
         add(new FeedbackPanel("feedback"));
         
         final TextField<String> tName = new TextField<String>("name",
