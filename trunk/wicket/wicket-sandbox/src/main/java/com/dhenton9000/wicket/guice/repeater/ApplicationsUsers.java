@@ -41,6 +41,7 @@ public final class ApplicationsUsers extends TemplatePage {
     private String titleStart = this.getClass().getSimpleName();
     private WebMarkupContainer userTable;
     private UsersForApplications userDataProvider;
+    private List<Users> selectedUsers = null;
 
     public ApplicationsUsers() {
         super();
@@ -82,6 +83,7 @@ public final class ApplicationsUsers extends TemplatePage {
             if (applications.size() > 0) {
                 
                 setSelectedApplication(applications.get(0));
+                selectedUsers = service.findUsersForApplications(selectedApplication);
             }
         }
         return applications;
@@ -102,6 +104,17 @@ public final class ApplicationsUsers extends TemplatePage {
     }
 
     /**
+     * @return the selectedUsers
+     */
+    public List<Users> getSelectedUsers() {
+        if (selectedUsers == null)
+        {
+            selectedUsers = service.findUsersForApplications(selectedApplication);
+        }
+        return selectedUsers;
+    }
+
+    /**
      * Dropdown with Applications.
      */
     private final class ApplicationsDropDownChoice extends DropDownChoice<Applications> {
@@ -119,21 +132,6 @@ public final class ApplicationsUsers extends TemplatePage {
 
         }
 
-//        @Override
-//        protected void onSelectionChanged(Applications newSelection) {
-//            Applications app = new Applications();
-//            app.setId(newSelection.getId());
-//            selectedApplication = app;
-//            
-//        }
-//
-//        @Override
-//        protected boolean wantOnSelectionChangedNotifications() {
-//            return true;
-//        }
-        
-        
-        
         
     }
 
@@ -164,7 +162,8 @@ public final class ApplicationsUsers extends TemplatePage {
     //// user stuff //////////////////////////////////////////////////////
     private void addUsersModule() {
         userTable = new WebMarkupContainer("userTable");
-
+        
+        //setMarkup to allow for refresh
         add(userTable.setOutputMarkupId(true));
 
         List<ICellPopulator<Users>> columns = new ArrayList<ICellPopulator<Users>>();
@@ -183,12 +182,12 @@ public final class ApplicationsUsers extends TemplatePage {
 
         @Override
         public Iterator iterator(long first, long count) {
-            return service.findUsersForApplications(selectedApplication).iterator();
+            return getSelectedUsers().iterator();
         }
 
         @Override
         public long size() {
-            return service.findUsersForApplications(selectedApplication).size();
+            return getSelectedUsers().size();
         }
 
         @Override
@@ -203,6 +202,7 @@ public final class ApplicationsUsers extends TemplatePage {
 
         @Override
         public void detach() {
+            selectedUsers = null;
         }
     }
 }
