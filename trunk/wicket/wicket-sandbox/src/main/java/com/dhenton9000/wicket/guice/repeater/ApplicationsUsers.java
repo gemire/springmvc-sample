@@ -12,17 +12,15 @@ import com.google.inject.Inject;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
+import org.apache.wicket.Component;
+import org.apache.wicket.ajax.AjaxRequestTarget;
+import org.apache.wicket.ajax.form.AjaxFormComponentUpdatingBehavior;
 import org.apache.wicket.extensions.markup.html.repeater.data.grid.DataGridView;
 import org.apache.wicket.extensions.markup.html.repeater.data.grid.ICellPopulator;
 import org.apache.wicket.extensions.markup.html.repeater.data.grid.PropertyPopulator;
-import org.apache.wicket.markup.html.WebPage;
-import org.apache.wicket.markup.html.basic.Label;
+import org.apache.wicket.markup.html.WebMarkupContainer;
 import org.apache.wicket.markup.html.form.ChoiceRenderer;
 import org.apache.wicket.markup.html.form.DropDownChoice;
-import org.apache.wicket.markup.html.list.ListItem;
-import org.apache.wicket.markup.html.list.ListView;
-import org.apache.wicket.markup.repeater.Item;
-import org.apache.wicket.markup.repeater.data.DataView;
 import org.apache.wicket.markup.repeater.data.IDataProvider;
 import org.apache.wicket.model.IModel;
 import org.apache.wicket.model.LoadableDetachableModel;
@@ -38,9 +36,11 @@ public final class ApplicationsUsers extends TemplatePage {
     @Inject
     private IApplicationsDao service;
     private List<Applications> applications;
-    private ApplicationsDropDownChoice dropDownApplicationListItem = null;
+    private Component dropDownApplicationListItem = null;
     private Applications selectedApplication;
     private String titleStart = this.getClass().getSimpleName();
+    private WebMarkupContainer userTable;
+    private UsersForApplications userDataProvider;
 
     public ApplicationsUsers() {
         super();
@@ -59,7 +59,13 @@ public final class ApplicationsUsers extends TemplatePage {
         setPageTitle(titleStart);
         getApplications();
         dropDownApplicationListItem =
-                new ApplicationsUsers.ApplicationsDropDownChoice("applicationsSelect");
+                new ApplicationsDropDownChoice("applicationsSelect").add(new AjaxFormComponentUpdatingBehavior("change") {
+            @Override
+            protected void onUpdate(AjaxRequestTarget target) {
+
+                target.add(userTable);
+            }
+        });
 
         add(dropDownApplicationListItem);
         addUsersModule();
@@ -74,7 +80,8 @@ public final class ApplicationsUsers extends TemplatePage {
         if (applications == null) {
             applications = service.getAllApplications();
             if (applications.size() > 0) {
-                setSelectedApplication(applications.get(applications.size() - 2));
+                
+                setSelectedApplication(applications.get(0));
             }
         }
         return applications;
@@ -108,31 +115,26 @@ public final class ApplicationsUsers extends TemplatePage {
             super(id, getApplications(), new ApplicationsUsers.ApplicationsChoiceRenderer());
             setChoices(getApplications());
             setModel(new PropertyModel<Applications>(ApplicationsUsers.this, "selectedApplication"));
-
-
-        }
-
-        /**
-         * @see
-         * org.apache.wicket.markup.html.form.DropDownChoice#onSelectionChanged(java.lang.Object)
-         */
-        @Override
-        public void onSelectionChanged(Applications newSelection) {
-            setPageTitle(titleStart + "--" + getSelectedApplication().getId());
-            this.setResponsePage(ApplicationsUsers.this);
-            // setModel(new PropertyModel<Applications>(ApplicationsUsers.this, "applications"));
+             
 
         }
 
-        /**
-         * @see
-         * org.apache.wicket.markup.html.form.DropDownChoice#wantOnSelectionChangedNotifications()
-         */
-        @Override
-        protected boolean wantOnSelectionChangedNotifications() {
-            // we want roundtrips when a the user selects another dropDownApplicationListItem
-            return true;
-        }
+//        @Override
+//        protected void onSelectionChanged(Applications newSelection) {
+//            Applications app = new Applications();
+//            app.setId(newSelection.getId());
+//            selectedApplication = app;
+//            
+//        }
+//
+//        @Override
+//        protected boolean wantOnSelectionChangedNotifications() {
+//            return true;
+//        }
+        
+        
+        
+        
     }
 
     private final class ApplicationsChoiceRenderer extends ChoiceRenderer<Applications> {
@@ -161,49 +163,46 @@ public final class ApplicationsUsers extends TemplatePage {
 
     //// user stuff //////////////////////////////////////////////////////
     private void addUsersModule() {
+        userTable = new WebMarkupContainer("userTable");
+
+        add(userTable.setOutputMarkupId(true));
 
         List<ICellPopulator<Users>> columns = new ArrayList<ICellPopulator<Users>>();
 
         columns.add(new PropertyPopulator<Users>("userid"));
         columns.add(new PropertyPopulator<Users>("username"));
-        add(new DataGridView<Users>("users", columns, new UsersForApplications(selectedApplication)));
+        userDataProvider = new UsersForApplications();
+        userTable.add(new DataGridView<Users>("users", columns, userDataProvider));
 
     }
- 
-    //http://jeff-schwartz.blogspot.com/2009/04/apache-wicket-jpahibernate-and-wicket.html
-   
+
     private class UsersForApplications implements IDataProvider<Users> {
-        Applications app ;
-        public UsersForApplications(Applications a) {
-            app = a;
+
+        public UsersForApplications() {
         }
 
         @Override
         public Iterator iterator(long first, long count) {
-           return  service.findUsersForApplications(app).iterator();
+            return service.findUsersForApplications(selectedApplication).iterator();
         }
 
         @Override
         public long size() {
-             return service.findUsersForApplications(app).size();
+            return service.findUsersForApplications(selectedApplication).size();
         }
 
         @Override
         public IModel model(final Users object) {
-             return new LoadableDetachableModel<Users>()
-             {
-
+            return new LoadableDetachableModel<Users>() {
                 @Override
                 protected Users load() {
-                     return object;
+                    return object;
                 }
-                 
-             };
+            };
         }
 
         @Override
         public void detach() {
-            throw new UnsupportedOperationException("Not supported yet.");
         }
     }
 }
