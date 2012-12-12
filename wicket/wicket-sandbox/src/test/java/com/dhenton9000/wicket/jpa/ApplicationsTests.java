@@ -11,6 +11,8 @@ import java.util.List;
 import org.junit.Test;
 import static org.junit.Assert.*;
 import org.junit.Before;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  *
@@ -19,7 +21,8 @@ import org.junit.Before;
 public class ApplicationsTests extends BaseTest {
 
     private IApplicationsDao service;
-
+    private final static Logger logger = LoggerFactory.getLogger(ApplicationsTests.class);
+    
     @Before
     public void before() {
         service = getInjector().getInstance(IApplicationsDao.class);
@@ -39,5 +42,17 @@ public class ApplicationsTests extends BaseTest {
     public void testAllApps() {
         List<Applications> t = service.getAllApplications();
         assertEquals(57, t.size());
+    }
+    
+    
+    @Test 
+    public void testUserThing()
+    {
+        Applications app = new Applications();
+        app.setId(new Integer(1));
+        List t = service.findUsersForApplications(app);
+        assertEquals(23,t.size());
+        
+         
     }
 }

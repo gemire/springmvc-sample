@@ -1,15 +1,29 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:wicket="http://wicket.apache.org">
     <body>
-<wicket:extend>
-     <h3>Applications</h3>
-      
-     <select wicket:id="applicationsSelect"></select>
-    
-     
-      
-       
-     
-</wicket:extend>
+        <wicket:extend>
+            <h3>Applications</h3>
+
+            <select wicket:id="applicationsSelect"></select>
+
+
+            <h3>Users</h3>
+
+            <table wicket:id="userTable" cellpadding="3" cellspacing="3">
+                <thead>
+                    <tr><th>User id</th><th>User name</th></tr>
+                    
+                    
+                </thead>
+                
+                <tr wicket:id="users">
+                    <td wicket:id="cells">
+                        <span wicket:id="cell">cell content goes here</span>
+                    </td>
+                </tr>
+
+            </table>   
+
+        </wicket:extend>
     </body>
 </html>

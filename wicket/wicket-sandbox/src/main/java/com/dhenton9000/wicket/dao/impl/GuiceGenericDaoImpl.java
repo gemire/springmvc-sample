@@ -25,8 +25,6 @@ import org.hibernate.criterion.Criterion;
 import org.hibernate.criterion.Junction;
 import org.hibernate.criterion.Projections;
 import org.hibernate.criterion.Restrictions;
-//import org.springframework.beans.factory.annotation.Autowired;
-//import org.springframework.transaction.annotation.Transactional;
 import com.google.inject.persist.Transactional;
 
 
@@ -36,6 +34,7 @@ import com.dhenton9000.jpa.dao.support.NamedQueryUtilHibernate;
 import com.dhenton9000.jpa.dao.support.SearchTemplate;
 import com.dhenton9000.jpa.domain.Identifiable;
 import com.google.inject.Inject;
+import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
@@ -46,7 +45,7 @@ public abstract class GuiceGenericDaoImpl<E extends Identifiable<PK>, PK extends
         GenericDao<E, PK> {
 
     private Class<E> type;
-    private final static org.slf4j.Logger logger = LoggerFactory.getLogger(GuiceGenericDaoImpl.class);
+    private final static Logger logger = LoggerFactory.getLogger(GuiceGenericDaoImpl.class);
 
     /**
      * This constructor needs the real type of the generic type E so it can be
