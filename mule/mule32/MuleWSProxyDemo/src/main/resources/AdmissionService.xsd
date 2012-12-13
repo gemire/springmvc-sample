@@ -16,6 +16,18 @@
 			</sequence>
 		</complexType>
 	</element>
+        
+        <element name="admitSubjectLookup">
+		<complexType>
+			<sequence>
+				<element ref="mod:Referer"/>
+				<element ref="mod:Referral"/>
+				<element ref="mod:Subject"/>
+                                <element ref="mod:Lookup"   />
+			</sequence>
+		</complexType>
+	</element>
+        
 	<element name="admitSubjectResponse">
 		<complexType>
 			<choice>

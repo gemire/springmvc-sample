@@ -10,6 +10,7 @@
 	<element name="Bill" type="tns:billType"/>
 	<element name="InsuranceCaseNumber" type="string"/>
 	<element name="InsuranceCoverStatus" type="string"/>
+        <element name="Lookup" type="string"  maxOccurs="1" minOccurs="1" />
 	<element name="Transaction" type="tns:transactionType"/>
 
 	<complexType name="refererType">
