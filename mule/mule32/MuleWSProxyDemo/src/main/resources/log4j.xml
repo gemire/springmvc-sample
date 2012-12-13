@@ -42,9 +42,12 @@ zzzzzzzzzzzzzzzzzzzzzzz
     <logger name="org.springframework">
         <level value="ERROR"/>
     </logger>
+    <logger name="org.apache">
+        <level value="ERROR"/>
+    </logger>
 
  <logger name="org.mule">
-        <level value="DEBUG"/>
+        <level value="INFO"/>
     </logger>
 
     <root>

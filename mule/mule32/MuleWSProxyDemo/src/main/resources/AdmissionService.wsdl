@@ -1,9 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <wsdl:definitions name="Admission" targetNamespace="http://www.mule-health.com/SOA/service/admission/1.0" xmlns:mes="http://www.mule-health.com/SOA/message/1.0" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:tns="http://www.mule-health.com/SOA/service/admission/1.0" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
   <wsdl:types>
-<xsd:schema xmlns:mes="http://www.mule-health.com/SOA/message/1.0" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:tns="http://www.mule-health.com/SOA/service/admission/1.0" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
-			<xsd:import namespace="http://www.mule-health.com/SOA/message/1.0" schemaLocation="AdmissionService.xsd"/>
-		</xsd:schema>
+<xsd:schema xmlns:mes="http://www.mule-health.com/SOA/message/1.0" 
+            xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" 
+            xmlns:tns="http://www.mule-health.com/SOA/service/admission/1.0" 
+            xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" 
+            xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+	<xsd:import namespace="http://www.mule-health.com/SOA/message/1.0" 
+                    schemaLocation="AdmissionService.xsd"/>
+</xsd:schema>
   </wsdl:types>
   <wsdl:message name="admitSubjectResponse">
     <wsdl:part element="mes:admitSubjectResponse" name="parameters">

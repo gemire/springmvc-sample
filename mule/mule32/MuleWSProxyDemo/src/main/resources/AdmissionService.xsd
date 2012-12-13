@@ -1,6 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<schema elementFormDefault="unqualified" targetNamespace="http://www.mule-health.com/SOA/message/1.0" xmlns="http://www.w3.org/2001/XMLSchema" xmlns:mod="http://www.mule-health.com/SOA/model/1.0" xmlns:tns="http://www.mule-health.com/SOA/message/1.0">
-	<import namespace="http://www.mule-health.com/SOA/model/1.0" schemaLocation="http://hospital-admission.cloudhub.io/AdmissionService?xsd=SOA-Model-1.0.xsd"/>
+<schema elementFormDefault="unqualified" 
+        targetNamespace="http://www.mule-health.com/SOA/message/1.0" 
+        xmlns="http://www.w3.org/2001/XMLSchema" 
+        xmlns:mod="http://www.mule-health.com/SOA/model/1.0" 
+        xmlns:tns="http://www.mule-health.com/SOA/message/1.0">
+	<import namespace="http://www.mule-health.com/SOA/model/1.0" 
+                schemaLocation="HospitalModel.xsd"/>
 
 	<element name="admitSubject">
 		<complexType>

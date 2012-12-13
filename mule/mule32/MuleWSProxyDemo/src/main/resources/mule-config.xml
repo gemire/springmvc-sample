@@ -30,25 +30,27 @@ http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/cor
     <flow name="MuleWebFlow">
         <http:inbound-endpoint exchange-pattern="request-response"
                                address="http://localhost:9090/admissions">
-            <!--  </http:inbound-endpoint>  -->
-            <cxf:jaxws-service validationEnabled="true" wsdlLocation="AdmissionService.wsdl"
+        </http:inbound-endpoint>  
+        <cxf:jaxws-service validationEnabled="true"  wsdlLocation="AdmissionService.wsdl"
                         
                                serviceClass="com.dhenton9000.admissions.ws.impl.AdmissionImpl"
-                               enableMuleSoapHeaders="false">
+                               enableMuleSoapHeaders="true">
 
-                <cxf:outFaultInterceptors>
-                    <spring:bean id="outfault"
+            <cxf:outFaultInterceptors>
+                <spring:bean id="outfault"
                                  class="com.dhenton9000.cxf.interceptors.SoapFaultInterceptor" />
-                </cxf:outFaultInterceptors>
+            </cxf:outFaultInterceptors>
 
-            </cxf:jaxws-service>
+        </cxf:jaxws-service>
            
-        </http:inbound-endpoint>
+        <!--  </http:inbound-endpoint> -->
        
           
         <component>
             <singleton-object class="com.dhenton9000.admissions.ws.impl.AdmissionImpl" />
         </component>
+        
+        <default-exception-strategy />
         
     </flow>
     
