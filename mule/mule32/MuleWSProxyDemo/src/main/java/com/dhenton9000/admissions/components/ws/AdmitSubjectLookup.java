@@ -21,6 +21,7 @@ import javax.xml.bind.annotation.XmlType;
  *         &lt;element ref="{http://www.mule-health.com/SOA/model/1.0}Referer"/>
  *         &lt;element ref="{http://www.mule-health.com/SOA/model/1.0}Referral"/>
  *         &lt;element ref="{http://www.mule-health.com/SOA/model/1.0}Subject"/>
+ *         &lt;element ref="{http://www.mule-health.com/SOA/model/1.0}Lookup"/>
  *       &lt;/sequence>
  *     &lt;/restriction>
  *   &lt;/complexContent>
@@ -33,7 +34,8 @@ import javax.xml.bind.annotation.XmlType;
 @XmlType(name = "", propOrder = {
     "referer",
     "referral",
-    "subject"
+    "subject",
+    "lookup"
 })
 @XmlRootElement(name = "admitSubjectLookup")
 public class AdmitSubjectLookup {
@@ -45,7 +47,7 @@ public class AdmitSubjectLookup {
     @XmlElement(name = "Subject", namespace = "http://www.mule-health.com/SOA/model/1.0", required = true)
     protected DemographicType subject;
     @XmlElement(name = "Lookup", namespace = "http://www.mule-health.com/SOA/model/1.0", required = true)
-    private String lookup;
+    protected String lookup;
 
     /**
      * Gets the value of the referer property.
@@ -120,17 +122,27 @@ public class AdmitSubjectLookup {
     }
 
     /**
-     * @return the lookup
+     * Gets the value of the lookup property.
+     * 
+     * @return
+     *     possible object is
+     *     {@link String }
+     *     
      */
     public String getLookup() {
         return lookup;
     }
 
     /**
-     * @param lookup the lookup to set
+     * Sets the value of the lookup property.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link String }
+     *     
      */
-    public void setLookup(String lookup) {
-        this.lookup = lookup;
+    public void setLookup(String value) {
+        this.lookup = value;
     }
 
 }

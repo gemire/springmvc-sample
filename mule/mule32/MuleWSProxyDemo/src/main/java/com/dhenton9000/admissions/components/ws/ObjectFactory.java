@@ -25,6 +25,7 @@ import javax.xml.namespace.QName;
 public class ObjectFactory {
 
     private final static QName _Patient_QNAME = new QName("http://www.mule-health.com/SOA/model/1.0", "Patient");
+    private final static QName _Lookup_QNAME = new QName("http://www.mule-health.com/SOA/model/1.0", "Lookup");
     private final static QName _Referer_QNAME = new QName("http://www.mule-health.com/SOA/model/1.0", "Referer");
     private final static QName _Referral_QNAME = new QName("http://www.mule-health.com/SOA/model/1.0", "Referral");
     private final static QName _PatientId_QNAME = new QName("http://www.mule-health.com/SOA/model/1.0", "PatientId");
@@ -187,6 +188,14 @@ public class ObjectFactory {
     }
 
     /**
+     * Create an instance of {@link AdmitSubjectLookup }
+     * 
+     */
+    public AdmitSubjectLookup createAdmitSubjectLookup() {
+        return new AdmitSubjectLookup();
+    }
+
+    /**
      * Create an instance of {@link FindEpisodes }
      * 
      */
@@ -217,6 +226,15 @@ public class ObjectFactory {
     @XmlElementDecl(namespace = "http://www.mule-health.com/SOA/model/1.0", name = "Patient")
     public JAXBElement<PatientType> createPatient(PatientType value) {
         return new JAXBElement<PatientType>(_Patient_QNAME, PatientType.class, null, value);
+    }
+
+    /**
+     * Create an instance of {@link JAXBElement }{@code <}{@link String }{@code >}}
+     * 
+     */
+    @XmlElementDecl(namespace = "http://www.mule-health.com/SOA/model/1.0", name = "Lookup")
+    public JAXBElement<String> createLookup(String value) {
+        return new JAXBElement<String>(_Lookup_QNAME, String.class, null, value);
     }
 
     /**
