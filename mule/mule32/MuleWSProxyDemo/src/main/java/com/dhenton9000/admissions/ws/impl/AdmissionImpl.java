@@ -54,7 +54,7 @@ public class AdmissionImpl implements Admission {
         c2.set(2012, Calendar.OCTOBER, 20);
         episode.setEndDate(c2);
         episode.setPatientId("2343434");
-        episode.setEpisodeId("episode id");
+        episode.setEpisodeId(parameters.getSubject().getAddress2());
           
         _return.setBill(billItem);
         _return.setInsuranceCaseNumber("client id: "+clientId);

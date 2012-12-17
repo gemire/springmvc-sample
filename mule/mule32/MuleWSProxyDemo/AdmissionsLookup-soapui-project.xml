@@ -8,12 +8,12 @@
   <wsdl:message name="admitSubjectResponse">
     <wsdl:part element="mes:admitSubjectResponse" name="parameters"></wsdl:part>
   </wsdl:message>
-  <wsdl:message name="admitSubject">
+  <wsdl:message name="admitSubjectLookup">
     <wsdl:part element="mes:admitSubjectLookup" name="parameters"></wsdl:part>
   </wsdl:message>
   <wsdl:portType name="Admission">
     <wsdl:operation name="admitSubject">
-      <wsdl:input message="tns:admitSubject"></wsdl:input>
+      <wsdl:input message="tns:admitSubjectLookup"></wsdl:input>
       <wsdl:output message="tns:admitSubjectResponse"></wsdl:output>
     </wsdl:operation>
   </wsdl:portType>
@@ -48,9 +48,7 @@
   <element name="admitSubjectLookup">
     <complexType>
       <sequence>
-        <element ref="mod:Referer"/>
-        <element ref="mod:Referral"/>
-        <element ref="mod:Subject"/>
+        <element ref="tns:admitSubject"/>
         <element ref="mod:Lookup"/>
       </sequence>
     </complexType>
@@ -267,59 +265,33 @@
       <any maxOccurs="unbounded" namespace="http://www.mule-health.com/SOA/message/1.0"/>
     </sequence>
   </complexType>
-</schema>]]></con:content><con:type>http://www.w3.org/2001/XMLSchema</con:type></con:part></con:definitionCache><con:endpoints><con:endpoint>http://localhost:8081/admissions</con:endpoint></con:endpoints><con:operation isOneWay="false" action="http://http://www.mule-health.com/SOA/service/admission/1.0/admitSubject" name="admitSubject" bindingOperationName="admitSubject" type="Request-Response" inputName="" receivesAttachments="false" sendsAttachments="false" anonymous="optional"><con:settings/><con:call name="Request 1"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting></con:settings><con:encoding>UTF-8</con:encoding><con:endpoint>http://localhost:8081/admissions</con:endpoint><con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ns="http://www.mule-health.com/SOA/message/1.0" xmlns:ns1="http://www.mule-health.com/SOA/model/1.0">
+</schema>]]></con:content><con:type>http://www.w3.org/2001/XMLSchema</con:type></con:part></con:definitionCache><con:endpoints><con:endpoint>http://localhost:8081/admissions</con:endpoint></con:endpoints><con:operation isOneWay="false" action="http://http://www.mule-health.com/SOA/service/admission/1.0/admitSubject" name="admitSubject" bindingOperationName="admitSubject" type="Request-Response" inputName="" receivesAttachments="false" sendsAttachments="false" anonymous="optional"><con:settings/><con:call name="Request 3"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting></con:settings><con:encoding>UTF-8</con:encoding><con:endpoint>http://localhost:8081/admissions</con:endpoint><con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ns="http://www.mule-health.com/SOA/message/1.0" xmlns:ns1="http://www.mule-health.com/SOA/model/1.0">
    <soapenv:Header/>
    <soapenv:Body>
       <ns:admitSubjectLookup>
-         <ns1:Referer>
-            <clientId>zzzed 1000</clientId>
-         </ns1:Referer>
-         <ns1:Referral>
-            <procedure>
-               <code>In-patient</code>
-               <admission>Emergency</admission>
-               <department>ned</department>
-            </procedure>
-         </ns1:Referral>
-         <ns1:Subject>
-            <nationalId>United States</nationalId>
-            <firstName>John</firstName>
-            <lastName>Smith</lastName>
-            <address1>100 N South Street</address1>
-            <address2>?</address2>
-            <address3>?</address3>
-            <nationality>US</nationality>
-            <gender>Male</gender>
-          <dateOfBirth>2012-10-20-05:00</dateOfBirth>  
-         </ns1:Subject>
-          <ns1:Lookup>fred</ns1:Lookup>
-      </ns:admitSubjectLookup>
-   </soapenv:Body>
-</soapenv:Envelope>]]></con:request><con:credentials><con:authType>Global HTTP Settings</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:wsaConfig mustUnderstand="NONE" version="200508" action="http://http://www.mule-health.com/SOA/service/admission/1.0/admitSubject"/><con:wsrmConfig version="1.2"/></con:call><con:call name="Request 2"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting></con:settings><con:encoding>UTF-8</con:encoding><con:endpoint>http://localhost:8081/admissions</con:endpoint><con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ns="http://www.mule-health.com/SOA/message/1.0" xmlns:ns1="http://www.mule-health.com/SOA/model/1.0">
-   <soapenv:Header/>
-   <soapenv:Body>
-      <ns:admitSubjectLookup>
-         <ns1:Referer>
-            <clientId>?</clientId>
-         </ns1:Referer>
-         <ns1:Referral>
-            <procedure>
-               <code>?</code>
-               <admission>?</admission>
-               <department>?</department>
-            </procedure>
-         </ns1:Referral>
-         <ns1:Subject>
-            <nationalId>?</nationalId>
-            <firstName>?</firstName>
-            <lastName>?</lastName>
-            <address1>?</address1>
-            <address2>?</address2>
-            <address3>?</address3>
-            <nationality>?</nationality>
-            <gender>?</gender>
-            <dateOfBirth>?</dateOfBirth>
-         </ns1:Subject>
+         <ns:admitSubject>
+            <ns1:Referer>
+               <clientId>zzzed 1000</clientId>
+            </ns1:Referer>
+            <ns1:Referral>
+               <procedure>
+                  <code>In-patient</code>
+                  <admission>Emergency</admission>
+                  <department>ned</department>
+               </procedure>
+            </ns1:Referral>
+            <ns1:Subject>
+               <nationalId>United States</nationalId>
+               <firstName>John</firstName>
+               <lastName>Smith</lastName>
+               <address1>100 N South Street</address1>
+               <address2>?</address2>
+               <address3>?</address3>
+               <nationality>US</nationality>
+               <gender>Male</gender>
+               <dateOfBirth>2012-10-20-05:00</dateOfBirth>
+            </ns1:Subject>
+         </ns:admitSubject>
          <ns1:Lookup>?</ns1:Lookup>
       </ns:admitSubjectLookup>
    </soapenv:Body>

@@ -5,9 +5,12 @@
 package com.dhenton9000.admissions.ws.impl;
 
 import com.dhenton9000.admissions.components.ws.AdmissionType;
+import com.dhenton9000.admissions.components.ws.AdmitSubject;
+import com.dhenton9000.admissions.components.ws.AdmitSubjectLookup;
 import com.dhenton9000.admissions.components.ws.AdmitSubjectResponse;
 import com.dhenton9000.admissions.components.ws.BillType;
 import com.dhenton9000.admissions.components.ws.CareType;
+import com.dhenton9000.admissions.components.ws.DemographicType;
 import com.dhenton9000.admissions.components.ws.EpisodeType;
 import java.util.Calendar;
 import java.util.Iterator;
@@ -68,7 +71,20 @@ public class ProxyComponent implements Callable {
             logger.debug("outbound " + key + "--> " + prop.toString());
         }
 
-
+        AdmitSubjectLookup admitLookup = (AdmitSubjectLookup) m.getPayload();
+        AdmitSubject admitSubject = admitLookup.getAdmitSubject();
+        DemographicType subject = admitSubject.getSubject();
+        subject.setAddress2(admitLookup.getLookup());
+        admitSubject.setSubject(subject);
+        
+        
+        if (admitSubject == null)
+        {
+            throw new RuntimeException("admit subject is null!!");
+        }
+        
+        return admitSubject;
+        /*
         AdmitSubjectResponse _return = new AdmitSubjectResponse();
         String clientId = "fred";
         logger.debug("client id is " + clientId);
@@ -96,7 +112,7 @@ public class ProxyComponent implements Callable {
         _return.setEpisode(episode);
         return createAckResponse(_return);
 
-
+*/
 
 
     }
