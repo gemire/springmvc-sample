@@ -265,13 +265,13 @@
       <any maxOccurs="unbounded" namespace="http://www.mule-health.com/SOA/message/1.0"/>
     </sequence>
   </complexType>
-</schema>]]></con:content><con:type>http://www.w3.org/2001/XMLSchema</con:type></con:part></con:definitionCache><con:endpoints><con:endpoint>http://localhost:8081/admissions</con:endpoint></con:endpoints><con:operation isOneWay="false" action="http://http://www.mule-health.com/SOA/service/admission/1.0/admitSubject" name="admitSubject" bindingOperationName="admitSubject" type="Request-Response" inputName="" receivesAttachments="false" sendsAttachments="false" anonymous="optional"><con:settings/><con:call name="Request 3"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting></con:settings><con:encoding>UTF-8</con:encoding><con:endpoint>http://localhost:8081/admissions</con:endpoint><con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ns="http://www.mule-health.com/SOA/message/1.0" xmlns:ns1="http://www.mule-health.com/SOA/model/1.0">
+</schema>]]></con:content><con:type>http://www.w3.org/2001/XMLSchema</con:type></con:part></con:definitionCache><con:endpoints><con:endpoint>http://localhost:8081/admissions</con:endpoint><con:endpoint>http://dhenton:8088/mockAdmissionSoap</con:endpoint></con:endpoints><con:operation isOneWay="false" action="http://http://www.mule-health.com/SOA/service/admission/1.0/admitSubject" name="admitSubject" bindingOperationName="admitSubject" type="Request-Response" inputName="" receivesAttachments="false" sendsAttachments="false" anonymous="optional"><con:settings/><con:call name="Request 3"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting></con:settings><con:encoding>UTF-8</con:encoding><con:endpoint>http://localhost:8081/admissions</con:endpoint><con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ns="http://www.mule-health.com/SOA/message/1.0" xmlns:ns1="http://www.mule-health.com/SOA/model/1.0">
    <soapenv:Header/>
    <soapenv:Body>
       <ns:admitSubjectLookup>
          <ns:admitSubject>
             <ns1:Referer>
-               <clientId>zzzed 1000</clientId>
+               <clientId> zzzzzed 1000</clientId>
             </ns1:Referer>
             <ns1:Referral>
                <procedure>
@@ -292,7 +292,30 @@
                <dateOfBirth>2012-10-20-05:00</dateOfBirth>
             </ns1:Subject>
          </ns:admitSubject>
-         <ns1:Lookup>?</ns1:Lookup>
+         <ns1:Lookup>kkklookup</ns1:Lookup>
       </ns:admitSubjectLookup>
    </soapenv:Body>
-</soapenv:Envelope>]]></con:request><con:credentials><con:authType>Global HTTP Settings</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:wsaConfig mustUnderstand="NONE" version="200508" action="http://http://www.mule-health.com/SOA/service/admission/1.0/admitSubject"/><con:wsrmConfig version="1.2"/></con:call></con:operation></con:interface><con:properties/><con:wssContainer/></con:soapui-project>
+</soapenv:Envelope>]]></con:request><con:credentials><con:authType>Global HTTP Settings</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:wsaConfig mustUnderstand="NONE" version="200508" action="http://http://www.mule-health.com/SOA/service/admission/1.0/admitSubject"/><con:wsrmConfig version="1.2"/></con:call></con:operation></con:interface><con:mockService port="8088" path="/mockAdmissionSoap" host="dhenton" name="AdmissionSoap MockService"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.mock.WsdlMockService@require-soap-action">false</con:setting></con:settings><con:mockOperation name="admitSubject" interface="AdmissionSoap" operation="admitSubject"><con:settings/><con:dispatchStyle>SEQUENCE</con:dispatchStyle><con:defaultResponse>Response 1</con:defaultResponse><con:response name="Response 1" encoding="UTF-8"><con:settings/><con:responseContent><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ns="http://www.mule-health.com/SOA/message/1.0" xmlns:ns1="http://www.mule-health.com/SOA/model/1.0">
+   <soapenv:Header/>
+   <soapenv:Body>
+      <ns:admitSubjectResponse>
+         <!--You have a CHOICE of the next 2 items at this level-->
+         <ns1:Episode>
+            <episodeId>?</episodeId>
+            <ns1:PatientId>?</ns1:PatientId>
+            <admission>?</admission>
+            <startDate>?</startDate>
+            <endDate>?</endDate>
+            <care>?</care>
+         </ns1:Episode>
+         <ns1:Bill>
+            <costPerNight>?</costPerNight>
+            <initialStayEstimate>?</initialStayEstimate>
+            <runningTotal>?</runningTotal>
+            <status>?</status>
+         </ns1:Bill>
+         <ns1:InsuranceCaseNumber>?</ns1:InsuranceCaseNumber>
+         <ns1:InsuranceCoverStatus>?</ns1:InsuranceCoverStatus>
+      </ns:admitSubjectResponse>
+   </soapenv:Body>
+</soapenv:Envelope>]]></con:responseContent><con:wsaConfig mustUnderstand="NONE" version="200508" action="http://http://www.mule-health.com/SOA/service/admission/1.0/admitSubject"/></con:response><con:dispatchConfig/></con:mockOperation><con:properties/></con:mockService><con:properties/><con:wssContainer/></con:soapui-project>
