@@ -1,0 +1,140 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<mule xmlns="http://www.mulesoft.org/schema/mule/core" 
+      xmlns:http="http://www.mulesoft.org/schema/mule/http"
+      xmlns:mule-ss="http://www.mulesoft.org/schema/mule/spring-security"
+      xmlns:ss="http://www.springframework.org/schema/security"
+      xmlns:cxf="http://www.mulesoft.org/schema/mule/cxf" 
+      xmlns:file="http://www.mulesoft.org/schema/mule/file" 
+      xmlns:vm="http://www.mulesoft.org/schema/mule/vm" 
+      xmlns:mulexml="http://www.mulesoft.org/schema/mule/xml" 
+      xmlns:doc="http://www.mulesoft.org/schema/mule/documentation"
+      xmlns:spring="http://www.springframework.org/schema/beans" 
+      xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+      version="CE-3.2.1"
+      xsi:schemaLocation="
+http://www.mulesoft.org/schema/mule/http http://www.mulesoft.org/schema/mule/http/3.2/mule-http.xsd 
+http://www.mulesoft.org/schema/mule/cxf http://www.mulesoft.org/schema/mule/cxf/3.2/mule-cxf.xsd 
+http://www.mulesoft.org/schema/mule/file http://www.mulesoft.org/schema/mule/file/3.2/mule-file.xsd 
+http://www.mulesoft.org/schema/mule/xml http://www.mulesoft.org/schema/mule/xml/3.2/mule-xml.xsd
+http://www.mulesoft.org/schema/mule/vm http://www.mulesoft.org/schema/mule/vm/3.2/mule-vm.xsd 
+http://www.mulesoft.org/schema/mule/spring-security http://www.mulesoft.org/schema/mule/spring-security/3.2/mule-spring-security.xsd
+http://www.springframework.org/schema/security http://www.springframework.org/schema/security/spring-security-3.0.xsd
+http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.0.xsd 
+http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/3.2/mule.xsd ">
+	
+    <!-- wsdl http://localhost:9090/admission?wsdl -->
+    <mulexml:dom-to-xml-transformer name="DomToXml" />
+    <mulexml:xml-to-dom-transformer name="XmlToDom" returnClass="org.w3c.dom.Document" />
+    <object-to-byte-array-transformer name="ObjectToByteArray" />
+    <byte-array-to-object-transformer name="ByteArrayToString" returnClass="java.lang.String"/>
+    <custom-transformer name="XMLStreamToDom"
+                        class="com.dhenton9000.transformers.xml.XMLStreamToDocument" />
+    <custom-transformer name="DocumentToSoapMessage"
+                        class="org.mule.module.saaj.DocumentToSOAPMessageTransformer" />
+    <custom-transformer name="SoapMessageToDocument"
+                        class="org.mule.module.saaj.SOAPMessageToDocumentTransformer" />
+    <spring:beans>
+        <spring:bean name="jaxbContext"
+                     class="javax.xml.bind.JAXBContext" factory-method="newInstance">
+            <!-- colon-separated list of package names where JAXB classes exist -->
+            <spring:constructor-arg
+                value="com.dhenton9000.admissions.components.ws" />
+        </spring:bean>
+    </spring:beans>
+  
+    <mulexml:jaxb-object-to-xml-transformer
+        name="LookupToString" returnClass="java.lang.String"
+                              jaxbContext-ref="jaxbContext" />
+    
+    <mulexml:jaxb-object-to-xml-transformer
+        name="AdmissionToString" returnClass="java.lang.String"
+                                 jaxbContext-ref="jaxbContext" />
+
+    <mulexml:jaxb-xml-to-object-transformer
+        name="StringToLookup"
+        returnClass="com.dhenton9000.admissions.components.ws.AdmitSubjectLookup"
+        jaxbContext-ref="jaxbContext" />
+  
+    <flow name="MuleAdmissionsLookup">
+       
+      
+        
+        <http:inbound-endpoint exchange-pattern="request-response" disableTransportTransformer="true"
+                               address="http://localhost:8081/admissions">
+        
+        
+      
+            <cxf:proxy-service payload="body" validationEnabled="true" 
+                               namespace="http://www.mule-health.com/SOA/service/admission/1.0"
+                               service="AdmissionService"
+                               wsdlLocation="AdmissionServiceLookup.wsdl">
+
+                <cxf:outFaultInterceptors>
+                    <spring:bean id="outfault2"
+                                 class="com.dhenton9000.cxf.interceptors.SoapFaultInterceptor" />
+                </cxf:outFaultInterceptors>
+
+            </cxf:proxy-service>
+        
+        </http:inbound-endpoint> 
+        <!--
+        <transformer ref="XMLStreamToDom" />
+        <mulexml:dom-to-xml-transformer/>
+        needed for 3.3 mule
+        
+        -->
+     <!--   <transformer ref="ObjectToByteArray" />
+        <transformer ref="ByteArrayToString" />
+        <transformer ref="StringToLookup" /> -->
+         
+        <component>
+            <singleton-object 
+                class="com.dhenton9000.admissions.ws.impl.ProxyComponent" />
+        </component>
+       
+        <transformer ref="AdmissionToString" /> 
+        <transformer ref="XmlToDom" /> 
+        <transformer ref="DocumentToSoapMessage" /> 
+      
+        <http:outbound-endpoint exchange-pattern="request-response"  
+                                responseTransformer-refs="SoapMessageToDocument"
+                                address="http://localhost:9090/admissions">
+        </http:outbound-endpoint>
+      
+    </flow>
+ 
+     
+    <flow name="MuleWebFlow">
+        <http:inbound-endpoint exchange-pattern="request-response"
+                               address="http://localhost:9090/admissions">
+         
+        <cxf:jaxws-service validationEnabled="true"  
+                           wsdlLocation="AdmissionService.wsdl"
+                           serviceClass="com.dhenton9000.admissions.ws.impl.AdmissionImpl"
+                           enableMuleSoapHeaders="true">
+
+            <cxf:outFaultInterceptors>
+                <spring:bean id="outfault"
+                             class="com.dhenton9000.cxf.interceptors.SoapFaultInterceptor" />
+            </cxf:outFaultInterceptors>
+
+        </cxf:jaxws-service>
+           
+       </http:inbound-endpoint> 
+       
+          
+        <component>
+            <singleton-object class="com.dhenton9000.admissions.ws.impl.AdmissionImpl" />
+        </component>
+        
+        <default-exception-strategy />
+        
+    </flow>
+    
+     
+
+ 
+    
+    
+</mule>
