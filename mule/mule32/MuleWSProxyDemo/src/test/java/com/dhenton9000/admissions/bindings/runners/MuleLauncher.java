@@ -24,9 +24,10 @@ public class MuleLauncher {
 
         DefaultMuleContextFactory muleContextFactory = new DefaultMuleContextFactory();
         try {
-
-            SpringXmlConfigurationBuilder configBuilder = new SpringXmlConfigurationBuilder(
-                    "mule-http-proxy-config.xml");
+              String[] conf = {   "billing/mule-sync-web-service.xml","mule-http-proxy-config.xml"};
+              
+            SpringXmlConfigurationBuilder configBuilder = 
+                    new SpringXmlConfigurationBuilder(conf);
 
             MuleContext context = muleContextFactory.createMuleContext(configBuilder);
             context.start();
