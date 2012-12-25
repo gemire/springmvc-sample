@@ -4,9 +4,10 @@ import java.io.Serializable;
 
 public class User implements Serializable{
 
-	private String name = "";
-        private String nickName = "fred";
-	private int age = 0;
+	private String name = "<please add>";
+        private String nickName = "nick";
+	private int age = 21;
+        private Integer userNumber = 3;
 
 	public String getName() {
 		return name;
@@ -43,8 +44,21 @@ public class User implements Serializable{
         this.nickName = nickName;
     }
 
-     
+    /**
+     * @return the userNumber
+     */
+    public Integer getUserNumber() {
+        return userNumber;
+    }
 
+    /**
+     * @param userNumber the userNumber to set
+     */
+    public void setUserNumber(Integer userNumber) {
+        this.userNumber = userNumber;
+    }
+
+    
      
 
 }
