@@ -21,6 +21,26 @@
                     <label>NickName</label>: <input wicket:id="nickName" type="text"
                                                     size="20" />
                 </p>
+
+
+                <table cellpadding="4">
+                    <tr>
+                        <td>
+                             <span wicket:id="userNumber">
+			  <label><wicket:message key="select.a.number" /> (RadioGroup)</label>			  
+				<span wicket:id="numbers">
+					<input type="radio" wicket:id="radio"/><label wicket:id="number" style="display:inline"></label>
+				</span>
+			  </span>
+
+                        </td>    
+
+                    </tr>   
+               </table>
+
+
+
+
                 <input type="submit" value="Register" />
             </form>
         </wicket:extend>

@@ -5,10 +5,20 @@
 package com.dhenton9000.wicket.pages.form.sample;
 
 import com.dhenton9000.wicket.TemplatePage;
+import java.util.Arrays;
+import java.util.List;
 import org.apache.wicket.markup.html.form.Form;
+import org.apache.wicket.markup.html.form.Radio;
+import org.apache.wicket.markup.html.form.RadioChoice;
+import org.apache.wicket.markup.html.form.RadioGroup;
+import org.apache.wicket.markup.html.form.SimpleFormComponentLabel;
 import org.apache.wicket.markup.html.form.TextField;
+import org.apache.wicket.markup.html.list.ListItem;
+import org.apache.wicket.markup.html.list.ListView;
 import org.apache.wicket.markup.html.panel.FeedbackPanel;
 import org.apache.wicket.model.CompoundPropertyModel;
+import org.apache.wicket.model.IModel;
+import org.apache.wicket.model.Model;
 import org.apache.wicket.request.mapper.parameter.PageParameters;
 import org.apache.wicket.validation.IValidatable;
 import org.apache.wicket.validation.ValidationError;
@@ -24,9 +34,10 @@ import org.apache.wicket.validation.validator.StringValidator;
 public final class CompoundUserPage extends TemplatePage {
 
     private User user = new User();
+    private static final List<String> NUMBERS = Arrays.asList("1", "2", "3");
 
     public CompoundUserPage(final PageParameters params) {
-        
+
         StringValidator bozoValidator = new BozoValidator();
         this.setPageTitle(this.getClass().getSimpleName());
         add(new FeedbackPanel("feedback"));
@@ -49,6 +60,11 @@ public final class CompoundUserPage extends TemplatePage {
                 pageParameters.add("name", user.getName());
                 pageParameters.add("age", Integer.toString(user.getAge()));
                 pageParameters.add("nickName", user.getNickName());
+                Integer i = user.getUserNumber();
+                if (i == null) {
+                    i = new Integer(0);
+                }
+                pageParameters.add("userNumber", Integer.toString(i));
 
                 setResponsePage(SuccessPage.class, pageParameters);
 
@@ -59,16 +75,46 @@ public final class CompoundUserPage extends TemplatePage {
         form.add(tName);
         form.add(tAge);
         form.add(tNickname);
+        
+
+        /////////////////////////////////////////////
+
+//        RadioChoice<String> rc = 
+//                new RadioChoice<String>("numberRadioChoice", 
+//                NUMBERS).setSuffix("");
+//        rc.setLabel(new Model<String>("number"));
+//        rc.setRequired(true);
+//        form.add(rc);
+
+        RadioGroup<String> group = new RadioGroup<String>("userNumber");
+        
+        form.add(group);
+        ListView<String> persons = new ListView<String>("numbers", NUMBERS) {
+            @Override
+            protected void populateItem(ListItem<String> item) {
+                Radio<String> radio = new Radio<String>("radio", item.getModel());
+                radio.setLabel(item.getModel());
+                item.add(radio);
+                item.add(new SimpleFormComponentLabel("number", radio));
+            }
+        }.setReuseItems(true);
+        //  set the default in code, but in this case its on the user object
+          group.setModel(new Model<String>(NUMBERS.get(2)));
+        group.add(persons);
+
+
+
+
+
 
     }
-    
+
     class BozoValidator extends StringValidator {
-       public ValidationError decorate(ValidationError error, 
-               IValidatable<String> validatable) {
-       error.addKey("mystringerror");
-       return error;
+
+        public ValidationError decorate(ValidationError error,
+                IValidatable<String> validatable) {
+            error.addKey("mystringerror");
+            return error;
+        }
     }
-}
-    
-    
 }
