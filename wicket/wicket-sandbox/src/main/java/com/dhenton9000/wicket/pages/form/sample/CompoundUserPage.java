@@ -98,7 +98,7 @@ public final class CompoundUserPage extends TemplatePage {
                 item.add(new SimpleFormComponentLabel("number", radio));
             }
         }.setReuseItems(true);
-        //  set the default in code, but in this case its on the user object
+        //  set the default in code, using the user object doesn't seem to work
           group.setModel(new Model<String>(NUMBERS.get(2)));
         group.add(persons);
 
