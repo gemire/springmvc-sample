@@ -4,12 +4,22 @@
  */
 package com.dhenton9000.wicket.security;
 
+import com.dhenton9000.jpa.entities.Users;
+import com.google.inject.ImplementedBy;
+
 /**
  *
  * @author dhenton
  */
+@ImplementedBy(AuthenticationServiceImpl.class)
 public interface AuthenticationService {
     
-     boolean signIn(String username, String password) ;
+    /**
+     * find the database users object or null if not found
+     * @param username
+     * @param password
+     * @return 
+     */
+     Users signIn(String username, String password) ;
     
 }

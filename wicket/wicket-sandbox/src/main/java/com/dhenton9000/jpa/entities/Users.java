@@ -29,6 +29,7 @@ public class Users implements Identifiable<String>, Serializable  {
      
         private String userid;
         private String username;
+        private String password;
         private Set<Groups> groupsSet;
 
     public Users() {
@@ -86,7 +87,7 @@ public class Users implements Identifiable<String>, Serializable  {
     public String toString() {
         return "com.dhenton9000.jpa.generated.Users[ userid=" + userid + " ]";
     }
-
+ 
     /**
      * @return the groupsSet
      */
@@ -131,6 +132,21 @@ public class Users implements Identifiable<String>, Serializable  {
     @Transient
     public boolean isUserIdSet() {
         return userid != null && !userid.isEmpty();
+    }
+
+    /**
+     * @return the password
+     */
+     @Column(name = "PASSWORD",   nullable = false, unique = true, length = 50)
+    public String getPassword() {
+        return password;
+    }
+
+    /**
+     * @param password the password to set
+     */
+    public void setPassword(String password) {
+        this.password = password;
     }
 
     
