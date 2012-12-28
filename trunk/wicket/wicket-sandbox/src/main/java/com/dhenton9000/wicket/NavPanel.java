@@ -11,6 +11,7 @@ import com.dhenton9000.wicket.guice.repeater.SimpleListViewRepeater;
 import com.dhenton9000.wicket.pages.form.sample.CompoundUserPage;
 import com.dhenton9000.wicket.pages.form.sample.UserPage;
 import com.dhenton9000.wicket.security.SignIn;
+import com.dhenton9000.wicket.security.maintenance.MaintainApplications;
 import org.apache.wicket.markup.html.link.BookmarkablePageLink;
 import org.apache.wicket.markup.html.link.ExternalLink;
 import org.apache.wicket.model.IModel;
@@ -52,6 +53,7 @@ public final class NavPanel extends TemplatePanel {
         add(new BookmarkablePageLink<Void>("guiceRepeaterOnePageLink", GuiceRepeaterOne.class));
         add(new BookmarkablePageLink<Void>("applicationsUsersLink", ApplicationsUsers.class));
         add(new BookmarkablePageLink<Void>("simpleListViewRepeaterLink", SimpleListViewRepeater.class));
-        ;
+        add(new BookmarkablePageLink<Void>("maintainApplicationsLink", MaintainApplications.class));
+        
     }
 }
