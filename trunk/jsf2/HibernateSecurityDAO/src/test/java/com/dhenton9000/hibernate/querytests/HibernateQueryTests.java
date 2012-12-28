@@ -51,8 +51,8 @@ public class HibernateQueryTests {
 
         Object[] oOne = (Object[]) lz.get(4);
         assertEquals(3, oOne.length);
-        assertEquals("HeelHeights", oOne[2]);
-        assertEquals(53, lz.size());
+        assertEquals("HeelHeightRange", oOne[2]);
+        assertEquals(31, lz.size());
     }
     @Test
     public void doNamedParmQuery() {
@@ -73,7 +73,7 @@ public class HibernateQueryTests {
             assertEquals("gaw", g.getUserId());
             // now that we have an object check its has assignment
             Set h = g.getGroupAssignmentses();
-            assertEquals(5, h.size());
+            assertEquals(2, h.size());
             int cc = 0;
             Iterator iter = h.iterator();
             while (iter.hasNext()) {
@@ -121,7 +121,7 @@ public class HibernateQueryTests {
             query = session.createQuery(oQuery);
             query.setEntity("u", g);
             List results = query.list();
-            assertEquals(5, results.size());
+            assertEquals(2, results.size());
            
         } catch (Exception e) {
             log.error("do Query ERROR: " + e.getClass().getName() + " " + e.getMessage());
@@ -146,7 +146,7 @@ public class HibernateQueryTests {
         assertEquals(Integer.class, oItems[1].getClass());
         assertEquals(117, list.size());
         assertEquals(2, oItems.length);
-        assertEquals(new Integer(1), oItems[1]);
+        assertEquals(new Integer(8), oItems[1]);
     }
 
     private List doQuery(String q) {
