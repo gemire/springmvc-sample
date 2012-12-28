@@ -3,7 +3,7 @@
 "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
 <!-- Generated Jul 5, 2010 7:03:40 AM by Hibernate Tools 3.2.1.GA -->
 <hibernate-mapping>
-    <class name="com.dhenton9000.hibernatesecurity.Applications" table="applications" catalog="security">
+    <class name="com.dhenton9000.hibernatesecurity.Applications" table="applications" catalog="sec">
         <id name="id" type="java.lang.Integer">
             <column name="id" />
             <generator class="identity" />
