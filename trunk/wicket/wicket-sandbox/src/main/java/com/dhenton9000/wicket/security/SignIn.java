@@ -86,7 +86,7 @@ public final class SignIn extends TemplatePage {
 
             // Get session info
             SandboxSession session = getMySession();
-
+            
             // Sign the user in
             if (authService.signIn(getUsername(), getPassword())) {
                 SecureUser u = new SecureUser();
@@ -94,10 +94,11 @@ public final class SignIn extends TemplatePage {
                 u.setFullName("fred friendly");
                 u.setSandboxPassword(getPassword());
                 u.setAdmin(true);
-                session.setSecureUser(u);
-                continueToOriginalDestination();
+                session.setUser(u);
+               // continueToOriginalDestination();
                 setResponsePage(getApplication().getHomePage());
-                session.setSecureUser(u);
+                
+         
 
 
             } else {

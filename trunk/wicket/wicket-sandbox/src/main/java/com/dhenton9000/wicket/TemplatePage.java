@@ -16,6 +16,8 @@
  */
 package com.dhenton9000.wicket;
 
+import com.dhenton9000.wicket.security.SignOutPage;
+import com.dhenton9000.wicket.security.UserPanel;
 import org.apache.wicket.markup.html.basic.Label;
 import org.apache.wicket.markup.html.link.BookmarkablePageLink;
 import org.apache.wicket.model.PropertyModel;
@@ -75,5 +77,6 @@ public abstract class TemplatePage extends WicketBasePage {
         // add the panel to the java graph, its location is found
         // in TemplatePage.html with wicket:id = 'navPanel'
         add(new NavPanel("navPanel"));
+        add(new UserPanel("userPanel",SignOutPage.class));
     }
 }

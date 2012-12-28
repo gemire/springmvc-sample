@@ -15,7 +15,7 @@ import org.apache.wicket.request.Request;
  */
 public class SandboxSession extends WebSession {
     
-    private SecureUser secureUser = null;
+    private SecureUser user = null;
     public SandboxSession(Request request)
     {
         super(request);
@@ -28,22 +28,24 @@ public class SandboxSession extends WebSession {
     
     public boolean isAuthenticated()
     {
-        return (getSecureUser() != null);
+        return (getUser() != null);
     }
 
     /**
-     * @return the secureUser
+     * @return the user
      */
-    public SecureUser getSecureUser() {
-        return secureUser;
+    public SecureUser getUser() {
+        return user;
     }
 
     /**
-     * @param secureUser the secureUser to set
+     * @param user the user to set
      */
-    public void setSecureUser(SecureUser secureUser) {
-        this.secureUser = secureUser;
+    public void setUser(SecureUser user) {
+        this.user = user;
     }
+
+    
 
    
 }

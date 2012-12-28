@@ -54,6 +54,7 @@ public class Application extends WebApplication {
             @Override
             public boolean isActionAuthorized(Component component, Action action) {
                 // authorize everything
+                logger.debug("authorizing for component " + component.getMarkupId() + " action " + action.getName());
                 return true;
             }
 
@@ -61,12 +62,15 @@ public class Application extends WebApplication {
             public <T extends IRequestableComponent> boolean isInstantiationAuthorized(
                     Class<T> componentClass) {
                 // Check if the new Page requires authentication (implements the marker interface)
+               // logger.debug("entering isInstantiationAuthorized " + componentClass.getSimpleName());
                 if (AuthenticatedWebPage.class.isAssignableFrom(componentClass)) {
                     // Is user signed in?
                     if (((SandboxSession) Session.get()).isAuthenticated()) {
                         // okay to proceed
+                    //    logger.debug("authenticated hit " + componentClass.getSimpleName());
                         return true;
                     }
+                   // logger.debug("about to throw noauth " + componentClass.getSimpleName());
 
                     // Intercept the request, but remember the target for later.
                     // Invoke Component.continueToOriginalDestination() after successful logon to
