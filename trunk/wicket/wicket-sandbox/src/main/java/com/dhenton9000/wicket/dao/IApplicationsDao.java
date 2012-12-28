@@ -4,10 +4,10 @@
  */
 package com.dhenton9000.wicket.dao;
 
-import com.dhenton9000.wicket.dao.impl.ApplicationsDaoImpl;
 import com.dhenton9000.jpa.dao.support.GenericDao;
 import com.dhenton9000.jpa.entities.Applications;
 import com.dhenton9000.jpa.entities.Users;
+import com.dhenton9000.wicket.dao.impl.ApplicationsDaoImpl;
 import com.google.inject.ImplementedBy;
 import java.util.List;
 

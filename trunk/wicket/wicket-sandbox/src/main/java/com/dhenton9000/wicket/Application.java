@@ -54,7 +54,7 @@ public class Application extends WebApplication {
             @Override
             public boolean isActionAuthorized(Component component, Action action) {
                 // authorize everything
-                logger.debug("authorizing for component " + component.getMarkupId() + " action " + action.getName());
+              //  logger.debug("authorizing for component " + component.getMarkupId() + " action " + action.getName());
                 return true;
             }
 

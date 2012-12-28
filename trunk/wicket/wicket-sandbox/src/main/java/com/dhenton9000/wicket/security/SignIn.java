@@ -24,13 +24,17 @@ package com.dhenton9000.wicket.security;
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+import com.dhenton9000.jpa.entities.Users;
 import com.dhenton9000.wicket.TemplatePage;
+import com.google.inject.Inject;
 import org.apache.wicket.markup.html.form.Form;
 import org.apache.wicket.markup.html.form.PasswordTextField;
 import org.apache.wicket.markup.html.form.TextField;
 import org.apache.wicket.markup.html.panel.FeedbackPanel;
 import org.apache.wicket.model.PropertyModel;
 import org.apache.wicket.util.value.ValueMap;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * Simple example of a sign in page. Even simpler, as shown in the
@@ -41,6 +45,10 @@ import org.apache.wicket.util.value.ValueMap;
  */
 public final class SignIn extends TemplatePage {
 
+    
+    @Inject
+    private AuthenticationService authService ;
+     private final static transient Logger logger = LoggerFactory.getLogger(SignIn.class);
     /**
      * Constructor
      */
@@ -51,6 +59,25 @@ public final class SignIn extends TemplatePage {
 
         // Add sign-in form to page
         add(new SignInForm("signInForm"));
+    }
+
+    /**
+     * @return the authService
+     */
+    public AuthenticationService getAuthService() {
+        if (authService == null)
+        {
+            throw new RuntimeException("auth service null in "+this.getClass().getName());
+        }
+        return authService;
+    }
+
+    /**
+     * @param authService the authService to set
+     */
+    
+    public void setAuthService(AuthenticationService authService) {
+        this.authService = authService;
     }
 
     /**
@@ -82,17 +109,18 @@ public final class SignIn extends TemplatePage {
         @Override
         public final void onSubmit() {
 
-            AuthenticationService authService = new AuthenticationServiceImpl();
+            
 
             // Get session info
             SandboxSession session = getMySession();
-            
+            Users dbUsers = getAuthService().signIn(getUsername(), getPassword());
             // Sign the user in
-            if (authService.signIn(getUsername(), getPassword())) {
+            if (dbUsers != null) {
                 SecureUser u = new SecureUser();
                 u.setSandboxUsername(getUsername());
-                u.setFullName("fred friendly");
                 u.setSandboxPassword(getPassword());
+                logger.debug("full name should be "+dbUsers.getUsername());
+                u.setFullName(dbUsers.getUsername());
                 u.setAdmin(true);
                 session.setUser(u);
                // continueToOriginalDestination();
