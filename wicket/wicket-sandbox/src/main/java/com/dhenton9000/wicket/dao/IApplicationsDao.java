@@ -22,4 +22,6 @@ public interface IApplicationsDao extends GenericDao<Applications, Integer>{
 
     public List<Users> findUsersForApplications(Applications app);
     
+    public List<Applications> getAllApplicationswithLimits(long start, long count);
+    
 }

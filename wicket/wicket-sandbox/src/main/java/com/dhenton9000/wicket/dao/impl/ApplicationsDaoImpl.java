@@ -47,7 +47,7 @@ public class ApplicationsDaoImpl
     @Override
     public List<Users> findUsersForApplications(Applications app) {
         Integer appKey = app.getId();
-        logger.debug("findUsersForApplications "+appKey.toString());
+        logger.debug("findUsersForApplications " + appKey.toString());
         String queryItem = "SELECT app "
                 + "FROM Applications app "
                 + "inner  join fetch app.groupsSet groups "
@@ -78,6 +78,19 @@ public class ApplicationsDaoImpl
 
 
         return ret;
+    }
+
+    @Override
+    public List<Applications> getAllApplicationswithLimits(long start, long count) {
+        String queryItem = "SELECT app "
+                + "FROM Applications app ";
+        Query query = getEntityManager().createQuery(queryItem);
+         
+        query.setFirstResult((int) start);
+        query.setMaxResults((int) count);
+        List<Applications> results = query.getResultList();
+
+        return results;
     }
 }
 
