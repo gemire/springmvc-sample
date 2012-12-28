@@ -52,6 +52,6 @@ public final class NavPanel extends TemplatePanel {
         add(new BookmarkablePageLink<Void>("guiceRepeaterOnePageLink", GuiceRepeaterOne.class));
         add(new BookmarkablePageLink<Void>("applicationsUsersLink", ApplicationsUsers.class));
         add(new BookmarkablePageLink<Void>("simpleListViewRepeaterLink", SimpleListViewRepeater.class));
-        add(new BookmarkablePageLink<Void>("secureLink", SignIn.class));
+        ;
     }
 }
