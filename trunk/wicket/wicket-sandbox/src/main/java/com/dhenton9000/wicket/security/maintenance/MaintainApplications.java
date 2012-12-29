@@ -4,7 +4,6 @@
  */
 package com.dhenton9000.wicket.security.maintenance;
 
- 
 import com.dhenton9000.jpa.entities.Applications;
 import com.dhenton9000.wicket.TemplatePage;
 import com.dhenton9000.wicket.dao.IApplicationsDao;
@@ -12,9 +11,17 @@ import com.google.inject.Inject;
 import java.util.ArrayList;
 import java.util.List;
 import org.apache.wicket.extensions.ajax.markup.html.repeater.data.table.AjaxFallbackDefaultDataTable;
+import org.apache.wicket.extensions.markup.html.repeater.data.grid.ICellPopulator;
+import org.apache.wicket.extensions.markup.html.repeater.data.table.AbstractColumn;
 import org.apache.wicket.extensions.markup.html.repeater.data.table.IColumn;
 import org.apache.wicket.extensions.markup.html.repeater.data.table.PropertyColumn;
+import org.apache.wicket.markup.html.basic.Label;
+import org.apache.wicket.markup.html.link.Link;
+import org.apache.wicket.markup.html.panel.Panel;
+import org.apache.wicket.markup.repeater.Item;
+import org.apache.wicket.model.IModel;
 import org.apache.wicket.model.Model;
+import org.apache.wicket.model.PropertyModel;
 import org.apache.wicket.request.mapper.parameter.PageParameters;
 
 /**
@@ -25,38 +32,79 @@ public final class MaintainApplications extends TemplatePage {
 
     @Inject
     private IApplicationsDao applicationsService;
-    
-    
+    private Integer selectedApplicationId = null;
+    private Label selectedAppIdLabel;
+     
+
     public MaintainApplications() {
         super();
         this.setPageTitle(this.getClass().getSimpleName());
-        setup();  
-        
+        setup();
+
     }
-    
+
     public MaintainApplications(PageParameters params) {
-		setup();       
-        
+        setup();
+
     }
 
     private void setup() {
+        selectedAppIdLabel = new Label("selectedAppId", new PropertyModel(this, "displaySelectedAppId"));
+        add(selectedAppIdLabel);
         List<IColumn<Applications, String>> columns = new ArrayList<IColumn<Applications, String>>();
-//'wicket_child6:wicket_extend7
-//		columns.add(new AbstractColumn<Applications, String>(new Model<String>("Actions"))
-//		{
-//			@Override
-//			public void populateItem(Item<ICellPopulator<Applications>> cellItem, String componentId,
-//				IModel<Applications> model)
-//			{
-//				cellItem.add(new ActionPanel(componentId, model));
-//			}
-//		});
 
-                columns.add(new PropertyColumn<Applications, String>(new Model<String>("ID"), "id"));
-                columns.add(new PropertyColumn<Applications, String>(new Model<String>("App Name"), "applicationName",
-                        "applicationName"));
-                add(new AjaxFallbackDefaultDataTable<Applications, String>("applicationsTable", columns,
-                        new SortableApplicationsDataProvider(applicationsService), 8));
-         
+        columns.add(new AbstractColumn<Applications, String>(new Model<String>("Actions")) {
+            @Override
+            public void populateItem(Item<ICellPopulator<Applications>> cellItem, String componentId,
+                    IModel<Applications> model) {
+                cellItem.add(new ActionPanel(componentId, model));
+            }
+        });
+
+        columns.add(new PropertyColumn<Applications, String>(new Model<String>("ID"), "id"));
+        columns.add(new PropertyColumn<Applications, String>(new Model<String>("App Name"), "applicationName",
+                "applicationName"));
+        final AjaxFallbackDefaultDataTable<Applications, String> ajaxFallbackDefaultDataTable =
+                new AjaxFallbackDefaultDataTable<Applications, String>("applicationsTable", columns,
+                new SortableApplicationsDataProvider(applicationsService), 10);
+                add(ajaxFallbackDefaultDataTable);
+
+    }
+
+    /**
+     * @return the displaySelectedAppId
+     */
+    public String getDisplaySelectedAppId() {
+        String info = "selected id: ";
+        if (selectedApplicationId == null)
+        {
+            info += "";
+        }
+        else
+        {
+            info += selectedApplicationId;
+        }
+        
+        return info;
+    }
+
+    class ActionPanel extends Panel {
+
+        /**
+         * @param id component id
+         * @param model model for contact
+         */
+        public ActionPanel(String id, IModel<Applications> model) {
+            super(id, model);
+            add(new Link("select") {
+                @Override
+                public void onClick() {
+                    Applications selected =
+                            (Applications) getParent().getDefaultModelObject();
+                    selectedApplicationId = selected.getId();
+                    
+                }
+            });
+        }
     }
 }
