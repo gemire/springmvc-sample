@@ -8,6 +8,7 @@ import com.dhenton9000.jpa.entities.Applications;
 import com.dhenton9000.wicket.TemplatePage;
 import com.dhenton9000.wicket.dao.IApplicationsDao;
 import com.dhenton9000.wicket.pages.form.sample.SuccessPage;
+import com.dhenton9000.wicket.security.SandboxSession;
 import com.google.inject.Inject;
 import java.util.ArrayList;
 import java.util.List;
@@ -17,6 +18,8 @@ import org.apache.wicket.extensions.markup.html.repeater.data.grid.ICellPopulato
 import org.apache.wicket.extensions.markup.html.repeater.data.table.AbstractColumn;
 import org.apache.wicket.extensions.markup.html.repeater.data.table.IColumn;
 import org.apache.wicket.extensions.markup.html.repeater.data.table.PropertyColumn;
+import org.apache.wicket.markup.ComponentTag;
+import org.apache.wicket.markup.MarkupStream;
 import org.apache.wicket.markup.html.WebMarkupContainer;
 import org.apache.wicket.markup.html.basic.Label;
 import org.apache.wicket.markup.html.form.Form;
@@ -79,7 +82,7 @@ public final class MaintainApplications extends TemplatePage {
         add(ajaxFallbackDefaultDataTable);
 
         //////// add a container to contain the editing system.
-        final WebMarkupContainer editGroup = new WebMarkupContainer("editGroup");
+        final WebMarkupContainer editGroup = new AppEditGroup("editGroup");
         EditForm editForm = new EditForm("editForm");
 
         final TextField<String> tApplicationName = new TextField<String>("applicationName",
@@ -110,6 +113,38 @@ public final class MaintainApplications extends TemplatePage {
         }
 
         return info;
+    }
+
+    class AppEditGroup extends WebMarkupContainer {
+
+        public AppEditGroup(String id) {
+            super(id);
+            
+        }
+
+        public AppEditGroup(String id, IModel<Applications> model) {
+            super(id, model);
+           
+
+        }
+
+        @Override
+        public boolean isVisible() {
+
+            if (selectedApplication != null 
+                    && selectedApplication.getId() != null) {
+                return true;
+            } else {
+                return false;
+            }
+        }
+
+        @Override
+        protected void onBeforeRender() {
+            super.onBeforeRender();
+
+
+        }
     }
 
     class EditForm extends Form<Applications> {
