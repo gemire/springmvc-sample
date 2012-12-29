@@ -7,16 +7,23 @@ package com.dhenton9000.wicket.security.maintenance;
 import com.dhenton9000.jpa.entities.Applications;
 import com.dhenton9000.wicket.TemplatePage;
 import com.dhenton9000.wicket.dao.IApplicationsDao;
+import com.dhenton9000.wicket.pages.form.sample.SuccessPage;
 import com.google.inject.Inject;
 import java.util.ArrayList;
 import java.util.List;
+import org.apache.wicket.MarkupContainer;
 import org.apache.wicket.extensions.ajax.markup.html.repeater.data.table.AjaxFallbackDefaultDataTable;
 import org.apache.wicket.extensions.markup.html.repeater.data.grid.ICellPopulator;
 import org.apache.wicket.extensions.markup.html.repeater.data.table.AbstractColumn;
 import org.apache.wicket.extensions.markup.html.repeater.data.table.IColumn;
 import org.apache.wicket.extensions.markup.html.repeater.data.table.PropertyColumn;
+import org.apache.wicket.markup.html.WebMarkupContainer;
 import org.apache.wicket.markup.html.basic.Label;
+import org.apache.wicket.markup.html.form.Form;
+import org.apache.wicket.markup.html.form.TextField;
 import org.apache.wicket.markup.html.link.Link;
+import org.apache.wicket.markup.html.panel.FeedbackPanel;
+import org.apache.wicket.markup.html.panel.Fragment;
 import org.apache.wicket.markup.html.panel.Panel;
 import org.apache.wicket.markup.repeater.Item;
 import org.apache.wicket.model.IModel;
@@ -32,9 +39,8 @@ public final class MaintainApplications extends TemplatePage {
 
     @Inject
     private IApplicationsDao applicationsService;
-    private Integer selectedApplicationId = null;
-    private Label selectedAppIdLabel;
-     
+    private Applications selectedApplication = new Applications();
+    //  private IModel<Applications> applicationsModel = null;
 
     public MaintainApplications() {
         super();
@@ -49,7 +55,10 @@ public final class MaintainApplications extends TemplatePage {
     }
 
     private void setup() {
-        selectedAppIdLabel = new Label("selectedAppId", new PropertyModel(this, "displaySelectedAppId"));
+
+
+
+        Label selectedAppIdLabel = new Label("selectedAppId", new PropertyModel(this, "displaySelectedAppId"));
         add(selectedAppIdLabel);
         List<IColumn<Applications, String>> columns = new ArrayList<IColumn<Applications, String>>();
 
@@ -67,7 +76,24 @@ public final class MaintainApplications extends TemplatePage {
         final AjaxFallbackDefaultDataTable<Applications, String> ajaxFallbackDefaultDataTable =
                 new AjaxFallbackDefaultDataTable<Applications, String>("applicationsTable", columns,
                 new SortableApplicationsDataProvider(applicationsService), 10);
-                add(ajaxFallbackDefaultDataTable);
+        add(ajaxFallbackDefaultDataTable);
+
+        //////// add a container to contain the editing system.
+        final WebMarkupContainer editGroup = new WebMarkupContainer("editGroup");
+        EditForm editForm = new EditForm("editForm");
+
+        final TextField<String> tApplicationName = new TextField<String>("applicationName",
+                new PropertyModel<String>(selectedApplication, "applicationName"));
+
+        final Label tId = new Label("applicationId",
+                new PropertyModel<String>(selectedApplication, "id"));
+
+        editForm.add(tApplicationName);
+        editForm.add(tId);
+        editGroup.add(editForm);
+        editGroup.add(new FeedbackPanel("feedback"));
+        add(editGroup);
+
 
     }
 
@@ -75,17 +101,30 @@ public final class MaintainApplications extends TemplatePage {
      * @return the displaySelectedAppId
      */
     public String getDisplaySelectedAppId() {
-        String info = "selected id: ";
-        if (selectedApplicationId == null)
-        {
+        String info = "selected : ";
+        if (selectedApplication.getId() == null) {
             info += "";
+        } else {
+            info += selectedApplication.getApplicationName() + " ("
+                    + selectedApplication.getPrimaryKey() + ")";
         }
-        else
-        {
-            info += selectedApplicationId;
-        }
-        
+
         return info;
+    }
+
+    class EditForm extends Form<Applications> {
+
+        public EditForm(String id) {
+            super(id);
+        }
+
+        public EditForm(String id, IModel<Applications> model) {
+            super(id, model);
+        }
+
+        @Override
+        protected void onSubmit() {
+        }
     }
 
     class ActionPanel extends Panel {
@@ -101,8 +140,10 @@ public final class MaintainApplications extends TemplatePage {
                 public void onClick() {
                     Applications selected =
                             (Applications) getParent().getDefaultModelObject();
-                    selectedApplicationId = selected.getId();
-                    
+                    //selectedApplicationId = selected.getId();
+                    selectedApplication.setApplicationName(selected.getApplicationName());
+                    selectedApplication.setId(selected.getId());
+
                 }
             });
         }

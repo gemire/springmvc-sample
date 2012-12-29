@@ -1,10 +1,40 @@
 <wicket:extend xmlns:wicket="http://wicket.apache.org">
+    <h2>Maintain Applications</h2>
     <p wicket:id="selectedAppId"></p>
     <table cellpadding="3" width="100%">
-        <tr><td style="width:50%"><table width="100%" class="dataview"  wicket:id="applicationsTable">[table]</table></td>
-            <td></td>
+        <tr><td style="width:50%"><table width="100%" class="dataview"  
+                                         wicket:id="applicationsTable">[table]</table></td>
+            <td>  
+
+
+                <div wicket:id="editGroup">
+                    <h3>Edit Selected Application</h3>
+                    <div wicket:id="feedback"></div>
+
+                    <form wicket:id="editForm">
+                        <table style="border: thin solid black" cellspacing="6" cellpadding="4">
+                            <tr>
+                                <th>Application<br>Name:</th><td>
+                                    <input wicket:id="applicationName" type="text"
+                                           size="30" /></td>
+                            </tr>
+                            <tr>
+                                <th>Id:</th><td><span wicket:id="applicationId"></span></td> 
+                            </tr>
+                            <tr>
+                                <td colspan="2"><input type="submit" value="Edit" /></td>
+                            </tr>
+                        </table>
+                    </form>
+
+                </div>
+
+            </td>
         </tr>
     </table>
 
 
-</wicket:extend>  
+
+
+
+</wicket:extend>     
