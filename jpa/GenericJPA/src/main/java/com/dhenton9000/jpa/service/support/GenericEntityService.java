@@ -68,6 +68,18 @@ public interface GenericEntityService<T extends Identifiable<PK>, PK extends Ser
      */
     void save(T entity);
 
+      /**
+     * Saves or updates the passed entity E to the repository
+     * handling the case of detached state for the parameter
+     * The returned reference is the new item in the cache for the
+     * updated object and should be used downstream
+     *
+     * @param entity the entity to be saved or updated.
+     */
+    T merge(T entity);
+    
+    
+    
     /**
      * Save or update the passed list of entities. 
      * 
