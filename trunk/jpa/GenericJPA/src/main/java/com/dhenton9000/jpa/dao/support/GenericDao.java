@@ -52,6 +52,18 @@ public interface GenericDao<E extends Identifiable<PK>, PK extends Serializable>
     void save(E entity);
 
     /**
+     * Saves or updates the passed entity E to the repository
+     * handling the case of detached state for the parameter
+     * The returned reference is the new item in the cache for the
+     * updated object and should be used downstream
+     *
+     * @param entity the entity to be saved or updated.
+     */
+    E merge(E entity);
+    
+    
+    
+    /**
      * Saves or updates the passed list of E entities to the repository.
      *
      * @param entities the list of entities to be saved or updated.

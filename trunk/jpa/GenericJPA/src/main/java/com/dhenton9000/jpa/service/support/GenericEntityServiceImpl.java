@@ -55,6 +55,14 @@ public abstract class GenericEntityServiceImpl<T extends Identifiable<PK>, PK ex
     public void save(T model) {
         getDao().save(model);
     }
+    
+     /**
+     * {@inheritDoc}
+     */
+    @Transactional
+    public T merge(T model) {
+       return getDao().merge(model);
+    }
 
     /**
      * {@inheritDoc}
