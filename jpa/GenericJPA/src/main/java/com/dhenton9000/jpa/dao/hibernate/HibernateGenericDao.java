@@ -76,6 +76,17 @@ public abstract class HibernateGenericDao<E extends Identifiable<PK>, PK extends
 
     @Override
     @Transactional
+    public E merge(E entity)
+    {
+        logger.debug("begin merge");
+        Validate.notNull(entity, "The entity to merge cannot be null element");
+        return getEntityManager().merge(entity);
+    }
+    
+    
+    
+    @Override
+    @Transactional
     public void save(E entity) {
         logger.debug("begin save");
         Validate.notNull(entity, "The entity to save cannot be null element");
