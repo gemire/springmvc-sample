@@ -5,13 +5,17 @@
 package com.dhenton9000.wicket.security.maintenance;
 
 import com.dhenton9000.jpa.entities.Applications;
+import com.dhenton9000.jpa.entities.Groups;
 import com.dhenton9000.wicket.TemplatePage;
 import com.dhenton9000.wicket.dao.IApplicationsDao;
+import com.dhenton9000.wicket.guice.data.ApplicationsUsers;
 import com.dhenton9000.wicket.pages.form.sample.SuccessPage;
 import com.dhenton9000.wicket.security.SandboxSession;
 import com.google.inject.Inject;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
+import java.util.Set;
 import org.apache.wicket.MarkupContainer;
 import org.apache.wicket.extensions.ajax.markup.html.repeater.data.table.AjaxFallbackDefaultDataTable;
 import org.apache.wicket.extensions.markup.html.repeater.data.grid.ICellPopulator;
@@ -22,6 +26,8 @@ import org.apache.wicket.markup.ComponentTag;
 import org.apache.wicket.markup.MarkupStream;
 import org.apache.wicket.markup.html.WebMarkupContainer;
 import org.apache.wicket.markup.html.basic.Label;
+import org.apache.wicket.markup.html.form.ChoiceRenderer;
+import org.apache.wicket.markup.html.form.DropDownChoice;
 import org.apache.wicket.markup.html.form.Form;
 import org.apache.wicket.markup.html.form.TextField;
 import org.apache.wicket.markup.html.link.Link;
@@ -35,6 +41,7 @@ import org.apache.wicket.model.PropertyModel;
 import org.apache.wicket.request.mapper.parameter.PageParameters;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.apache.wicket.markup.html.form.ListMultipleChoice;
 
 /**
  *
@@ -44,8 +51,7 @@ public final class MaintainApplications extends TemplatePage {
 
     @Inject
     private IApplicationsDao applicationsService;
-    
-    private   final Logger logger =   LoggerFactory.getLogger(MaintainApplications.class);
+    private final Logger logger = LoggerFactory.getLogger(MaintainApplications.class);
     /**
      * this doesn't need a detach as it was loaded from the ajax table which
      * already has a detachable model
@@ -80,7 +86,7 @@ public final class MaintainApplications extends TemplatePage {
             }
         });
 
-        columns.add(new PropertyColumn<Applications, String>(new Model<String>("ID"), "id"));
+        columns.add(new PropertyColumn<Applications, String>(new Model<String>("ID"), "id", "id"));
         columns.add(new PropertyColumn<Applications, String>(new Model<String>("App Name"), "applicationName",
                 "applicationName"));
         final AjaxFallbackDefaultDataTable<Applications, String> ajaxFallbackDefaultDataTable =
@@ -159,45 +165,59 @@ public final class MaintainApplications extends TemplatePage {
             final Label tId = new Label("applicationId",
                     new PropertyModel<String>(selectedApplication, "id"));
 
+            GroupsDropDownChoice groupsChoice;
+            groupsChoice = new GroupsDropDownChoice("applicationGroups");
             add(tApplicationName);
             add(tId);
-            
+            add(groupsChoice);
+
         }
 
-        /*
-         AjaxButton lSearchButton = new AjaxButton("searchButton") {
-         private static final long serialVersionUID = 1L;
-
-         @Override
-         protected void onSubmit(AjaxRequestTarget target, Form<?> form) {
-         SubscriberFilter filter = new SubscriberFilter();
-         target.add(table);
-         if (!(tn.getValue() == null) && !tn.getValue().isEmpty()) {
-         filter.setTn(tn.getValue());
-         }
-         // giving the new filter to the dataProvider
-         subscriberDataProvider.setFilterState(filter);
-         }
-
-         @Override
-         protected void onError(AjaxRequestTarget target, Form<?> form) {
-         // TODO Implement onError(..)
-         throw new UnsupportedOperationException("Not yet implemented.");
-         }
-
-         };
-         lSearchButton.setOutputMarkupId(true);
-         this.setDefaultButton(lSearchButton);
-         add(lSearchButton);
-        
-        
-         */
         @Override
         protected void onSubmit() {
-           
-             
+
+
             applicationsService.merge(selectedApplication);
-           
+
+        }
+    }
+    IModel selectedGroupsModel = new PropertyModel(selectedApplication, "groupsSet") {
+        @Override
+        public Object getObject() {
+            return new ArrayList((Set) super.getObject());
+        }
+    };
+
+    class GroupsDropDownChoice extends ListMultipleChoice<Groups> {
+
+        // there needs to be a model that represents the selections
+        // and a model that represents the choices for which the
+        // selections are a subset
+        
+        public GroupsDropDownChoice(String id) {
+            super(id, selectedGroupsModel, new GroupsDropDownRenderer());
+            //  super(id, getApplications(), new ApplicationsUsers.ApplicationsChoiceRenderer());
+            // setChoices(getApplications());
+            // setModel(new PropertyModel<Applications>(ApplicationsUsers.this, "selectedApplication"));
+
+
+
+        }
+    }
+
+    class GroupsDropDownRenderer extends ChoiceRenderer<Groups> {
+
+        public GroupsDropDownRenderer() {
+        }
+
+        @Override
+        public Object getDisplayValue(Groups object) {
+            return object.getGroupName();
+        }
+
+        @Override
+        public String getIdValue(Groups object, int index) {
+            return object.getId().toString();
         }
     }
 
@@ -218,6 +238,8 @@ public final class MaintainApplications extends TemplatePage {
                     //selectedApplicationId = selected.getId();
                     selectedApplication.setApplicationName(selected.getApplicationName());
                     selectedApplication.setId(selected.getId());
+                    selectedApplication.setGroupsSet(selected.getGroupsSet());
+
 
                 }
             });
