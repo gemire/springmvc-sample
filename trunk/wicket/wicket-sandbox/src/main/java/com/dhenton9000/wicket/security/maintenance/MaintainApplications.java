@@ -161,7 +161,7 @@ public final class MaintainApplications extends TemplatePage {
 
             add(tApplicationName);
             add(tId);
-
+            
         }
 
         /*
