@@ -95,6 +95,19 @@ public abstract class GuiceGenericDaoImpl<E extends Identifiable<PK>, PK extends
         return entityFound;
     }
 
+    
+    @Override
+    @Transactional
+    public E merge(E entity)
+    {
+        logger.debug("begin save");
+        Validate.notNull(entity, "The entity to save cannot be null element");
+        E newMergedEntity = getEntityManager().merge(entity);
+        return newMergedEntity;
+    }
+    
+    
+    
     @Override
     @Transactional
     public void save(E entity) {
@@ -114,6 +127,10 @@ public abstract class GuiceGenericDaoImpl<E extends Identifiable<PK>, PK extends
             getEntityManager().persist(entity);
             return;
         }
+        
+         
+        
+        
     }
 
     /**
