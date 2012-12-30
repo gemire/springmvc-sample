@@ -33,6 +33,8 @@ import org.apache.wicket.model.IModel;
 import org.apache.wicket.model.Model;
 import org.apache.wicket.model.PropertyModel;
 import org.apache.wicket.request.mapper.parameter.PageParameters;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  *
@@ -42,8 +44,13 @@ public final class MaintainApplications extends TemplatePage {
 
     @Inject
     private IApplicationsDao applicationsService;
+    
+    private   final Logger logger =   LoggerFactory.getLogger(MaintainApplications.class);
+    /**
+     * this doesn't need a detach as it was loaded from the ajax table which
+     * already has a detachable model
+     */
     private Applications selectedApplication = new Applications();
-    //  private IModel<Applications> applicationsModel = null;
 
     public MaintainApplications() {
         super();
@@ -79,20 +86,13 @@ public final class MaintainApplications extends TemplatePage {
         final AjaxFallbackDefaultDataTable<Applications, String> ajaxFallbackDefaultDataTable =
                 new AjaxFallbackDefaultDataTable<Applications, String>("applicationsTable", columns,
                 new SortableApplicationsDataProvider(applicationsService), 10);
+        ajaxFallbackDefaultDataTable.setOutputMarkupId(true);
         add(ajaxFallbackDefaultDataTable);
 
         //////// add a container to contain the editing system.
         final WebMarkupContainer editGroup = new AppEditGroup("editGroup");
         EditForm editForm = new EditForm("editForm");
 
-        final TextField<String> tApplicationName = new TextField<String>("applicationName",
-                new PropertyModel<String>(selectedApplication, "applicationName"));
-
-        final Label tId = new Label("applicationId",
-                new PropertyModel<String>(selectedApplication, "id"));
-
-        editForm.add(tApplicationName);
-        editForm.add(tId);
         editGroup.add(editForm);
         editGroup.add(new FeedbackPanel("feedback"));
         add(editGroup);
@@ -119,31 +119,24 @@ public final class MaintainApplications extends TemplatePage {
 
         public AppEditGroup(String id) {
             super(id);
-            
+
         }
 
         public AppEditGroup(String id, IModel<Applications> model) {
             super(id, model);
-           
+
 
         }
 
         @Override
         public boolean isVisible() {
 
-            if (selectedApplication != null 
+            if (selectedApplication != null
                     && selectedApplication.getId() != null) {
                 return true;
             } else {
                 return false;
             }
-        }
-
-        @Override
-        protected void onBeforeRender() {
-            super.onBeforeRender();
-
-
         }
     }
 
@@ -151,14 +144,60 @@ public final class MaintainApplications extends TemplatePage {
 
         public EditForm(String id) {
             super(id);
+            setup();
         }
 
         public EditForm(String id, IModel<Applications> model) {
             super(id, model);
+            setup();
         }
 
+        private void setup() {
+            final TextField<String> tApplicationName = new TextField<String>("applicationName",
+                    new PropertyModel<String>(selectedApplication, "applicationName"));
+
+            final Label tId = new Label("applicationId",
+                    new PropertyModel<String>(selectedApplication, "id"));
+
+            add(tApplicationName);
+            add(tId);
+
+        }
+
+        /*
+         AjaxButton lSearchButton = new AjaxButton("searchButton") {
+         private static final long serialVersionUID = 1L;
+
+         @Override
+         protected void onSubmit(AjaxRequestTarget target, Form<?> form) {
+         SubscriberFilter filter = new SubscriberFilter();
+         target.add(table);
+         if (!(tn.getValue() == null) && !tn.getValue().isEmpty()) {
+         filter.setTn(tn.getValue());
+         }
+         // giving the new filter to the dataProvider
+         subscriberDataProvider.setFilterState(filter);
+         }
+
+         @Override
+         protected void onError(AjaxRequestTarget target, Form<?> form) {
+         // TODO Implement onError(..)
+         throw new UnsupportedOperationException("Not yet implemented.");
+         }
+
+         };
+         lSearchButton.setOutputMarkupId(true);
+         this.setDefaultButton(lSearchButton);
+         add(lSearchButton);
+        
+        
+         */
         @Override
         protected void onSubmit() {
+           
+             
+            applicationsService.merge(selectedApplication);
+           
         }
     }
 
@@ -175,6 +214,7 @@ public final class MaintainApplications extends TemplatePage {
                 public void onClick() {
                     Applications selected =
                             (Applications) getParent().getDefaultModelObject();
+
                     //selectedApplicationId = selected.getId();
                     selectedApplication.setApplicationName(selected.getApplicationName());
                     selectedApplication.setId(selected.getId());
