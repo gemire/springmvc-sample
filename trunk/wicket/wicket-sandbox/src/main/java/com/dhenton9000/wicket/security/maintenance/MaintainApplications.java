@@ -10,10 +10,14 @@ import com.dhenton9000.wicket.TemplatePage;
 import com.dhenton9000.wicket.dao.IApplicationsDao;
 import com.dhenton9000.wicket.dao.IGroupsDao;
 import com.google.inject.Inject;
+import java.io.File;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+import java.util.logging.Level;
+import org.apache.wicket.ajax.AjaxRequestTarget;
+import org.apache.wicket.ajax.markup.html.form.AjaxButton;
 import org.apache.wicket.extensions.ajax.markup.html.repeater.data.table.AjaxFallbackDefaultDataTable;
 import org.apache.wicket.extensions.markup.html.repeater.data.grid.ICellPopulator;
 import org.apache.wicket.extensions.markup.html.repeater.data.table.AbstractColumn;
@@ -21,6 +25,7 @@ import org.apache.wicket.extensions.markup.html.repeater.data.table.IColumn;
 import org.apache.wicket.extensions.markup.html.repeater.data.table.PropertyColumn;
 import org.apache.wicket.markup.html.WebMarkupContainer;
 import org.apache.wicket.markup.html.basic.Label;
+import org.apache.wicket.markup.html.form.Button;
 import org.apache.wicket.markup.html.form.ChoiceRenderer;
 import org.apache.wicket.markup.html.form.Form;
 import org.apache.wicket.markup.html.form.ListMultipleChoice;
@@ -46,10 +51,17 @@ public final class MaintainApplications extends TemplatePage {
     private IApplicationsDao applicationsService;
     @Inject
     private IGroupsDao groupsService;
-    private final Logger logger = LoggerFactory.getLogger(MaintainApplications.class);
     private List<Groups> allGroups = new ArrayList<Groups>();
     private List<Groups> selectedGroups = new ArrayList<Groups>();
-      /**
+    private EditForm editForm;
+
+    private enum STATE {
+
+        INITIAL, ADD, EDIT, DELETE
+    };
+    private final Logger logger = LoggerFactory.getLogger(MaintainApplications.class);
+    private STATE currentState = STATE.INITIAL;
+    /**
      * this doesn't need a detach as it was loaded from the ajax table which
      * already has a detachable model
      */
@@ -94,12 +106,17 @@ public final class MaintainApplications extends TemplatePage {
 
         //////// add a container to contain the editing system.
         final WebMarkupContainer editGroup = new AppEditGroup("editGroup");
-        EditForm editForm = new EditForm("editForm");
-
+        
+        editForm = new EditForm("editForm", new PropertyModel(MaintainApplications.this,"selectedApplication"));
+        
         editGroup.add(editForm);
         editGroup.add(new FeedbackPanel("feedback"));
         add(editGroup);
-
+        /////// add a container for the add button
+        AddButtonForm addButtonForm = new AddButtonForm("addButtonForm");
+        final WebMarkupContainer addGroup = new AppAddGroup("addGroup");
+        addGroup.add(addButtonForm);
+        add(addGroup);
 
     }
 
@@ -115,7 +132,7 @@ public final class MaintainApplications extends TemplatePage {
                     + selectedApplication.getPrimaryKey() + ")";
         }
 
-        return info;
+        return info + " [" + currentState.toString() + "]";
     }
 
     /**
@@ -123,6 +140,28 @@ public final class MaintainApplications extends TemplatePage {
      */
     public IApplicationsDao getApplicationsService() {
         return applicationsService;
+    }
+
+    /**
+     * reset the various state items based on the submitted state
+     * @param newState 
+     */
+    public void resetSelectedApplication(STATE newState) {
+        logger.debug("reset called with state "+newState.toString());
+        currentState = newState;
+        switch (newState) {
+            case ADD:
+            case INITIAL:
+                selectedApplication = new Applications();
+                selectedGroups = new ArrayList<Groups>();
+                
+                break;
+            default:
+                break;
+          }
+         String info = "After reset app is now "+selectedApplication.getApplicationName()
+                            + " with group size of "+selectedGroups.size();
+                    logger.debug("action panel on click\n"+info+"\n");
     }
 
     /**
@@ -136,15 +175,11 @@ public final class MaintainApplications extends TemplatePage {
      * @return the allGroups
      */
     public List<Groups> getAllGroups() {
-        if (allGroups.isEmpty())
-        {
+        if (allGroups.isEmpty()) {
             allGroups = getGroupsService().getAllGroups();
         }
         return allGroups;
     }
-
-    
-   
 
     class AppEditGroup extends WebMarkupContainer {
 
@@ -161,13 +196,50 @@ public final class MaintainApplications extends TemplatePage {
 
         @Override
         public boolean isVisible() {
+            boolean visible = false;
 
-            if (selectedApplication != null
-                    && selectedApplication.getId() != null) {
-                return true;
-            } else {
-                return false;
+
+            switch (currentState) {
+                case INITIAL:
+                    visible = false;
+                    break;
+                default:
+                    visible = true;
             }
+
+
+            return visible;
+        }
+    }
+
+    class AppAddGroup extends WebMarkupContainer {
+
+        public AppAddGroup(String id) {
+            super(id);
+
+        }
+
+        public AppAddGroup(String id, IModel<Applications> model) {
+            super(id, model);
+
+
+        }
+
+        @Override
+        public boolean isVisible() {
+            boolean visible = true;
+
+
+            switch (currentState) {
+                case INITIAL:
+                    visible = true;
+                    break;
+                default:
+                    visible = false;
+            }
+
+
+            return visible;
         }
     }
 
@@ -178,6 +250,20 @@ public final class MaintainApplications extends TemplatePage {
             setup();
         }
 
+        // info("Cancel was pressed!");
+        public String getCurrentStateLabel() {
+            String label = "Edit Application";
+            switch (currentState) {
+                case INITIAL:
+                    break;
+                case ADD:
+                    label = "Add Application";
+                default:
+
+            }
+            return label;
+        }
+
         public EditForm(String id, IModel<Applications> model) {
             super(id, model);
             setup();
@@ -185,44 +271,53 @@ public final class MaintainApplications extends TemplatePage {
 
         private void setup() {
             final TextField<String> tApplicationName = new TextField<String>("applicationName",
-                    new PropertyModel<String>(MaintainApplications.this, "selectedApplication.applicationName"));
+                    new PropertyModel<String>(this.getModel(), "applicationName"));
 
             final Label tId = new Label("applicationId",
-                    new PropertyModel<String>(MaintainApplications.this, "selectedApplication.id"));
+                    new PropertyModel<String>(this.getModel(), "id"));
+            
+             final Label tDes = new Label("actionDescription",
+                    new PropertyModel<String>(this, "currentStateLabel"));
 
             GroupsDropDownChoice groupsChoice;
             groupsChoice = new GroupsDropDownChoice("applicationGroups");
             add(tApplicationName);
             add(tId);
+            add(tDes);
             add(groupsChoice);
+            // this is the default save submission button with 
+            add(new Button("saveEditButton", new PropertyModel<String>(this,
+                    "currentStateLabel")));
+
+            Button cancel = new Button("cancelEditButton") {
+                public void onSubmit() {
+
+                    resetSelectedApplication(STATE.INITIAL);
+                }
+            };
+            cancel.setDefaultFormProcessing(true);
+            add(cancel);
 
         }
 
         @Override
         protected void onSubmit() {
-              Set newGroups = new HashSet(selectedGroups);  
-              selectedApplication.setGroupsSet(newGroups);              
-              getApplicationsService().merge(selectedApplication);
+            Set newGroups = new HashSet(selectedGroups);
+            selectedApplication.setGroupsSet(newGroups);
+            getApplicationsService().merge(selectedApplication);
 
         }
     }
- 
 
-
-    
     class GroupsDropDownChoice extends ListMultipleChoice<Groups> {
 
         // there needs to be a model that represents the selections
         // and a model that represents the choices for which the
         // selections are a subset
-        
         public GroupsDropDownChoice(String id) {
-            super(id,  new PropertyModel(MaintainApplications.this,"selectedGroups"),
-            new PropertyModel(MaintainApplications.this, 
-            "allGroups"), new GroupsDropDownRenderer());
-            //  super(id, getApplications(), new ApplicationsUsers.ApplicationsChoiceRenderer());
-            // setChoices(getApplications());
-            // setModel(new PropertyModel<Applications>(ApplicationsUsers.this, "selectedApplication"));
+            super(id, new PropertyModel(MaintainApplications.this, "selectedGroups"),
+                    new PropertyModel(MaintainApplications.this,
+                    "allGroups"), new GroupsDropDownRenderer());
 
 
 
@@ -249,7 +344,7 @@ public final class MaintainApplications extends TemplatePage {
 
         /**
          * @param id component id
-         * @param model model for contact
+         * @param model model for selected application
          */
         public ActionPanel(String id, IModel<Applications> model) {
             super(id, model);
@@ -258,11 +353,54 @@ public final class MaintainApplications extends TemplatePage {
                 public void onClick() {
                     selectedApplication =
                             (Applications) getParent().getDefaultModelObject();
-                    logger.debug(selectedApplication.getGroupsSet()+"");
+                    //logger.debug(selectedApplication.getGroupsSet() + "");
                     selectedGroups = new ArrayList(selectedApplication.getGroupsSet());
-
+                    String info = "The selected app is now "+selectedApplication.getApplicationName()
+                            + " with group size of "+selectedGroups.size();
+                    logger.debug("action panel on click\n"+info+"\n");
+                    resetSelectedApplication(STATE.EDIT);
+                    
                 }
             });
         }
     }
+
+    class AddButtonForm extends Form<Applications> {
+
+        public AddButtonForm(String id) {
+            super(id);
+
+
+        }
+
+        public AddButtonForm(String id, IModel<Applications> model) {
+            super(id, model);
+
+
+        }
+
+       
+
+        @Override
+        protected void onSubmit() {
+            resetSelectedApplication(STATE.ADD);
+
+        }
+    }
 }
+
+
+/*
+ * 
+ form.add(new AjaxButton("ajax-button", new PropertyModel<String>(this,
+            "counter", form)) {
+
+        @Override
+        protected void onSubmit(AjaxRequestTarget target, Form<?> form) {
+            counter++;
+            target.addComponent(this);
+
+        }
+    });
+ * 
+ */
