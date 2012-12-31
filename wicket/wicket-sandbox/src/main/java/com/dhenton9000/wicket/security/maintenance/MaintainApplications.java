@@ -8,31 +8,24 @@ import com.dhenton9000.jpa.entities.Applications;
 import com.dhenton9000.jpa.entities.Groups;
 import com.dhenton9000.wicket.TemplatePage;
 import com.dhenton9000.wicket.dao.IApplicationsDao;
-import com.dhenton9000.wicket.guice.data.ApplicationsUsers;
-import com.dhenton9000.wicket.pages.form.sample.SuccessPage;
-import com.dhenton9000.wicket.security.SandboxSession;
+import com.dhenton9000.wicket.dao.IGroupsDao;
 import com.google.inject.Inject;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 import java.util.Set;
-import org.apache.wicket.MarkupContainer;
 import org.apache.wicket.extensions.ajax.markup.html.repeater.data.table.AjaxFallbackDefaultDataTable;
 import org.apache.wicket.extensions.markup.html.repeater.data.grid.ICellPopulator;
 import org.apache.wicket.extensions.markup.html.repeater.data.table.AbstractColumn;
 import org.apache.wicket.extensions.markup.html.repeater.data.table.IColumn;
 import org.apache.wicket.extensions.markup.html.repeater.data.table.PropertyColumn;
-import org.apache.wicket.markup.ComponentTag;
-import org.apache.wicket.markup.MarkupStream;
 import org.apache.wicket.markup.html.WebMarkupContainer;
 import org.apache.wicket.markup.html.basic.Label;
 import org.apache.wicket.markup.html.form.ChoiceRenderer;
-import org.apache.wicket.markup.html.form.DropDownChoice;
 import org.apache.wicket.markup.html.form.Form;
+import org.apache.wicket.markup.html.form.ListMultipleChoice;
 import org.apache.wicket.markup.html.form.TextField;
 import org.apache.wicket.markup.html.link.Link;
 import org.apache.wicket.markup.html.panel.FeedbackPanel;
-import org.apache.wicket.markup.html.panel.Fragment;
 import org.apache.wicket.markup.html.panel.Panel;
 import org.apache.wicket.markup.repeater.Item;
 import org.apache.wicket.model.IModel;
@@ -41,7 +34,6 @@ import org.apache.wicket.model.PropertyModel;
 import org.apache.wicket.request.mapper.parameter.PageParameters;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.apache.wicket.markup.html.form.ListMultipleChoice;
 
 /**
  *
@@ -51,12 +43,17 @@ public final class MaintainApplications extends TemplatePage {
 
     @Inject
     private IApplicationsDao applicationsService;
+    @Inject
+    private IGroupsDao groupsService;
     private final Logger logger = LoggerFactory.getLogger(MaintainApplications.class);
-    /**
+    private List<Groups> allGroups = new ArrayList<Groups>();
+    private List<Groups> selectedGroups = new ArrayList<Groups>();
+      /**
      * this doesn't need a detach as it was loaded from the ajax table which
      * already has a detachable model
      */
     private Applications selectedApplication = new Applications();
+    private IModel selectedGroupsModel =  new SelectedGroupsModel(selectedApplication,"groupsSet");
 
     public MaintainApplications() {
         super();
@@ -91,7 +88,7 @@ public final class MaintainApplications extends TemplatePage {
                 "applicationName"));
         final AjaxFallbackDefaultDataTable<Applications, String> ajaxFallbackDefaultDataTable =
                 new AjaxFallbackDefaultDataTable<Applications, String>("applicationsTable", columns,
-                new SortableApplicationsDataProvider(applicationsService), 10);
+                new SortableApplicationsDataProvider(getApplicationsService()), 10);
         ajaxFallbackDefaultDataTable.setOutputMarkupId(true);
         add(ajaxFallbackDefaultDataTable);
 
@@ -120,6 +117,34 @@ public final class MaintainApplications extends TemplatePage {
 
         return info;
     }
+
+    /**
+     * @return the applicationsService
+     */
+    public IApplicationsDao getApplicationsService() {
+        return applicationsService;
+    }
+
+    /**
+     * @return the groupsService
+     */
+    public IGroupsDao getGroupsService() {
+        return groupsService;
+    }
+
+    /**
+     * @return the allGroups
+     */
+    public List<Groups> getAllGroups() {
+        if (allGroups.isEmpty())
+        {
+            allGroups = getGroupsService().getAllGroups();
+        }
+        return allGroups;
+    }
+
+    
+   
 
     class AppEditGroup extends WebMarkupContainer {
 
@@ -160,10 +185,10 @@ public final class MaintainApplications extends TemplatePage {
 
         private void setup() {
             final TextField<String> tApplicationName = new TextField<String>("applicationName",
-                    new PropertyModel<String>(selectedApplication, "applicationName"));
+                    new PropertyModel<String>(MaintainApplications.this, "selectedApplication.applicationName"));
 
             final Label tId = new Label("applicationId",
-                    new PropertyModel<String>(selectedApplication, "id"));
+                    new PropertyModel<String>(MaintainApplications.this, "selectedApplication.id"));
 
             GroupsDropDownChoice groupsChoice;
             groupsChoice = new GroupsDropDownChoice("applicationGroups");
@@ -176,18 +201,32 @@ public final class MaintainApplications extends TemplatePage {
         @Override
         protected void onSubmit() {
 
-
-            applicationsService.merge(selectedApplication);
+              getApplicationsService().merge(selectedApplication);
 
         }
     }
-    IModel selectedGroupsModel = new PropertyModel(selectedApplication, "groupsSet") {
+ 
+
+    class SelectedGroupsModel extends PropertyModel
+    {
+
+        public SelectedGroupsModel(Object modelObject, String expression) {
+            super(modelObject, expression);
+        }
         @Override
         public Object getObject() {
-            return new ArrayList((Set) super.getObject());
+           
+            logger.debug("111111 selectedGroups " );
+            if (super.getObject() != null) {
+                 Set s =(Set) super.getObject();
+                logger.debug("111111 selectedGroups ");
+                return new ArrayList(s);
+                
+            }
+            return new ArrayList();
         }
-    };
-
+    }
+    
     class GroupsDropDownChoice extends ListMultipleChoice<Groups> {
 
         // there needs to be a model that represents the selections
@@ -195,7 +234,9 @@ public final class MaintainApplications extends TemplatePage {
         // selections are a subset
         
         public GroupsDropDownChoice(String id) {
-            super(id, selectedGroupsModel, new GroupsDropDownRenderer());
+            super(id,  new PropertyModel(MaintainApplications.this,"selectedGroups"),
+            new PropertyModel(MaintainApplications.this, 
+            "allGroups"), new GroupsDropDownRenderer());
             //  super(id, getApplications(), new ApplicationsUsers.ApplicationsChoiceRenderer());
             // setChoices(getApplications());
             // setModel(new PropertyModel<Applications>(ApplicationsUsers.this, "selectedApplication"));
@@ -232,14 +273,10 @@ public final class MaintainApplications extends TemplatePage {
             add(new Link("select") {
                 @Override
                 public void onClick() {
-                    Applications selected =
+                    selectedApplication =
                             (Applications) getParent().getDefaultModelObject();
-
-                    //selectedApplicationId = selected.getId();
-                    selectedApplication.setApplicationName(selected.getApplicationName());
-                    selectedApplication.setId(selected.getId());
-                    selectedApplication.setGroupsSet(selected.getGroupsSet());
-
+                    logger.debug(selectedApplication.getGroupsSet()+"");
+                    selectedGroups = new ArrayList(selectedApplication.getGroupsSet());
 
                 }
             });
