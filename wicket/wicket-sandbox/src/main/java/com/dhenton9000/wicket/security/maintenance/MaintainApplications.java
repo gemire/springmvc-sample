@@ -16,6 +16,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 import java.util.logging.Level;
+import org.apache.wicket.AttributeModifier;
 import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.ajax.markup.html.form.AjaxButton;
 import org.apache.wicket.extensions.ajax.markup.html.repeater.data.table.AjaxFallbackDefaultDataTable;
@@ -106,9 +107,9 @@ public final class MaintainApplications extends TemplatePage {
 
         //////// add a container to contain the editing system.
         final WebMarkupContainer editGroup = new AppEditGroup("editGroup");
-        
-        editForm = new EditForm("editForm", new PropertyModel(MaintainApplications.this,"selectedApplication"));
-        
+
+        editForm = new EditForm("editForm", new PropertyModel(MaintainApplications.this, "selectedApplication"));
+
         editGroup.add(editForm);
         editGroup.add(new FeedbackPanel("feedback"));
         add(editGroup);
@@ -144,24 +145,25 @@ public final class MaintainApplications extends TemplatePage {
 
     /**
      * reset the various state items based on the submitted state
-     * @param newState 
+     *
+     * @param newState
      */
     public void resetSelectedApplication(STATE newState) {
-        logger.debug("reset called with state "+newState.toString());
+        logger.debug("reset called with state " + newState.toString());
         currentState = newState;
         switch (newState) {
             case ADD:
             case INITIAL:
                 selectedApplication = new Applications();
                 selectedGroups = new ArrayList<Groups>();
-                
+
                 break;
             default:
                 break;
-          }
-         String info = "After reset app is now "+selectedApplication.getApplicationName()
-                            + " with group size of "+selectedGroups.size();
-                    logger.debug("action panel on click\n"+info+"\n");
+        }
+        String info = "After reset app is now " + selectedApplication.getApplicationName()
+                + " with group size of " + selectedGroups.size();
+        logger.debug("action panel on click\n" + info + "\n");
     }
 
     /**
@@ -275,8 +277,8 @@ public final class MaintainApplications extends TemplatePage {
 
             final Label tId = new Label("applicationId",
                     new PropertyModel<String>(this.getModel(), "id"));
-            
-             final Label tDes = new Label("actionDescription",
+
+            final Label tDes = new Label("actionDescription",
                     new PropertyModel<String>(this, "currentStateLabel"));
 
             GroupsDropDownChoice groupsChoice;
@@ -297,6 +299,9 @@ public final class MaintainApplications extends TemplatePage {
             };
             cancel.setDefaultFormProcessing(true);
             add(cancel);
+
+
+
 
         }
 
@@ -355,13 +360,46 @@ public final class MaintainApplications extends TemplatePage {
                             (Applications) getParent().getDefaultModelObject();
                     //logger.debug(selectedApplication.getGroupsSet() + "");
                     selectedGroups = new ArrayList(selectedApplication.getGroupsSet());
-                    String info = "The selected app is now "+selectedApplication.getApplicationName()
-                            + " with group size of "+selectedGroups.size();
-                    logger.debug("action panel on click\n"+info+"\n");
+                    String info = "The selected app is now " + selectedApplication.getApplicationName()
+                            + " with group size of " + selectedGroups.size();
+                    logger.debug("action panel on click\n" + info + "\n");
                     resetSelectedApplication(STATE.EDIT);
-                    
+
                 }
             });
+
+
+
+
+
+            Link remove =
+                    new Link("delete") {
+                        @Override
+                        public void onClick() {
+                            selectedApplication =
+                                    (Applications) getParent().getDefaultModelObject();
+                            logger.debug("delete requested " + selectedApplication.getApplicationName());
+                            try {
+                                getApplicationsService().delete(selectedApplication);
+                            } catch (Exception err) {
+                                logger.error("ERROR in delete " + err.getClass().getName() + err.getMessage());
+                            }
+
+
+                        }
+                    };
+
+            remove.add(new AttributeModifier("onclick", model) {
+                @Override
+                protected String newValue(final String currentValue, final String replacementValue) {
+                    return "return confirm(’Confirm Delete’);";
+                }
+            });
+
+
+
+
+            add(remove);
         }
     }
 
@@ -378,8 +416,6 @@ public final class MaintainApplications extends TemplatePage {
 
 
         }
-
-       
 
         @Override
         protected void onSubmit() {
