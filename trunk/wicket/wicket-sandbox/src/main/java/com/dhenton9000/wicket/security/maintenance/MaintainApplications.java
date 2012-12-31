@@ -11,6 +11,7 @@ import com.dhenton9000.wicket.dao.IApplicationsDao;
 import com.dhenton9000.wicket.dao.IGroupsDao;
 import com.google.inject.Inject;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 import org.apache.wicket.extensions.ajax.markup.html.repeater.data.table.AjaxFallbackDefaultDataTable;
@@ -53,7 +54,6 @@ public final class MaintainApplications extends TemplatePage {
      * already has a detachable model
      */
     private Applications selectedApplication = new Applications();
-    private IModel selectedGroupsModel =  new SelectedGroupsModel(selectedApplication,"groupsSet");
 
     public MaintainApplications() {
         super();
@@ -200,32 +200,15 @@ public final class MaintainApplications extends TemplatePage {
 
         @Override
         protected void onSubmit() {
-
+              Set newGroups = new HashSet(selectedGroups);  
+              selectedApplication.setGroupsSet(newGroups);              
               getApplicationsService().merge(selectedApplication);
 
         }
     }
  
 
-    class SelectedGroupsModel extends PropertyModel
-    {
 
-        public SelectedGroupsModel(Object modelObject, String expression) {
-            super(modelObject, expression);
-        }
-        @Override
-        public Object getObject() {
-           
-            logger.debug("111111 selectedGroups " );
-            if (super.getObject() != null) {
-                 Set s =(Set) super.getObject();
-                logger.debug("111111 selectedGroups ");
-                return new ArrayList(s);
-                
-            }
-            return new ArrayList();
-        }
-    }
     
     class GroupsDropDownChoice extends ListMultipleChoice<Groups> {
 
