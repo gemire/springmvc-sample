@@ -3,16 +3,29 @@
     <p wicket:id="selectedAppId"></p>
     <table cellpadding="3" width="100%">
         <tr><td style="width:50%"><table width="100%" class="dataview"  
-                                         wicket:id="applicationsTable">[table]</table></td>
+                                         wicket:id="applicationsTable">[table]</table> 
+                                         
+                <div wicket:id="addGroup">                        
+                <div><form  wicket:id="addButtonForm">
+                    <input type="submit" value="AddApplication" /></form>
+                </div>
+                </div> 
+                
+                
+            </td>
             <td>  
 
-
+ 
                 <div wicket:id="editGroup">
-                    <h3>Edit Selected Application</h3>
+                   
                     <div wicket:id="feedback"></div>
 
                     <form wicket:id="editForm">
                         <table style="border: thin solid black" cellspacing="6" cellpadding="4">
+                            <tr><td>
+                                     <h3 wicket:id="actionDescription">Edit Selected Application</h3>
+                                </td></tr>
+                            
                             <tr>
                                 <th>Application<br>Name:</th><td>
                                     <input wicket:id="applicationName" type="text"
@@ -32,7 +45,11 @@
 
 
                             <tr>
-                                <td colspan="2"><input type="submit" value="Edit" /></td>
+                                <td colspan="2"><input wicket:id="saveEditButton" type="submit" value="Edit" />
+                                
+                                &nbsp;&nbsp;<input wicket:id="cancelEditButton" type="submit" value="Cancel" />
+                                
+                                </td>
                             </tr>
                         </table>
                     </form>
