@@ -6,6 +6,8 @@
 package com.dhenton9000.wicket;
 
 import com.dhenton9000.wicket.jpa.JPAServiceStarter;
+import com.dhenton9000.wicket.refs.ImageRefPage;
+import com.dhenton9000.wicket.refs.ImageResourceReference;
 import com.dhenton9000.wicket.security.AuthenticatedWebPage;
 import com.dhenton9000.wicket.security.SandboxSession;
 import com.dhenton9000.wicket.security.SignIn;
@@ -46,7 +48,11 @@ public class Application extends WebApplication {
     @Override
     public void init() {
         super.init();
-
+        // this is for the generated image in demo in ImageRefPage.java
+        mountResource("/images/${name}", new ImageResourceReference());
+        // this cleans up the url http://localhost:9090/wicket-sandbox/imagesPage?0
+        // will go to the ImageRefPage
+        mountPage("imagesPage", ImageRefPage.class);
         ////////////////////
 
         // Register the authorization strategy
