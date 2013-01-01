@@ -10,15 +10,11 @@ import com.dhenton9000.wicket.TemplatePage;
 import com.dhenton9000.wicket.dao.IApplicationsDao;
 import com.dhenton9000.wicket.dao.IGroupsDao;
 import com.google.inject.Inject;
-import java.io.File;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
-import java.util.logging.Level;
 import org.apache.wicket.AttributeModifier;
-import org.apache.wicket.ajax.AjaxRequestTarget;
-import org.apache.wicket.ajax.markup.html.form.AjaxButton;
 import org.apache.wicket.extensions.ajax.markup.html.repeater.data.table.AjaxFallbackDefaultDataTable;
 import org.apache.wicket.extensions.markup.html.repeater.data.grid.ICellPopulator;
 import org.apache.wicket.extensions.markup.html.repeater.data.table.AbstractColumn;
@@ -55,6 +51,8 @@ public final class MaintainApplications extends TemplatePage {
     private List<Groups> allGroups = new ArrayList<Groups>();
     private List<Groups> selectedGroups = new ArrayList<Groups>();
     private EditForm editForm;
+    protected SortableApplicationsDataProvider applicationsDataProvider;
+    protected AjaxFallbackDefaultDataTable<Applications, String> ajaxFallbackDefaultDataTable;
 
     private enum STATE {
 
@@ -95,15 +93,17 @@ public final class MaintainApplications extends TemplatePage {
                 cellItem.add(new ActionPanel(componentId, model));
             }
         });
+        applicationsDataProvider = new SortableApplicationsDataProvider(getApplicationsService());
 
         columns.add(new PropertyColumn<Applications, String>(new Model<String>("ID"), "id", "id"));
         columns.add(new PropertyColumn<Applications, String>(new Model<String>("App Name"), "applicationName",
                 "applicationName"));
-        final AjaxFallbackDefaultDataTable<Applications, String> ajaxFallbackDefaultDataTable =
-                new AjaxFallbackDefaultDataTable<Applications, String>("applicationsTable", columns,
-                new SortableApplicationsDataProvider(getApplicationsService()), 10);
+        ajaxFallbackDefaultDataTable = new AjaxFallbackDefaultDataTable<Applications, String>("applicationsTable", columns,
+                applicationsDataProvider, 10);
         ajaxFallbackDefaultDataTable.setOutputMarkupId(true);
         add(ajaxFallbackDefaultDataTable);
+
+
 
         //////// add a container to contain the editing system.
         final WebMarkupContainer editGroup = new AppEditGroup("editGroup");
@@ -309,8 +309,18 @@ public final class MaintainApplications extends TemplatePage {
         protected void onSubmit() {
             Set newGroups = new HashSet(selectedGroups);
             selectedApplication.setGroupsSet(newGroups);
-            getApplicationsService().merge(selectedApplication);
+            switch (currentState) {
+                case EDIT:
+                    getApplicationsService().merge(selectedApplication);
+                    break;
+                case ADD:
+                    getApplicationsService().save(selectedApplication);
+                    break;
+                default:
+                    break;
 
+            }
+            resetSelectedApplication(STATE.INITIAL);
         }
     }
 
@@ -368,10 +378,6 @@ public final class MaintainApplications extends TemplatePage {
                 }
             });
 
-
-
-
-
             Link remove =
                     new Link("delete") {
                         @Override
@@ -380,19 +386,40 @@ public final class MaintainApplications extends TemplatePage {
                                     (Applications) getParent().getDefaultModelObject();
                             logger.debug("delete requested " + selectedApplication.getApplicationName());
                             try {
-                                getApplicationsService().delete(selectedApplication);
+                                Integer k = selectedApplication.getId();
+                                Applications n = new Applications();
+                                n.setPrimaryKey(k);
+                                //selectedApplication = null;
+                                //selectedGroups = null;
+                                getApplicationsService().delete(n);
+                                resetSelectedApplication(STATE.INITIAL);
                             } catch (Exception err) {
                                 logger.error("ERROR in delete " + err.getClass().getName() + err.getMessage());
                             }
+                        }
+
+                        @Override
+                        public boolean isVisible() {
+                            boolean visible = false;
 
 
+                            switch (currentState) {
+                                case INITIAL:
+                                    visible = true;
+                                    break;
+                                default:
+                                    visible = false;
+                            }
+
+
+                            return visible;
                         }
                     };
 
             remove.add(new AttributeModifier("onclick", model) {
                 @Override
                 protected String newValue(final String currentValue, final String replacementValue) {
-                    return "return confirm(’Confirm Delete’);";
+                    return "return confirm('Confirm Delete?');";
                 }
             });
 

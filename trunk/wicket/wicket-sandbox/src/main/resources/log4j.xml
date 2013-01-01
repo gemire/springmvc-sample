@@ -46,6 +46,10 @@ zzzzzzzzzzzzzzzzzzzzzzz
     <logger name="com.dhenton9000">
         <level value="DEBUG"/>
     </logger>
+    
+    <logger name="com.dhenton9000.jpa.dao.support">
+        <level value="ERROR"/>
+    </logger>
 
     
     <logger name="com.ibatis">

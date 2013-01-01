@@ -91,10 +91,10 @@ public class Applications implements Identifiable<Integer>, Serializable  {
     @ManyToMany(cascade = {
         CascadeType.PERSIST, CascadeType.MERGE
     },fetch=FetchType.LAZY)
-    @JoinTable(name = "APPLICATION_GROUPS", catalog = "sec", joinColumns = {
+    @JoinTable(name = "APPLICATION_GROUPS",    catalog = "sec", joinColumns = {
          @JoinColumn(name = "application_id")
      }, inverseJoinColumns = {
-         @JoinColumn(name = "group_id")
+         @JoinColumn(name = "group_id") 
      })
     @XmlTransient
     public Set<Groups> getGroupsSet() {
