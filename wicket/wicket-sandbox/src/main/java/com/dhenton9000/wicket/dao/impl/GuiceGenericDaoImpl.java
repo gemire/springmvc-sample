@@ -89,7 +89,7 @@ public abstract class GuiceGenericDaoImpl<E extends Identifiable<PK>, PK extends
         E entityFound = getEntityManager().find(type, id);
 
         if (entityFound == null) {
-            logger.warn("get returned null with pk=" + id);
+            logger.warn("findById returned null with pk=" + id);
         }
 
         return entityFound;
@@ -318,10 +318,14 @@ public abstract class GuiceGenericDaoImpl<E extends Identifiable<PK>, PK extends
     @Transactional
     @Override
     public void delete(E entity) {
+        logger.debug("Begin Delete "+entity.getPrimaryKey());
         if (getEntityManager().contains(entity)) {
+            logger.debug("contains remove "+entity.getPrimaryKey());
             getEntityManager().remove(entity);
+           
         } else {
             // could be a delete on a transient instance
+            logger.debug("transient remove");
             E entityRef = getEntityManager().getReference(type, entity.getPrimaryKey());
 
             if (entityRef != null) {
