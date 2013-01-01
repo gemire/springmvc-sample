@@ -15,6 +15,8 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 import org.apache.wicket.AttributeModifier;
+import org.apache.wicket.ajax.AjaxRequestTarget;
+import org.apache.wicket.ajax.markup.html.AjaxLink;
 import org.apache.wicket.extensions.ajax.markup.html.repeater.data.table.AjaxFallbackDefaultDataTable;
 import org.apache.wicket.extensions.markup.html.repeater.data.grid.ICellPopulator;
 import org.apache.wicket.extensions.markup.html.repeater.data.table.AbstractColumn;
@@ -378,10 +380,16 @@ public final class MaintainApplications extends TemplatePage {
                 }
             });
 
-            Link remove =
-                    new Link("delete") {
+            //  mySortableDataProvider.updateDataList(updatedPersons);
+            //         myAjaxFallbackDefaultDataTable.modelChanged();
+            //         target.addComponent(myAjaxFallbackDefaultDataTable); 
+
+
+
+            AjaxLink remove =
+                    new AjaxLink("delete") {
                         @Override
-                        public void onClick() {
+                        public void onClick(AjaxRequestTarget target) {
                             selectedApplication =
                                     (Applications) getParent().getDefaultModelObject();
                             logger.debug("delete requested " + selectedApplication.getApplicationName());
@@ -392,6 +400,9 @@ public final class MaintainApplications extends TemplatePage {
                                 //selectedApplication = null;
                                 //selectedGroups = null;
                                 getApplicationsService().delete(n);
+                                ajaxFallbackDefaultDataTable.modelChanged();    
+                                target.add(ajaxFallbackDefaultDataTable);
+
                                 resetSelectedApplication(STATE.INITIAL);
                             } catch (Exception err) {
                                 logger.error("ERROR in delete " + err.getClass().getName() + err.getMessage());
