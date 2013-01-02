@@ -14,11 +14,9 @@ import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
-import org.apache.commons.lang.StringEscapeUtils;
 import org.apache.wicket.AttributeModifier;
 import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.ajax.markup.html.AjaxLink;
-import org.apache.wicket.ajax.markup.html.form.AjaxButton;
 import org.apache.wicket.extensions.ajax.markup.html.repeater.data.table.AjaxFallbackDefaultDataTable;
 import org.apache.wicket.extensions.markup.html.repeater.data.grid.ICellPopulator;
 import org.apache.wicket.extensions.markup.html.repeater.data.table.AbstractColumn;
@@ -46,38 +44,22 @@ import org.slf4j.LoggerFactory;
  *
  * @author dhenton
  */
-public final class MaintainApplications extends TemplatePage {
+public final class MaintainApplicationsOld extends TemplatePage {
 
     @Inject
     private IApplicationsDao applicationsService;
     @Inject
     private IGroupsDao groupsService;
-    private EditForm editForm;
     private List<Groups> allGroups = new ArrayList<Groups>();
     private List<Groups> selectedGroups = new ArrayList<Groups>();
-    //   private EditForm editForm;
+    private EditForm editForm;
     protected SortableApplicationsDataProvider applicationsDataProvider;
     protected AjaxFallbackDefaultDataTable<Applications, String> ajaxFallbackDefaultDataTable;
-    private WebMarkupContainer mainRefreshGroup;
-
-    /**
-     * @return the groupsService
-     */
-    public IGroupsDao getGroupsService() {
-        return groupsService;
-    }
 
     private enum STATE {
 
         INITIAL, ADD, EDIT, DELETE
     };
-
-    /**
-     * @return the applicationsService
-     */
-    public IApplicationsDao getApplicationsService() {
-        return applicationsService;
-    }
     private final Logger logger = LoggerFactory.getLogger(MaintainApplications.class);
     private STATE currentState = STATE.INITIAL;
     /**
@@ -86,45 +68,31 @@ public final class MaintainApplications extends TemplatePage {
      */
     private Applications selectedApplication = new Applications();
 
-    public MaintainApplications() {
+    public MaintainApplicationsOld() {
         super();
+        this.setPageTitle(this.getClass().getSimpleName());
         setup();
 
     }
 
-    public MaintainApplications(PageParameters params) {
+    public MaintainApplicationsOld(PageParameters params) {
         setup();
 
     }
 
     private void setup() {
 
-        this.setPageTitle(this.getClass().getSimpleName());
-        mainRefreshGroup = new WebMarkupContainer("mainRefreshGroup");
-        mainRefreshGroup.setOutputMarkupId(true);
 
 
         Label selectedAppIdLabel = new Label("selectedAppId", new PropertyModel(this, "displaySelectedAppId"));
-        mainRefreshGroup.add(selectedAppIdLabel);
-
-
-        //do the edit form
-        editForm = new EditForm("editForm", new PropertyModel(MaintainApplications.this, "selectedApplication"));
-
-        mainRefreshGroup.add(editForm);
-        mainRefreshGroup.add(new FeedbackPanel("feedback"));
-
-
-
-
-        // do the data table 
+        add(selectedAppIdLabel);
         List<IColumn<Applications, String>> columns = new ArrayList<IColumn<Applications, String>>();
 
         columns.add(new AbstractColumn<Applications, String>(new Model<String>("Actions")) {
             @Override
             public void populateItem(Item<ICellPopulator<Applications>> cellItem, String componentId,
                     IModel<Applications> model) {
-                cellItem.add(new MaintainApplications.ActionPanel(componentId, model));
+                cellItem.add(new ActionPanel(componentId, model));
             }
         });
         applicationsDataProvider = new SortableApplicationsDataProvider(getApplicationsService());
@@ -135,34 +103,29 @@ public final class MaintainApplications extends TemplatePage {
         ajaxFallbackDefaultDataTable = new AjaxFallbackDefaultDataTable<Applications, String>("applicationsTable", columns,
                 applicationsDataProvider, 10);
         ajaxFallbackDefaultDataTable.setOutputMarkupId(true);
-        mainRefreshGroup.add(ajaxFallbackDefaultDataTable);
+        add(ajaxFallbackDefaultDataTable);
 
-        add(mainRefreshGroup);
+
+
+        //////// add a container to contain the editing system.
+        final WebMarkupContainer editGroup = new AppEditGroup("editGroup");
+
+        editForm = new EditForm("editForm", new PropertyModel(MaintainApplicationsOld.this, "selectedApplication"));
+
+        editGroup.add(editForm);
+        editGroup.add(new FeedbackPanel("feedback"));
+        add(editGroup);
+        /////// add a container for the add button
+        AddButtonForm addButtonForm = new AddButtonForm("addButtonForm");
+        final WebMarkupContainer addGroup = new AppAddGroup("addGroup");
+        addGroup.add(addButtonForm);
+        add(addGroup);
+
     }
 
-     /**
-     * @return the allGroups
+    /**
+     * @return the displaySelectedAppId
      */
-    public List<Groups> getAllGroups() {
-        if (allGroups.isEmpty()) {
-            allGroups = getGroupsService().getAllGroups();
-        }
-        return allGroups;
-    }
-    
-    public String getCurrentStateLabel() {
-        String label = "Edit Application";
-        switch (currentState) {
-            case INITIAL:
-                break;
-            case ADD:
-                label = "Add Application";
-            default:
-
-        }
-        return label;
-    }
-
     public String getDisplaySelectedAppId() {
         String info = "selected : ";
         if (selectedApplication.getId() == null) {
@@ -175,6 +138,18 @@ public final class MaintainApplications extends TemplatePage {
         return info + " [" + currentState.toString() + "]";
     }
 
+    /**
+     * @return the applicationsService
+     */
+    public IApplicationsDao getApplicationsService() {
+        return applicationsService;
+    }
+
+    /**
+     * reset the various state items based on the submitted state
+     *
+     * @param newState
+     */
     public void resetSelectedApplication(STATE newState) {
         logger.debug("reset called with state " + newState.toString());
         currentState = newState;
@@ -193,112 +168,84 @@ public final class MaintainApplications extends TemplatePage {
         logger.debug("action panel on click\n" + info + "\n");
     }
 
-    //////////////////////////////////////
-    class ActionPanel extends Panel {
-
-        /**
-         * @param id component id
-         * @param model model for selected application
-         */
-        public ActionPanel(String id, IModel<Applications> model) {
-            super(id, model);
-            setOutputMarkupId(true);
-            AjaxLink select =
-                    new AjaxLink("select") {
-                        @Override
-                        public void onClick(AjaxRequestTarget target) {
-                            selectedApplication =
-                                    (Applications) getParent().getDefaultModelObject();
-                            //logger.debug(selectedApplication.getGroupsSet() + "");
-                            selectedGroups = new ArrayList(selectedApplication.getGroupsSet());
-                            String info = "The selected app is now " + selectedApplication.getApplicationName()
-                                    + " with group size of " + selectedGroups.size();
-                            logger.debug("action panel on click\n" + info + "\n");
-                            resetSelectedApplication(STATE.EDIT);
-                            target.add(mainRefreshGroup);
-                            target.add(editForm);
-
-                        }
-                    };
-            select.setOutputMarkupId(true);
-            AjaxLink delete =
-                    new AjaxLink("delete") {
-                        @Override
-                        public void onClick(AjaxRequestTarget target) {
-                            selectedApplication =
-                                    (Applications) getParent().getDefaultModelObject();
-                            logger.debug("delete requested " + selectedApplication.getApplicationName());
-                            try {
-                                Integer k = selectedApplication.getId();
-                                Applications n = new Applications();
-                                n.setPrimaryKey(k);
-                                //selectedApplication = null;
-                                //selectedGroups = null;
-                                resetSelectedApplication(STATE.INITIAL);
-                                getApplicationsService().delete(n);
-                                ajaxFallbackDefaultDataTable.modelChanged();
-                                target.add(ajaxFallbackDefaultDataTable);
-                                target.add(mainRefreshGroup);
-
-                                
-                            } catch (Exception err) {
-                                logger.error("ERROR in delete " + err.getClass().getName() + err.getMessage());
-                            }
-                        }
-
-                        @Override
-                        public boolean isVisible() {
-                            boolean visible = false;
-
-
-                            switch (currentState) {
-                                case INITIAL:
-                                    visible = true;
-                                    break;
-                                default:
-                                    visible = false;
-                            }
-
-
-                            return visible;
-                        }
-                    };
-
-            delete.add(new AttributeModifier("onclick", model) {
-                @Override
-                protected String newValue(final String currentValue, final String replacementValue) {
-                    return "return confirm('Remove Application?')";
-                }
-            });
-            delete.setOutputMarkupId(true);
-            add(select);
-            add(delete);
-
-
-        }
+    /**
+     * @return the groupsService
+     */
+    public IGroupsDao getGroupsService() {
+        return groupsService;
     }
 
-    class AddButtonForm extends Form<Applications> {
+    /**
+     * @return the allGroups
+     */
+    public List<Groups> getAllGroups() {
+        if (allGroups.isEmpty()) {
+            allGroups = getGroupsService().getAllGroups();
+        }
+        return allGroups;
+    }
 
-        public AddButtonForm(String id) {
+    class AppEditGroup extends WebMarkupContainer {
+
+        public AppEditGroup(String id) {
             super(id);
-
 
         }
 
-        public AddButtonForm(String id, IModel<Applications> model) {
+        public AppEditGroup(String id, IModel<Applications> model) {
             super(id, model);
 
 
         }
 
         @Override
-        protected void onSubmit() {
-            resetSelectedApplication(STATE.ADD);
+        public boolean isVisible() {
+            boolean visible = false;
 
+
+            switch (currentState) {
+                case INITIAL:
+                    visible = false;
+                    break;
+                default:
+                    visible = true;
+            }
+
+
+            return visible;
         }
     }
-    //////////////////////////////////////
+
+    class AppAddGroup extends WebMarkupContainer {
+
+        public AppAddGroup(String id) {
+            super(id);
+
+        }
+
+        public AppAddGroup(String id, IModel<Applications> model) {
+            super(id, model);
+
+
+        }
+
+        @Override
+        public boolean isVisible() {
+            boolean visible = true;
+
+
+            switch (currentState) {
+                case INITIAL:
+                    visible = true;
+                    break;
+                default:
+                    visible = false;
+            }
+
+
+            return visible;
+        }
+    }
 
     class EditForm extends Form<Applications> {
 
@@ -327,7 +274,6 @@ public final class MaintainApplications extends TemplatePage {
         }
 
         private void setup() {
-            this.setOutputMarkupId(true);
             final TextField<String> tApplicationName = new TextField<String>("applicationName",
                     new PropertyModel<String>(this.getModel(), "applicationName"));
 
@@ -337,45 +283,28 @@ public final class MaintainApplications extends TemplatePage {
             final Label tDes = new Label("actionDescription",
                     new PropertyModel<String>(this, "currentStateLabel"));
 
-            MaintainApplications.GroupsDropDownChoice groupsChoice;
-            groupsChoice = new MaintainApplications.GroupsDropDownChoice("applicationGroups");
-            tApplicationName.setOutputMarkupId(true);
-            tId.setOutputMarkupId(true);
-            tDes.setOutputMarkupId(true);
-            groupsChoice.setOutputMarkupId(true);
+            GroupsDropDownChoice groupsChoice;
+            groupsChoice = new GroupsDropDownChoice("applicationGroups");
             add(tApplicationName);
             add(tId);
             add(tDes);
             add(groupsChoice);
-
-
-
-            AjaxButton saveEditButton = new AjaxButton("saveEditButton", new PropertyModel<String>(this,
-                    "currentStateLabel"), this) {
-                @Override
-                protected void onSubmit(AjaxRequestTarget target, Form<?> form) {
-                    super.onSubmit(target, form);
-                    target.add(mainRefreshGroup);
-                    target.add(ajaxFallbackDefaultDataTable);
-                    
-                }
-            };
             // this is the default save submission button with 
-            add(saveEditButton);
+            add(new Button("saveEditButton", new PropertyModel<String>(this,
+                    "currentStateLabel")));
 
-            AjaxButton cancelButton = new AjaxButton("cancelEditButton", new Model("Cancel"), this) {
-                @Override
-                protected void onSubmit(AjaxRequestTarget target, Form<?> form) {
+            Button cancel = new Button("cancelEditButton") {
+                public void onSubmit() {
+
                     resetSelectedApplication(STATE.INITIAL);
-                    target.add(mainRefreshGroup);
-                    target.add(ajaxFallbackDefaultDataTable);
-                    target.add(editForm);
                 }
             };
-            saveEditButton.setOutputMarkupId(true);
-            cancelButton.setOutputMarkupId(true);
-            cancelButton.setDefaultFormProcessing(true);
-            add(cancelButton);
+            cancel.setDefaultFormProcessing(true);
+            add(cancel);
+
+
+
+
         }
 
         @Override
@@ -403,9 +332,9 @@ public final class MaintainApplications extends TemplatePage {
         // and a model that represents the choices for which the
         // selections are a subset
         public GroupsDropDownChoice(String id) {
-            super(id, new PropertyModel(MaintainApplications.this, "selectedGroups"),
-                    new PropertyModel(MaintainApplications.this,
-                    "allGroups"), new MaintainApplications.GroupsDropDownRenderer());
+            super(id, new PropertyModel(MaintainApplicationsOld.this, "selectedGroups"),
+                    new PropertyModel(MaintainApplicationsOld.this,
+                    "allGroups"), new GroupsDropDownRenderer());
 
 
 
@@ -427,4 +356,125 @@ public final class MaintainApplications extends TemplatePage {
             return object.getId().toString();
         }
     }
+
+    class ActionPanel extends Panel {
+
+        /**
+         * @param id component id
+         * @param model model for selected application
+         */
+        public ActionPanel(String id, IModel<Applications> model) {
+            super(id, model);
+            add(new Link("select") {
+                @Override
+                public void onClick() {
+                    selectedApplication =
+                            (Applications) getParent().getDefaultModelObject();
+                    //logger.debug(selectedApplication.getGroupsSet() + "");
+                    selectedGroups = new ArrayList(selectedApplication.getGroupsSet());
+                    String info = "The selected app is now " + selectedApplication.getApplicationName()
+                            + " with group size of " + selectedGroups.size();
+                    logger.debug("action panel on click\n" + info + "\n");
+                    resetSelectedApplication(STATE.EDIT);
+
+                }
+            });
+
+            //  mySortableDataProvider.updateDataList(updatedPersons);
+            //         myAjaxFallbackDefaultDataTable.modelChanged();
+            //         target.addComponent(myAjaxFallbackDefaultDataTable); 
+
+
+
+            AjaxLink remove =
+                    new AjaxLink("delete") {
+                        @Override
+                        public void onClick(AjaxRequestTarget target) {
+                            selectedApplication =
+                                    (Applications) getParent().getDefaultModelObject();
+                            logger.debug("delete requested " + selectedApplication.getApplicationName());
+                            try {
+                                Integer k = selectedApplication.getId();
+                                Applications n = new Applications();
+                                n.setPrimaryKey(k);
+                                //selectedApplication = null;
+                                //selectedGroups = null;
+                                getApplicationsService().delete(n);
+                                ajaxFallbackDefaultDataTable.modelChanged();    
+                                target.add(ajaxFallbackDefaultDataTable);
+
+                                resetSelectedApplication(STATE.INITIAL);
+                            } catch (Exception err) {
+                                logger.error("ERROR in delete " + err.getClass().getName() + err.getMessage());
+                            }
+                        }
+
+                        @Override
+                        public boolean isVisible() {
+                            boolean visible = false;
+
+
+                            switch (currentState) {
+                                case INITIAL:
+                                    visible = true;
+                                    break;
+                                default:
+                                    visible = false;
+                            }
+
+
+                            return visible;
+                        }
+                    };
+
+            remove.add(new AttributeModifier("onclick", model) {
+                @Override
+                protected String newValue(final String currentValue, final String replacementValue) {
+                    return "return confirm('Confirm Delete?');";
+                }
+            });
+
+
+
+
+            add(remove);
+        }
+    }
+
+    class AddButtonForm extends Form<Applications> {
+
+        public AddButtonForm(String id) {
+            super(id);
+
+
+        }
+
+        public AddButtonForm(String id, IModel<Applications> model) {
+            super(id, model);
+
+
+        }
+
+        @Override
+        protected void onSubmit() {
+            resetSelectedApplication(STATE.ADD);
+
+        }
+    }
 }
+
+
+/*
+ * 
+ form.add(new AjaxButton("ajax-button", new PropertyModel<String>(this,
+            "counter", form)) {
+
+        @Override
+        protected void onSubmit(AjaxRequestTarget target, Form<?> form) {
+            counter++;
+            target.addComponent(this);
+
+        }
+    });
+ * 
+ */
