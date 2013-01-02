@@ -140,7 +140,7 @@ public final class MaintainApplications extends TemplatePage {
         add(mainRefreshGroup);
     }
 
-     /**
+    /**
      * @return the allGroups
      */
     public List<Groups> getAllGroups() {
@@ -149,7 +149,7 @@ public final class MaintainApplications extends TemplatePage {
         }
         return allGroups;
     }
-    
+
     public String getCurrentStateLabel() {
         String label = "Edit Application";
         switch (currentState) {
@@ -240,7 +240,7 @@ public final class MaintainApplications extends TemplatePage {
                                 target.add(ajaxFallbackDefaultDataTable);
                                 target.add(mainRefreshGroup);
 
-                                
+
                             } catch (Exception err) {
                                 logger.error("ERROR in delete " + err.getClass().getName() + err.getMessage());
                             }
@@ -307,6 +307,24 @@ public final class MaintainApplications extends TemplatePage {
             setup();
         }
 
+        @Override
+        public boolean isVisible() {
+            boolean visible = false;
+
+
+            switch (currentState) {
+                case EDIT:
+                case ADD:
+                    visible = true;
+                    break;
+                default:
+                    visible = false;
+            }
+
+
+            return visible;
+        }
+
         // info("Cancel was pressed!");
         public String getCurrentStateLabel() {
             String label = "Edit Application";
@@ -357,7 +375,8 @@ public final class MaintainApplications extends TemplatePage {
                     super.onSubmit(target, form);
                     target.add(mainRefreshGroup);
                     target.add(ajaxFallbackDefaultDataTable);
-                    
+
+
                 }
             };
             // this is the default save submission button with 
@@ -370,6 +389,7 @@ public final class MaintainApplications extends TemplatePage {
                     target.add(mainRefreshGroup);
                     target.add(ajaxFallbackDefaultDataTable);
                     target.add(editForm);
+
                 }
             };
             saveEditButton.setOutputMarkupId(true);
