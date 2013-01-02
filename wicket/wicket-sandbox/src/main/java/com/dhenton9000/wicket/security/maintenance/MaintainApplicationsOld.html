@@ -1,29 +1,31 @@
 <wicket:extend xmlns:wicket="http://wicket.apache.org">
     <h2>Maintain Applications</h2>
-    <div wicket:id="mainRefreshGroup">
-        <p wicket:id="selectedAppId"></p>
-        <table cellpadding="3" width="100%">
-            <tr>  
-                <!-- data table -->
-                <td style="width:50%"><table width="100%" class="dataview"  
-                                             wicket:id="applicationsTable">[table]</table> 
+    <p wicket:id="selectedAppId"></p>
+    <table cellpadding="3" width="100%">
+        <tr><td style="width:50%"><table width="100%" class="dataview"  
+                                         wicket:id="applicationsTable">[table]</table> 
+                                         
+                <div wicket:id="addGroup">                        
+                <div><form  wicket:id="addButtonForm">
+                    <input type="submit" value="AddApplication" /></form>
+                </div>
+                </div> 
+                
+                
+            </td>
+            <td>  
 
-
-
-                </td>
-
-
-                <td>
-
-
+ 
+                <div wicket:id="editGroup">
+                   
                     <div wicket:id="feedback"></div>
 
                     <form wicket:id="editForm">
                         <table style="border: thin solid black" cellspacing="6" cellpadding="4">
                             <tr><td>
-                                    <h3 wicket:id="actionDescription">Edit Selected Application</h3>
+                                     <h3 wicket:id="actionDescription">Edit Selected Application</h3>
                                 </td></tr>
-
+                            
                             <tr>
                                 <th>Application<br>Name:</th><td>
                                     <input wicket:id="applicationName" type="text"
@@ -44,30 +46,22 @@
 
                             <tr>
                                 <td colspan="2"><input wicket:id="saveEditButton" type="submit" value="Edit" />
-
-                                    &nbsp;&nbsp;<input wicket:id="cancelEditButton" type="submit" value="Cancel" />
-
+                                
+                                &nbsp;&nbsp;<input wicket:id="cancelEditButton" type="submit" value="Cancel" />
+                                
                                 </td>
                             </tr>
                         </table>
                     </form>
 
+                </div>
 
-
-                </td>
-
-
-
-
-
+            </td>
+        </tr>
+    </table>
 
 
 
 
 
-
-
-            </tr>
-        </table>
-    </div>    
 </wicket:extend>     
