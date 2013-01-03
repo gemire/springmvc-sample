@@ -118,6 +118,7 @@ public abstract class GuiceGenericDaoImpl<E extends Identifiable<PK>, PK extends
         if (!entity.isPrimaryKeySet()) {
             logger.debug("in auto generated for save");
             getEntityManager().persist(entity);
+            logger.debug("persist of save completed");
             return;
         }
 
@@ -125,12 +126,8 @@ public abstract class GuiceGenericDaoImpl<E extends Identifiable<PK>, PK extends
         if (isEntityIdManuallyAssigned(type) && !getEntityManager().contains(entity)) {
             logger.debug("in manually assigned for save");
             getEntityManager().persist(entity);
-            return;
+           
         }
-        
-         
-        
-        
     }
 
     /**
