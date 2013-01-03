@@ -4,7 +4,7 @@
  */
 package com.dhenton9000.wicket.pages.form.sample;
 
-import com.dhenton9000.wicket.TemplatePage;
+import com.dhenton9000.wicket.pages.TemplatePage;
 import java.util.Arrays;
 import java.util.List;
 import org.apache.wicket.markup.html.form.Form;

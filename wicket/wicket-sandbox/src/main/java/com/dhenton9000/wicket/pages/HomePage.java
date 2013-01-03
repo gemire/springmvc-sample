@@ -4,7 +4,7 @@
  * Created on December 3, 2012, 9:50 AM
  */
 
-package com.dhenton9000.wicket;           
+package com.dhenton9000.wicket.pages;           
 
 import org.apache.wicket.markup.html.WebPage;
 

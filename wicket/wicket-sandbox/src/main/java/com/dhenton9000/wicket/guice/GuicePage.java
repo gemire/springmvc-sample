@@ -17,7 +17,7 @@
 package com.dhenton9000.wicket.guice;
 
 import com.dhenton9000.jpa.entities.Applications;
-import com.dhenton9000.wicket.TemplatePage;
+import com.dhenton9000.wicket.pages.TemplatePage;
 import com.dhenton9000.wicket.dao.IApplicationsDao;
 import com.google.inject.Inject;
 import org.apache.wicket.markup.html.basic.Label;

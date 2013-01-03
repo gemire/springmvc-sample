@@ -1,6 +1,6 @@
 package com.dhenton9000.wicket.pages.form.sample;
 
-import com.dhenton9000.wicket.TemplatePage;
+import com.dhenton9000.wicket.pages.TemplatePage;
 import com.dhenton9000.wicket.validators.NoHTMLValidator;
 import org.apache.wicket.markup.html.form.Form;
 import org.apache.wicket.markup.html.form.TextField;

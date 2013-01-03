@@ -2,17 +2,21 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.dhenton9000.wicket;
+package com.dhenton9000.wicket.pages;
 
+import com.dhenton9000.wicket.pages.Page2;
+import com.dhenton9000.wicket.pages.Page1;
+import com.dhenton9000.wicket.pages.HomePage;
+import com.dhenton9000.wicket.pages.TemplatePanel;
 import com.dhenton9000.wicket.guice.GuicePage;
-import com.dhenton9000.wicket.guice.data.ApplicationsUsers;
-import com.dhenton9000.wicket.guice.data.GuiceRepeaterOne;
-import com.dhenton9000.wicket.guice.repeater.SimpleListViewRepeater;
+import com.dhenton9000.wicket.pages.guice.data.ApplicationsUsers;
+import com.dhenton9000.wicket.pages.guice.data.GuiceRepeaterOne;
+import com.dhenton9000.wicket.pages.guice.repeater.SimpleListViewRepeater;
 import com.dhenton9000.wicket.pages.form.sample.CompoundUserPage;
 import com.dhenton9000.wicket.pages.form.sample.UserPage;
 import com.dhenton9000.wicket.refs.ImageRefPage;
-import com.dhenton9000.wicket.security.SignIn;
-import com.dhenton9000.wicket.security.maintenance.MaintainApplications;
+import com.dhenton9000.wicket.pages.security.SignIn;
+import com.dhenton9000.wicket.pages.security.maintenance.MaintainApplications;
 import org.apache.wicket.markup.html.link.BookmarkablePageLink;
 import org.apache.wicket.markup.html.link.ExternalLink;
 import org.apache.wicket.model.IModel;
