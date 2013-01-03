@@ -12,11 +12,14 @@ import com.dhenton9000.wicket.dao.IGroupsDao;
 import com.google.inject.Inject;
 import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
 import org.apache.commons.lang.StringEscapeUtils;
 import org.apache.wicket.AttributeModifier;
 import org.apache.wicket.ajax.AjaxRequestTarget;
+import org.apache.wicket.ajax.attributes.AjaxCallListener;
+import org.apache.wicket.ajax.attributes.AjaxRequestAttributes;
 import org.apache.wicket.ajax.markup.html.AjaxLink;
 import org.apache.wicket.ajax.markup.html.form.AjaxButton;
 import org.apache.wicket.extensions.ajax.markup.html.repeater.data.table.AjaxFallbackDefaultDataTable;
@@ -114,9 +117,6 @@ public final class MaintainApplications extends TemplatePage {
         mainRefreshGroup.add(editForm);
         mainRefreshGroup.add(new FeedbackPanel("feedback"));
 
-
-
-
         // do the data table 
         List<IColumn<Applications, String>> columns = new ArrayList<IColumn<Applications, String>>();
 
@@ -137,7 +137,60 @@ public final class MaintainApplications extends TemplatePage {
         ajaxFallbackDefaultDataTable.setOutputMarkupId(true);
         mainRefreshGroup.add(ajaxFallbackDefaultDataTable);
 
+
+
+        AjaxLink addLink = new AjaxLink("addButton") {
+            @Override
+            public void onClick(AjaxRequestTarget target) {
+                resetSelectedApplication(STATE.ADD);
+                target.add(mainRefreshGroup);
+                //   target. add(editForm); 
+            }
+
+            @Override
+            public boolean isVisible() {
+                boolean visible = true;
+
+
+                switch (currentState) {
+                    case INITIAL:
+                        visible = true;
+                        break;
+                    default:
+                        visible = true;
+                        break;
+                }
+
+
+                return visible;
+            }
+        };
+        addLink.setBody(new Model("Add Application"));
+        addLink.setOutputMarkupId(true);
+        mainRefreshGroup.add(addLink);
         add(mainRefreshGroup);
+    }
+
+    /**
+     * Take the list of select groups in the edit screen and return a set of
+     * live hibernate objects suitable for an add or edit.
+     *
+     * @return
+     */
+    protected Set<Groups> convertSelectedGroupsToLiveGroups() {
+        Set<Groups> rSet = new HashSet<Groups>();
+        if (selectedGroups != null && selectedGroups.size() > 0) {
+            Iterator<Groups> gIter = selectedGroups.iterator();
+            while (gIter.hasNext()) {
+                Groups nG = gIter.next();
+                if (getAllGroups().contains(nG)) {
+                    rSet.add(nG);
+                }
+            }
+
+        }
+
+        return rSet;
     }
 
     /**
@@ -247,6 +300,14 @@ public final class MaintainApplications extends TemplatePage {
                         }
 
                         @Override
+                        protected void updateAjaxAttributes(AjaxRequestAttributes attributes) {
+                            super.updateAjaxAttributes(attributes);
+                            AjaxCallListener ajaxCallListener = new AjaxCallListener();
+                            ajaxCallListener.onPrecondition("return confirm('Remove Application?');");
+                            attributes.getAjaxCallListeners().add(ajaxCallListener);
+                        }
+
+                        @Override
                         public boolean isVisible() {
                             boolean visible = false;
 
@@ -264,41 +325,20 @@ public final class MaintainApplications extends TemplatePage {
                         }
                     };
 
-            delete.add(new AttributeModifier("onclick", model) {
-                @Override
-                protected String newValue(final String currentValue, final String replacementValue) {
-                    return "return confirm('Remove Application?')";
-                }
-            });
+
+
+
+
+
             delete.setOutputMarkupId(true);
+            select.setBody(new Model("Select"));
+            delete.setBody(new Model("Remove"));
             add(select);
             add(delete);
 
 
         }
     }
-
-    class AddButtonForm extends Form<Applications> {
-
-        public AddButtonForm(String id) {
-            super(id);
-
-
-        }
-
-        public AddButtonForm(String id, IModel<Applications> model) {
-            super(id, model);
-
-
-        }
-
-        @Override
-        protected void onSubmit() {
-            resetSelectedApplication(STATE.ADD);
-
-        }
-    }
-    //////////////////////////////////////
 
     class EditForm extends Form<Applications> {
 
@@ -400,13 +440,16 @@ public final class MaintainApplications extends TemplatePage {
 
         @Override
         protected void onSubmit() {
-            Set newGroups = new HashSet(selectedGroups);
-            selectedApplication.setGroupsSet(newGroups);
+            Set newGroups = convertSelectedGroupsToLiveGroups();
             switch (currentState) {
                 case EDIT:
+
+                    selectedApplication.setGroupsSet(newGroups);
                     getApplicationsService().merge(selectedApplication);
                     break;
                 case ADD:
+                    selectedApplication.setGroupsSet(newGroups);
+                    logger.debug("start save in on submit");
                     getApplicationsService().save(selectedApplication);
                     break;
                 default:
