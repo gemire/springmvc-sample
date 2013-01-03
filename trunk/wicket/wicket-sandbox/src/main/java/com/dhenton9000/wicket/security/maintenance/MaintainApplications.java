@@ -150,6 +150,7 @@ public final class MaintainApplications extends TemplatePage {
                 resetSelectedApplication(STATE.ADD);
                 editForm.modelChanged();
                 target.add(mainRefreshGroup);
+                editForm.clearInput();
                 target.add(editForm);
             }
 
@@ -449,7 +450,7 @@ public final class MaintainApplications extends TemplatePage {
             saveEditButton.setOutputMarkupId(true);
             cancelButton.setOutputMarkupId(true);
             saveEditButton.setDefaultFormProcessing(true);
-            cancelButton.setDefaultFormProcessing(true);
+            cancelButton.setDefaultFormProcessing(false);
             add(cancelButton);
 
         }
