@@ -56,6 +56,10 @@ public abstract class GuiceGenericDaoImpl<E extends Identifiable<PK>, PK extends
         this.cacheRegion = type.getCanonicalName();
     }
 
+    
+     
+    
+    
     /**
      * {@inheritDoc}
      */
@@ -119,6 +123,7 @@ public abstract class GuiceGenericDaoImpl<E extends Identifiable<PK>, PK extends
             logger.debug("in auto generated for save");
             getEntityManager().persist(entity);
             logger.debug("persist of save completed");
+            getEntityManager().flush();
             return;
         }
 
@@ -302,6 +307,7 @@ public abstract class GuiceGenericDaoImpl<E extends Identifiable<PK>, PK extends
 
         for (E entity : entities) {
             save(entity);
+            
         }
 
         if (logger.isDebugEnabled()) {
@@ -327,6 +333,7 @@ public abstract class GuiceGenericDaoImpl<E extends Identifiable<PK>, PK extends
 
             if (entityRef != null) {
                 getEntityManager().remove(entityRef);
+                getEntityManager().flush();
             } else {
                 logger.warn("Attempt to delete an instance that is not present in the database: " + entity.toString());
             }

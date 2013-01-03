@@ -20,8 +20,10 @@ import org.apache.wicket.AttributeModifier;
 import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.ajax.attributes.AjaxCallListener;
 import org.apache.wicket.ajax.attributes.AjaxRequestAttributes;
+import org.apache.wicket.ajax.form.AjaxFormComponentUpdatingBehavior;
 import org.apache.wicket.ajax.markup.html.AjaxLink;
 import org.apache.wicket.ajax.markup.html.form.AjaxButton;
+import org.apache.wicket.ajax.markup.html.form.AjaxSubmitLink;
 import org.apache.wicket.extensions.ajax.markup.html.repeater.data.table.AjaxFallbackDefaultDataTable;
 import org.apache.wicket.extensions.markup.html.repeater.data.grid.ICellPopulator;
 import org.apache.wicket.extensions.markup.html.repeater.data.table.AbstractColumn;
@@ -33,6 +35,7 @@ import org.apache.wicket.markup.html.form.Button;
 import org.apache.wicket.markup.html.form.ChoiceRenderer;
 import org.apache.wicket.markup.html.form.Form;
 import org.apache.wicket.markup.html.form.ListMultipleChoice;
+import org.apache.wicket.markup.html.form.RequiredTextField;
 import org.apache.wicket.markup.html.form.TextField;
 import org.apache.wicket.markup.html.link.Link;
 import org.apache.wicket.markup.html.panel.FeedbackPanel;
@@ -62,6 +65,7 @@ public final class MaintainApplications extends TemplatePage {
     protected SortableApplicationsDataProvider applicationsDataProvider;
     protected AjaxFallbackDefaultDataTable<Applications, String> ajaxFallbackDefaultDataTable;
     private WebMarkupContainer mainRefreshGroup;
+    //private FeedbackPanel feedbackPanel;
 
     /**
      * @return the groupsService
@@ -115,7 +119,8 @@ public final class MaintainApplications extends TemplatePage {
         editForm = new EditForm("editForm", new PropertyModel(MaintainApplications.this, "selectedApplication"));
 
         mainRefreshGroup.add(editForm);
-        mainRefreshGroup.add(new FeedbackPanel("feedback"));
+
+        //  mainRefreshGroup.add(feedbackPanel);
 
         // do the data table 
         List<IColumn<Applications, String>> columns = new ArrayList<IColumn<Applications, String>>();
@@ -143,8 +148,9 @@ public final class MaintainApplications extends TemplatePage {
             @Override
             public void onClick(AjaxRequestTarget target) {
                 resetSelectedApplication(STATE.ADD);
+                editForm.modelChanged();
                 target.add(mainRefreshGroup);
-                //   target. add(editForm); 
+                target.add(editForm);
             }
 
             @Override
@@ -269,6 +275,7 @@ public final class MaintainApplications extends TemplatePage {
                             logger.debug("action panel on click\n" + info + "\n");
                             resetSelectedApplication(STATE.EDIT);
                             target.add(mainRefreshGroup);
+                            editForm.modelChanged();
                             target.add(editForm);
 
                         }
@@ -365,20 +372,6 @@ public final class MaintainApplications extends TemplatePage {
             return visible;
         }
 
-        // info("Cancel was pressed!");
-        public String getCurrentStateLabel() {
-            String label = "Edit Application";
-            switch (currentState) {
-                case INITIAL:
-                    break;
-                case ADD:
-                    label = "Add Application";
-                default:
-
-            }
-            return label;
-        }
-
         public EditForm(String id, IModel<Applications> model) {
             super(id, model);
             setup();
@@ -386,6 +379,11 @@ public final class MaintainApplications extends TemplatePage {
 
         private void setup() {
             this.setOutputMarkupId(true);
+
+            final FeedbackPanel feedbackPanel = new FeedbackPanel("feedback");
+            feedbackPanel.setOutputMarkupId(true);
+            add(feedbackPanel);
+
             final TextField<String> tApplicationName = new TextField<String>("applicationName",
                     new PropertyModel<String>(this.getModel(), "applicationName"));
 
@@ -393,7 +391,7 @@ public final class MaintainApplications extends TemplatePage {
                     new PropertyModel<String>(this.getModel(), "id"));
 
             final Label tDes = new Label("actionDescription",
-                    new PropertyModel<String>(this, "currentStateLabel"));
+                    new PropertyModel<String>(MaintainApplications.this, "currentStateLabel"));
 
             MaintainApplications.GroupsDropDownChoice groupsChoice;
             groupsChoice = new MaintainApplications.GroupsDropDownChoice("applicationGroups");
@@ -408,18 +406,34 @@ public final class MaintainApplications extends TemplatePage {
 
 
 
-            AjaxButton saveEditButton = new AjaxButton("saveEditButton", new PropertyModel<String>(this,
-                    "currentStateLabel"), this) {
+            AjaxButton saveEditButton = new AjaxButton("saveEditButton", new Model<String>("Save"), this) {
                 @Override
                 protected void onSubmit(AjaxRequestTarget target, Form<?> form) {
-                    super.onSubmit(target, form);
+                    Form<Applications> aForm = (Form<Applications>) form;
+
+                    doSubmitWork(aForm);
+                    //super.onSubmit(target, form);
                     target.add(mainRefreshGroup);
+                    target.add(feedbackPanel);
                     target.add(ajaxFallbackDefaultDataTable);
+                    target.add(form);
+
+                }
+
+                @Override
+                protected void onError(AjaxRequestTarget target, Form<?> form) {
+                    // super.onError(target, form);
+                    logger.debug("error!!!!");
+                    target.add(mainRefreshGroup);
+                    target.add(feedbackPanel);
+                    target.add(ajaxFallbackDefaultDataTable);
+                    target.add(form);
 
 
                 }
             };
             // this is the default save submission button with 
+
             add(saveEditButton);
 
             AjaxButton cancelButton = new AjaxButton("cancelEditButton", new Model("Cancel"), this) {
@@ -434,21 +448,30 @@ public final class MaintainApplications extends TemplatePage {
             };
             saveEditButton.setOutputMarkupId(true);
             cancelButton.setOutputMarkupId(true);
+            saveEditButton.setDefaultFormProcessing(true);
             cancelButton.setDefaultFormProcessing(true);
             add(cancelButton);
+
         }
 
-        @Override
-        protected void onSubmit() {
+        //@Override
+        //public void onSubmit()
+        protected void doSubmitWork(Form<Applications> aForm) {
+            String applicationName = aForm.getModelObject().getApplicationName();
+            logger.debug("In submit work app name is '" + applicationName + "'");
+            if (applicationName == null) {
+                error("Application Name is required!");
+                return;
+            }
             Set newGroups = convertSelectedGroupsToLiveGroups();
+            selectedApplication.setApplicationName(applicationName);
+            selectedApplication.setGroupsSet(newGroups);
             switch (currentState) {
                 case EDIT:
-
-                    selectedApplication.setGroupsSet(newGroups);
                     getApplicationsService().merge(selectedApplication);
                     break;
                 case ADD:
-                    selectedApplication.setGroupsSet(newGroups);
+
                     logger.debug("start save in on submit");
                     getApplicationsService().save(selectedApplication);
                     break;
