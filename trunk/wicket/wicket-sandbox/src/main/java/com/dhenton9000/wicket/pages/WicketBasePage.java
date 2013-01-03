@@ -14,7 +14,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.dhenton9000.wicket;
+package com.dhenton9000.wicket.pages;
 
 import org.apache.wicket.markup.html.WebPage;
 import org.apache.wicket.model.IModel;

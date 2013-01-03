@@ -4,7 +4,7 @@
  */
 package com.dhenton9000.wicket.refs;
 
-import com.dhenton9000.wicket.TemplatePage;
+import com.dhenton9000.wicket.pages.TemplatePage;
 import com.dhenton9000.wicket.shared.images.MountSharedImage;
 import java.util.Arrays;
 import java.util.Locale;

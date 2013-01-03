@@ -14,10 +14,10 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.dhenton9000.wicket;
+package com.dhenton9000.wicket.pages;
 
-import com.dhenton9000.wicket.security.SignOutPage;
-import com.dhenton9000.wicket.security.UserPanel;
+import com.dhenton9000.wicket.pages.security.SignOutPage;
+import com.dhenton9000.wicket.pages.security.UserPanel;
 import org.apache.wicket.markup.html.basic.Label;
 import org.apache.wicket.markup.html.link.BookmarkablePageLink;
 import org.apache.wicket.model.PropertyModel;

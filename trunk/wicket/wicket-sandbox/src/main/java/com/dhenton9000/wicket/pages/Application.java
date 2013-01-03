@@ -3,14 +3,14 @@
  *
  * Created on December 3, 2012, 9:50 AM
  */
-package com.dhenton9000.wicket;
+package com.dhenton9000.wicket.pages;
 
 import com.dhenton9000.wicket.jpa.JPAServiceStarter;
 import com.dhenton9000.wicket.refs.ImageRefPage;
 import com.dhenton9000.wicket.refs.ImageResourceReference;
-import com.dhenton9000.wicket.security.AuthenticatedWebPage;
-import com.dhenton9000.wicket.security.SandboxSession;
-import com.dhenton9000.wicket.security.SignIn;
+import com.dhenton9000.wicket.pages.security.AuthenticatedWebPage;
+import com.dhenton9000.wicket.pages.security.SandboxSession;
+import com.dhenton9000.wicket.pages.security.SignIn;
 import com.google.inject.Injector;
 import org.apache.wicket.Component;
 import org.apache.wicket.RestartResponseAtInterceptPageException;
