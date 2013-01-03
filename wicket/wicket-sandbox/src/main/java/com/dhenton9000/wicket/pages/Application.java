@@ -6,8 +6,8 @@
 package com.dhenton9000.wicket.pages;
 
 import com.dhenton9000.wicket.jpa.JPAServiceStarter;
-import com.dhenton9000.wicket.refs.ImageRefPage;
-import com.dhenton9000.wicket.refs.ImageResourceReference;
+import com.dhenton9000.wicket.pages.refs.ImageRefPage;
+import com.dhenton9000.wicket.pages.refs.ImageResourceReference;
 import com.dhenton9000.wicket.pages.security.AuthenticatedWebPage;
 import com.dhenton9000.wicket.pages.security.SandboxSession;
 import com.dhenton9000.wicket.pages.security.SignIn;
