@@ -14,7 +14,7 @@ import com.dhenton9000.wicket.pages.guice.data.GuiceRepeaterOne;
 import com.dhenton9000.wicket.pages.guice.repeater.SimpleListViewRepeater;
 import com.dhenton9000.wicket.pages.form.sample.CompoundUserPage;
 import com.dhenton9000.wicket.pages.form.sample.UserPage;
-import com.dhenton9000.wicket.refs.ImageRefPage;
+import com.dhenton9000.wicket.pages.refs.ImageRefPage;
 import com.dhenton9000.wicket.pages.security.SignIn;
 import com.dhenton9000.wicket.pages.security.maintenance.MaintainApplications;
 import org.apache.wicket.markup.html.link.BookmarkablePageLink;
