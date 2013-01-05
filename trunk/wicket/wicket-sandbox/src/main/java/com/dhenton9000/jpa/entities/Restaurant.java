@@ -31,28 +31,26 @@ import javax.xml.bind.annotation.XmlTransient;
  * @author dhenton
  */
 @Entity
-@Table(name = "WINE")
+@Table(name = "RESTAURANT")
 @XmlRootElement
 @NamedQueries({
-    @NamedQuery(name = "Wine.findAll", query = "SELECT u FROM Wine u"),
-    @NamedQuery(name = "Wine.findByid", query = "SELECT u FROM Wine u WHERE u.id = :id"),
-    @NamedQuery(name = "Wine.findByName", query = "SELECT u FROM Wine u WHERE u.name = :name")})
-public class Wine implements Identifiable<Integer>, Serializable {
+    @NamedQuery(name = "Restaurant.findAll", query = "SELECT u FROM Restaurant u"),
+    @NamedQuery(name = "Restaurant.findByid", query = "SELECT u FROM Restaurant u WHERE u.id = :id"),
+    @NamedQuery(name = "Restaurant.findByName", query = "SELECT u FROM Restaurant u WHERE u.name = :name")})
+public class Restaurant implements Identifiable<Integer>, Serializable {
 
     private static final long serialVersionUID = 1L;
     private Integer id;
-        private String name;
-        private Integer wineYear;
-        private String grapes;
-        private String country;
-        private String region;
-        private String description;
-        private String picture;
+    private String name;
+    private Integer version;
+    private String zipCode;
+    private String city;
+    private String state;
 
-    public Wine() {
+    public Restaurant() {
     }
 
-    public Wine(Integer id) {
+    public Restaurant(Integer id) {
         this.id = id;
     }
 
@@ -85,7 +83,7 @@ public class Wine implements Identifiable<Integer>, Serializable {
         if (getClass() != obj.getClass()) {
             return false;
         }
-        final Wine other = (Wine) obj;
+        final Restaurant other = (Restaurant) obj;
         if ((this.id == null) ? (other.id != null) : !this.id.equals(other.id)) {
             return false;
         }
@@ -101,7 +99,7 @@ public class Wine implements Identifiable<Integer>, Serializable {
 
     @Override
     public String toString() {
-        return "com.dhenton9000.jpa.generated.Wine[ id=" + id + " ]";
+        return "com.dhenton9000.jpa.generated.Restaurant[ id=" + id + " ]";
     }
 
     @Override
@@ -124,93 +122,62 @@ public class Wine implements Identifiable<Integer>, Serializable {
     }
 
     /**
-     * @return the wineYear
+     * @return the version
      */
-    @Column(name = "WINE_YEAR")
-    public Integer getWineYear() {
-        return wineYear;
+    @Column(name = "VERSION")
+    public Integer getVersion() {
+        return version;
     }
 
     /**
-     * @param wineYear the wineYear to set
+     * @param version the version to set
      */
-    public void setWineYear(Integer wineYear) {
-        this.wineYear = wineYear;
+    public void setVersion(Integer version) {
+        this.version = version;
     }
 
     /**
-     * @return the grapes
+     * @return the zipCode
      */
-    @Column(name = "GRAPES", length = 45)
-    public String getGrapes() {
-        return grapes;
+    @Column(name = "ZIP_CODE", length = 250)
+    public String getZipCode() {
+        return zipCode;
     }
 
     /**
-     * @param grapes the grapes to set
+     * @param zipCode the zipCode to set
      */
-    public void setGrapes(String grapes) {
-        this.grapes = grapes;
+    public void setZipCode(String zipCode) {
+        this.zipCode = zipCode;
     }
 
     /**
-     * @return the country
+     * @return the city
      */
-    @Column(name = "COUNTRY", length = 45)
-    public String getCountry() {
-        return country;
+    @Column(name = "CITY", length = 250)
+    public String getCity() {
+        return city;
     }
 
     /**
-     * @param country the country to set
+     * @param city the city to set
      */
-    public void setCountry(String country) {
-        this.country = country;
+    public void setCity(String city) {
+        this.city = city;
     }
 
     /**
-     * @return the region
+     * @return the state
      */
-    @Column(name = "REGION", length = 45)
-    public String getRegion() {
-        return region;
+    @Column(name = "STATE", length = 250)
+    public String getState() {
+        return state;
     }
 
     /**
-     * @param region the region to set
+     * @param state the state to set
      */
-    public void setRegion(String region) {
-        this.region = region;
-    }
-
-    /**
-     * @return the description
-     */
-    @Column(name = "DESCRIPTION", length = 45)
-    @Lob
-    public String getDescription() {
-        return description;
-    }
-
-    /**
-     * @param description the description to set
-     */
-    public void setDescription(String description) {
-        this.description = description;
-    }
-
-    /**
-     * @return the picture
-     */
-    @Column(name = "PICTURE", length = 250)
-    public String getPicture() {
-        return picture;
-    }
-
-    /**
-     * @param picture the picture to set
-     */
-    public void setPicture(String picture) {
-        this.picture = picture;
+    public void setState(String state) {
+        this.state = state;
     }
 }

@@ -5,7 +5,7 @@
     <class>com.dhenton9000.jpa.entities.Users</class>
     <class>com.dhenton9000.jpa.entities.Groups</class>
     <class>com.dhenton9000.jpa.entities.Applications</class>
-    <class>com.dhenton9000.jpa.entities.Wine</class>
+    <class>com.dhenton9000.jpa.entities.Restaurant</class>
     <properties>
       <property name="hibernate.connection.username" value="sec"/>
       <property name="hibernate.connection.driver_class" value="org.apache.derby.jdbc.ClientDriver"/>
