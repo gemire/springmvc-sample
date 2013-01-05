@@ -42,7 +42,7 @@ public class ReloadableEntityModel<T extends Identifiable<PK>, PK extends Serial
 
     private Class<T> entityClass;
     private Serializable id;
-    private Identifiable entity;
+    private T entity;
     private byte[] serializedEntity;
     private IModel entityModel;
 
@@ -60,14 +60,14 @@ public class ReloadableEntityModel<T extends Identifiable<PK>, PK extends Serial
     }
 
     @Override
-    protected final Object load() {
-        Identifiable result;
+    protected final T load() {
+        T result;
         if (entityModel != null) {
-            entity = (Identifiable) entityModel.getObject();
+            entity = (T) entityModel.getObject();
             entityModel.detach();
             entityModel = null;
         } else if (serializedEntity != null) {
-            entity = (Identifiable) SerializationUtils.deserialize(serializedEntity);
+            entity = (T) SerializationUtils.deserialize(serializedEntity);
             result = entity;
         }
         if (entity != null) {
@@ -90,7 +90,7 @@ public class ReloadableEntityModel<T extends Identifiable<PK>, PK extends Serial
     @Override
     public void detach() {
         if (entityModel != null) {
-            entity = (Identifiable) entityModel.getObject();
+            entity = (T) entityModel.getObject();
             entityModel.detach();
             entityModel = null;
         }
