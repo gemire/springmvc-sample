@@ -11,6 +11,7 @@ import java.util.List;
 import org.junit.Test;
 import static org.junit.Assert.*;
 import org.junit.Before;
+import org.junit.BeforeClass;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -23,8 +24,9 @@ public class ApplicationsTests extends BaseTest {
     private IApplicationsDao service;
     private final static Logger logger = LoggerFactory.getLogger(ApplicationsTests.class);
     
+ 
     @Before
-    public void before() {
+    public void beforeTest() {
         service = getInjector().getInstance(IApplicationsDao.class);
     }
 
