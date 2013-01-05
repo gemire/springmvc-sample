@@ -38,7 +38,8 @@ import org.apache.wicket.model.IModel;
 import org.apache.wicket.model.LoadableDetachableModel;
 
 @SuppressWarnings("serial")
-public class ReloadableEntityModel<T extends Identifiable<PK>, PK extends Serializable> extends LoadableDetachableModel {
+public class ReloadableEntityModel<T extends Identifiable<PK>, PK extends Serializable> 
+extends LoadableDetachableModel {
 
     private Class<T> entityClass;
     private Serializable id;

@@ -4,17 +4,25 @@
  */
 package com.dhenton9000.wicket.pages.guice.repeater;
 
- 
 import com.dhenton9000.jpa.entities.Restaurant;
+import com.dhenton9000.wicket.dao.IApplicationsDao;
+import com.dhenton9000.wicket.dao.IRestaurantDao;
+import com.dhenton9000.wicket.models.RestaurantReloadableEntityModel;
 import com.dhenton9000.wicket.pages.TemplatePage;
 import com.dhenton9000.wicket.pages.panels.ActionPanel;
+import com.google.inject.Inject;
 import java.util.Iterator;
+import org.apache.wicket.markup.html.basic.Label;
 import org.apache.wicket.markup.html.form.Form;
 import org.apache.wicket.markup.html.form.TextField;
 import org.apache.wicket.markup.html.panel.FeedbackPanel;
 import org.apache.wicket.markup.repeater.Item;
 import org.apache.wicket.markup.repeater.RefreshingView;
+import org.apache.wicket.markup.repeater.ReuseIfModelsEqualStrategy;
+import org.apache.wicket.markup.repeater.util.ModelIteratorAdapter;
+import org.apache.wicket.model.CompoundPropertyModel;
 import org.apache.wicket.model.IModel;
+import org.apache.wicket.model.StringResourceModel;
 import org.apache.wicket.request.mapper.parameter.PageParameters;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -24,14 +32,17 @@ import org.slf4j.LoggerFactory;
  * @author dhenton
  */
 public final class FormInputWithList extends TemplatePage {
+
     private final Logger logger = LoggerFactory.getLogger(FormInputWithList.class);
     private Form<Restaurant> form;
-    
+    @Inject
+    private IRestaurantDao service;
+
     public FormInputWithList() {
         super();
         setup();
     }
-    
+
     public FormInputWithList(PageParameters params) {
         setup();
     }
@@ -40,47 +51,63 @@ public final class FormInputWithList extends TemplatePage {
         setPageTitle(getClass().getSimpleName());
         add(new FeedbackPanel("feedback"));
         form = new Form<Restaurant>("form");
-        
-    }
-    
-    
-    
-    
-    
-    
-    
-    //////////////////////////////
-    class WineFormView extends RefreshingView<Restaurant>
-    {
+        add(form);
 
-        public WineFormView(String id) {
+        RefreshingView<Restaurant> refreshingView = new RestaurantFormView("restaurantFormView");
+        refreshingView.setItemReuseStrategy(ReuseIfModelsEqualStrategy.getInstance());
+        form.add(new Label("sampleHeaderFromBundle", new StringResourceModel("sample.Header", this, null)));
+        form.add(refreshingView);
+
+    }
+
+    /**
+     * @return the service
+     */
+    public IRestaurantDao getService() {
+        return service;
+    }
+
+    //////////////////////////////
+    class RestaurantFormView extends RefreshingView<Restaurant> {
+
+        public RestaurantFormView(String id) {
             super(id);
         }
 
-        public WineFormView(String id, IModel<?> model) {
+        public RestaurantFormView(String id, IModel<?> model) {
             super(id, model);
         }
 
         @Override
         protected Iterator<IModel<Restaurant>> getItemModels() {
-             return null;
+            Iterator<Restaurant> rIter =
+                    service.getAllRestaurants().iterator();
+
+
+            return new ModelIteratorAdapter<Restaurant>(rIter) {
+                @Override
+                protected IModel<Restaurant> model(Restaurant object) {
+                    return new CompoundPropertyModel<Restaurant>(
+                            new RestaurantReloadableEntityModel(object));
+                }
+            };
+
+
+
         }
 
         @Override
         protected void populateItem(Item<Restaurant> item) {
-             
-            
-            IModel<Restaurant> wine = item.getModel();
-				item.add(new ActionPanel("actions", wine));
-				item.add(new TextField<Long>("id"));
-				item.add(new TextField<String>("firstName"));
-				item.add(new TextField<String>("lastName"));
-				item.add(new TextField<String>("homePhone"));
-				item.add(new TextField<String>("cellPhone"));
-            
-            
+
+
+            IModel<Restaurant> restaurant = item.getModel();
+            item.add(new Label("id"));
+            item.add(new TextField<String>("name"));
+            item.add(new TextField<String>("city"));
+            item.add(new TextField<String>("state"));
+            item.add(new TextField<String>("zipCode"));
+
+
         }
-        
     }
-    
 }
