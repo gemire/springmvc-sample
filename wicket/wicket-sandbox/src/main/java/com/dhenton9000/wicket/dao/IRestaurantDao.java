@@ -5,8 +5,8 @@
 package com.dhenton9000.wicket.dao;
 
 import com.dhenton9000.jpa.dao.support.GenericDao;
-import com.dhenton9000.jpa.entities.Wine;
-import com.dhenton9000.wicket.dao.impl.WineDaoImpl;
+import com.dhenton9000.jpa.entities.Restaurant;
+import com.dhenton9000.wicket.dao.impl.RestaurantDaoImpl;
 import com.google.inject.ImplementedBy;
  
 
@@ -14,8 +14,8 @@ import com.google.inject.ImplementedBy;
  *
  * @author dhenton
  */
-@ImplementedBy(WineDaoImpl.class)
-public interface IWineDao extends GenericDao<Wine, Integer>{
+@ImplementedBy(RestaurantDaoImpl.class)
+public interface IRestaurantDao extends GenericDao<Restaurant, Integer>{
     
     
 }
