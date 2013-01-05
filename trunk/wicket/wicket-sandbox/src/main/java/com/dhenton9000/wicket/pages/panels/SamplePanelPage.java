@@ -16,9 +16,15 @@ public final class SamplePanelPage extends TemplatePage {
 
     public SamplePanelPage() {
         super();
+        setup();
     }
     
     public SamplePanelPage(PageParameters params) {
-        //TODO:  process page parameters
+       setup();
+    }
+    
+    private void setup()
+    {
+        add(new SamplePanel("panel"));
     }
 }
