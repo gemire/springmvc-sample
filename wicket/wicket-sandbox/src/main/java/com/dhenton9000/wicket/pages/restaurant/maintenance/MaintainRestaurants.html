@@ -1,0 +1,28 @@
+
+<wicket:extend xmlns:wicket="http://wicket.apache.org">
+    <h2>Maintain Restaurants</h2>
+    
+    <table cellpadding="10" cellspacing="10">
+        <tr><td>
+    <div>Selected Restaurant: <span wicket:id="selectedRestaurant" /></div>
+            <br/>
+            
+            
+    <form wicket:id="pickRestaurantForm">
+        <div wicket:id="feedbackForPickRestaurant"></div>
+        <div style=" border: thin solid #E9601A; overflow-y:scroll ;
+             overflow-x:hidden ; height:300px;width:350px">
+        <ul>
+            <li wicket:id="pickRestaurantFormView">
+                
+                <span wicket:id="pickAction"> </span>
+                
+            </li>
+        </ul>
+        </div>
+    </form>
+    </td><td>input form here</td></tr>
+    </table>
+</wicket:extend>
+
+
