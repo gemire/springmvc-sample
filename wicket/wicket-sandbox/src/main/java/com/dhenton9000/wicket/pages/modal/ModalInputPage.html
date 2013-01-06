@@ -7,11 +7,9 @@
 
             <form wicket:id="form">
                 <table cellpadding="4" cellspacing="4">
-                    <tr><td wicket:id="label"></td><td><input type="text" wicket:id="text" /></td></tr>
-                    <tr><td>
-                            <div wicket:id="chooserWindow"></div> 
-                        </td>
-                        <td><a href="#" wicket:id="chooserLink">Chooser</a></td></tr>
+                    <tr><td wicket:id="ageLabel"></td><td><input type="text" wicket:id="age" /></td></tr>
+                    <tr><td wicket:id="nameLabel"></td><td><input type="text" wicket:id="name" /></td></tr>
+                    <tr><td colspan="2"><a href="#" wicket:id="chooserLink">Chooser</a></td></tr>
                         <tr><td colspan="2">
                             <input wicket:id="button" type="submit" />
                         </td></tr>
@@ -21,7 +19,7 @@
 
 
             </form>
-            
+            <div wicket:id="chooserWindow"></div> 
         </wicket:extend>
     </body>
 </html>

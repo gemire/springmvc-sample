@@ -4,19 +4,17 @@
  */
 package com.dhenton9000.wicket.pages.modal;
 
-import java.io.Serializable;
-import java.util.Arrays;
-import java.util.List;
+import com.dhenton9000.wicket.pages.modal.ModalInputPage.ModalData;
 import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.ajax.markup.html.form.AjaxButton;
 import org.apache.wicket.extensions.ajax.markup.html.modal.ModalWindow;
 import org.apache.wicket.markup.html.WebMarkupContainer;
-import org.apache.wicket.markup.html.form.CheckBoxMultipleChoice;
-import org.apache.wicket.markup.html.form.ChoiceRenderer;
 import org.apache.wicket.markup.html.form.Form;
+import org.apache.wicket.markup.html.form.TextField;
 import org.apache.wicket.markup.html.panel.Panel;
 import org.apache.wicket.model.IModel;
-import org.apache.wicket.model.PropertyModel;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  *
@@ -24,57 +22,41 @@ import org.apache.wicket.model.PropertyModel;
  */
 public class ChooserPanel extends Panel {
 
+    private final Logger logger = LoggerFactory.getLogger(ChooserPanel.class);
     private static final long serialVersionUID = 1L;
-    private List<ChooserItem> availItems = Arrays.asList(
-            new ChooserItem("I1", "Item 1"),
-            new ChooserItem("I2", "Item 2"),
-            new ChooserItem("I2", "Item 3"));
-    private CheckBoxMultipleChoice checkBoxMultipleChoice;
 
-    public IModel getSelectedModel() {
-        return checkBoxMultipleChoice.getModel();
-    }
+    public ChooserPanel(String id, IModel model) {
 
-    public ChooserPanel(String id, IModel model, final ModalWindow window) {  
-        
-        // use this to pass in the model that will be modified by this
-        // popup.
+
         super(id, model);
-    }
-    public ChooserPanel(String id, final ModalWindow window) {
-        super(id);
+        //  }
+        //  public ChooserPanel(String id) {
+        //      super(id);
 
         final WebMarkupContainer parent = new WebMarkupContainer("chooser");
         parent.setOutputMarkupId(true);
         add(parent);
-
-        Form form = new Form("chooserForm") {
+        Form<ModalData> form = new Form<ModalData>("chooserForm", model) {
             @Override
             protected void onSubmit() {
-                System.out.println("chooseForm submitted.");
+                // noop the standard submit process
             }
         };
-        parent.add(form);
-        checkBoxMultipleChoice = new CheckBoxMultipleChoice("itemselection", availItems, new ChoiceRenderer("name", "id"));
+        TextField ageField = new TextField("age");
+        form.add(ageField);
+        TextField nameField = new TextField("name");
+        form.add(nameField);
 
-        form.add(checkBoxMultipleChoice);
+        parent.add(form);
         form.add(new AjaxButton("button") {
             @Override
             protected void onSubmit(AjaxRequestTarget target, Form form) {
-
-                window.close(target);
+                // this submits the form, and since the data in the form
+                // is also the data in the calling window, modifications here
+                // will be reflected in the calling pages form
+                ModalWindow.closeCurrent(target);
             }
         });
 
-    }
-
-    public class ChooserItem implements Serializable {
-
-        private String id, name;
-
-        public ChooserItem(String id, String name) {
-            this.id = id;
-            this.name = name;
-        }
     }
 }
