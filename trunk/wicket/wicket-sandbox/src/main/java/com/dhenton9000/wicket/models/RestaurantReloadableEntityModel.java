@@ -10,10 +10,11 @@ import com.dhenton9000.jpa.entities.Restaurant;
  *
  * @author dhenton
  */
-public class RestaurantReloadableEntityModel extends ReloadableEntityModel<Restaurant,Integer>{
+public class RestaurantReloadableEntityModel extends GuiceReloadableEntityModel<Restaurant,Integer>{
 
     public RestaurantReloadableEntityModel(Restaurant entity) {
         super(entity);
     }
+
     
 }

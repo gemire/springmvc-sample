@@ -31,20 +31,20 @@ import org.apache.wicket.model.IModel;
 import org.apache.wicket.model.Model;
 
 @SuppressWarnings("serial")
-public class EntityModel<T extends Identifiable<PK>, PK extends Serializable> extends Model {
+public class GuiceEntityModel<T extends Identifiable<PK>, PK extends Serializable> extends Model {
 
     private ReloadableEntityModel<T, PK> reloadableEntityModel;
 
-    public EntityModel() {
+    public GuiceEntityModel() {
     }
 
-    public EntityModel(IModel entityModel) {
+    public GuiceEntityModel(IModel entityModel) {
         super();
-        this.reloadableEntityModel = new ReloadableEntityModel<T, PK>(entityModel);
+        this.reloadableEntityModel = new GuiceReloadableEntityModel<T, PK>(entityModel);
     }
 
-    public EntityModel(T entity) {
-        this(new ReloadableEntityModel<T, PK>(entity));
+    public GuiceEntityModel(T entity) {
+        this(new GuiceReloadableEntityModel<T, PK>(entity));
     }
 
     @Override
@@ -62,10 +62,10 @@ public class EntityModel<T extends Identifiable<PK>, PK extends Serializable> ex
                 if (reloadableEntityModel.getObject() == null
                         || !reloadableEntityModel.getObject().equals(myEntity)) {
                     reloadableEntityModel.detach();
-                    reloadableEntityModel = new ReloadableEntityModel<T, PK>((T) myEntity);
+                    reloadableEntityModel = new GuiceReloadableEntityModel<T, PK>((T) myEntity);
                 }
             } else {
-                reloadableEntityModel = new ReloadableEntityModel<T, PK>((T) myEntity);
+                reloadableEntityModel = new GuiceReloadableEntityModel<T, PK>((T) myEntity);
             }
         } else if (reloadableEntityModel != null) {
             reloadableEntityModel.detach();

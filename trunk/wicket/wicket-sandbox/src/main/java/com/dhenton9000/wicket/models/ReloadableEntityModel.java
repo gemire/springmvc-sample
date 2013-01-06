@@ -26,19 +26,15 @@ package com.dhenton9000.wicket.models;
  */
 import com.dhenton9000.jpa.dao.support.GenericDao;
 import com.dhenton9000.jpa.domain.Identifiable;
-import com.dhenton9000.wicket.dao.impl.GuiceGenericDaoImpl;
 import java.io.IOException;
 import java.io.ObjectOutputStream;
 import java.io.Serializable;
-
-import javax.persistence.EntityManager;
-
 import org.apache.commons.lang.SerializationUtils;
 import org.apache.wicket.model.IModel;
 import org.apache.wicket.model.LoadableDetachableModel;
 
 @SuppressWarnings("serial")
-public class ReloadableEntityModel<T extends Identifiable<PK>, PK extends Serializable> 
+public abstract class ReloadableEntityModel<T extends Identifiable<PK>, PK extends Serializable> 
 extends LoadableDetachableModel {
 
     private Class<T> entityClass;
@@ -59,6 +55,8 @@ extends LoadableDetachableModel {
     public ReloadableEntityModel(IModel entityModel) {
         this.entityModel = entityModel;
     }
+    
+    public abstract GenericDao getDao();
 
     @Override
     protected final T load() {
@@ -75,7 +73,7 @@ extends LoadableDetachableModel {
             result = entity;
         } else {
 
-            GenericDao<T, PK> crudServices = new GuiceGenericDaoImpl<T, PK>(entityClass);
+            GenericDao<T, PK> crudServices = getDao();
             if (id != null) {
                 result = entity = crudServices.findById(id);
             } else {
@@ -117,5 +115,12 @@ extends LoadableDetachableModel {
                 entity = null;
             }
         }
+    }
+
+    /**
+     * @return the entityClass
+     */
+    public Class<T> getEntityClass() {
+        return entityClass;
     }
 }

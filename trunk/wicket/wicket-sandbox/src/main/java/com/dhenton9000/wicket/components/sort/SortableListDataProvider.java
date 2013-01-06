@@ -39,7 +39,7 @@ import org.apache.wicket.model.CompoundPropertyModel;
 import org.apache.wicket.model.IModel;
 
 
-import com.dhenton9000.wicket.models.EntityModel;
+import com.dhenton9000.wicket.models.GuiceEntityModel;
 import com.dhenton9000.wicket.models.SortableListModel;
 import com.dhenton9000.wicket.models.SortablePropertyListModel;
 import java.io.Serializable;
@@ -106,7 +106,7 @@ public class SortableListDataProvider extends SortableDataProvider {
 	    Object modelObject;
 	    if (object instanceof Identifiable) {
 	        modelObject = 
-                        new EntityModel<Identifiable<Serializable>,Serializable> ((Identifiable) object);
+                        new GuiceEntityModel<Identifiable<Serializable>,Serializable> ((Identifiable) object);
 	    } else {
 	        modelObject = object;
 	    }
