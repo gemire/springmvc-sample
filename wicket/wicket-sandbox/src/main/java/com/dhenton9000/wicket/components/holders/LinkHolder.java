@@ -21,7 +21,7 @@ package com.dhenton9000.wicket.components.holders;
  */
  
 
-import com.dhenton9000.wicket.panels.AjaxPanel;
+import com.dhenton9000.wicket.panels.crud.AjaxPanel;
 import org.apache.wicket.Component;
 import org.apache.wicket.markup.html.WebMarkupContainer;
 import org.apache.wicket.markup.html.basic.Label;

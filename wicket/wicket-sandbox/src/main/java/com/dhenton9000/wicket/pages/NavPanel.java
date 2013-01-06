@@ -15,6 +15,7 @@ import com.dhenton9000.wicket.pages.guice.repeater.SimpleListViewRepeater;
 import com.dhenton9000.wicket.pages.form.sample.CompoundUserPage;
 import com.dhenton9000.wicket.pages.form.sample.UserPage;
 import com.dhenton9000.wicket.pages.guice.repeater.FormInputWithList;
+import com.dhenton9000.wicket.pages.modal.ModalInputPage;
 import com.dhenton9000.wicket.pages.panels.SamplePanel;
 import com.dhenton9000.wicket.pages.panels.SamplePanelPage;
 import com.dhenton9000.wicket.pages.refs.ImageRefPage;
@@ -64,6 +65,7 @@ public final class NavPanel extends TemplatePanel {
         add(new BookmarkablePageLink<Void>("maintainApplicationsLink", MaintainApplications.class));
         add(new BookmarkablePageLink<Void>("simplePanelLink", SamplePanelPage.class));
         add(new BookmarkablePageLink<Void>("refreshingViewLink", FormInputWithList.class));
+        add(new BookmarkablePageLink<Void>("modalInputPageLink",ModalInputPage.class));
         // this isn't needed see Application.java for a mount 
         // that allows for a more normal url
         // add(new BookmarkablePageLink<Void>("refPageLink", ImageRefPage.class));

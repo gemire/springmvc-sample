@@ -2,7 +2,7 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.dhenton9000.wicket.panels;
+package com.dhenton9000.wicket.panels.crud;
 
 /**
  * Constellio, Open Source Enterprise Search Copyright (C) 2010 DocuLibre inc.
