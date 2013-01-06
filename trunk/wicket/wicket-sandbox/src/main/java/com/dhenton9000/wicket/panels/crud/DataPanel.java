@@ -2,7 +2,7 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.dhenton9000.wicket.panels;
+package com.dhenton9000.wicket.panels.crud;
 
 /**
  *
@@ -24,8 +24,10 @@ package com.dhenton9000.wicket.panels;
  * along with this distribution; if not, write to: Free Software Foundation,
  * Inc. 51 Franklin Street, Fifth Floor Boston, MA 02110-1301 USA
  */
+import com.dhenton9000.jpa.domain.Identifiable;
 import com.dhenton9000.wicket.components.sort.AutoHidePagingNavigator;
-import com.dhenton9000.wicket.components.sort.SortableListDataProvider;
+import com.dhenton9000.wicket.data.providers.GuiceSortableListDataProvider;
+import com.dhenton9000.wicket.models.GuiceEntityModel;
 import com.dhenton9000.wicket.models.SortableListModel;
 import java.util.Arrays;
 import java.util.List;
@@ -57,7 +59,13 @@ public abstract class DataPanel<T> extends AjaxPanel {
 
         SortableListModel<T> sortableListModel = getSortableListModel();
 
-        SortableDataProvider dataProvider = new SortableListDataProvider(sortableListModel);
+        SortableDataProvider dataProvider = new GuiceSortableListDataProvider(sortableListModel) {
+
+            @Override
+            protected GuiceEntityModel getEntityModel(Identifiable identifiable) {
+                throw new UnsupportedOperationException("Not supported yet.");
+            }
+        };
 
         List<?> list = Arrays.asList(columns.toArray(new IColumn[0]));
 

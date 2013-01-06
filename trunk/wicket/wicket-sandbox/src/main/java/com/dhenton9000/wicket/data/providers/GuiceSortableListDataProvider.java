@@ -44,6 +44,7 @@ import com.dhenton9000.wicket.models.GuiceEntityModel;
 import com.dhenton9000.wicket.models.SortableListModel;
 import com.dhenton9000.wicket.models.SortablePropertyListModel;
 import java.io.Serializable;
+import org.apache.wicket.model.Model;
 
 /**
  * 
@@ -51,19 +52,19 @@ import java.io.Serializable;
  * @author Vincent Dussault
  */
 @SuppressWarnings("serial")
-public class SortableListDataProvider extends SortableDataProvider {
+public abstract class GuiceSortableListDataProvider extends SortableDataProvider {
 
 	protected SortableListModel<? extends Object> listModel;
 	
 	@SuppressWarnings("unchecked")
-    public SortableListDataProvider(List<? extends Object> listModelObject) {
+    public GuiceSortableListDataProvider(List<? extends Object> listModelObject) {
 		this(new SortablePropertyListModel(listModelObject));
 	}
 
 	/**
 	 * 
 	 */
-	public SortableListDataProvider(SortableListModel<? extends Object> listModel) {
+	public GuiceSortableListDataProvider(SortableListModel<? extends Object> listModel) {
 		super();
 		this.listModel = listModel;
 	}
@@ -105,8 +106,10 @@ public class SortableListDataProvider extends SortableDataProvider {
 	public IModel model(Object object) {
 	    Object modelObject;
 	    if (object instanceof Identifiable) {
-	        modelObject = new GuiceEntityModel<Identifiable<Serializable>,
-                        Serializable>((Identifiable) object);
+//	        modelObject = new GuiceEntityModel<Identifiable<Serializable>,
+//                        Serializable>((Identifiable) object);
+                
+                modelObject = getEntityModel((Identifiable) object);
 	    } else {
 	        modelObject = object;
 	    }
@@ -156,5 +159,7 @@ public class SortableListDataProvider extends SortableDataProvider {
 	public void detach() {
 		listModel.detach();
 	}
+
+    protected abstract GuiceEntityModel  getEntityModel(Identifiable identifiable) ;
 
 }
