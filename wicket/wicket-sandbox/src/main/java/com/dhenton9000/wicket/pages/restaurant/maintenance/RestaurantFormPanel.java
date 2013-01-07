@@ -13,6 +13,7 @@ import org.apache.wicket.markup.html.form.Form;
 import org.apache.wicket.markup.html.form.TextField;
 import org.apache.wicket.markup.html.panel.Panel;
 import org.apache.wicket.model.IModel;
+import org.apache.wicket.model.Model;
 
 /**
  *
@@ -29,12 +30,14 @@ public final class RestaurantFormPanel extends Panel {
      * @param model
      * @param service
      */
-    public RestaurantFormPanel(String id, IModel model, IRestaurantDao service) {
+    public RestaurantFormPanel(String id, IModel model, final IRestaurantDao service) {
         super(id, model);
         Form<Restaurant> form = new Form<Restaurant>("restaurantForm", model) {
             @Override
             protected void onSubmit() {
                 // noop the standard submit process
+                Restaurant modelObject = getModelObject();
+                service.merge(modelObject);
             }
         };
         TextField zipCodeField = new TextField("zipCode");
@@ -49,7 +52,7 @@ public final class RestaurantFormPanel extends Panel {
         form.add(stateField);
         Label idLabel = new Label("id");
         form.add(idLabel);
-        form.add(new Button("submitButton"));
+        form.add(new Button("submitButton",new Model("Save Edits")));
         add(form);
     }
 

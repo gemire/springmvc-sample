@@ -34,6 +34,8 @@ public final class PickRestaurantPanel extends Panel {
 
     /**
      * The model is a Restaurant object
+     * may have to change to the model as the MaintainRestaurant Page
+     * so you can set state to EDIT when an item is clicked
      */
     public PickRestaurantPanel(String id, IModel model,IRestaurantDao service) {
         super(id,model);
@@ -103,6 +105,7 @@ public final class PickRestaurantPanel extends Panel {
     }
 
     ////////////////////////////////
+    
     private class PickActionPanel extends Panel {
 
         ////////////////////////////////////////////////////////
