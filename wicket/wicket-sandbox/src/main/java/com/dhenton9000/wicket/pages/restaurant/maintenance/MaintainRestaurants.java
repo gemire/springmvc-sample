@@ -38,10 +38,11 @@ import org.slf4j.LoggerFactory;
 public final class MaintainRestaurants extends TemplatePage {
 
     private final Logger logger = LoggerFactory.getLogger(MaintainRestaurants.class);
-    private Form<Restaurant> pickRestaurantForm;
     private Restaurant selectedRestaurant = new Restaurant();
     @Inject
     private IRestaurantDao service;
+    private PickRestaurantPanel pickPanel = null;
+    private RestaurantFormPanel restaurantFormPanel = null;
 
     public MaintainRestaurants() {
         super();
@@ -55,17 +56,18 @@ public final class MaintainRestaurants extends TemplatePage {
     private void setup() {
         setPageTitle(getClass().getSimpleName());
 
-        pickRestaurantForm = new Form<Restaurant>("pickRestaurantForm");
-        add(pickRestaurantForm);
-        add(new Label("selectedRestaurant", new PropertyModel(MaintainRestaurants.this, "selectedRestaurant.name")));
-        pickRestaurantForm.add(new FeedbackPanel("feedbackForPickRestaurant"));
-        RefreshingView<Restaurant> refreshingView = new PickRestaurantFormView("pickRestaurantFormView");
-        refreshingView.setItemReuseStrategy(ReuseIfModelsEqualStrategy.getInstance());
-        pickRestaurantForm.add(refreshingView);
+        PropertyModel mLabel = new PropertyModel(MaintainRestaurants.this, "selectedRestaurant.name");
+        add(new Label("selectedRestaurant", mLabel));
+        PropertyModel selectedRestaurantModel =
+                new PropertyModel(MaintainRestaurants.this, "selectedRestaurant");
+        pickPanel = new PickRestaurantPanel("pickPanel", selectedRestaurantModel, service);
+        add(pickPanel);
+        CompoundPropertyModel formModel = new CompoundPropertyModel(
+                selectedRestaurantModel);
+        restaurantFormPanel = new RestaurantFormPanel("restaurantFormPanel", formModel, service);
+        add(restaurantFormPanel);
 
     }
-
-    
 
     /**
      * @return the service
@@ -86,62 +88,5 @@ public final class MaintainRestaurants extends TemplatePage {
      */
     public void setSelectedRestaurant(Restaurant selectedRestaurant) {
         this.selectedRestaurant = selectedRestaurant;
-    }
-
-    //////////////////////////////
-    class PickRestaurantFormView extends RefreshingView<Restaurant> {
-
-        public PickRestaurantFormView(String id) {
-            super(id);
-        }
-
-        public PickRestaurantFormView(String id, IModel<?> model) {
-            super(id, model);
-        }
-
-        @Override
-        protected Iterator<IModel<Restaurant>> getItemModels() {
-            Iterator<Restaurant> rIter =
-                    service.getAllRestaurants().iterator();
-
-
-            return new ModelIteratorAdapter<Restaurant>(rIter) {
-                @Override
-                protected IModel<Restaurant> model(Restaurant object) {
-                    return new CompoundPropertyModel<Restaurant>(
-                            new RestaurantReloadableEntityModel(object));
-                }
-            };
-
-
-
-        }
-
-        @Override
-        protected void populateItem(Item<Restaurant> item) {
-
-
-            IModel<Restaurant> restaurant = item.getModel();
-            item.add(new PickActionPanel("pickAction", restaurant));
-
-        }
-    }
-
-    private class PickActionPanel extends Panel {
-
-        ////////////////////////////////////////////////////////
-        public PickActionPanel(String id, IModel<Restaurant> model) {
-            super(id, model);
-            final Restaurant r = (Restaurant) PickActionPanel.this.getDefaultModelObject();
-            Link select = new Link("select") {
-                @Override
-                public void onClick() {
-                    setSelectedRestaurant(r);
-                }
-            };
-            PickActionPanel.this.add(select);
-            select.add(new Label("linkText", new Model(r.getName())));
-
-        }
     }
 }
