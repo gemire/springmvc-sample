@@ -63,7 +63,7 @@ public class GuiceGenericDaoImpl<E extends Identifiable<PK>, PK extends Serializ
     /**
      * {@inheritDoc}
      */
-    @Transactional
+    //@Transactional
     public E get(E entity) {
         if (entity == null) {
             return null;
@@ -83,7 +83,7 @@ public class GuiceGenericDaoImpl<E extends Identifiable<PK>, PK extends Serializ
         return entityFound;
     }
 
-    @Transactional
+    //@Transactional
     @Override
     public E findById(Serializable id) {
         if (id == null) {
@@ -101,7 +101,7 @@ public class GuiceGenericDaoImpl<E extends Identifiable<PK>, PK extends Serializ
 
     
     @Override
-    @Transactional
+    //@Transactional
     public E merge(E entity)
     {
         logger.debug("begin save");
@@ -113,7 +113,7 @@ public class GuiceGenericDaoImpl<E extends Identifiable<PK>, PK extends Serializ
     
     
     @Override
-    @Transactional
+    //@Transactional
     public void save(E entity) {
         logger.debug("begin save");
         Validate.notNull(entity, "The entity to save cannot be null element");
@@ -123,7 +123,6 @@ public class GuiceGenericDaoImpl<E extends Identifiable<PK>, PK extends Serializ
             logger.debug("in auto generated for save");
             getEntityManager().persist(entity);
             logger.debug("persist of save completed");
-            getEntityManager().flush();
             return;
         }
 
@@ -138,7 +137,7 @@ public class GuiceGenericDaoImpl<E extends Identifiable<PK>, PK extends Serializ
     /**
      * {@inheritDoc}
      */
-    @Transactional
+    //@Transactional
     @Override
     public void refresh(E entity) {
         if (entityManager.contains(entity)) {
@@ -150,7 +149,7 @@ public class GuiceGenericDaoImpl<E extends Identifiable<PK>, PK extends Serializ
      * {@inheritDoc}
      */
     @SuppressWarnings("unchecked")
-    @Transactional
+    //@Transactional
     @Override
     public List<E> find(E entity, SearchTemplate parameterSample) {
         Validate.notNull(entity, "The passed entity cannot be null");
@@ -174,7 +173,7 @@ public class GuiceGenericDaoImpl<E extends Identifiable<PK>, PK extends Serializ
     /**
      * {@inheritDoc}
      */
-    @Transactional
+    //@Transactional
     @Override
     public int findCount(E entity, SearchTemplate searchTemplate) {
         Validate.notNull(entity, "The entity cannot be null");
@@ -300,7 +299,7 @@ public class GuiceGenericDaoImpl<E extends Identifiable<PK>, PK extends Serializ
     /**
      * {@inheritDoc}
      */
-    @Transactional
+    //@Transactional
     @Override
     public void save(Iterable<E> entities) {
         Validate.notNull(entities, "The entities to save cannot be null");
@@ -318,7 +317,7 @@ public class GuiceGenericDaoImpl<E extends Identifiable<PK>, PK extends Serializ
     /**
      * {@inheritDoc}
      */
-    @Transactional
+    //@Transactional
     @Override
     public void delete(E entity) {
         logger.debug("Begin Delete "+entity.getPrimaryKey());
@@ -333,8 +332,7 @@ public class GuiceGenericDaoImpl<E extends Identifiable<PK>, PK extends Serializ
 
             if (entityRef != null) {
                 getEntityManager().remove(entityRef);
-                getEntityManager().flush();
-            } else {
+             } else {
                 logger.warn("Attempt to delete an instance that is not present in the database: " + entity.toString());
             }
         }
@@ -343,7 +341,7 @@ public class GuiceGenericDaoImpl<E extends Identifiable<PK>, PK extends Serializ
     /**
      * {@inheritDoc}
      */
-    @Transactional
+    //@Transactional
     public void delete(Iterable<E> entities) {
         Validate.notNull(entities, "Cannot delete null collection");
         for (E entity : entities) {

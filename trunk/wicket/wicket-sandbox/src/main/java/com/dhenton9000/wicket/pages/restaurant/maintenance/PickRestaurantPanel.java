@@ -7,6 +7,7 @@ package com.dhenton9000.wicket.pages.restaurant.maintenance;
 import com.dhenton9000.jpa.entities.Restaurant;
 import com.dhenton9000.wicket.dao.IRestaurantDao;
 import com.dhenton9000.wicket.models.RestaurantReloadableEntityModel;
+import com.dhenton9000.wicket.service.IRestaurantService;
 import java.util.Iterator;
 import org.apache.wicket.markup.html.basic.Label;
 import org.apache.wicket.markup.html.form.Form;
@@ -29,7 +30,7 @@ import org.apache.wicket.model.PropertyModel;
 public final class PickRestaurantPanel extends Panel {
 
     private Form<Restaurant> pickRestaurantForm;
-    private IRestaurantDao service;
+    private IRestaurantService service;
     private Restaurant selectedRestaurant = null;
 
     /**
@@ -37,7 +38,7 @@ public final class PickRestaurantPanel extends Panel {
      * may have to change to the model as the MaintainRestaurant Page
      * so you can set state to EDIT when an item is clicked
      */
-    public PickRestaurantPanel(String id, IModel model,IRestaurantDao service) {
+    public PickRestaurantPanel(String id, IModel model,IRestaurantService service) {
         super(id,model);
         this.service = service;
         pickRestaurantForm = new Form<Restaurant>("pickRestaurantForm");

@@ -94,10 +94,17 @@ public class Application extends WebApplication {
 
         // getComponentInstantiationListeners().add(new GuiceComponentInjector(this));
 
-        Injector injector = (Injector) getServletContext().getAttribute(Injector.class.getName());
-        getComponentInstantiationListeners().add(new GuiceComponentInjector(this, injector));
-        // start the JPA session thing
-        injector.getInstance(JPAServiceStarter.class);
+//        Injector injector = (Injector) getServletContext().getAttribute(Injector.class.getName());
+//        getComponentInstantiationListeners().add(new GuiceComponentInjector(this, injector));
+//        // start the JPA session thing
+//        injector.getInstance(JPAServiceStarter.class);
+//        
+    
+        getComponentInstantiationListeners().add(new GuiceComponentInjector(this,
+                new MyServletModule()));
+     
+        
+        
     }
 
     @Override
