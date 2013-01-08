@@ -50,7 +50,7 @@ public final class MaintainApplications extends TemplatePage {
 
     @SpringBean
     private IApplicationsService applicationsService;
-    
+    @SpringBean
     private IGroupsDao groupsService;
     private EditForm editForm;
     private List<Groups> allGroups = new ArrayList<Groups>();
