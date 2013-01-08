@@ -4,9 +4,9 @@
  */
 package com.dhenton9000.wicket.models;
 
+import com.dhenton9000.jpa.dao.hibernate.HibernateGenericDaoImpl;
 import com.dhenton9000.jpa.dao.support.GenericDao;
 import com.dhenton9000.jpa.domain.Identifiable;
-import com.dhenton9000.wicket.dao.impl.GuiceGenericDaoImpl;
 import java.io.Serializable;
 import org.apache.wicket.model.IModel;
 
@@ -14,18 +14,18 @@ import org.apache.wicket.model.IModel;
  *
  * @author dhenton
  */
-public class GuiceReloadableEntityModel<T extends Identifiable<PK>, PK extends Serializable>
+public class HibernateReloadableEntityModel<T extends Identifiable<PK>, PK extends Serializable>
         extends ReloadableEntityModel {
 
-    public GuiceReloadableEntityModel(Class entityClass, Long id) {
+    public HibernateReloadableEntityModel(Class entityClass, Long id) {
         super(entityClass, id);
     }
 
-    public GuiceReloadableEntityModel(Identifiable entity) {
+    public HibernateReloadableEntityModel(Identifiable entity) {
         super(entity);
     }
 
-    public GuiceReloadableEntityModel(IModel entityModel) {
+    public HibernateReloadableEntityModel(IModel entityModel) {
         super(entityModel);
     }
 
@@ -35,7 +35,7 @@ public class GuiceReloadableEntityModel<T extends Identifiable<PK>, PK extends S
     @Override
      public GenericDao getDao()
      {
-         GenericDao<T, PK> crudServices = new GuiceGenericDaoImpl<T, PK>(getEntityClass());
+         GenericDao<T, PK> crudServices = new HibernateGenericDaoImpl<T, PK>(getEntityClass());
          return crudServices;
      }
     

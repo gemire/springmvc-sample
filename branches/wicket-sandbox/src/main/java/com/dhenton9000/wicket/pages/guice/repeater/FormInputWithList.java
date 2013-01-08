@@ -10,7 +10,6 @@ import com.dhenton9000.wicket.dao.IRestaurantDao;
 import com.dhenton9000.wicket.models.RestaurantReloadableEntityModel;
 import com.dhenton9000.wicket.pages.TemplatePage;
 import com.dhenton9000.wicket.pages.panels.ActionPanel;
-import com.google.inject.Inject;
 import java.util.Iterator;
 import org.apache.wicket.markup.html.basic.Label;
 import org.apache.wicket.markup.html.form.Form;
@@ -35,7 +34,7 @@ public final class FormInputWithList extends TemplatePage {
 
     private final Logger logger = LoggerFactory.getLogger(FormInputWithList.class);
     private Form<Restaurant> form;
-    @Inject
+  
     private IRestaurantDao service;
 
     public FormInputWithList() {

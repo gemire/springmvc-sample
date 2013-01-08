@@ -24,7 +24,7 @@ public class RestaurantTests extends BaseTest {
     
     @Before
     public void before() {
-        service = getInjector().getInstance(IRestaurantDao.class);
+         
     }
 
     @Test

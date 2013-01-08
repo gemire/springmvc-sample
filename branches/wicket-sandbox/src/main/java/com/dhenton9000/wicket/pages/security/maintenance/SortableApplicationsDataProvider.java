@@ -6,7 +6,6 @@ package com.dhenton9000.wicket.pages.security.maintenance;
 
 import com.dhenton9000.jpa.entities.Applications;
 import com.dhenton9000.wicket.dao.IApplicationsDao;
-import com.google.inject.Inject;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.Iterator;

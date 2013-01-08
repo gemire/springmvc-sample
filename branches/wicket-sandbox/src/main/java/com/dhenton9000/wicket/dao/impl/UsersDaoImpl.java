@@ -4,12 +4,11 @@
  */
 package com.dhenton9000.wicket.dao.impl;
 
+import com.dhenton9000.jpa.dao.hibernate.HibernateGenericDaoImpl;
 import com.dhenton9000.jpa.dao.support.SearchTemplate;
-import com.dhenton9000.jpa.entities.Applications;
 import com.dhenton9000.jpa.entities.Groups;
 import com.dhenton9000.jpa.entities.Users;
 import com.dhenton9000.wicket.dao.IUsersDao;
-import com.google.inject.Singleton;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
@@ -21,9 +20,9 @@ import org.slf4j.LoggerFactory;
  *
  * @author dhenton
  */
-@Singleton
+
 public class UsersDaoImpl
-        extends GuiceGenericDaoImpl<Users, String>
+        extends HibernateGenericDaoImpl<Users, String>
         implements IUsersDao {
 
     private final static Logger logger = LoggerFactory.getLogger(UsersDaoImpl.class);

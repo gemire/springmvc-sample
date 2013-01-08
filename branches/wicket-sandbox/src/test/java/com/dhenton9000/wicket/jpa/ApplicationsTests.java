@@ -27,7 +27,7 @@ public class ApplicationsTests extends BaseTest {
  
     @Before
     public void beforeTest() {
-        service = getInjector().getInstance(IApplicationsDao.class);
+        
     }
 
     @Test

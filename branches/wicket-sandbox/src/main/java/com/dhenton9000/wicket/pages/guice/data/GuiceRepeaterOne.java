@@ -7,7 +7,6 @@ package com.dhenton9000.wicket.pages.guice.data;
 import com.dhenton9000.jpa.entities.Applications;
 import com.dhenton9000.wicket.pages.TemplatePage;
 import com.dhenton9000.wicket.dao.IApplicationsDao;
-import com.google.inject.Inject;
 import java.util.List;
 import org.apache.wicket.markup.html.basic.Label;
 import org.apache.wicket.markup.html.form.ChoiceRenderer;
@@ -23,7 +22,7 @@ import org.apache.wicket.model.PropertyModel;
  */
 public final class GuiceRepeaterOne extends TemplatePage {
 
-    @Inject
+ 
     private IApplicationsDao service;
     private List<Applications> applications;
 

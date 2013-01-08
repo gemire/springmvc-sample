@@ -14,7 +14,7 @@ import com.dhenton9000.wicket.dao.impl.ApplicationsDaoImpl;
  * @author dhenton
  */
 public class ApplicationsReloadableEntityModel
-        extends GuiceReloadableEntityModel<Applications, Integer> {
+        extends HibernateReloadableEntityModel<Applications, Integer> {
 
     public ApplicationsReloadableEntityModel(Applications entity) {
         super(entity);

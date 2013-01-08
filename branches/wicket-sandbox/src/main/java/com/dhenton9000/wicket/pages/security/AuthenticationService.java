@@ -5,13 +5,13 @@
 package com.dhenton9000.wicket.pages.security;
 
 import com.dhenton9000.jpa.entities.Users;
-import com.google.inject.ImplementedBy;
+ 
 
 /**
  *
  * @author dhenton
  */
-@ImplementedBy(AuthenticationServiceImpl.class)
+ 
 public interface AuthenticationService {
     
     /**

@@ -9,7 +9,6 @@ import com.dhenton9000.jpa.entities.Groups;
 import com.dhenton9000.wicket.dao.IApplicationsDao;
 import com.dhenton9000.wicket.dao.IGroupsDao;
 import com.dhenton9000.wicket.pages.TemplatePage;
-import com.google.inject.Inject;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Iterator;
@@ -47,9 +46,9 @@ import org.slf4j.LoggerFactory;
  */
 public final class MaintainApplications extends TemplatePage {
 
-    @Inject
+    
     private IApplicationsDao applicationsService;
-    @Inject
+    
     private IGroupsDao groupsService;
     private EditForm editForm;
     private List<Groups> allGroups = new ArrayList<Groups>();

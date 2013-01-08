@@ -6,7 +6,6 @@ package com.dhenton9000.wicket.pages.security;
 
 import com.dhenton9000.jpa.entities.Users;
 import com.dhenton9000.wicket.dao.IUsersDao;
-import com.google.inject.Inject;
 import java.io.Serializable;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -17,7 +16,7 @@ import org.slf4j.LoggerFactory;
  */
 public class AuthenticationServiceImpl implements AuthenticationService, Serializable {
 
-    @Inject
+     
     private IUsersDao usersService;
     private final static transient Logger logger = LoggerFactory.getLogger(AuthenticationServiceImpl.class);
 

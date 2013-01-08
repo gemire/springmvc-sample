@@ -26,7 +26,6 @@ package com.dhenton9000.wicket.pages.security;
  */
 import com.dhenton9000.jpa.entities.Users;
 import com.dhenton9000.wicket.pages.TemplatePage;
-import com.google.inject.Inject;
 import org.apache.wicket.markup.html.form.Form;
 import org.apache.wicket.markup.html.form.PasswordTextField;
 import org.apache.wicket.markup.html.form.TextField;
@@ -46,7 +45,7 @@ import org.slf4j.LoggerFactory;
 public final class SignIn extends TemplatePage {
 
     
-    @Inject
+    
     private AuthenticationService authService ;
      private final static transient Logger logger = LoggerFactory.getLogger(SignIn.class);
     /**

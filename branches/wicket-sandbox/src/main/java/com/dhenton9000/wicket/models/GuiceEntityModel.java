@@ -40,11 +40,11 @@ public class GuiceEntityModel<T extends Identifiable<PK>, PK extends Serializabl
 
     public GuiceEntityModel(IModel entityModel) {
         super();
-        this.reloadableEntityModel = new GuiceReloadableEntityModel<T, PK>(entityModel);
+        this.reloadableEntityModel = new HibernateReloadableEntityModel<T, PK>(entityModel);
     }
 
     public GuiceEntityModel(T entity) {
-        this(new GuiceReloadableEntityModel<T, PK>(entity));
+        this(new HibernateReloadableEntityModel<T, PK>(entity));
     }
 
     @Override
@@ -62,10 +62,10 @@ public class GuiceEntityModel<T extends Identifiable<PK>, PK extends Serializabl
                 if (reloadableEntityModel.getObject() == null
                         || !reloadableEntityModel.getObject().equals(myEntity)) {
                     reloadableEntityModel.detach();
-                    reloadableEntityModel = new GuiceReloadableEntityModel<T, PK>((T) myEntity);
+                    reloadableEntityModel = new HibernateReloadableEntityModel<T, PK>((T) myEntity);
                 }
             } else {
-                reloadableEntityModel = new GuiceReloadableEntityModel<T, PK>((T) myEntity);
+                reloadableEntityModel = new HibernateReloadableEntityModel<T, PK>((T) myEntity);
             }
         } else if (reloadableEntityModel != null) {
             reloadableEntityModel.detach();

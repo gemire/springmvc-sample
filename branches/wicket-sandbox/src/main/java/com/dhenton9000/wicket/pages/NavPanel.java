@@ -4,26 +4,16 @@
  */
 package com.dhenton9000.wicket.pages;
 
-import com.dhenton9000.wicket.pages.Page2;
-import com.dhenton9000.wicket.pages.Page1;
-import com.dhenton9000.wicket.pages.HomePage;
-import com.dhenton9000.wicket.pages.TemplatePanel;
-import com.dhenton9000.wicket.pages.guice.GuicePage;
 import com.dhenton9000.wicket.pages.guice.data.ApplicationsUsers;
-import com.dhenton9000.wicket.pages.guice.data.GuiceRepeaterOne;
 import com.dhenton9000.wicket.pages.guice.repeater.SimpleListViewRepeater;
 import com.dhenton9000.wicket.pages.form.sample.CompoundUserPage;
 import com.dhenton9000.wicket.pages.form.sample.UserPage;
 import com.dhenton9000.wicket.pages.guice.repeater.FormInputWithList;
 import com.dhenton9000.wicket.pages.modal.ModalInputPage;
-import com.dhenton9000.wicket.pages.panels.SamplePanel;
 import com.dhenton9000.wicket.pages.panels.SamplePanelPage;
-import com.dhenton9000.wicket.pages.refs.ImageRefPage;
 import com.dhenton9000.wicket.pages.restaurant.maintenance.MaintainRestaurants;
-import com.dhenton9000.wicket.pages.security.SignIn;
 import com.dhenton9000.wicket.pages.security.maintenance.MaintainApplications;
 import org.apache.wicket.markup.html.link.BookmarkablePageLink;
-import org.apache.wicket.markup.html.link.ExternalLink;
 import org.apache.wicket.model.IModel;
 
 /**
@@ -59,8 +49,6 @@ public final class NavPanel extends TemplatePanel {
         add(new BookmarkablePageLink<Void>("homeLink", HomePage.class));
         add(new BookmarkablePageLink<Void>("userFormLink", UserPage.class));
         add(new BookmarkablePageLink<Void>("compoundFormLink", CompoundUserPage.class));
-        add(new BookmarkablePageLink<Void>("guicePageLink", GuicePage.class));
-        add(new BookmarkablePageLink<Void>("guiceRepeaterOnePageLink", GuiceRepeaterOne.class));
         add(new BookmarkablePageLink<Void>("applicationsUsersLink", ApplicationsUsers.class));
         add(new BookmarkablePageLink<Void>("simpleListViewRepeaterLink", SimpleListViewRepeater.class));
         add(new BookmarkablePageLink<Void>("maintainApplicationsLink", MaintainApplications.class));

@@ -4,12 +4,12 @@
  */
 package com.dhenton9000.wicket.dao.impl;
 
+import com.dhenton9000.jpa.dao.hibernate.HibernateGenericDaoImpl;
 import com.dhenton9000.jpa.dao.support.SearchTemplate;
 import com.dhenton9000.jpa.entities.Applications;
 import com.dhenton9000.jpa.entities.Groups;
 import com.dhenton9000.jpa.entities.Users;
 import com.dhenton9000.wicket.dao.IApplicationsDao;
-import com.google.inject.Singleton;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
@@ -21,9 +21,9 @@ import org.slf4j.LoggerFactory;
  *
  * @author dhenton
  */
-@Singleton
+
 public class ApplicationsDaoImpl
-        extends GuiceGenericDaoImpl<Applications, Integer>
+        extends HibernateGenericDaoImpl<Applications, Integer>
         implements IApplicationsDao {
 
     private final static Logger logger = LoggerFactory.getLogger(ApplicationsDaoImpl.class);
@@ -35,7 +35,7 @@ public class ApplicationsDaoImpl
     @Override
     public List<Applications> getAllApplications() {
 
-
+        
         SearchTemplate t = new SearchTemplate();
         t.setNamedQuery("Applications.findAll");
         // the applications object is a dummy to hold parameters 

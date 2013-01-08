@@ -5,19 +5,19 @@
  */
 package com.dhenton9000.wicket.pages;
 
-import com.dhenton9000.wicket.jpa.JPAServiceStarter;
+
 import com.dhenton9000.wicket.pages.refs.ImageRefPage;
 import com.dhenton9000.wicket.pages.refs.ImageResourceReference;
 import com.dhenton9000.wicket.pages.security.AuthenticatedWebPage;
 import com.dhenton9000.wicket.pages.security.SandboxSession;
 import com.dhenton9000.wicket.pages.security.SignIn;
-import com.google.inject.Injector;
+
 import org.apache.wicket.Component;
 import org.apache.wicket.RestartResponseAtInterceptPageException;
 import org.apache.wicket.Session;
 import org.apache.wicket.authorization.Action;
 import org.apache.wicket.authorization.IAuthorizationStrategy;
-import org.apache.wicket.guice.GuiceComponentInjector;
+
 import org.apache.wicket.protocol.http.WebApplication;
 import org.apache.wicket.request.Request;
 import org.apache.wicket.request.Response;
@@ -35,6 +35,8 @@ public class Application extends WebApplication {
     private final Logger logger = LoggerFactory.getLogger(Application.class);
 
     public Application() {
+         
+
     }
 
     @Override
@@ -90,14 +92,7 @@ public class Application extends WebApplication {
             }
         });
 
-        ///////////////////
-
-        // getComponentInstantiationListeners().add(new GuiceComponentInjector(this));
-
-        Injector injector = (Injector) getServletContext().getAttribute(Injector.class.getName());
-        getComponentInstantiationListeners().add(new GuiceComponentInjector(this, injector));
-        // start the JPA session thing
-        injector.getInstance(JPAServiceStarter.class);
+    
     }
 
     @Override

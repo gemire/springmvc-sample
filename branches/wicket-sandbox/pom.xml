@@ -126,23 +126,12 @@
     
     
     <dependencies>
-        
-        <dependency>
-            <groupId>com.google.inject.extensions</groupId>
-            <artifactId>guice-servlet</artifactId>
-            <version>3.0</version>
+         <dependency>
+            <groupId>com.dhenton9000</groupId>
+            <artifactId>GenericJPA</artifactId>
+            <version>1.0-SNAPSHOT</version>
         </dependency>
         
-        <dependency>
-            <groupId>com.google.inject</groupId>
-            <artifactId>guice</artifactId>
-            <version>3.0</version>
-        </dependency>
-        <dependency>
-            <groupId>com.google.inject.extensions</groupId>
-            <artifactId>guice-persist</artifactId>
-            <version>3.0</version>
-        </dependency>
         <dependency>
             <groupId>org.apache.wicket</groupId>
             <artifactId>wicket-core</artifactId>
@@ -214,20 +203,9 @@
                 </exclusion>
             </exclusions>
         </dependency>
-        <dependency>
-            <groupId>org.apache.wicket</groupId>
-            <artifactId>wicket-guice</artifactId>
-            <version>6.0.0</version>
-            <type>jar</type>
-        </dependency>
-        <!--
-        <dependency>
-            <groupId>com.dhenton9000</groupId>
-            <artifactId>GenericJPA</artifactId>
-            <version>1.0-SNAPSHOT</version>
-            <type>jar</type>
-        </dependency>
-        -->
+        
+        
+        
         <!--
         <dependency>
             <groupId>javax.persistence</groupId>

@@ -4,17 +4,11 @@
  */
 package com.dhenton9000.wicket.dao.impl;
 
+import com.dhenton9000.jpa.dao.hibernate.HibernateGenericDaoImpl;
 import com.dhenton9000.jpa.dao.support.SearchTemplate;
-import com.dhenton9000.jpa.entities.Applications;
 import com.dhenton9000.jpa.entities.Groups;
-import com.dhenton9000.jpa.entities.Users;
-import com.dhenton9000.wicket.dao.IApplicationsDao;
 import com.dhenton9000.wicket.dao.IGroupsDao;
-import com.google.inject.Singleton;
-import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
-import javax.persistence.Query;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -22,9 +16,9 @@ import org.slf4j.LoggerFactory;
  *
  * @author dhenton
  */
-@Singleton
+
 public class GroupsDaoImpl
-        extends GuiceGenericDaoImpl<Groups, Integer>
+        extends HibernateGenericDaoImpl<Groups, Integer>
         implements IGroupsDao {
 
     private final static Logger logger = LoggerFactory.getLogger(GroupsDaoImpl.class);

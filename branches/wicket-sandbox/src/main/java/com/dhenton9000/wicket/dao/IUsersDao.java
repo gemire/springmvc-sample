@@ -7,13 +7,13 @@ package com.dhenton9000.wicket.dao;
 import com.dhenton9000.jpa.dao.support.GenericDao;
 import com.dhenton9000.jpa.entities.Users;
 import com.dhenton9000.wicket.dao.impl.UsersDaoImpl;
-import com.google.inject.ImplementedBy;
+
 
 /**
  *
  * @author dhenton
  */
-@ImplementedBy(UsersDaoImpl.class)
+
 public interface IUsersDao extends GenericDao<Users, String> {
     
     public Users getUserById(String userid);

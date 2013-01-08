@@ -8,7 +8,6 @@ import com.dhenton9000.jpa.dao.support.GenericDao;
 import com.dhenton9000.jpa.entities.Applications;
 import com.dhenton9000.jpa.entities.Restaurant;
 import com.dhenton9000.wicket.dao.impl.RestaurantDaoImpl;
-import com.google.inject.ImplementedBy;
 import java.util.List;
  
 
@@ -16,7 +15,7 @@ import java.util.List;
  *
  * @author dhenton
  */
-@ImplementedBy(RestaurantDaoImpl.class)
+
 public interface IRestaurantDao extends GenericDao<Restaurant, Integer>{
 
    List<Restaurant> getAllRestaurants();
