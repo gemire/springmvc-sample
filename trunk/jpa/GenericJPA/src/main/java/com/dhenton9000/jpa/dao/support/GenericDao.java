@@ -98,7 +98,7 @@ public interface GenericDao<E extends Identifiable<PK>, PK extends Serializable>
      * @param key
      * @return 
      */
-    E findById(Serializable key);
+    E findById(PK key);
     
     
     /**
