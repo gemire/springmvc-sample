@@ -7,7 +7,6 @@ package com.dhenton9000.wicket.pages.restaurant.maintenance;
 import com.dhenton9000.jpa.entities.Restaurant;
 import com.dhenton9000.wicket.dao.IRestaurantDao;
 import com.dhenton9000.wicket.pages.modal.ModalInputPage;
-import com.dhenton9000.wicket.service.IRestaurantService;
 import org.apache.wicket.markup.html.basic.Label;
 import org.apache.wicket.markup.html.form.Button;
 import org.apache.wicket.markup.html.form.Form;
@@ -22,7 +21,7 @@ import org.apache.wicket.model.Model;
  */
 public final class RestaurantFormPanel extends Panel {
 
-    private IRestaurantService service;
+    private IRestaurantDao service;
 
     /**
      * the model is a compound property model around a property model
@@ -31,7 +30,7 @@ public final class RestaurantFormPanel extends Panel {
      * @param model
      * @param service
      */
-    public RestaurantFormPanel(String id, IModel model, final IRestaurantService service) {
+    public RestaurantFormPanel(String id, IModel model, final IRestaurantDao service) {
         super(id, model);
         Form<Restaurant> form = new Form<Restaurant>("restaurantForm", model) {
             @Override
@@ -60,7 +59,7 @@ public final class RestaurantFormPanel extends Panel {
     /**
      * @return the service
      */
-    public IRestaurantService getService() {
+    public IRestaurantDao getService() {
         return service;
     }
 }

@@ -14,7 +14,6 @@
         <hibernate.version>3.5.5-Final</hibernate.version>
         <hibernate-validator.version>4.1.0.Final</hibernate-validator.version>
         <wicket.version>6.0.0</wicket.version>
-        <guice.version>3.0</guice.version>
     </properties>
     
     <build>
@@ -131,18 +130,18 @@
         <dependency>
             <groupId>com.google.inject.extensions</groupId>
             <artifactId>guice-servlet</artifactId>
-            <version>${guice.version}</version>
+            <version>3.0</version>
         </dependency>
         
         <dependency>
             <groupId>com.google.inject</groupId>
             <artifactId>guice</artifactId>
-            <version>${guice.version}</version>
+            <version>3.0</version>
         </dependency>
         <dependency>
             <groupId>com.google.inject.extensions</groupId>
             <artifactId>guice-persist</artifactId>
-            <version>${guice.version}</version>
+            <version>3.0</version>
         </dependency>
         <dependency>
             <groupId>org.apache.wicket</groupId>
