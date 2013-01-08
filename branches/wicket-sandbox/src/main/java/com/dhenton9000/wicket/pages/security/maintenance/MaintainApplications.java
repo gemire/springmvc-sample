@@ -37,9 +37,10 @@ import org.apache.wicket.model.IModel;
 import org.apache.wicket.model.Model;
 import org.apache.wicket.model.PropertyModel;
 import org.apache.wicket.request.mapper.parameter.PageParameters;
+import org.apache.wicket.spring.injection.annot.SpringBean;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
+ 
 
 /**
  *
@@ -47,7 +48,7 @@ import org.springframework.beans.factory.annotation.Autowired;
  */
 public final class MaintainApplications extends TemplatePage {
 
-    @Autowired
+    @SpringBean
     private IApplicationsService applicationsService;
     
     private IGroupsDao groupsService;

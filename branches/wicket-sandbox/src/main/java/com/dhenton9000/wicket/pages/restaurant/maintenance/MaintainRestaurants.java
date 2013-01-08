@@ -16,6 +16,7 @@ import org.apache.wicket.model.CompoundPropertyModel;
 import org.apache.wicket.model.Model;
 import org.apache.wicket.model.PropertyModel;
 import org.apache.wicket.request.mapper.parameter.PageParameters;
+import org.apache.wicket.spring.injection.annot.SpringBean;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -27,6 +28,7 @@ public final class MaintainRestaurants extends TemplatePage {
 
     private final Logger logger = LoggerFactory.getLogger(MaintainRestaurants.class);
     private Restaurant selectedRestaurant = new Restaurant();
+    @SpringBean
     private IRestaurantDao service;
     private PickRestaurantPanel pickPanel = null;
     private RestaurantFormPanel restaurantFormPanel = null;

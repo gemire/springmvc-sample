@@ -21,6 +21,7 @@ import org.apache.wicket.model.CompoundPropertyModel;
 import org.apache.wicket.model.IModel;
 import org.apache.wicket.model.StringResourceModel;
 import org.apache.wicket.request.mapper.parameter.PageParameters;
+import org.apache.wicket.spring.injection.annot.SpringBean;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -33,6 +34,7 @@ public final class FormInputWithList extends TemplatePage {
     private final Logger logger = LoggerFactory.getLogger(FormInputWithList.class);
     private Form<Restaurant> form;
   
+    @SpringBean
     private IRestaurantDao service;
 
     public FormInputWithList() {
