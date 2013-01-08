@@ -7,3 +7,6 @@ the web.xml file is wide open on the filter mapping
 references:
 
 https://cwiki.apache.org/WICKET/reference-library.html
+
+The db scripts are for derby, as these projects are generally
+run in netbeans
