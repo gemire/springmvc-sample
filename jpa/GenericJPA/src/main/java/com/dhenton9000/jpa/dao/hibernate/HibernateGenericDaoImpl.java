@@ -75,7 +75,7 @@ public  class HibernateGenericDaoImpl<E extends Identifiable<PK>, PK extends Ser
     }
     
     @Override
-    public E findById(Serializable key) {
+    public E findById(PK key) {
          return getEntityManager().find(type, key);
     }
     
