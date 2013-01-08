@@ -73,6 +73,13 @@ public  class HibernateGenericDaoImpl<E extends Identifiable<PK>, PK extends Ser
 
         return entityFound;
     }
+    
+    @Override
+    public E findById(Serializable key) {
+         return getEntityManager().find(type, key);
+    }
+    
+    
 
     @Override
     @Transactional
@@ -400,4 +407,6 @@ public  class HibernateGenericDaoImpl<E extends Identifiable<PK>, PK extends Ser
     public String getCacheRegion() {
         return cacheRegion;
     }
+
+  
 }
