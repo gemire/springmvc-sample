@@ -8,6 +8,7 @@ import com.dhenton9000.jpa.entities.Restaurant;
 import com.dhenton9000.wicket.dao.IRestaurantDao;
 import com.dhenton9000.wicket.models.RestaurantReloadableEntityModel;
 import java.util.Iterator;
+import org.apache.wicket.MarkupContainer;
 import org.apache.wicket.markup.html.basic.Label;
 import org.apache.wicket.markup.html.form.Form;
 import org.apache.wicket.markup.html.link.Link;
@@ -33,12 +34,12 @@ public final class PickRestaurantPanel extends Panel {
     private Restaurant selectedRestaurant = null;
 
     /**
-     * The model is a Restaurant object
-     * may have to change to the model as the MaintainRestaurant Page
-     * so you can set state to EDIT when an item is clicked
+     * The model is a Restaurant object may have to change to the model as the
+     * MaintainRestaurant Page so you can set state to EDIT when an item is
+     * clicked
      */
-    public PickRestaurantPanel(String id, IModel model,IRestaurantDao service) {
-        super(id,model);
+    public PickRestaurantPanel(String id, IModel model, IRestaurantDao service) {
+        super(id, model);
         this.service = service;
         pickRestaurantForm = new Form<Restaurant>("pickRestaurantForm");
         add(pickRestaurantForm);
@@ -46,6 +47,7 @@ public final class PickRestaurantPanel extends Panel {
         RefreshingView<Restaurant> refreshingView = new PickRestaurantFormView("pickRestaurantFormView");
         refreshingView.setItemReuseStrategy(ReuseIfModelsEqualStrategy.getInstance());
         pickRestaurantForm.add(refreshingView);
+
 
 
     }
@@ -63,6 +65,13 @@ public final class PickRestaurantPanel extends Panel {
     public void setSelectedRestaurant(Restaurant selectedRestaurant) {
         this.selectedRestaurant = selectedRestaurant;
         this.setDefaultModelObject(selectedRestaurant);
+    }
+
+    /**
+     * @return the containingPage
+     */
+    public MaintainRestaurants getContainingPage() {
+        return (MaintainRestaurants) getParent();
     }
 
     //////////////////////////////
@@ -105,7 +114,6 @@ public final class PickRestaurantPanel extends Panel {
     }
 
     ////////////////////////////////
-    
     private class PickActionPanel extends Panel {
 
         ////////////////////////////////////////////////////////
@@ -115,6 +123,7 @@ public final class PickRestaurantPanel extends Panel {
             Link select = new Link("select") {
                 @Override
                 public void onClick() {
+                    getContainingPage().performStateOperation(MaintainRestaurants.STATE.EDIT);
                     setSelectedRestaurant(r);
                 }
             };

@@ -66,24 +66,44 @@ public final class MaintainRestaurants extends TemplatePage {
         logger.debug("operation called with " + t);
 
         switch (t) {
+            
             case ADD:
-
+                setState(STATE.ADD);
+                selectedRestaurant = new Restaurant();
                 break;
             case DELETE:
                 if (selectedRestaurant != null) {
                     service.delete(selectedRestaurant);
+                    setState(STATE.INITIAL);
+                    selectedRestaurant = new Restaurant();
                 }
                 break;
+            case EDIT:
+                setState(STATE.EDIT);
+                break;
+            case INITIAL:
+                setState(STATE.INITIAL);
+                selectedRestaurant = new Restaurant();
+                //restaurantFormPanel.resetMainForm();
+                break;
         }
-        setState(t);
-        selectedRestaurant = new Restaurant();
 
+
+
+    }
+
+    public String getSelectedRestaurantDisplay() {
+        String t = getSelectedRestaurant().getName();
+        if (t == null) {
+            t = "";
+        }
+        return t + " [" + getState() + "]";
     }
 
     private void setup() {
         setPageTitle(getClass().getSimpleName());
 
-        PropertyModel mLabel = new PropertyModel(MaintainRestaurants.this, "selectedRestaurant.name");
+        PropertyModel mLabel = new PropertyModel(MaintainRestaurants.this, "selectedRestaurantDisplay");
         add(new Label("selectedRestaurant", mLabel));
         PropertyModel selectedRestaurantModel =
                 new PropertyModel(MaintainRestaurants.this, "selectedRestaurant");
@@ -93,9 +113,7 @@ public final class MaintainRestaurants extends TemplatePage {
                 selectedRestaurantModel);
         restaurantFormPanel = new RestaurantFormPanel("restaurantFormPanel", formModel, service);
         add(restaurantFormPanel);
-        Model pageModel =
-                new Model(MaintainRestaurants.this);
-        add(new AddDeleteRestaurantPanel("addDeletePanel", pageModel, service));
+        add(new AddDeleteRestaurantPanel("addDeletePanel"));
 
     }
 

@@ -17,43 +17,38 @@ import org.apache.wicket.model.Model;
  * @author dhenton
  */
 public final class AddDeleteRestaurantPanel extends Panel {
+
     private Form<Restaurant> addDeleteRestaurantForm;
-    private final IRestaurantDao service;
     private Restaurant selectedRestaurant = null;
-    private MaintainRestaurants containingPage = null;
+     
+
     /**
      * The model is the containing Page , MaintainRestaurants
+     *
      * @param id
      * @param model
-     * @param service 
+     * @param service
      */
-    public AddDeleteRestaurantPanel(String id, IModel model,final IRestaurantDao service) {
-        super(id,model);
-        this.service = service;
-        this.containingPage =  (MaintainRestaurants) model.getObject();
-        
-         Form<Restaurant> addDeleteRestaurantForm = new Form<Restaurant>("addDeleteForm", model) {
+    public AddDeleteRestaurantPanel(String id) {
+        super(id);
+
+
+        addDeleteRestaurantForm = new Form<Restaurant>("addDeleteForm") {
             @Override
             protected void onSubmit() {
-                 
             }
         };
-        Button addButton = new Button("addButton",new Model("Add"))
-        {
-
+        Button addButton = new Button("addButton", new Model("Add")) {
             @Override
             public void onSubmit() {
                 getContainingPage().performStateOperation(MaintainRestaurants.STATE.ADD);
             }
-            
-            
+
             @Override
-            public boolean isVisible()
-            {
+            public boolean isVisible() {
                 boolean isVisible = false;
-                
-                switch (getContainingPage().getState())
-                {
+
+                switch (getContainingPage().getState()) {
                     case ADD:
                         break;
                     case EDIT:
@@ -64,96 +59,57 @@ public final class AddDeleteRestaurantPanel extends Panel {
                     case DELETE:
                         break;
                 }
-                
-                
+
+
                 return isVisible;
             }
-            
         };
-        
-         Button cancelButton = new Button("cancelButton",new Model("Cancel"))
-        {
 
+   
+        Button deleteButton = new Button("deleteButton", new Model("Delete")) {
             @Override
             public void onSubmit() {
-                getContainingPage().performStateOperation(MaintainRestaurants.STATE.INITIAL);
-            }
-            
-            
-              @Override
-            public boolean isVisible()
-            {
-                boolean isVisible = true;
-                
-                switch (getContainingPage().getState())
-                {
-                    case ADD:
-                        break;
-                    case EDIT:
-                        break;
-                    case INITIAL:
-                        isVisible = false;
-                        break;
-                    case DELETE:
-                        break;
-                }
-                
-                
-                return isVisible;
-            }
-            
-        };
-        Button deleteButton = new Button("deleteButton",new Model("Delete"))
-        {
-
-            @Override
-            public void onSubmit() {
-              getContainingPage().performStateOperation(MaintainRestaurants.STATE.DELETE);  
+                getContainingPage().performStateOperation(MaintainRestaurants.STATE.DELETE);
             }
 
             @Override
             protected String getOnClickScript() {
                 return "return confirm('Remove Restaurant?');";
             }
-            
-              @Override
-            public boolean isVisible()
-            {
+
+            @Override
+            public boolean isVisible() {
                 boolean isVisible = false;
-                
-                switch (getContainingPage().getState())
-                {
+
+                switch (getContainingPage().getState()) {
                     case ADD:
                         break;
                     case EDIT:
-                         isVisible = true;
+                        isVisible = true;
                         break;
                     case INITIAL:
-                       
+
                         break;
                     case DELETE:
                         break;
                 }
-                
-                
+
+
                 return isVisible;
             }
-            
-            
         };
-        
+
         addDeleteRestaurantForm.add(addButton);
         addDeleteRestaurantForm.add(deleteButton);
-        addDeleteRestaurantForm.add(cancelButton);
         add(addDeleteRestaurantForm);
-        
-        
-        
-        
-        
+
+
+
+
+
     }
-    
-      public Restaurant getSelectedRestaurant() {
+
+    public Restaurant getSelectedRestaurant() {
         return selectedRestaurant;
     }
 
@@ -169,7 +125,6 @@ public final class AddDeleteRestaurantPanel extends Panel {
      * @return the containingPage
      */
     public MaintainRestaurants getContainingPage() {
-        return containingPage;
+       return  (MaintainRestaurants) getParent();
     }
-
 }
