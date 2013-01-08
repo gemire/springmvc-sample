@@ -38,12 +38,12 @@ public abstract class ReloadableEntityModel<T extends Identifiable<PK>, PK exten
 extends LoadableDetachableModel {
 
     private Class<T> entityClass;
-    private Serializable id;
+    private PK id;
     private T entity;
     private byte[] serializedEntity;
     private IModel entityModel;
 
-    public ReloadableEntityModel(Class<T> entityClass, Long id) {
+    public ReloadableEntityModel(Class<T> entityClass, PK id) {
         this.entityClass = entityClass;
         this.id = id;
     }

@@ -7,7 +7,7 @@ package com.dhenton9000.wicket.pages.guice.data;
 import com.dhenton9000.jpa.entities.Applications;
 import com.dhenton9000.jpa.entities.Users;
 import com.dhenton9000.wicket.pages.TemplatePage;
-import com.dhenton9000.wicket.dao.IApplicationsDao;
+import com.dhenton9000.wicket.dao.service.IApplicationsService;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
@@ -33,7 +33,7 @@ import org.apache.wicket.request.mapper.parameter.PageParameters;
 public final class ApplicationsUsers extends TemplatePage {
 
     
-    private IApplicationsDao service;
+    private IApplicationsService service;
     private List<Applications> applications;
     private Component dropDownApplicationListItem = null;
     private Applications selectedApplication;

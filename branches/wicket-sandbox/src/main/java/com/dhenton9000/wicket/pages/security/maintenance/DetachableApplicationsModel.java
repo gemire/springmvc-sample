@@ -5,7 +5,7 @@
 package com.dhenton9000.wicket.pages.security.maintenance;
 
 import com.dhenton9000.jpa.entities.Applications;
-import com.dhenton9000.wicket.dao.IApplicationsDao;
+import com.dhenton9000.wicket.dao.service.IApplicationsService;
 import org.apache.wicket.model.LoadableDetachableModel;
 
 /**
@@ -15,19 +15,19 @@ import org.apache.wicket.model.LoadableDetachableModel;
 public class DetachableApplicationsModel extends LoadableDetachableModel<Applications> {
 
     private Integer id;
-    private IApplicationsDao applicationsService;
+    private IApplicationsService applicationsService;
 
     /**
      * @param c
      */
-    public DetachableApplicationsModel(Applications c, IApplicationsDao dao) {
+    public DetachableApplicationsModel(Applications c, IApplicationsService dao) {
         this(c.getId(),dao);
     }
 
     /**
      * @param id
      */
-    public DetachableApplicationsModel(Integer id,IApplicationsDao dao) {
+    public DetachableApplicationsModel(Integer id,IApplicationsService dao) {
         if (id == null) {
             throw new IllegalArgumentException();
         }
@@ -68,6 +68,6 @@ public class DetachableApplicationsModel extends LoadableDetachableModel<Applica
      */
     @Override
     protected Applications load() {
-        return applicationsService.findById(id);
+        return applicationsService.getByPrimaryKey(id);
     }
 }

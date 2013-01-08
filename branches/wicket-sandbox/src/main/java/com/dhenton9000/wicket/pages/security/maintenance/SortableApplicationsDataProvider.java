@@ -5,7 +5,7 @@
 package com.dhenton9000.wicket.pages.security.maintenance;
 
 import com.dhenton9000.jpa.entities.Applications;
-import com.dhenton9000.wicket.dao.IApplicationsDao;
+import com.dhenton9000.wicket.dao.service.IApplicationsService;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.Iterator;
@@ -24,12 +24,12 @@ import org.slf4j.LoggerFactory;
 public class SortableApplicationsDataProvider extends SortableDataProvider<Applications, String> {
 
     private final Logger logger = LoggerFactory.getLogger(SortableApplicationsDataProvider.class);
-    private IApplicationsDao applicationsService;
+    private IApplicationsService applicationsService;
 
     /**
      * constructor
      */
-    SortableApplicationsDataProvider(IApplicationsDao applicationsService) {
+    SortableApplicationsDataProvider(IApplicationsService applicationsService) {
 
         setSort("applicationName", SortOrder.ASCENDING);
 

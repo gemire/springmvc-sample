@@ -6,7 +6,7 @@ package com.dhenton9000.wicket.pages.security.maintenance;
 
 import com.dhenton9000.jpa.entities.Applications;
 import com.dhenton9000.jpa.entities.Groups;
-import com.dhenton9000.wicket.dao.IApplicationsDao;
+import com.dhenton9000.wicket.dao.service.IApplicationsService;
 import com.dhenton9000.wicket.dao.IGroupsDao;
 import com.dhenton9000.wicket.pages.TemplatePage;
 import java.util.ArrayList;
@@ -47,7 +47,7 @@ import org.slf4j.LoggerFactory;
 public final class MaintainApplications extends TemplatePage {
 
     
-    private IApplicationsDao applicationsService;
+    private IApplicationsService applicationsService;
     
     private IGroupsDao groupsService;
     private EditForm editForm;
@@ -73,7 +73,7 @@ public final class MaintainApplications extends TemplatePage {
     /**
      * @return the applicationsService
      */
-    public IApplicationsDao getApplicationsService() {
+    public IApplicationsService getApplicationsService() {
         return applicationsService;
     }
     private final Logger logger = LoggerFactory.getLogger(MaintainApplications.class);

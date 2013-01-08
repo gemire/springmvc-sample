@@ -5,7 +5,7 @@
 package com.dhenton9000.wicket.pages.guice.repeater;
 
 import com.dhenton9000.jpa.entities.Restaurant;
-import com.dhenton9000.wicket.dao.IApplicationsDao;
+import com.dhenton9000.wicket.dao.service.IApplicationsService;
 import com.dhenton9000.wicket.dao.IRestaurantDao;
 import com.dhenton9000.wicket.models.RestaurantReloadableEntityModel;
 import com.dhenton9000.wicket.pages.TemplatePage;

@@ -6,12 +6,11 @@
 package com.dhenton9000.wicket.jpa;
 
 import com.dhenton9000.jpa.entities.Applications;
-import com.dhenton9000.wicket.dao.IApplicationsDao;
+import com.dhenton9000.wicket.dao.service.IApplicationsService;
 import java.util.List;
-import org.junit.Test;
 import static org.junit.Assert.*;
 import org.junit.Before;
-import org.junit.BeforeClass;
+import org.junit.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -21,13 +20,11 @@ import org.slf4j.LoggerFactory;
  */
 public class ApplicationsTests extends BaseTest {
 
-    private IApplicationsDao service;
+    private IApplicationsService service;
     private final static Logger logger = LoggerFactory.getLogger(ApplicationsTests.class);
-    
- 
+
     @Before
     public void beforeTest() {
-        
     }
 
     @Test
@@ -45,16 +42,14 @@ public class ApplicationsTests extends BaseTest {
         List<Applications> t = service.getAllApplications();
         assertEquals(57, t.size());
     }
-    
-    
-    @Test 
-    public void testUserThing()
-    {
+
+    @Test
+    public void testUserThing() {
         Applications app = new Applications();
         app.setId(new Integer(1));
         List t = service.findUsersForApplications(app);
-        assertEquals(23,t.size());
-        
-         
+        assertEquals(23, t.size());
+
+
     }
 }

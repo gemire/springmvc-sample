@@ -94,16 +94,4 @@ public class ApplicationsDaoImpl
     }
 }
 
-/*
-    String queryItem = "FROM com.gatesbiz.scorecard.externaldata.model.ExternalFieldProviderText as t  WHERE t.sponsorCompanyId = :sponsorCompanyId  and t.fieldText = :fieldText and t.providerCompanyId =:providerCompanyId ";
-
-		Query query = getEntityManager().createQuery(queryItem);
-		query.setParameter("sponsorCompanyId", sponsorCompanyId);
-		query.setParameter("providerCompanyId", providerCompanyId);
-		query.setParameter("fieldText", fieldText);
-		List<ExternalFieldProviderText> results = query.getResultList();
-		if (results != null && results.size() > 0) {
-			providerText = results.get(0);
-		}
-		return providerText;
- */
+ 

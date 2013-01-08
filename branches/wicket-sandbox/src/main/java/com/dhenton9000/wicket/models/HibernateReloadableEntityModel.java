@@ -7,6 +7,7 @@ package com.dhenton9000.wicket.models;
 import com.dhenton9000.jpa.dao.hibernate.HibernateGenericDaoImpl;
 import com.dhenton9000.jpa.dao.support.GenericDao;
 import com.dhenton9000.jpa.domain.Identifiable;
+import com.dhenton9000.jpa.service.support.GenericEntityService;
 import java.io.Serializable;
 import org.apache.wicket.model.IModel;
 
@@ -38,5 +39,7 @@ public class HibernateReloadableEntityModel<T extends Identifiable<PK>, PK exten
          GenericDao<T, PK> crudServices = new HibernateGenericDaoImpl<T, PK>(getEntityClass());
          return crudServices;
      }
+
+    
     
 }
