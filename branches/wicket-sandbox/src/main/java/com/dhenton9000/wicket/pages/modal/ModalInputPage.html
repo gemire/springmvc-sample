@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:wicket="http://wicket.apache.org">
+    <body>
+        <wicket:extend>
+            <h3>Modal Dialog with Form</h3>
+
+
+            <form wicket:id="form">
+                <table cellpadding="4" cellspacing="4">
+                    <tr><td wicket:id="ageLabel"></td><td><input type="text" wicket:id="age" /></td></tr>
+                    <tr><td wicket:id="nameLabel"></td><td><input type="text" wicket:id="name" /></td></tr>
+                    <tr><td colspan="2"><a href="#" wicket:id="chooserLink">Chooser</a></td></tr>
+                        <tr><td colspan="2">
+                            <input wicket:id="button" type="submit" />
+                        </td></tr>
+
+                </table>
+
+
+
+            </form>
+            <div wicket:id="chooserWindow"></div> 
+        </wicket:extend>
+    </body>
+</html>
