@@ -73,4 +73,11 @@ public class ApplicationsTest {
         
         
     }
+     
+     @Test
+     public void testById()
+     {
+         Applications t = applicationsDAO.findById(new Integer(1));
+         assertEquals("ColorParent",t.getApplicationName());
+     }
 }
