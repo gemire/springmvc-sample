@@ -94,6 +94,14 @@ public interface GenericDao<E extends Identifiable<PK>, PK extends Serializable>
     List<E> find(E entity, SearchTemplate searchTemplate);
 
     /**
+     * find the entity by its key type
+     * @param key
+     * @return 
+     */
+    E findById(Serializable key);
+    
+    
+    /**
      * Count the number of E instances.
      *
      * @param entity a sample entity whose non-null properties may be used as search hint
