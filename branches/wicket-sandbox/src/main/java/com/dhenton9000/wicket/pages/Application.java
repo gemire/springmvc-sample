@@ -5,38 +5,45 @@
  */
 package com.dhenton9000.wicket.pages;
 
-
 import com.dhenton9000.wicket.pages.refs.ImageRefPage;
 import com.dhenton9000.wicket.pages.refs.ImageResourceReference;
 import com.dhenton9000.wicket.pages.security.AuthenticatedWebPage;
 import com.dhenton9000.wicket.pages.security.SandboxSession;
 import com.dhenton9000.wicket.pages.security.SignIn;
-
-import org.apache.wicket.Component;
 import org.apache.wicket.RestartResponseAtInterceptPageException;
 import org.apache.wicket.Session;
+import org.apache.wicket.application.IComponentInstantiationListener;
 import org.apache.wicket.authorization.Action;
 import org.apache.wicket.authorization.IAuthorizationStrategy;
-
 import org.apache.wicket.protocol.http.WebApplication;
 import org.apache.wicket.request.Request;
 import org.apache.wicket.request.Response;
 import org.apache.wicket.request.component.IRequestableComponent;
+import org.apache.wicket.spring.injection.annot.SpringComponentInjector;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.ApplicationContext;
+import org.springframework.stereotype.Component;
 
 /**
+ ** <code>getComponentInstantiationListeners().add(new SpringComponentInjector(this));</code>
+ * <p> Only Wicket {@link Component}s and {@link Behavior}s are automatically
+ * injected, other classes such as {@link Session}, {@link Model}, and any other
+ * POJO can be injected by calling
+ * <code>Injector.get().inject(this)</code> in their constructor.
  *
  * @author dhenton
  * @version
  */
+@Component(value = "wicketApplication")
 public class Application extends WebApplication {
 
     private final Logger logger = LoggerFactory.getLogger(Application.class);
+    @Autowired
+    private ApplicationContext applicationContext;
 
     public Application() {
-         
-
     }
 
     @Override
@@ -50,6 +57,12 @@ public class Application extends WebApplication {
     @Override
     public void init() {
         super.init();
+        IComponentInstantiationListener spListener =
+                new SpringComponentInjector(this, applicationContext, true);
+        this.getComponentInstantiationListeners().add(spListener);
+
+
+
         // this is for the generated image in demo in ImageRefPage.java
         mountResource("/images/${name}", new ImageResourceReference());
         // this cleans up the url http://localhost:9090/wicket-sandbox/imagesPage?0
@@ -60,9 +73,9 @@ public class Application extends WebApplication {
         // Register the authorization strategy
         getSecuritySettings().setAuthorizationStrategy(new IAuthorizationStrategy() {
             @Override
-            public boolean isActionAuthorized(Component component, Action action) {
+            public boolean isActionAuthorized(org.apache.wicket.Component component, Action action) {
                 // authorize everything
-              //  logger.debug("authorizing for component " + component.getMarkupId() + " action " + action.getName());
+                //  logger.debug("authorizing for component " + component.getMarkupId() + " action " + action.getName());
                 return true;
             }
 
@@ -70,15 +83,15 @@ public class Application extends WebApplication {
             public <T extends IRequestableComponent> boolean isInstantiationAuthorized(
                     Class<T> componentClass) {
                 // Check if the new Page requires authentication (implements the marker interface)
-               // logger.debug("entering isInstantiationAuthorized " + componentClass.getSimpleName());
+                // logger.debug("entering isInstantiationAuthorized " + componentClass.getSimpleName());
                 if (AuthenticatedWebPage.class.isAssignableFrom(componentClass)) {
                     // Is user signed in?
                     if (((SandboxSession) Session.get()).isAuthenticated()) {
                         // okay to proceed
-                    //    logger.debug("authenticated hit " + componentClass.getSimpleName());
+                        //    logger.debug("authenticated hit " + componentClass.getSimpleName());
                         return true;
                     }
-                   // logger.debug("about to throw noauth " + componentClass.getSimpleName());
+                    // logger.debug("about to throw noauth " + componentClass.getSimpleName());
 
                     // Intercept the request, but remember the target for later.
                     // Invoke Component.continueToOriginalDestination() after successful logon to
@@ -92,7 +105,7 @@ public class Application extends WebApplication {
             }
         });
 
-    
+
     }
 
     @Override

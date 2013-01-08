@@ -7,6 +7,7 @@ package com.dhenton9000.wicket.pages.security.maintenance;
 import com.dhenton9000.jpa.entities.Applications;
 import com.dhenton9000.wicket.dao.service.IApplicationsService;
 import org.apache.wicket.model.LoadableDetachableModel;
+import org.springframework.beans.factory.annotation.Autowired;
 
 /**
  *
@@ -15,6 +16,7 @@ import org.apache.wicket.model.LoadableDetachableModel;
 public class DetachableApplicationsModel extends LoadableDetachableModel<Applications> {
 
     private Integer id;
+    @Autowired
     private IApplicationsService applicationsService;
 
     /**

@@ -15,6 +15,7 @@ import org.apache.wicket.extensions.markup.html.repeater.util.SortableDataProvid
 import org.apache.wicket.model.IModel;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 
 /**
  * http://www.javabeat.net/2011/04/displaying-data-using-datatable-in-apache-wicket/
@@ -24,6 +25,7 @@ import org.slf4j.LoggerFactory;
 public class SortableApplicationsDataProvider extends SortableDataProvider<Applications, String> {
 
     private final Logger logger = LoggerFactory.getLogger(SortableApplicationsDataProvider.class);
+    @Autowired
     private IApplicationsService applicationsService;
 
     /**

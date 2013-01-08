@@ -25,6 +25,7 @@ import org.apache.wicket.model.IModel;
 import org.apache.wicket.model.LoadableDetachableModel;
 import org.apache.wicket.model.PropertyModel;
 import org.apache.wicket.request.mapper.parameter.PageParameters;
+import org.springframework.beans.factory.annotation.Autowired;
 
 /**
  *
@@ -32,7 +33,7 @@ import org.apache.wicket.request.mapper.parameter.PageParameters;
  */
 public final class ApplicationsUsers extends TemplatePage {
 
-    
+    @Autowired
     private IApplicationsService service;
     private List<Applications> applications;
     private Component dropDownApplicationListItem = null;

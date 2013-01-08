@@ -24,10 +24,10 @@ import org.springframework.stereotype.Service;
 @Service
 public class ApplicationsServiceImpl extends GenericEntityServiceImpl<Applications, Integer> implements IApplicationsService {
 
-    protected ApplicationsDaoImpl applicationsDao;
+    protected IApplicationsDao applicationsDao;
 
     @Autowired
-    public void setApplicationsDao(ApplicationsDaoImpl applicationsDAO) {
+    public void setApplicationsDao(IApplicationsDao applicationsDAO) {
         this.applicationsDao = applicationsDAO;
     }
 
