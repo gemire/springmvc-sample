@@ -36,7 +36,7 @@ import org.slf4j.LoggerFactory;
  * Partial Hibernate implementation of the {@link GenericDao} interface.<br> The
  * exceptions are converted to generic spring unchecked exceptions.
  */
-public abstract class HibernateGenericDaoImpl<E extends Identifiable<PK>, PK extends Serializable> implements
+public  class HibernateGenericDaoImpl<E extends Identifiable<PK>, PK extends Serializable> implements
         GenericDao<E, PK> {
 
     private Class<E> type;
