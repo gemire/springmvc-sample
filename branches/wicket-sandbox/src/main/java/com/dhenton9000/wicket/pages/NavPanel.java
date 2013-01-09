@@ -4,11 +4,11 @@
  */
 package com.dhenton9000.wicket.pages;
 
-import com.dhenton9000.wicket.pages.guice.data.ApplicationsUsers;
-import com.dhenton9000.wicket.pages.guice.repeater.SimpleListViewRepeater;
+import com.dhenton9000.wicket.pages.data.ApplicationsUsers;
+import com.dhenton9000.wicket.pages.repeater.SimpleListViewRepeater;
 import com.dhenton9000.wicket.pages.form.sample.CompoundUserPage;
 import com.dhenton9000.wicket.pages.form.sample.UserPage;
-import com.dhenton9000.wicket.pages.guice.repeater.FormInputWithList;
+import com.dhenton9000.wicket.pages.repeater.FormInputWithList;
 import com.dhenton9000.wicket.pages.modal.ModalInputPage;
 import com.dhenton9000.wicket.pages.panels.SamplePanelPage;
 import com.dhenton9000.wicket.pages.restaurant.maintenance.MaintainRestaurants;

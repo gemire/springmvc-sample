@@ -2,7 +2,7 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.dhenton9000.wicket.pages.guice.data;
+package com.dhenton9000.wicket.pages.data;
 
 import com.dhenton9000.jpa.entities.Applications;
 import com.dhenton9000.jpa.entities.Users;

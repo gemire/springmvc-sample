@@ -5,16 +5,26 @@
  */
 package com.dhenton9000.wicket.pages;
 
+import com.dhenton9000.wicket.pages.data.ApplicationsUsers;
+import com.dhenton9000.wicket.pages.form.sample.CompoundUserPage;
+import com.dhenton9000.wicket.pages.form.sample.UserPage;
+import com.dhenton9000.wicket.pages.modal.ModalInputPage;
+import com.dhenton9000.wicket.pages.panels.SamplePanelPage;
 import com.dhenton9000.wicket.pages.refs.ImageRefPage;
 import com.dhenton9000.wicket.pages.refs.ImageResourceReference;
+import com.dhenton9000.wicket.pages.repeater.FormInputWithList;
+import com.dhenton9000.wicket.pages.repeater.SimpleListViewRepeater;
+import com.dhenton9000.wicket.pages.restaurant.maintenance.MaintainRestaurants;
 import com.dhenton9000.wicket.pages.security.AuthenticatedWebPage;
 import com.dhenton9000.wicket.pages.security.SandboxSession;
 import com.dhenton9000.wicket.pages.security.SignIn;
+import com.dhenton9000.wicket.pages.security.maintenance.MaintainApplications;
 import org.apache.wicket.RestartResponseAtInterceptPageException;
 import org.apache.wicket.Session;
 import org.apache.wicket.application.IComponentInstantiationListener;
 import org.apache.wicket.authorization.Action;
 import org.apache.wicket.authorization.IAuthorizationStrategy;
+import org.apache.wicket.markup.html.link.BookmarkablePageLink;
 import org.apache.wicket.protocol.http.WebApplication;
 import org.apache.wicket.request.Request;
 import org.apache.wicket.request.Response;
@@ -61,7 +71,7 @@ public class Application extends WebApplication {
                 new SpringComponentInjector(this, applicationContext, true);
         this.getComponentInstantiationListeners().add(spListener);
 
-
+        mountPages();
 
         // this is for the generated image in demo in ImageRefPage.java
         mountResource("/images/${name}", new ImageResourceReference());
@@ -69,7 +79,7 @@ public class Application extends WebApplication {
         // will go to the ImageRefPage
         mountPage("imagesPage", ImageRefPage.class);
         ////////////////////
-
+//mountBookmarkablePage(page.getSimpleName(), page);
         // Register the authorization strategy
         getSecuritySettings().setAuthorizationStrategy(new IAuthorizationStrategy() {
             @Override
@@ -111,5 +121,23 @@ public class Application extends WebApplication {
     @Override
     public Session newSession(Request request, Response response) {
         return new SandboxSession(request);
+    }
+
+    private void mountPages() {
+
+        Class pageArray[] = {
+            Page1.class, Page2.class,
+            HomePage.class, UserPage.class,
+            CompoundUserPage.class,
+            ApplicationsUsers.class,
+            SimpleListViewRepeater.class, MaintainApplications.class,
+            SamplePanelPage.class,
+            FormInputWithList.class, ModalInputPage.class,
+            MaintainRestaurants.class};
+
+        for (Class page : pageArray) {
+            this.mountPage(page.getSimpleName(), page);
+
+        }
     }
 }
