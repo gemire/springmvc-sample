@@ -7,6 +7,8 @@
     </head>
     <body>
         <wicket:panel>
+             <div wicket:id="feedbackForEditForm"></div>
+ 
             <form wicket:id="restaurantForm">
                 <table cellpadding="4" cellspacing="4">
                     <tr><th>ID</th><td wicket:id="id"></td></tr>
@@ -15,17 +17,20 @@
                     <tr><th>Zip Code</th><td><input size="20"  wicket:id="zipCode" /></td></tr>
                     <tr><th>City</th><td><input size="20"  wicket:id="city" /></td></tr>
                     <tr><th>State</th><td><input size="20"  wicket:id="state" /></td></tr>
-                    <tr><td colspan="2">
+                    <tr><td>
                             <input wicket:id="submitButton" type="submit" />
+                        </td>
+                        <td>
+                            <input wicket:id="cancelButton" type="submit"/> 
                         </td>
 
                     </tr>
                 </table>
             </form>
-            <form wicket:id="cancelForm">
-                <div><input wicket:id="cancelButton" type="submit" /></div>
+             
+                 
 
-            </form>
+             
 
         </wicket:panel>
     </body>

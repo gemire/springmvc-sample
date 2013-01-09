@@ -43,7 +43,7 @@ public final class PickRestaurantPanel extends Panel {
         this.service = service;
         pickRestaurantForm = new Form<Restaurant>("pickRestaurantForm");
         add(pickRestaurantForm);
-        pickRestaurantForm.add(new FeedbackPanel("feedbackForPickRestaurant"));
+          
         RefreshingView<Restaurant> refreshingView = new PickRestaurantFormView("pickRestaurantFormView");
         refreshingView.setItemReuseStrategy(ReuseIfModelsEqualStrategy.getInstance());
         pickRestaurantForm.add(refreshingView);

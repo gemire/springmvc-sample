@@ -9,7 +9,9 @@ import com.dhenton9000.wicket.dao.IRestaurantDao;
 import org.apache.wicket.markup.html.basic.Label;
 import org.apache.wicket.markup.html.form.Button;
 import org.apache.wicket.markup.html.form.Form;
+import org.apache.wicket.markup.html.form.RequiredTextField;
 import org.apache.wicket.markup.html.form.TextField;
+import org.apache.wicket.markup.html.panel.FeedbackPanel;
 import org.apache.wicket.markup.html.panel.Panel;
 import org.apache.wicket.model.IModel;
 import org.apache.wicket.model.Model;
@@ -22,6 +24,14 @@ public final class RestaurantFormPanel extends Panel {
 
     private IRestaurantDao service;
     private Form<Restaurant> mainEditForm = null;
+    private TextField nameField;
+    private FeedbackPanel feedbackPanel;
+
+    private enum BUTTON_ACTION {
+
+        SAVE, CANCEL
+    }
+    private BUTTON_ACTION buttonAction = BUTTON_ACTION.SAVE;
 
     /**
      * the model is a compound property model around a property model
@@ -32,18 +42,34 @@ public final class RestaurantFormPanel extends Panel {
      */
     public RestaurantFormPanel(String id, IModel model, final IRestaurantDao service) {
         super(id, model);
+
+
+
         mainEditForm = new Form<Restaurant>("restaurantForm", model) {
-            
             @Override
             protected void onSubmit() {
+                if (buttonAction.equals(BUTTON_ACTION.SAVE)) {
+                    String name = (String) nameField.getModelObject();
 
-                Restaurant modelObject = getModelObject();
-                service.merge(modelObject);
-                getContainingPage().performStateOperation(MaintainRestaurants.STATE.INITIAL);
+                    if (name != null && name.length() > 0) {
+                        Restaurant modelObject = getModelObject();
+                        service.merge(modelObject);
+                        getContainingPage().performStateOperation(MaintainRestaurants.STATE.INITIAL);
+                        info("Changes saved!");
 
+                    } else {
+                        error("Restaurant Name cannot be empty");
+                        //state stays the same
+                    }
+                } else {
+                    // cancel
+                    buttonAction = BUTTON_ACTION.SAVE;
+                    getContainingPage().performStateOperation(MaintainRestaurants.STATE.INITIAL);
+
+                }
             }
-            
-             @Override
+
+            @Override
             public boolean isVisible() {
                 boolean isVisible = false;
 
@@ -55,7 +81,7 @@ public final class RestaurantFormPanel extends Panel {
                         isVisible = true;
                         break;
                     case INITIAL:
-                        
+
                         break;
                     case DELETE:
                         break;
@@ -64,10 +90,6 @@ public final class RestaurantFormPanel extends Panel {
 
                 return isVisible;
             }
-            
-            
-            
-            
         };
         TextField zipCodeField = new TextField("zipCode");
         mainEditForm.add(zipCodeField);
@@ -75,7 +97,7 @@ public final class RestaurantFormPanel extends Panel {
         mainEditForm.add(versionField);
         TextField cityField = new TextField("city");
         mainEditForm.add(cityField);
-        TextField nameField = new TextField("name");
+        nameField = new TextField("name");
         mainEditForm.add(nameField);
         TextField stateField = new TextField("state");
         mainEditForm.add(stateField);
@@ -83,13 +105,15 @@ public final class RestaurantFormPanel extends Panel {
         mainEditForm.add(idLabel);
         mainEditForm.add(new Button("submitButton", new Model("Save Edits")));
         add(mainEditForm);
+        feedbackPanel = new FeedbackPanel("feedbackForEditForm");
+        add(feedbackPanel);
 
-        Form cancelForm = new Form("cancelForm");
+
+        // Form cancelForm = new Form("cancelForm");
         Button cancelButton = new Button("cancelButton", new Model("Cancel")) {
             @Override
             public void onSubmit() {
-               // mainEditForm.clearInput();
-                getContainingPage().performStateOperation(MaintainRestaurants.STATE.INITIAL);
+                buttonAction = BUTTON_ACTION.CANCEL;
             }
 
             @Override
@@ -113,13 +137,12 @@ public final class RestaurantFormPanel extends Panel {
             }
         };
 
-        cancelForm.add(cancelButton);
-        add(cancelForm);
-
+        // cancelForm.add(cancelButton);
+        // add(cancelForm);
+        mainEditForm.add(cancelButton);
 
     }
 
-    
     /**
      * @return the service
      */
@@ -130,9 +153,8 @@ public final class RestaurantFormPanel extends Panel {
     public MaintainRestaurants getContainingPage() {
         return (MaintainRestaurants) getParent();
     }
-    
-    public void resetMainForm()
-    {
+
+    public void resetMainForm() {
         mainEditForm.clearInput();
     }
 }
