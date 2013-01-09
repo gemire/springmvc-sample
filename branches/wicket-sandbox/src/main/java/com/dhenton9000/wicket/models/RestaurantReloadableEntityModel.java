@@ -5,6 +5,7 @@
 package com.dhenton9000.wicket.models;
 
 import com.dhenton9000.jpa.entities.Restaurant;
+import com.dhenton9000.jpa.service.support.GenericEntityService;
 
 /**
  *
@@ -12,9 +13,13 @@ import com.dhenton9000.jpa.entities.Restaurant;
  */
 public class RestaurantReloadableEntityModel extends HibernateReloadableEntityModel<Restaurant,Integer>{
 
-    public RestaurantReloadableEntityModel(Restaurant entity) {
-        super(entity);
-    }
+    
+    
+     public RestaurantReloadableEntityModel(Restaurant entity,GenericEntityService service)
+     {
+         super(entity);
+         this.setService(service);
+     }
 
     
 }

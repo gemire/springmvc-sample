@@ -47,7 +47,8 @@
     <!-- this allows access to the sessionFactory, most likely via the @PersistenceContext annotation -->
     <util:property-path id="sessionFactory" path="entityManagerFactory.sessionFactory" />
 
-    <context:component-scan base-package="com.dhenton9000.wicket.dao,com.dhenton9000.jpa,com.dhenton9000.wicket"  name-generator="com.dhenton9000.jpa.util.WithoutTrailingImplBeanNameGenerator">
+    <context:component-scan base-package="com.dhenton9000.wicket,com.dhenton9000.jpa" 
+      name-generator="com.dhenton9000.jpa.util.WithoutTrailingImplBeanNameGenerator">
     </context:component-scan>
     <tx:annotation-driven />
  

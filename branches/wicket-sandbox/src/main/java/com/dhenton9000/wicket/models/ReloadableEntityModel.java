@@ -26,6 +26,7 @@ package com.dhenton9000.wicket.models;
  */
 import com.dhenton9000.jpa.dao.support.GenericDao;
 import com.dhenton9000.jpa.domain.Identifiable;
+import com.dhenton9000.jpa.service.support.GenericEntityService;
 import java.io.IOException;
 import java.io.ObjectOutputStream;
 import java.io.Serializable;
@@ -56,7 +57,8 @@ extends LoadableDetachableModel {
         this.entityModel = entityModel;
     }
     
-    public abstract GenericDao getDao();
+    public abstract GenericEntityService getService();
+    public abstract void setService(GenericEntityService dao);
 
     @Override
     protected final T load() {
@@ -73,9 +75,11 @@ extends LoadableDetachableModel {
             result = entity;
         } else {
 
-            GenericDao<T, PK> crudServices = getDao();
+            
             if (id != null) {
-                result = entity = crudServices.findById(id);
+               T j = (T) getService().getByPrimaryKey(id);
+               result = j;
+               entity = j;
             } else {
                 result = null;
             }
@@ -117,6 +121,37 @@ extends LoadableDetachableModel {
         }
     }
 
+    /**
+     * only usable if 
+     * @return 
+     */
+    public T getEntity()
+    {
+        T result = null;
+        
+        if (entityModel != null) {
+            result = (T) entityModel.getObject();
+             
+        } else if (serializedEntity != null) {
+            entity = (T) SerializationUtils.deserialize(serializedEntity);
+            result = entity;
+        }
+        if (entity != null) {
+            result = entity;
+        } else {
+
+           
+            if (id != null) {
+                result = entity =   (T) getService().getByPrimaryKey(id);
+            } else {
+                result = null;
+            }
+        }
+       
+        return result;
+    }
+    
+    
     /**
      * @return the entityClass
      */

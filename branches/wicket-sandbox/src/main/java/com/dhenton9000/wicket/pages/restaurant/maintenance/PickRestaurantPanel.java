@@ -5,14 +5,12 @@
 package com.dhenton9000.wicket.pages.restaurant.maintenance;
 
 import com.dhenton9000.jpa.entities.Restaurant;
-import com.dhenton9000.wicket.dao.IRestaurantDao;
+import com.dhenton9000.wicket.dao.service.IRestaurantService;
 import com.dhenton9000.wicket.models.RestaurantReloadableEntityModel;
 import java.util.Iterator;
-import org.apache.wicket.MarkupContainer;
 import org.apache.wicket.markup.html.basic.Label;
 import org.apache.wicket.markup.html.form.Form;
 import org.apache.wicket.markup.html.link.Link;
-import org.apache.wicket.markup.html.panel.FeedbackPanel;
 import org.apache.wicket.markup.html.panel.Panel;
 import org.apache.wicket.markup.repeater.Item;
 import org.apache.wicket.markup.repeater.RefreshingView;
@@ -21,7 +19,6 @@ import org.apache.wicket.markup.repeater.util.ModelIteratorAdapter;
 import org.apache.wicket.model.CompoundPropertyModel;
 import org.apache.wicket.model.IModel;
 import org.apache.wicket.model.Model;
-import org.apache.wicket.model.PropertyModel;
 
 /**
  *
@@ -30,20 +27,18 @@ import org.apache.wicket.model.PropertyModel;
 public final class PickRestaurantPanel extends Panel {
 
     private Form<Restaurant> pickRestaurantForm;
-    private IRestaurantDao service;
+    private IRestaurantService service;
     private Restaurant selectedRestaurant = null;
 
     /**
-     * The model is a Restaurant object may have to change to the model as the
-     * MaintainRestaurant Page so you can set state to EDIT when an item is
-     * clicked
+     * The model is a Restaurant object
      */
-    public PickRestaurantPanel(String id, IModel model, IRestaurantDao service) {
+    public PickRestaurantPanel(String id, IModel model, IRestaurantService service) {
         super(id, model);
         this.service = service;
         pickRestaurantForm = new Form<Restaurant>("pickRestaurantForm");
         add(pickRestaurantForm);
-          
+
         RefreshingView<Restaurant> refreshingView = new PickRestaurantFormView("pickRestaurantFormView");
         refreshingView.setItemReuseStrategy(ReuseIfModelsEqualStrategy.getInstance());
         pickRestaurantForm.add(refreshingView);
@@ -87,15 +82,14 @@ public final class PickRestaurantPanel extends Panel {
 
         @Override
         protected Iterator<IModel<Restaurant>> getItemModels() {
-            Iterator<Restaurant> rIter =
-                    service.getAllRestaurants().iterator();
-
-
+ 
+            Iterator<Restaurant> rIter =  service.getAllRestaurants().iterator();
+           
             return new ModelIteratorAdapter<Restaurant>(rIter) {
                 @Override
                 protected IModel<Restaurant> model(Restaurant object) {
                     return new CompoundPropertyModel<Restaurant>(
-                            new RestaurantReloadableEntityModel(object));
+                            new RestaurantReloadableEntityModel(object,service));
                 }
             };
 

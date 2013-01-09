@@ -6,6 +6,7 @@ package com.dhenton9000.wicket.pages.repeater;
 
 import com.dhenton9000.jpa.entities.Restaurant;
 import com.dhenton9000.wicket.dao.IRestaurantDao;
+import com.dhenton9000.wicket.dao.service.IRestaurantService;
 import com.dhenton9000.wicket.models.RestaurantReloadableEntityModel;
 import com.dhenton9000.wicket.pages.TemplatePage;
 import java.util.Iterator;
@@ -35,7 +36,7 @@ public final class FormInputWithList extends TemplatePage {
     private Form<Restaurant> form;
   
     @SpringBean
-    private IRestaurantDao service;
+    private IRestaurantService service;
 
     public FormInputWithList() {
         super();
@@ -62,7 +63,7 @@ public final class FormInputWithList extends TemplatePage {
     /**
      * @return the service
      */
-    public IRestaurantDao getService() {
+    public IRestaurantService getService() {
         return service;
     }
 
@@ -87,7 +88,7 @@ public final class FormInputWithList extends TemplatePage {
                 @Override
                 protected IModel<Restaurant> model(Restaurant object) {
                     return new CompoundPropertyModel<Restaurant>(
-                            new RestaurantReloadableEntityModel(object));
+                            new RestaurantReloadableEntityModel(object,service));
                 }
             };
 

@@ -6,6 +6,7 @@ package com.dhenton9000.wicket.pages.restaurant.maintenance;
 
 import com.dhenton9000.jpa.entities.Restaurant;
 import com.dhenton9000.wicket.dao.IRestaurantDao;
+import com.dhenton9000.wicket.dao.service.IRestaurantService;
 import org.apache.wicket.markup.html.basic.Label;
 import org.apache.wicket.markup.html.form.Button;
 import org.apache.wicket.markup.html.form.Form;
@@ -40,7 +41,7 @@ public final class RestaurantFormPanel extends Panel {
      * @param model
      * @param service
      */
-    public RestaurantFormPanel(String id, IModel model, final IRestaurantDao service) {
+    public RestaurantFormPanel(String id, IModel model, final IRestaurantService service) {
         super(id, model);
 
 

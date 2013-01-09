@@ -17,6 +17,8 @@ import org.apache.wicket.model.IModel;
  */
 public class HibernateReloadableEntityModel<T extends Identifiable<PK>, PK extends Serializable>
         extends ReloadableEntityModel {
+    
+    private GenericEntityService service = null;
 
     public HibernateReloadableEntityModel(Class entityClass, Long id) {
         super(entityClass, id);
@@ -30,15 +32,30 @@ public class HibernateReloadableEntityModel<T extends Identifiable<PK>, PK exten
         super(entityModel);
     }
 
-    
-    
-    
+    /**
+     * @return the service
+     */
     @Override
-     public GenericDao getDao()
-     {
-         GenericDao<T, PK> crudServices = new HibernateGenericDaoImpl<T, PK>(getEntityClass());
-         return crudServices;
-     }
+    public GenericEntityService getService() {
+        return service;
+    }
+
+    /**
+     * @param service the service to set
+     */
+    @Override
+    public void setService(GenericEntityService service) {
+        this.service = service;
+    }
+
+     
+
+     
+
+    
+
+    
+ 
 
     
     

@@ -10,6 +10,8 @@ package com.dhenton9000.wicket.pages.restaurant.maintenance;
  */
 import com.dhenton9000.jpa.entities.Restaurant;
 import com.dhenton9000.wicket.dao.IRestaurantDao;
+import com.dhenton9000.wicket.dao.service.IRestaurantService;
+import com.dhenton9000.wicket.models.RestaurantReloadableEntityModel;
 import com.dhenton9000.wicket.pages.TemplatePage;
 import org.apache.wicket.markup.html.basic.Label;
 import org.apache.wicket.model.CompoundPropertyModel;
@@ -27,9 +29,9 @@ import org.slf4j.LoggerFactory;
 public final class MaintainRestaurants extends TemplatePage {
 
     private final Logger logger = LoggerFactory.getLogger(MaintainRestaurants.class);
-    private Restaurant selectedRestaurant = new Restaurant();
+    private RestaurantReloadableEntityModel selectedRestaurant = null;
     @SpringBean
-    private IRestaurantDao service;
+    private IRestaurantService service;
     private PickRestaurantPanel pickPanel = null;
     private RestaurantFormPanel restaurantFormPanel = null;
 
@@ -66,16 +68,16 @@ public final class MaintainRestaurants extends TemplatePage {
         logger.debug("operation called with " + t);
 
         switch (t) {
-            
+
             case ADD:
                 setState(STATE.ADD);
-                selectedRestaurant = new Restaurant();
+                selectedRestaurant = new RestaurantReloadableEntityModel(new Restaurant(),service);
                 break;
             case DELETE:
                 if (selectedRestaurant != null) {
-                    service.delete(selectedRestaurant);
+                    service.delete((Restaurant) selectedRestaurant.getEntity());
                     setState(STATE.INITIAL);
-                    selectedRestaurant = new Restaurant();
+                    selectedRestaurant = new RestaurantReloadableEntityModel(new Restaurant(),service);
                 }
                 break;
             case EDIT:
@@ -83,7 +85,7 @@ public final class MaintainRestaurants extends TemplatePage {
                 break;
             case INITIAL:
                 setState(STATE.INITIAL);
-                selectedRestaurant = new Restaurant();
+                selectedRestaurant = new RestaurantReloadableEntityModel(new Restaurant(),service);
                 //restaurantFormPanel.resetMainForm();
                 break;
         }
@@ -102,7 +104,8 @@ public final class MaintainRestaurants extends TemplatePage {
 
     private void setup() {
         setPageTitle(getClass().getSimpleName());
-
+        selectedRestaurant = new RestaurantReloadableEntityModel(new Restaurant(),service);
+        selectedRestaurant.setService(service);
         PropertyModel mLabel = new PropertyModel(MaintainRestaurants.this, "selectedRestaurantDisplay");
         add(new Label("selectedRestaurant", mLabel));
         PropertyModel selectedRestaurantModel =
@@ -115,12 +118,13 @@ public final class MaintainRestaurants extends TemplatePage {
         add(restaurantFormPanel);
         add(new AddDeleteRestaurantPanel("addDeletePanel"));
 
+        
     }
 
     /**
      * @return the service
      */
-    public IRestaurantDao getService() {
+    public IRestaurantService getService() {
         return service;
     }
 
@@ -128,13 +132,13 @@ public final class MaintainRestaurants extends TemplatePage {
      * @return the selectedRestaurant
      */
     public Restaurant getSelectedRestaurant() {
-        return selectedRestaurant;
+        return (Restaurant) selectedRestaurant.getEntity();
     }
 
     /**
      * @param selectedRestaurant the selectedRestaurant to set
      */
     public void setSelectedRestaurant(Restaurant selectedRestaurant) {
-        this.selectedRestaurant = selectedRestaurant;
+        this.selectedRestaurant = new RestaurantReloadableEntityModel(selectedRestaurant,service);
     }
 }
