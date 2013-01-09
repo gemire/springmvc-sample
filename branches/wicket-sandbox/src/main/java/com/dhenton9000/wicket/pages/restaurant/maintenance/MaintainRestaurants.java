@@ -9,15 +9,12 @@ package com.dhenton9000.wicket.pages.restaurant.maintenance;
  * and open the template in the editor.
  */
 import com.dhenton9000.jpa.entities.Restaurant;
-import com.dhenton9000.wicket.dao.IRestaurantDao;
 import com.dhenton9000.wicket.dao.service.IRestaurantService;
 import com.dhenton9000.wicket.models.RestaurantReloadableEntityModel;
 import com.dhenton9000.wicket.pages.TemplatePage;
 import org.apache.wicket.markup.html.basic.Label;
 import org.apache.wicket.model.CompoundPropertyModel;
-import org.apache.wicket.model.Model;
 import org.apache.wicket.model.PropertyModel;
-import org.apache.wicket.request.mapper.parameter.PageParameters;
 import org.apache.wicket.spring.injection.annot.SpringBean;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -35,6 +32,14 @@ public final class MaintainRestaurants extends TemplatePage {
     private PickRestaurantPanel pickPanel = null;
     private RestaurantFormPanel restaurantFormPanel = null;
 
+     public MaintainRestaurants() {
+        super();
+        setup();
+    }
+
+    
+    
+    
     /**
      * @return the state
      */
@@ -55,14 +60,7 @@ public final class MaintainRestaurants extends TemplatePage {
     }
     private STATE state = STATE.INITIAL;
 
-    public MaintainRestaurants() {
-        super();
-        setup();
-    }
-
-    public MaintainRestaurants(PageParameters params) {
-        setup();
-    }
+   
 
     public void performStateOperation(STATE t) {
         logger.debug("operation called with " + t);
