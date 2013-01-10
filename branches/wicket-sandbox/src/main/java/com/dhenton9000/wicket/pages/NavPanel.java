@@ -5,14 +5,14 @@
 package com.dhenton9000.wicket.pages;
 
 import com.dhenton9000.wicket.pages.data.ApplicationsUsers;
-import com.dhenton9000.wicket.pages.repeater.SimpleListViewRepeater;
 import com.dhenton9000.wicket.pages.form.sample.CompoundUserPage;
 import com.dhenton9000.wicket.pages.form.sample.UserPage;
-import com.dhenton9000.wicket.pages.repeater.FormInputWithList;
+import com.dhenton9000.wicket.pages.maintenance.restaurant.MaintainRestaurants;
+import com.dhenton9000.wicket.pages.maintenance.security.MaintainApplications;
 import com.dhenton9000.wicket.pages.modal.ModalInputPage;
-import com.dhenton9000.wicket.pages.panels.SamplePanelPage;
-import com.dhenton9000.wicket.pages.restaurant.maintenance.MaintainRestaurants;
-import com.dhenton9000.wicket.pages.security.maintenance.MaintainApplications;
+import com.dhenton9000.wicket.pages.repeater.FormInputWithList;
+import com.dhenton9000.wicket.pages.repeater.SimpleListViewRepeater;
+import com.dhenton9000.wicket.pages.resources.LightboxPage;
 import org.apache.wicket.markup.html.link.BookmarkablePageLink;
 import org.apache.wicket.model.IModel;
 
@@ -52,10 +52,12 @@ public final class NavPanel extends TemplatePanel {
         add(new BookmarkablePageLink<Void>("applicationsUsersLink", ApplicationsUsers.class));
         add(new BookmarkablePageLink<Void>("simpleListViewRepeaterLink", SimpleListViewRepeater.class));
         add(new BookmarkablePageLink<Void>("maintainApplicationsLink", MaintainApplications.class));
-        add(new BookmarkablePageLink<Void>("simplePanelLink", SamplePanelPage.class));
         add(new BookmarkablePageLink<Void>("refreshingViewLink", FormInputWithList.class));
         add(new BookmarkablePageLink<Void>("modalInputPageLink",ModalInputPage.class));
         add(new BookmarkablePageLink<Void>("maintainRestaurantsLink",MaintainRestaurants.class));
+        add(new BookmarkablePageLink<Void>("lightBoxPageLink",LightboxPage.class));
+         
+        
         // this isn't needed see Application.java for a mount 
         // that allows for a more normal url
         // add(new BookmarkablePageLink<Void>("refPageLink", ImageRefPage.class));

@@ -9,16 +9,16 @@ import com.dhenton9000.wicket.pages.data.ApplicationsUsers;
 import com.dhenton9000.wicket.pages.form.sample.CompoundUserPage;
 import com.dhenton9000.wicket.pages.form.sample.UserPage;
 import com.dhenton9000.wicket.pages.modal.ModalInputPage;
-import com.dhenton9000.wicket.pages.panels.SamplePanelPage;
-import com.dhenton9000.wicket.pages.refs.ImageRefPage;
-import com.dhenton9000.wicket.pages.refs.ImageResourceReference;
+import com.dhenton9000.wicket.pages.resources.ImageRefPage;
+import com.dhenton9000.wicket.pages.resources.ImageResourceReference;
 import com.dhenton9000.wicket.pages.repeater.FormInputWithList;
 import com.dhenton9000.wicket.pages.repeater.SimpleListViewRepeater;
-import com.dhenton9000.wicket.pages.restaurant.maintenance.MaintainRestaurants;
+import com.dhenton9000.wicket.pages.maintenance.restaurant.MaintainRestaurants;
 import com.dhenton9000.wicket.pages.security.AuthenticatedWebPage;
 import com.dhenton9000.wicket.pages.security.SandboxSession;
 import com.dhenton9000.wicket.pages.security.SignIn;
-import com.dhenton9000.wicket.pages.security.maintenance.MaintainApplications;
+import com.dhenton9000.wicket.pages.maintenance.security.MaintainApplications;
+import com.dhenton9000.wicket.pages.resources.LightboxPage;
 import org.apache.wicket.RestartResponseAtInterceptPageException;
 import org.apache.wicket.Session;
 import org.apache.wicket.application.IComponentInstantiationListener;
@@ -128,10 +128,10 @@ public class Application extends WebApplication {
         Class pageArray[] = {
             Page1.class, Page2.class,
             HomePage.class, UserPage.class,
-            CompoundUserPage.class,
+            CompoundUserPage.class,LightboxPage.class,
             ApplicationsUsers.class,
             SimpleListViewRepeater.class, MaintainApplications.class,
-            SamplePanelPage.class,
+           
             FormInputWithList.class, ModalInputPage.class,
             MaintainRestaurants.class};
 

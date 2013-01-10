@@ -4,10 +4,8 @@
  */
 package com.dhenton9000.wicket.models;
 
- 
 import com.dhenton9000.jpa.entities.Applications;
- 
-
+import com.dhenton9000.jpa.service.support.GenericEntityService;
 
 /**
  *
@@ -16,11 +14,8 @@ import com.dhenton9000.jpa.entities.Applications;
 public class ApplicationsReloadableEntityModel
         extends HibernateReloadableEntityModel<Applications, Integer> {
 
-    public ApplicationsReloadableEntityModel(Applications entity) {
+    public ApplicationsReloadableEntityModel(Applications entity, GenericEntityService service) {
         super(entity);
+        this.setService(service);
     }
-
-   
-    
-    
 }

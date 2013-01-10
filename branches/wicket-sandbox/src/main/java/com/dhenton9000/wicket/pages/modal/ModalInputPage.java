@@ -5,6 +5,7 @@
 package com.dhenton9000.wicket.pages.modal;
 
 import com.dhenton9000.wicket.pages.TemplatePage;
+import java.io.Serializable;
 import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.ajax.markup.html.AjaxLink;
 import org.apache.wicket.extensions.ajax.markup.html.modal.ModalWindow;
@@ -123,7 +124,7 @@ public final class ModalInputPage extends TemplatePage {
     /**
      * the form 'backing bean' if you will
      */
-    public class ModalData {
+    public class ModalData implements Serializable{
 
         private String name = "[Type Name]";
         private Integer age = 25;
