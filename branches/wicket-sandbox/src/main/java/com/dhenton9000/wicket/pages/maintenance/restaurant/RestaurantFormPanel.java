@@ -13,6 +13,7 @@ import org.apache.wicket.markup.html.form.Form;
 import org.apache.wicket.markup.html.form.TextField;
 import org.apache.wicket.markup.html.panel.FeedbackPanel;
 import org.apache.wicket.markup.html.panel.Panel;
+import org.apache.wicket.model.CompoundPropertyModel;
 import org.apache.wicket.model.IModel;
 import org.apache.wicket.model.Model;
 import org.slf4j.Logger;
@@ -46,13 +47,13 @@ public final class RestaurantFormPanel extends Panel {
     public RestaurantFormPanel(String id, IModel model, final IRestaurantService service) {
         super(id, model);
 
+        logger.debug("restaurant form panel "+model.getObject().toString());
 
-
-        mainEditForm = new Form<Restaurant>("restaurantForm", model) {
+        mainEditForm = new Form<Restaurant>("restaurantForm", new CompoundPropertyModel(model)) {
             @Override
             protected void onSubmit() {
                 if (buttonAction.equals(BUTTON_ACTION.SAVE)) {
-                    String name =  nameField.getDefaultModelObjectAsString();
+                    String name =  (String) nameField.getModelObject();
                     logger.debug("name is "+name);
                     if (name != null && name.length() > 0) {
                         Restaurant modelObject = getModelObject();

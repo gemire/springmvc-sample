@@ -97,10 +97,7 @@ public class Restaurant implements Identifiable<Integer>, Serializable {
         return hash;
     }
 
-    @Override
-    public String toString() {
-        return "com.dhenton9000.jpa.generated.Restaurant[ id=" + id + " ]";
-    }
+    
 
     @Override
     @Transient
@@ -179,5 +176,10 @@ public class Restaurant implements Identifiable<Integer>, Serializable {
      */
     public void setState(String state) {
         this.state = state;
+    }
+    
+    @Override
+    public String toString() {
+        return getName()+" {"+getPrimaryKey()+"}";
     }
 }

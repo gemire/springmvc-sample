@@ -29,8 +29,8 @@ public final class AddDeleteRestaurantPanel extends Panel {
      * @param model
      * @param service
      */
-    public AddDeleteRestaurantPanel(String id) {
-        super(id);
+    public AddDeleteRestaurantPanel(String id, IModel model) {
+        super(id,model);
 
 
         addDeleteRestaurantForm = new Form<Restaurant>("addDeleteForm") {
@@ -41,7 +41,9 @@ public final class AddDeleteRestaurantPanel extends Panel {
         Button addButton = new Button("addButton", new Model("Add")) {
             @Override
             public void onSubmit() {
+                
                 getContainingPage().performStateOperation(MaintainRestaurants.STATE.ADD);
+              //  setSelectedRestaurant(new Restaurant());
             }
 
             @Override
@@ -70,6 +72,7 @@ public final class AddDeleteRestaurantPanel extends Panel {
             @Override
             public void onSubmit() {
                 getContainingPage().performStateOperation(MaintainRestaurants.STATE.DELETE);
+             //   setSelectedRestaurant(new Restaurant());
             }
 
             @Override

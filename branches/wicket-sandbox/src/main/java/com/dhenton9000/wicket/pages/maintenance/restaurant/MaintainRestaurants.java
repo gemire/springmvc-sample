@@ -26,11 +26,12 @@ import org.slf4j.LoggerFactory;
 public final class MaintainRestaurants extends TemplatePage {
 
     private final Logger logger = LoggerFactory.getLogger(MaintainRestaurants.class);
-    private RestaurantReloadableEntityModel selectedRestaurant = null;
+   // private RestaurantReloadableEntityModel selectedRestaurantModel = null;
     @SpringBean
     private IRestaurantService service;
     private PickRestaurantPanel pickPanel = null;
     private RestaurantFormPanel restaurantFormPanel = null;
+    private RestaurantReloadableEntityModel selectedRestaurantModel;
 
      public MaintainRestaurants() {
         super();
@@ -54,6 +55,22 @@ public final class MaintainRestaurants extends TemplatePage {
         this.state = state;
     }
 
+    /**
+     * @return the selectedRestaurantModel
+     */
+    public RestaurantReloadableEntityModel getSelectedRestaurantModel() {
+        return selectedRestaurantModel;
+    }
+
+     
+//
+//    /**
+//     * @param selectedRestaurantPropertyModel the selectedRestaurantPropertyModel to set
+//     */
+//    public void setSelectedRestaurantModel(RestaurantReloadableEntityModel selectedRestaurantModel) {
+//        this.selectedRestaurantModel = selectedRestaurantModel;
+//    }
+
     public enum STATE {
 
         INITIAL, ADD, EDIT, DELETE
@@ -69,13 +86,15 @@ public final class MaintainRestaurants extends TemplatePage {
 
             case ADD:
                 setState(STATE.ADD);
-                selectedRestaurant = new RestaurantReloadableEntityModel(new Restaurant(),service);
+               // selectedRestaurantPropertyModel = new RestaurantReloadableEntityModel(new Restaurant(),service);
+                selectedRestaurantModel.setObject(new Restaurant());
                 break;
             case DELETE:
-                if (selectedRestaurant != null) {
-                    service.delete((Restaurant) selectedRestaurant.getEntity());
+                if (getSelectedRestaurantModel() != null) {
+                    service.delete((Restaurant) getSelectedRestaurantModel().getObject());
                     setState(STATE.INITIAL);
-                    selectedRestaurant = new RestaurantReloadableEntityModel(new Restaurant(),service);
+                  //  selectedRestaurantPropertyModel = new RestaurantReloadableEntityModel(new Restaurant(),service);
+                     getSelectedRestaurantModel().setObject(new Restaurant());
                 }
                 break;
             case EDIT:
@@ -83,18 +102,18 @@ public final class MaintainRestaurants extends TemplatePage {
                 break;
             case INITIAL:
                 setState(STATE.INITIAL);
-                selectedRestaurant = new RestaurantReloadableEntityModel(new Restaurant(),service);
-                 
+               // selectedRestaurantPropertyModel = new RestaurantReloadableEntityModel(new Restaurant(),service);
+                  getSelectedRestaurantModel().setObject(new Restaurant());
+                   
                 //restaurantFormPanel.resetMainForm();
                 break;
         }
 
-
-
     }
 
     public String getSelectedRestaurantDisplay() {
-        String t = getSelectedRestaurant().getName();
+        Restaurant rr = (Restaurant) getDefaultModel().getObject();
+        String t = rr.getName();
         if (t == null) {
             t = "";
         }
@@ -103,19 +122,20 @@ public final class MaintainRestaurants extends TemplatePage {
 
     private void setup() {
         setPageTitle(getClass().getSimpleName());
-        selectedRestaurant = new RestaurantReloadableEntityModel(new Restaurant(),service);
-        selectedRestaurant.setService(service);
+        selectedRestaurantModel = new RestaurantReloadableEntityModel(new Restaurant(),service);
+        
+        setDefaultModel(selectedRestaurantModel);
+        logger.debug("maintain "+getDefaultModel().getObject().toString());
         PropertyModel mLabel = new PropertyModel(MaintainRestaurants.this, "selectedRestaurantDisplay");
         add(new Label("selectedRestaurant", mLabel));
-        PropertyModel selectedRestaurantModel =
-                new PropertyModel(MaintainRestaurants.this, "selectedRestaurant");
-        pickPanel = new PickRestaurantPanel("pickPanel", selectedRestaurantModel, service);
+      
+        pickPanel = new PickRestaurantPanel("pickPanel", getDefaultModel(), service);
         add(pickPanel);
-        CompoundPropertyModel formModel = new CompoundPropertyModel(
-                selectedRestaurantModel);
-        restaurantFormPanel = new RestaurantFormPanel("restaurantFormPanel", formModel, service);
+        //CompoundPropertyModel formModel = new CompoundPropertyModel(
+        //        getDefaultModel());
+        restaurantFormPanel = new RestaurantFormPanel("restaurantFormPanel", getDefaultModel(), service);
         add(restaurantFormPanel);
-        add(new AddDeleteRestaurantPanel("addDeletePanel"));
+        add(new AddDeleteRestaurantPanel("addDeletePanel",getDefaultModel()));
 
         
     }
@@ -125,19 +145,5 @@ public final class MaintainRestaurants extends TemplatePage {
      */
     public IRestaurantService getService() {
         return service;
-    }
-
-    /**
-     * @return the selectedRestaurant
-     */
-    public Restaurant getSelectedRestaurant() {
-        return (Restaurant) selectedRestaurant.getEntity();
-    }
-
-    /**
-     * @param selectedRestaurant the selectedRestaurant to set
-     */
-    public void setSelectedRestaurant(Restaurant selectedRestaurant) {
-        this.selectedRestaurant = new RestaurantReloadableEntityModel(selectedRestaurant,service);
     }
 }

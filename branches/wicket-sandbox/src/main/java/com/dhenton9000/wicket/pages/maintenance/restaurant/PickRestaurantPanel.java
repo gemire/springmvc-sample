@@ -19,6 +19,8 @@ import org.apache.wicket.markup.repeater.util.ModelIteratorAdapter;
 import org.apache.wicket.model.CompoundPropertyModel;
 import org.apache.wicket.model.IModel;
 import org.apache.wicket.model.Model;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  *
@@ -28,7 +30,8 @@ public final class PickRestaurantPanel extends Panel {
 
     private Form<Restaurant> pickRestaurantForm;
     private IRestaurantService service;
-    private Restaurant selectedRestaurant = null;
+    private final Logger logger = LoggerFactory.getLogger(PickRestaurantPanel.class);
+    private IModel pickRestaurantPanelModel = null;
 
     /**
      * The model is a Restaurant object
@@ -36,10 +39,13 @@ public final class PickRestaurantPanel extends Panel {
     public PickRestaurantPanel(String id, IModel model, IRestaurantService service) {
         super(id, model);
         this.service = service;
+        this.pickRestaurantPanelModel = model;
+        logger.debug("pick restaurant panel "+model.getObject().toString());
+        
         pickRestaurantForm = new Form<Restaurant>("pickRestaurantForm");
         add(pickRestaurantForm);
 
-        RefreshingView<Restaurant> refreshingView = new PickRestaurantFormView("pickRestaurantFormView");
+        RefreshingView<Restaurant> refreshingView = new PickRestaurantFormView("pickRestaurantFormView",model);
         refreshingView.setItemReuseStrategy(ReuseIfModelsEqualStrategy.getInstance());
         pickRestaurantForm.add(refreshingView);
 
@@ -48,18 +54,23 @@ public final class PickRestaurantPanel extends Panel {
     }
 
     /**
-     * @return the selectedRestaurant
+     * @return the pickRestaurantPanelModel
      */
-    public Restaurant getSelectedRestaurant() {
-        return selectedRestaurant;
-    }
+//    public Restaurant getSelectedRestaurantModel() {
+//        return pickRestaurantPanelModel;
+//    }
 
     /**
-     * @param selectedRestaurant the selectedRestaurant to set
+     * @param pickRestaurantPanelModel the pickRestaurantPanelModel to set
      */
-    public void setSelectedRestaurant(Restaurant selectedRestaurant) {
-        this.selectedRestaurant = selectedRestaurant;
-        this.setDefaultModelObject(selectedRestaurant);
+    public void setSelectedRestaurant(RestaurantReloadableEntityModel selectedRestaurantModel) {
+   //     this.pickRestaurantPanelModel = pickRestaurantPanelModel;
+       // this.setDefaultModel(selectedRestaurantModel);
+        logger.debug("sent in set "+selectedRestaurantModel.getObject());
+        Object z = selectedRestaurantModel.getObject();
+        this.setDefaultModelObject(z);
+        
+        logger.debug("Panel is now "+ this.getDefaultModel().getObject().toString());
     }
 
     /**
@@ -72,10 +83,7 @@ public final class PickRestaurantPanel extends Panel {
     //////////////////////////////
     class PickRestaurantFormView extends RefreshingView<Restaurant> {
 
-        public PickRestaurantFormView(String id) {
-            super(id);
-        }
-
+        
         public PickRestaurantFormView(String id, IModel<?> model) {
             super(id, model);
         }
@@ -88,8 +96,9 @@ public final class PickRestaurantPanel extends Panel {
             return new ModelIteratorAdapter<Restaurant>(rIter) {
                 @Override
                 protected IModel<Restaurant> model(Restaurant object) {
-                    return new CompoundPropertyModel<Restaurant>(
-                            new RestaurantReloadableEntityModel(object,service));
+                    //return new CompoundPropertyModel<Restaurant>(
+                    //        new RestaurantReloadableEntityModel(object,service));
+                    return  new RestaurantReloadableEntityModel(object,service);
                 }
             };
 
@@ -101,8 +110,8 @@ public final class PickRestaurantPanel extends Panel {
         protected void populateItem(Item<Restaurant> item) {
 
 
-            IModel<Restaurant> restaurant = item.getModel();
-            item.add(new PickActionPanel("pickAction", restaurant));
+            
+            item.add(new PickActionPanel("pickAction", item.getModel()));
 
         }
     }
@@ -113,16 +122,30 @@ public final class PickRestaurantPanel extends Panel {
         ////////////////////////////////////////////////////////
         public PickActionPanel(String id, IModel<Restaurant> model) {
             super(id, model);
-            final Restaurant r = (Restaurant) this.getDefaultModelObject();
+            final RestaurantReloadableEntityModel pickActionPanelModel = 
+                    (RestaurantReloadableEntityModel) this.getDefaultModel();
+           
             Link select = new Link("select") {
                 @Override
                 public void onClick() {
+                    
+//                    final RestaurantReloadableEntityModel pickActionPanelModel = 
+//                    (RestaurantReloadableEntityModel) this.getDefaultModel();
+//                    
+                    
                     getContainingPage().performStateOperation(MaintainRestaurants.STATE.EDIT);
-                    setSelectedRestaurant(r);
+                    setSelectedRestaurant(pickActionPanelModel);
+                     logger.debug(" clicked on "
+                             + pickActionPanelModel.getObject());
+                      logger.debug(" panelmodel "
+                             + pickRestaurantPanelModel.getObject());
+                     
+                    
                 }
             };
             PickActionPanel.this.add(select);
-            select.add(new Label("linkText", new Model(r.getName())));
+            Restaurant rItem = ((Restaurant) pickActionPanelModel.getObject());
+            select.add(new Label("linkText", new Model(rItem.getName() )));
 
         }
     }
