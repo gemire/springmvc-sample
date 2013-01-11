@@ -11,12 +11,13 @@
  
             <form wicket:id="restaurantForm">
                 <table cellpadding="4" cellspacing="4">
-                    <tr><th>ID</th><td wicket:id="id"></td></tr>
+                    <tr><th>ID</th><td></td></tr>
                     <tr><th>Name</th><td><input size="20"  wicket:id="name" /></td></tr>
                     <tr><th>Version</th><td><input size="20"  wicket:id="version" /></td></tr>
                     <tr><th>Zip Code</th><td><input size="20"  wicket:id="zipCode" /></td></tr>
                     <tr><th>City</th><td><input size="20"  wicket:id="city" /></td></tr>
                     <tr><th>State</th><td><input size="20"  wicket:id="state" /></td></tr>
+                    
                     <tr><td>
                             <input wicket:id="submitButton" type="submit" />
                         </td>
@@ -26,6 +27,7 @@
 
                     </tr>
                 </table>
+                <input type="hidden" wicket:id="id" />
             </form>
              
                  

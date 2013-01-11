@@ -43,7 +43,7 @@ public final class AddDeleteRestaurantPanel extends Panel {
             public void onSubmit() {
                 
                 getContainingPage().performStateOperation(MaintainRestaurants.STATE.ADD);
-              //  setSelectedRestaurant(new Restaurant());
+                setSelectedRestaurant(new Restaurant());
             }
 
             @Override

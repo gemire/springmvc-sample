@@ -59,7 +59,7 @@ public final class MaintainRestaurants extends TemplatePage {
      * @return the selectedRestaurantModel
      */
     public RestaurantReloadableEntityModel getSelectedRestaurantModel() {
-        return selectedRestaurantModel;
+        return (RestaurantReloadableEntityModel) getDefaultModel();
     }
 
      
@@ -87,7 +87,7 @@ public final class MaintainRestaurants extends TemplatePage {
             case ADD:
                 setState(STATE.ADD);
                // selectedRestaurantPropertyModel = new RestaurantReloadableEntityModel(new Restaurant(),service);
-                selectedRestaurantModel.setObject(new Restaurant());
+                getSelectedRestaurantModel().setObject(new Restaurant());
                 break;
             case DELETE:
                 if (getSelectedRestaurantModel() != null) {
@@ -113,11 +113,22 @@ public final class MaintainRestaurants extends TemplatePage {
 
     public String getSelectedRestaurantDisplay() {
         Restaurant rr = (Restaurant) getDefaultModel().getObject();
+        if (rr == null) {
+            return "";
+        }
         String t = rr.getName();
+        String j = "";
+        if (rr.getPrimaryKey() == null) {
+            j ="";
+        }
+        else {
+            j = rr.getPrimaryKey().toString();
+        }
         if (t == null) {
             t = "";
+            j="";
         }
-        return t + " [" + getState() + "]";
+        return t + " [" + getState() + "] "+j;
     }
 
     private void setup() {

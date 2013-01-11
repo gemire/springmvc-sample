@@ -7,9 +7,11 @@ package com.dhenton9000.wicket.pages.maintenance.restaurant;
 import com.dhenton9000.jpa.entities.Restaurant;
 import com.dhenton9000.wicket.dao.IRestaurantDao;
 import com.dhenton9000.wicket.dao.service.IRestaurantService;
+import java.util.List;
 import org.apache.wicket.markup.html.basic.Label;
 import org.apache.wicket.markup.html.form.Button;
 import org.apache.wicket.markup.html.form.Form;
+import org.apache.wicket.markup.html.form.HiddenField;
 import org.apache.wicket.markup.html.form.TextField;
 import org.apache.wicket.markup.html.panel.FeedbackPanel;
 import org.apache.wicket.markup.html.panel.Panel;
@@ -47,25 +49,27 @@ public final class RestaurantFormPanel extends Panel {
     public RestaurantFormPanel(String id, IModel model, final IRestaurantService service) {
         super(id, model);
 
-        logger.debug("restaurant form panel "+model.getObject().toString());
+        logger.debug("restaurant form panel " + model.getObject().toString());
 
         mainEditForm = new Form<Restaurant>("restaurantForm", new CompoundPropertyModel(model)) {
             @Override
             protected void onSubmit() {
                 if (buttonAction.equals(BUTTON_ACTION.SAVE)) {
-                    String name =  (String) nameField.getModelObject();
-                    logger.debug("name is "+name);
+                    String name = (String) nameField.getModelObject();
+                    logger.debug("name is " + name);
                     if (name != null && name.length() > 0) {
                         Restaurant modelObject = getModelObject();
-                        if (modelObject.isPrimaryKeySet() == false)
-                        {
+                        if (modelObject.isPrimaryKeySet() == false) {
                             service.save(modelObject);
-                        }
-                        else
-                        {
+                        } else {
+                            logger.debug("in on submit " + modelObject.toString());
+
+                            //  List<Restaurant> t = service.find(modelObject);
+                            // Restaurant t0 = t.get(0);
+                            // t0.setName(t0.getName()+"zzz");
                             service.merge(modelObject);
                         }
-                        
+//                        
                         getContainingPage().performStateOperation(MaintainRestaurants.STATE.INITIAL);
                         info("Changes saved!");
 
@@ -113,12 +117,14 @@ public final class RestaurantFormPanel extends Panel {
         mainEditForm.add(nameField);
         TextField stateField = new TextField("state");
         mainEditForm.add(stateField);
-        Label idLabel = new Label("id");
-        mainEditForm.add(idLabel);
+        // Label idLabel = new Label("idDisplay");
+        // mainEditForm.add(idLabel);
         mainEditForm.add(new Button("submitButton", new Model("Save Edits")));
         add(mainEditForm);
         feedbackPanel = new FeedbackPanel("feedbackForEditForm");
         add(feedbackPanel);
+        HiddenField idField = new HiddenField("id");
+        mainEditForm.add(idField);
 
 
         // Form cancelForm = new Form("cancelForm");
