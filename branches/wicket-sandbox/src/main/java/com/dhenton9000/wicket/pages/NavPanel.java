@@ -5,6 +5,7 @@
 package com.dhenton9000.wicket.pages;
 
 import com.dhenton9000.wicket.pages.data.ApplicationsUsers;
+import com.dhenton9000.wicket.pages.events.SimpleEventPage;
 import com.dhenton9000.wicket.pages.form.sample.CompoundUserPage;
 import com.dhenton9000.wicket.pages.form.sample.UserPage;
 import com.dhenton9000.wicket.pages.maintenance.restaurant.MaintainRestaurants;
@@ -44,8 +45,7 @@ public final class NavPanel extends TemplatePanel {
     }
 
     private void configureComponents() {
-        add(new BookmarkablePageLink<Void>("page1Link", Page1.class));
-        add(new BookmarkablePageLink<Void>("page2Link", Page2.class));
+   
         add(new BookmarkablePageLink<Void>("homeLink", HomePage.class));
         add(new BookmarkablePageLink<Void>("userFormLink", UserPage.class));
         add(new BookmarkablePageLink<Void>("compoundFormLink", CompoundUserPage.class));
@@ -56,7 +56,7 @@ public final class NavPanel extends TemplatePanel {
         add(new BookmarkablePageLink<Void>("modalInputPageLink",ModalInputPage.class));
         add(new BookmarkablePageLink<Void>("maintainRestaurantsLink",MaintainRestaurants.class));
         add(new BookmarkablePageLink<Void>("lightBoxPageLink",LightboxPage.class));
-         
+         add(new BookmarkablePageLink<Void>("simpleEventPageLink",SimpleEventPage.class)); 
         
         // this isn't needed see Application.java for a mount 
         // that allows for a more normal url
