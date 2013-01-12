@@ -1,8 +1,0 @@
-Logging is done by modifying the main jboss log4j file, which is part of the
-server's conf directory.
-This configuration will use a special filter to move your apps info to a file. 
-However, the file also receives messages from the general logging, 
-it redirects and duplicates.
-
-in jboss 6x this may not be necessary
-

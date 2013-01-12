@@ -1,2 +1,0 @@
-bob && mark;
-mike && ike && bob && ted && alice;

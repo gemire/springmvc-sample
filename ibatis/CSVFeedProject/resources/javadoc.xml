@@ -1,6 +1,0 @@
-<?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<project default="javadoc">
-    <target name="javadoc">
-        <javadoc access="private" author="true" classpath="../libs/ibatis-2.3.0.677.jar;../libs/spring.jar;../libs/dom4j-1.6.1.jar;../libs/mysql-connector-java-3.1.10-bin.jar;../libs/commons-logging.jar;../libs/log4j-1.2.14.jar;../libs/datafile.jar;C:\eclipsenew\eclipse\plugins\org.junit_3.8.2.v3_8_2_v20100427-1100\junit.jar" destdir="../doc" nodeprecated="false" nodeprecatedlist="false" noindex="false" nonavbar="false" notree="false" packagenames="com.dhenton9000.feeds,com.dhenton9000.ibatis.vo,com.dhenton9000.csvfeed.generators,com.dhenton9000.csvfeed.validation,com.dhenton9000.csvfeed.customerfeed,com.dhenton9000.db,com.dhenton9000.csvfeed.customerfeed.columns,com.dhenton9000.ibatis.dao" source="1.5" sourcefiles="../src/com/dhenton9000/csvfeed/FeedColumn.java,../src/com/dhenton9000/csvfeed/GenericMethodColumn.java,../src/com/dhenton9000/csvfeed/ConstantColumn.java,../src/com/dhenton9000/csvfeed/BaseCSVFeedController.java" sourcepath="../src;../test" splitindex="true" use="true" version="true"/>
-    </target>
-</project>
