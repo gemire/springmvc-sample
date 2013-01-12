@@ -9,11 +9,13 @@ import com.dhenton9000.wicket.dao.IUsersDao;
 import java.io.Serializable;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.stereotype.Service;
 
 /**
  *
  * @author dhenton
  */
+@Service
 public class AuthenticationServiceImpl implements AuthenticationService, Serializable {
 
      
@@ -23,7 +25,7 @@ public class AuthenticationServiceImpl implements AuthenticationService, Seriali
     @Override
     public Users signIn(String username, String password) {
 
-        if (usersService == null) {
+        if (getUsersService() == null) {
             throw new RuntimeException("user service null in " + this.getClass().getName());
         }
 
@@ -35,7 +37,7 @@ public class AuthenticationServiceImpl implements AuthenticationService, Seriali
         }
 
   
-        Users testUser = usersService.getUserById(username);
+        Users testUser = getUsersService().getUserById(username);
         logger.debug("testing user ");
         if (testUser != null) {
             String passwordTemp = testUser.getPassword();
@@ -48,5 +50,19 @@ public class AuthenticationServiceImpl implements AuthenticationService, Seriali
         }
 
         return null;
+    }
+
+    /**
+     * @return the usersService
+     */
+    public IUsersDao getUsersService() {
+        return usersService;
+    }
+
+    /**
+     * @param usersService the usersService to set
+     */
+    public void setUsersService(IUsersDao usersService) {
+        this.usersService = usersService;
     }
 }

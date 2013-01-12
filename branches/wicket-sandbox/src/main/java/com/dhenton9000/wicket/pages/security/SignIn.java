@@ -31,6 +31,7 @@ import org.apache.wicket.markup.html.form.PasswordTextField;
 import org.apache.wicket.markup.html.form.TextField;
 import org.apache.wicket.markup.html.panel.FeedbackPanel;
 import org.apache.wicket.model.PropertyModel;
+import org.apache.wicket.spring.injection.annot.SpringBean;
 import org.apache.wicket.util.value.ValueMap;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -45,9 +46,9 @@ import org.slf4j.LoggerFactory;
 public final class SignIn extends TemplatePage {
 
     
-    
+    @SpringBean(name="authServiceBean")
     private AuthenticationService authService ;
-     private final static transient Logger logger = LoggerFactory.getLogger(SignIn.class);
+    private final static transient Logger logger = LoggerFactory.getLogger(SignIn.class);
     /**
      * Constructor
      */

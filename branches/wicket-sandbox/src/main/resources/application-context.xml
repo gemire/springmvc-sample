@@ -58,6 +58,11 @@
     <context:spring-configured />
     <context:annotation-config />
 
+     <bean id="authServiceBean" class="com.dhenton9000.wicket.pages.security.AuthenticationServiceImpl">
+     <property name="usersService">
+      <bean class="com.dhenton9000.wicket.dao.impl.UsersDaoImpl" />
+     </property>
+     </bean>
     <!-- services 
     com.dhenton9000.jpa.services.UsersServiceImpl is annotated  with @Service
     and the name-generator in the component scan will translate the 
