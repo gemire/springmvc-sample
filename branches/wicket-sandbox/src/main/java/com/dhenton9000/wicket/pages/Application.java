@@ -7,6 +7,7 @@ package com.dhenton9000.wicket.pages;
 
 import com.dhenton9000.wicket.pages.data.ApplicationsUsers;
 import com.dhenton9000.wicket.pages.events.SimpleEventPage;
+import com.dhenton9000.wicket.pages.form.explore.ExploreFormPage;
 import com.dhenton9000.wicket.pages.form.sample.CompoundUserPage;
 import com.dhenton9000.wicket.pages.form.sample.UserPage;
 import com.dhenton9000.wicket.pages.modal.ModalInputPage;
@@ -128,11 +129,10 @@ public class Application extends WebApplication {
 
         Class pageArray[] = {
          
-            HomePage.class, UserPage.class,
+            HomePage.class, UserPage.class,ExploreFormPage.class,
             CompoundUserPage.class,LightboxPage.class,
             ApplicationsUsers.class,SimpleEventPage.class,
             SimpleListViewRepeater.class, MaintainApplications.class,
-           
             FormInputWithList.class, ModalInputPage.class,
             MaintainRestaurants.class};
 
