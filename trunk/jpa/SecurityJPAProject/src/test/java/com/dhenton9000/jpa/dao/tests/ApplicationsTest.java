@@ -30,7 +30,7 @@ import org.springframework.transaction.annotation.Transactional;
 public class ApplicationsTest {
 
     private static final Logger logger = LoggerFactory.getLogger(ApplicationsTest.class);
-    @PersistenceContext
+    @PersistenceContext()
     private EntityManager entityManager;
     @Autowired
     ApplicationsDAO applicationsDAO;
