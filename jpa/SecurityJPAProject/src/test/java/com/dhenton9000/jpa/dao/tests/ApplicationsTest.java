@@ -78,6 +78,6 @@ public class ApplicationsTest {
      public void testById()
      {
          Applications t = applicationsDAO.findById(new Integer(1));
-         assertEquals("ColorParent",t.getApplicationName());
+         assertEquals("ColorParentMatches",t.getApplicationName());
      }
 }
