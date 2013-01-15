@@ -1,0 +1,34 @@
+15:36:30,101 | INFO   | com.dhenton9000.stax.parse.LaunchParse |   29 | begin parse
+15:36:30,113 | DEBUG  | com.dhenton9000.stax.parse.LaunchParse |   80 | start element BookCatalogue
+15:36:30,114 | DEBUG  | com.dhenton9000.stax.parse.LaunchParse |   80 | start element Book
+15:36:30,115 | DEBUG  | com.dhenton9000.stax.parse.LaunchParse |   80 | start element Title
+15:36:30,116 | DEBUG  | com.dhenton9000.stax.parse.LaunchParse |  125 | end element Title
+15:36:30,117 | DEBUG  | com.dhenton9000.stax.parse.LaunchParse |   80 | start element Author
+15:36:30,118 | DEBUG  | com.dhenton9000.stax.parse.LaunchParse |  125 | end element Author
+15:36:30,118 | DEBUG  | com.dhenton9000.stax.parse.LaunchParse |   80 | start element Date
+15:36:30,119 | DEBUG  | com.dhenton9000.stax.parse.LaunchParse |  125 | end element Date
+15:36:30,120 | DEBUG  | com.dhenton9000.stax.parse.LaunchParse |   80 | start element ISBN
+15:36:30,120 | DEBUG  | com.dhenton9000.stax.parse.LaunchParse |  125 | end element ISBN
+15:36:30,121 | DEBUG  | com.dhenton9000.stax.parse.LaunchParse |   80 | start element Publisher
+15:36:30,122 | DEBUG  | com.dhenton9000.stax.parse.LaunchParse |  125 | end element Publisher
+15:36:30,122 | DEBUG  | com.dhenton9000.stax.parse.LaunchParse |   80 | start element Cost
+15:36:30,124 | DEBUG  | com.dhenton9000.stax.parse.LaunchParse |  125 | end element Cost
+15:36:30,125 | DEBUG  | com.dhenton9000.stax.parse.LaunchParse |  125 | end element Book
+15:36:30,132 | DEBUG  | com.dhenton9000.stax.parse.LaunchParse |   80 | start element Book
+15:36:30,133 | DEBUG  | com.dhenton9000.stax.parse.LaunchParse |   80 | start element Title
+15:36:30,134 | DEBUG  | com.dhenton9000.stax.parse.LaunchParse |  125 | end element Title
+15:36:30,134 | DEBUG  | com.dhenton9000.stax.parse.LaunchParse |   80 | start element Author
+15:36:30,135 | DEBUG  | com.dhenton9000.stax.parse.LaunchParse |  125 | end element Author
+15:36:30,136 | DEBUG  | com.dhenton9000.stax.parse.LaunchParse |   80 | start element Date
+15:36:30,136 | DEBUG  | com.dhenton9000.stax.parse.LaunchParse |  125 | end element Date
+15:36:30,137 | DEBUG  | com.dhenton9000.stax.parse.LaunchParse |   80 | start element ISBN
+15:36:30,138 | DEBUG  | com.dhenton9000.stax.parse.LaunchParse |  125 | end element ISBN
+15:36:30,138 | DEBUG  | com.dhenton9000.stax.parse.LaunchParse |   80 | start element Publisher
+15:36:30,139 | DEBUG  | com.dhenton9000.stax.parse.LaunchParse |  125 | end element Publisher
+15:36:30,140 | DEBUG  | com.dhenton9000.stax.parse.LaunchParse |   80 | start element Cost
+15:36:30,142 | DEBUG  | com.dhenton9000.stax.parse.LaunchParse |  125 | end element Cost
+15:36:30,142 | DEBUG  | com.dhenton9000.stax.parse.LaunchParse |  125 | end element Book
+15:36:30,143 | DEBUG  | com.dhenton9000.stax.parse.LaunchParse |  125 | end element BookCatalogue
+15:36:30,144 | DEBUG  | com.dhenton9000.stax.parse.LaunchParse |  136 | book: LibraryBook{libraryName=Delvan St, title=Yogasana Vijnana: the Science of Yoga, author=Dhirendra Brahmachari, cost=11.5, currency=INR, ISBN=81-40-34319-4}
+15:36:30,145 | DEBUG  | com.dhenton9000.stax.parse.LaunchParse |  136 | book: LibraryBook{libraryName=Franklin, title=The First and Last Freedom, author=J. Krishnamurti, cost=2.95, currency=USD, ISBN=0-06-064831-7}
+15:36:30,146 | INFO   | com.dhenton9000.stax.parse.LaunchParse |   31 | end parse
