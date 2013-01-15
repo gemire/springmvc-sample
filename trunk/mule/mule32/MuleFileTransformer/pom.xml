@@ -5,9 +5,9 @@
 
     <modelVersion>4.0.0</modelVersion>
     <groupId>com.dhenton9000.mule.file.transformer</groupId>
-    <artifactId>MuleFileTransformer2</artifactId>
+    <artifactId>MuleFileTransformer</artifactId>
     <packaging>mule</packaging>
-    <name>MuleFileTransformer2</name>
+    <name>MuleFileTransformer</name>
     <version>1.0-SNAPSHOT</version>
     <description>Mule File transformer demo</description>
 
