@@ -43,7 +43,7 @@ public class CursorParse {
     }
 
     public static void main(String[] args) throws Exception {
-        int count = 0;
+         int count = 0;
         String filename = null;
 
         try {
