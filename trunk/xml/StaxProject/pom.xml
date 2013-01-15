@@ -1,169 +1,171 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
-  <modelVersion>4.0.0</modelVersion>
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
 
-  <groupId>com.dhenton9000</groupId>
-  <artifactId>Staxproject</artifactId>
-  <version>1.0-SNAPSHOT</version>
-  <packaging>jar</packaging>
+    <groupId>com.dhenton9000.wicket</groupId>
+    <artifactId>StaxProject</artifactId>
+    <version>1.0-SNAPSHOT</version>
+    <packaging>jar</packaging>
 
-  <name>Staxproject</name>
-  <url>http://maven.apache.org</url>
+    <name>StaxProject</name>
+    <url>http://maven.apache.org</url>
 
-  <properties>
-    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-  </properties>
+    <properties>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
   
-  
-     <build>
-       
-        <pluginManagement>
-            <plugins>
-                <plugin>
-                    <groupId>org.apache.maven.plugins</groupId>
-                    <artifactId>maven-install-plugin</artifactId>
-                    <version>2.3.1</version>
-                </plugin>
-              
-            </plugins>
-        </pluginManagement>
+        <spring.version>3.1.0.RELEASE</spring.version>
+        
+
+      
+    </properties>
+   
+    <build>
         <plugins>
-            
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
                 <version>2.3.2</version>
                 <configuration>
-                    <source>${jdk.version}</source>
-                    <target>${jdk.version}</target>
-                    <encoding>UTF-8</encoding>
+                    <source>1.6</source>
+                    <target>1.6</target>
                 </configuration>
             </plugin>
-            <plugin>
-                <artifactId>maven-assembly-plugin</artifactId>
-                <configuration>
-                    <finalName>${project.artifactId}-${project.version}</finalName>
-                    <descriptors>
-                        <descriptor>assembly.xml</descriptor>
-                    </descriptors>
-                    <appendAssemblyId>false</appendAssemblyId>
-                </configuration>
-            </plugin>
-           
         </plugins>
     </build>
 
-    <!-- plugins for creating site reports -->
-     
     <reporting>
         <plugins>
             <plugin>
+                <!-- http://maven.apache.org/plugins/maven-surefire-report-plugin/ -->
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-surefire-report-plugin</artifactId>
-                <version>2.4.2</version>
-            </plugin>
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-dependency-plugin</artifactId>
-                <version>2.4.2</version>
-            </plugin>
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-checkstyle-plugin</artifactId>
-                <version>2.5</version>
+                <version>2.4.3</version>
                 <configuration>
-                    <configLocation>http://mulesoft.org/download/attachments/92/checkstyle.xml?version=1</configLocation>
+                    <showSuccess>false</showSuccess>
+                    <!-- surefire uses a new jvm, MAVEN_OPTS are ignored, so you better set the memory options here -->
+                    <argLine>-Xmx512m -XX:MaxPermSize=256m</argLine>
                 </configuration>
             </plugin>
             <plugin>
+                <!-- http://maven.apache.org/plugins/maven-javadoc-plugin/ -->
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-javadoc-plugin</artifactId>
+                <version>2.6.1</version>
+            </plugin>
+            <plugin>
+                <!-- http://maven.apache.org/plugins/maven-jxr-plugin/ -->
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-jxr-plugin</artifactId>
+                <version>2.1</version>
+            </plugin>
+            <plugin>
+                <!-- http://mojo.codehaus.org/taglist-maven-plugin/ -->
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>taglist-maven-plugin</artifactId>
+                <version>2.4</version>
+            </plugin>
+            <plugin>
+                <!-- http://maven.apache.org/plugins/maven-pmd-plugin/ -->
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-pmd-plugin</artifactId>
-                <version>2.5</version>
+                <version>2.4</version>
                 <configuration>
+                    <linkXref>true</linkXref>
                     <targetJdk>${jdk.version}</targetJdk>
                 </configuration>
             </plugin>
             <plugin>
+                <!-- http://maven.apache.org/plugins/maven-changes-plugin/ -->
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-changes-plugin</artifactId>
+                <version>2.3</version>
+                <configuration>
+                    <xmlPath>src/site/changes.xml</xmlPath>
+                </configuration>
+                <reportSets>
+                    <reportSet>
+                        <reports>
+                            <report>changes-report</report>
+                        </reports>
+                    </reportSet>
+                </reportSets>
+            </plugin>
+            <plugin>
+                <!-- http://mojo.codehaus.org/cobertura-maven-plugin/ -->
                 <groupId>org.codehaus.mojo</groupId>
                 <artifactId>cobertura-maven-plugin</artifactId>
-                <version>2.5</version>
-            </plugin>
-            <plugin>
-                <groupId>org.codehaus.mojo</groupId>
-                <artifactId>taglist-maven-plugin</artifactId>
                 <version>2.4</version>
-                <configuration>
-                    <tags>
-                        <tag>TODO</tag>
-                        <tag>@todo</tag>
-                        <tag>FIXME</tag>
-                        <tag>@fixme</tag>
-                        <tag>@deprecated</tag>
-                    </tags>
-                </configuration>
             </plugin>
             <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-jxr-plugin</artifactId>
-                <version>2.2</version>
-            </plugin>
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-javadoc-plugin</artifactId>
-                <version>2.7</version>
-                <configuration>
-                    <source>${jdk.version}</source>
-                    <links>
-                        <link>http://java.sun.com/j2ee/1.4/docs/api</link>
-                        <link>http://java.sun.com/j2se/1.4.2/docs/api</link>
-                        <link>http://java.sun.com/j2se/1.5.0/docs/api</link>
-                    </links>
-                </configuration>
-            </plugin>
-            <plugin>
+                <!-- http://mojo.codehaus.org/l10n-maven-plugin/ -->
                 <groupId>org.codehaus.mojo</groupId>
-                <artifactId>jdepend-maven-plugin</artifactId>
-                <version>2.0-beta-2</version>
+                <artifactId>l10n-maven-plugin</artifactId>
+                <version>1.0-alpha-2</version>
+                <configuration>
+                    <locales>
+                        <locale>en</locale>
+                        <locale>fr</locale>
+                    </locales>
+                </configuration>
             </plugin>
             <plugin>
+                <!-- http://mojo.codehaus.org/findbugs-maven-plugin/ -->
                 <groupId>org.codehaus.mojo</groupId>
                 <artifactId>findbugs-maven-plugin</artifactId>
-                <version>2.3.2</version>
+                <version>2.3.1</version>
+                <configuration>
+                    <findbugsXmlOutput>true</findbugsXmlOutput>
+                    <xmlOutput>true</xmlOutput>
+                </configuration>
             </plugin>
         </plugins>
     </reporting>
-
-
-  <dependencies>
-      
-       <dependency>
-            <groupId>org.slf4j</groupId>
-            <artifactId>slf4j-log4j12</artifactId>
-            <version>1.5.5</version>
-        </dependency>
+    
+ 
+    <dependencies>
+         
         <dependency>
-            <groupId>org.slf4j</groupId>
-            <artifactId>slf4j-api</artifactId>
-            <version>1.5.5</version>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-core</artifactId>
+            <version>${spring.version}</version>
         </dependency>
-        
-        
+
+        <dependency>
+            <groupId>junit</groupId>
+            <artifactId>junit</artifactId>
+            <version>4.11</version>
+            <scope>test</scope>
+        </dependency>
+
         <dependency>
             <groupId>log4j</groupId>
             <artifactId>log4j</artifactId>
             <version>1.2.12</version>
+		 
         </dependency>
         <dependency>
-            <groupId>com.dhenton9000.utils</groupId>
-            <artifactId>XmlUtils</artifactId>
-            <version>1.0-SNAPSHOT</version>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-test</artifactId>
+            <version>${spring.version}</version>
+            <scope>test</scope>
         </dependency>
-      
-    <dependency>
-      <groupId>junit</groupId>
-      <artifactId>junit</artifactId>
-      <version>3.8.1</version>
-      <scope>test</scope>
-    </dependency>
-  </dependencies>
+        <dependency>
+            <groupId>org.hamcrest</groupId>
+            <artifactId>hamcrest-all</artifactId>
+            <version>1.1</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.easymock</groupId>
+            <artifactId>easymock</artifactId>
+            <version>3.1</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.slf4j</groupId>
+            <artifactId>slf4j-api</artifactId>
+            <version>1.6.5</version>
+            <type>jar</type>
+        </dependency>
+    </dependencies>
 </project>
