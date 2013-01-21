@@ -58,11 +58,16 @@ public final class RestaurantFormPanel extends Panel {
                     String name = (String) nameField.getModelObject();
                     logger.debug("name is " + name);
                     if (name != null && name.length() > 0) {
+                        
+                        
                         Restaurant modelObject = getModelObject();
+                         logger.debug("before merge/add submit "+modelObject);
                         if (modelObject.isPrimaryKeySet() == false) {
+                             logger.debug("in on submit save " + modelObject.toString());
+                            
                             service.save(modelObject);
                         } else {
-                            logger.debug("in on submit " + modelObject.toString());
+                            logger.debug("in on submit merge " + modelObject.toString());
 
                             //  List<Restaurant> t = service.find(modelObject);
                             // Restaurant t0 = t.get(0);
@@ -74,7 +79,11 @@ public final class RestaurantFormPanel extends Panel {
                         info("Changes saved!");
 
                     } else {
+                         Restaurant modelObject = getModelObject();
+                         logger.debug("before error "+modelObject);
                         error("Restaurant Name cannot be empty");
+                        modelObject = getModelObject();
+                         logger.debug("after error "+modelObject);
                         //state stays the same
                     }
                 } else {

@@ -6,11 +6,15 @@ package com.dhenton9000.wicket.pages.maintenance.restaurant;
 
 import com.dhenton9000.jpa.entities.Restaurant;
 import com.dhenton9000.wicket.dao.IRestaurantDao;
+import com.dhenton9000.wicket.models.RestaurantReloadableEntityModel;
 import org.apache.wicket.markup.html.form.Button;
 import org.apache.wicket.markup.html.form.Form;
 import org.apache.wicket.markup.html.panel.Panel;
+import org.apache.wicket.model.IChainingModel;
 import org.apache.wicket.model.IModel;
 import org.apache.wicket.model.Model;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  *
@@ -18,32 +22,35 @@ import org.apache.wicket.model.Model;
  */
 public final class AddDeleteRestaurantPanel extends Panel {
 
-    private Form<Restaurant> addDeleteRestaurantForm;
-    private Restaurant selectedRestaurant = null;
-     
+    private Form addDeleteRestaurantForm;
+    private RestaurantReloadableEntityModel selectedRestaurantModel = null;
+    private final Logger logger = LoggerFactory.getLogger(AddDeleteRestaurantPanel.class);
 
     /**
-     * The model is the containing Page , MaintainRestaurants
+     * The model  propertymodel of the containing page
      *
      * @param id
      * @param model
      * @param service
      */
-    public AddDeleteRestaurantPanel(String id, IModel model) {
-        super(id,model);
+    public AddDeleteRestaurantPanel(String id) {
+        super(id);
+       // selectedRestaurantModel = (RestaurantReloadableEntityModel) model.getChainedModel();
 
-
-        addDeleteRestaurantForm = new Form<Restaurant>("addDeleteForm") {
+        addDeleteRestaurantForm = new Form("addDeleteForm") {
             @Override
             protected void onSubmit() {
             }
         };
+
+
+
         Button addButton = new Button("addButton", new Model("Add")) {
             @Override
             public void onSubmit() {
                 
                 getContainingPage().performStateOperation(MaintainRestaurants.STATE.ADD);
-                setSelectedRestaurant(new Restaurant());
+               // setSelectedRestaurant(new Restaurant());
             }
 
             @Override
@@ -67,12 +74,16 @@ public final class AddDeleteRestaurantPanel extends Panel {
             }
         };
 
-   
+
         Button deleteButton = new Button("deleteButton", new Model("Delete")) {
             @Override
             public void onSubmit() {
-                getContainingPage().performStateOperation(MaintainRestaurants.STATE.DELETE);
-             //   setSelectedRestaurant(new Restaurant());
+               // Restaurant r = (Restaurant) getPanelModel().getObject();
+               // logger.debug("restaurant in delete is "+r);
+               Restaurant r = (Restaurant)  getContainingPage().getSelectedRestaurantModel().getObject();
+               logger.debug("restaurant in delete button is "+r);
+               getContainingPage().performStateOperation(MaintainRestaurants.STATE.DELETE);
+                //   setSelectedRestaurant(new Restaurant());
             }
 
             @Override
@@ -112,22 +123,13 @@ public final class AddDeleteRestaurantPanel extends Panel {
 
     }
 
-    public Restaurant getSelectedRestaurant() {
-        return selectedRestaurant;
-    }
-
-    /**
-     * @param selectedRestaurant the selectedRestaurant to set
-     */
-    public void setSelectedRestaurant(Restaurant selectedRestaurant) {
-        this.selectedRestaurant = selectedRestaurant;
-        this.setDefaultModelObject(selectedRestaurant);
-    }
+ 
+    
 
     /**
      * @return the containingPage
      */
     public MaintainRestaurants getContainingPage() {
-       return  (MaintainRestaurants) getParent();
+        return (MaintainRestaurants) getParent();
     }
 }

@@ -4,7 +4,8 @@
  */
 package com.dhenton9000.wicket.dao.impl;
 
-import com.dhenton9000.jpa.dao.hibernate.HibernateGenericDaoImpl;
+import com.dhenton9000.jpa.dao.hibernate.BaseHibernateGenericDaoImpl;
+import com.dhenton9000.jpa.dao.support.NamedQueryUtil;
 import com.dhenton9000.jpa.dao.support.SearchTemplate;
 import com.dhenton9000.jpa.entities.Applications;
 import com.dhenton9000.jpa.entities.Groups;
@@ -13,9 +14,12 @@ import com.dhenton9000.wicket.dao.IApplicationsDao;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 /**
@@ -24,7 +28,7 @@ import org.springframework.stereotype.Repository;
  */
 @Repository
 public class ApplicationsDaoImpl
-        extends HibernateGenericDaoImpl<Applications, Integer>
+        extends BaseHibernateGenericDaoImpl<Applications, Integer>
         implements IApplicationsDao {
 
     private final static Logger logger = LoggerFactory.getLogger(ApplicationsDaoImpl.class);
@@ -33,6 +37,20 @@ public class ApplicationsDaoImpl
         super(Applications.class);
     }
 
+    @PersistenceContext
+    @Override
+    public void setEntityManager(EntityManager entityManager) {
+        this.entityManager = entityManager;
+    }
+
+    @Autowired
+    @Override
+    public void setNamedQueryUtil(NamedQueryUtil namedQueryUtil) {
+        this.namedQueryUtil = namedQueryUtil;
+    } 
+    
+    
+    
     @Override
     public List<Applications> getAllApplications() {
 

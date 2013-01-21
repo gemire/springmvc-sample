@@ -31,7 +31,7 @@ public final class PickRestaurantPanel extends Panel {
     private Form<Restaurant> pickRestaurantForm;
     private IRestaurantService service;
     private final Logger logger = LoggerFactory.getLogger(PickRestaurantPanel.class);
-    private IModel pickRestaurantPanelModel = null;
+ //   private IModel pickRestaurantPanelModel = null;
 
     /**
      * The model is a Restaurant object
@@ -39,7 +39,7 @@ public final class PickRestaurantPanel extends Panel {
     public PickRestaurantPanel(String id, IModel model, IRestaurantService service) {
         super(id, model);
         this.service = service;
-        this.pickRestaurantPanelModel = model;
+   //     this.pickRestaurantPanelModel = model;
         logger.debug("pick restaurant panel "+model.getObject().toString());
         
         pickRestaurantForm = new Form<Restaurant>("pickRestaurantForm");
@@ -69,7 +69,7 @@ public final class PickRestaurantPanel extends Panel {
         logger.debug("sent in set "+selectedRestaurantModel.getObject());
         Object z = selectedRestaurantModel.getObject();
         this.setDefaultModelObject(z);
-        
+        getContainingPage().setSelectedRestaurantModel(selectedRestaurantModel);
         logger.debug("Panel is now "+ this.getDefaultModel().getObject().toString());
     }
 
@@ -132,13 +132,13 @@ public final class PickRestaurantPanel extends Panel {
 //                    final RestaurantReloadableEntityModel pickActionPanelModel = 
 //                    (RestaurantReloadableEntityModel) this.getDefaultModel();
 //                    
-                    
-                    getContainingPage().performStateOperation(MaintainRestaurants.STATE.EDIT);
                     setSelectedRestaurant(pickActionPanelModel);
+                    getContainingPage().performStateOperation(MaintainRestaurants.STATE.EDIT);
+                   
                      logger.debug(" clicked on "
                              + pickActionPanelModel.getObject());
-                      logger.debug(" panelmodel "
-                             + pickRestaurantPanelModel.getObject());
+                     // logger.debug(" panelmodel "
+                      //       + pickRestaurantPanelModel.getObject());
                      
                     
                 }

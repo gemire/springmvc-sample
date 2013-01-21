@@ -5,11 +5,9 @@
 package com.dhenton9000.wicket.dao.service;
 
 
-import com.dhenton9000.jpa.dao.support.GenericDao;
 import com.dhenton9000.jpa.entities.Restaurant;
 import com.dhenton9000.jpa.service.support.GenericEntityServiceImpl;
 import com.dhenton9000.wicket.dao.IRestaurantDao;
-import com.dhenton9000.wicket.dao.impl.RestaurantDaoImpl;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

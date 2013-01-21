@@ -62,6 +62,10 @@ public final class MaintainRestaurants extends TemplatePage {
         return (RestaurantReloadableEntityModel) getDefaultModel();
     }
 
+    void setSelectedRestaurantModel(RestaurantReloadableEntityModel selectedRestaurantModel) {
+        setDefaultModel(selectedRestaurantModel);
+    }
+
      
 //
 //    /**
@@ -91,13 +95,18 @@ public final class MaintainRestaurants extends TemplatePage {
                 break;
             case DELETE:
                 if (getSelectedRestaurantModel() != null) {
-                    service.delete((Restaurant) getSelectedRestaurantModel().getObject());
+                    Restaurant r = (Restaurant) getSelectedRestaurantModel().getObject();
+                    logger.debug("in switch delete "+r);
+                    service.delete(r);
                     setState(STATE.INITIAL);
                   //  selectedRestaurantPropertyModel = new RestaurantReloadableEntityModel(new Restaurant(),service);
                      getSelectedRestaurantModel().setObject(new Restaurant());
                 }
                 break;
             case EDIT:
+                 Restaurant r = (Restaurant) getSelectedRestaurantModel().getObject();
+                    logger.debug("in switch edit "+r);
+                    
                 setState(STATE.EDIT);
                 break;
             case INITIAL:
@@ -134,7 +143,7 @@ public final class MaintainRestaurants extends TemplatePage {
     private void setup() {
         setPageTitle(getClass().getSimpleName());
         selectedRestaurantModel = new RestaurantReloadableEntityModel(new Restaurant(),service);
-        
+         PropertyModel propModel = new PropertyModel(MaintainRestaurants.this,"selectedRestaurantModel.object");
         setDefaultModel(selectedRestaurantModel);
         logger.debug("maintain "+getDefaultModel().getObject().toString());
         PropertyModel mLabel = new PropertyModel(MaintainRestaurants.this, "selectedRestaurantDisplay");
@@ -142,11 +151,11 @@ public final class MaintainRestaurants extends TemplatePage {
       
         pickPanel = new PickRestaurantPanel("pickPanel", getDefaultModel(), service);
         add(pickPanel);
-        //CompoundPropertyModel formModel = new CompoundPropertyModel(
-        //        getDefaultModel());
-        restaurantFormPanel = new RestaurantFormPanel("restaurantFormPanel", getDefaultModel(), service);
+        restaurantFormPanel = new RestaurantFormPanel("restaurantFormPanel", 
+                propModel, service);
         add(restaurantFormPanel);
-        add(new AddDeleteRestaurantPanel("addDeletePanel",getDefaultModel()));
+        
+        add(new AddDeleteRestaurantPanel("addDeletePanel"));
 
         
     }

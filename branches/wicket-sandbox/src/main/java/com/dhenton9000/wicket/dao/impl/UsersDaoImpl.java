@@ -4,7 +4,8 @@
  */
 package com.dhenton9000.wicket.dao.impl;
 
-import com.dhenton9000.jpa.dao.hibernate.HibernateGenericDaoImpl;
+import com.dhenton9000.jpa.dao.hibernate.BaseHibernateGenericDaoImpl;
+import com.dhenton9000.jpa.dao.support.NamedQueryUtil;
 import com.dhenton9000.jpa.dao.support.SearchTemplate;
 import com.dhenton9000.jpa.entities.Groups;
 import com.dhenton9000.jpa.entities.Users;
@@ -13,8 +14,11 @@ import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 /**
@@ -23,7 +27,7 @@ import org.springframework.stereotype.Repository;
  */
 @Repository
 public class UsersDaoImpl
-        extends HibernateGenericDaoImpl<Users, String>
+        extends BaseHibernateGenericDaoImpl<Users, String>
         implements IUsersDao {
 
     private final static Logger logger = LoggerFactory.getLogger(UsersDaoImpl.class);
@@ -32,6 +36,22 @@ public class UsersDaoImpl
         super(Users.class);
     }
 
+    
+     @PersistenceContext
+    @Override
+    public void setEntityManager(EntityManager entityManager) {
+        this.entityManager = entityManager;
+    }
+
+    @Autowired
+    @Override
+    public void setNamedQueryUtil(NamedQueryUtil namedQueryUtil) {
+        this.namedQueryUtil = namedQueryUtil;
+    } 
+    
+    
+    
+    
     @Override
     public Users getUserById(String userid) {
 
