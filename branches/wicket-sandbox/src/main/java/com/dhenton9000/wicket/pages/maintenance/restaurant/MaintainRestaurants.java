@@ -26,21 +26,18 @@ import org.slf4j.LoggerFactory;
 public final class MaintainRestaurants extends TemplatePage {
 
     private final Logger logger = LoggerFactory.getLogger(MaintainRestaurants.class);
-   // private RestaurantReloadableEntityModel selectedRestaurantModel = null;
+    // private RestaurantReloadableEntityModel selectedRestaurantModel = null;
     @SpringBean
     private IRestaurantService service;
     private PickRestaurantPanel pickPanel = null;
-    private RestaurantFormPanel restaurantFormPanel = null;
+    private ValidatingRestaurantFormPanel restaurantFormPanel = null;
     private RestaurantReloadableEntityModel selectedRestaurantModel;
 
-     public MaintainRestaurants() {
+    public MaintainRestaurants() {
         super();
         setup();
     }
 
-    
-    
-    
     /**
      * @return the state
      */
@@ -66,7 +63,6 @@ public final class MaintainRestaurants extends TemplatePage {
         setDefaultModel(selectedRestaurantModel);
     }
 
-     
 //
 //    /**
 //     * @param selectedRestaurantPropertyModel the selectedRestaurantPropertyModel to set
@@ -74,14 +70,11 @@ public final class MaintainRestaurants extends TemplatePage {
 //    public void setSelectedRestaurantModel(RestaurantReloadableEntityModel selectedRestaurantModel) {
 //        this.selectedRestaurantModel = selectedRestaurantModel;
 //    }
-
     public enum STATE {
 
         INITIAL, ADD, EDIT, DELETE
     }
     private STATE state = STATE.INITIAL;
-
-   
 
     public void performStateOperation(STATE t) {
         logger.debug("operation called with " + t);
@@ -90,30 +83,27 @@ public final class MaintainRestaurants extends TemplatePage {
 
             case ADD:
                 setState(STATE.ADD);
-               // selectedRestaurantPropertyModel = new RestaurantReloadableEntityModel(new Restaurant(),service);
-                getSelectedRestaurantModel().setObject(new Restaurant());
+                setSelectedRestaurantModel(new RestaurantReloadableEntityModel(new Restaurant(), service));
                 break;
             case DELETE:
                 if (getSelectedRestaurantModel() != null) {
                     Restaurant r = (Restaurant) getSelectedRestaurantModel().getObject();
-                    logger.debug("in switch delete "+r);
+                    logger.debug("in switch delete " + r);
                     service.delete(r);
                     setState(STATE.INITIAL);
-                  //  selectedRestaurantPropertyModel = new RestaurantReloadableEntityModel(new Restaurant(),service);
-                     getSelectedRestaurantModel().setObject(new Restaurant());
+                    setSelectedRestaurantModel(new RestaurantReloadableEntityModel(new Restaurant(), service));
+                     
                 }
                 break;
             case EDIT:
-                 Restaurant r = (Restaurant) getSelectedRestaurantModel().getObject();
-                    logger.debug("in switch edit "+r);
-                    
-                setState(STATE.EDIT);
+                Restaurant r = (Restaurant) getSelectedRestaurantModel().getObject();
+                logger.debug("in switch edit " + r);
+               setState(STATE.EDIT);
                 break;
             case INITIAL:
                 setState(STATE.INITIAL);
-               // selectedRestaurantPropertyModel = new RestaurantReloadableEntityModel(new Restaurant(),service);
-                  getSelectedRestaurantModel().setObject(new Restaurant());
-                   
+                setSelectedRestaurantModel(new RestaurantReloadableEntityModel(new Restaurant(), service));
+
                 //restaurantFormPanel.resetMainForm();
                 break;
         }
@@ -128,36 +118,35 @@ public final class MaintainRestaurants extends TemplatePage {
         String t = rr.getName();
         String j = "";
         if (rr.getPrimaryKey() == null) {
-            j ="";
-        }
-        else {
+            j = "";
+        } else {
             j = rr.getPrimaryKey().toString();
         }
         if (t == null) {
             t = "";
-            j="";
+            j = "";
         }
-        return t + " [" + getState() + "] "+j;
+        return t + " [" + getState() + "] " + j;
     }
 
     private void setup() {
         setPageTitle(getClass().getSimpleName());
-        selectedRestaurantModel = new RestaurantReloadableEntityModel(new Restaurant(),service);
-         PropertyModel propModel = new PropertyModel(MaintainRestaurants.this,"selectedRestaurantModel.object");
+        selectedRestaurantModel = new RestaurantReloadableEntityModel(new Restaurant(), service);
+        PropertyModel propModel = new PropertyModel(MaintainRestaurants.this, "selectedRestaurantModel.object");
         setDefaultModel(selectedRestaurantModel);
-        logger.debug("maintain "+getDefaultModel().getObject().toString());
+        logger.debug("maintain " + getDefaultModel().getObject().toString());
         PropertyModel mLabel = new PropertyModel(MaintainRestaurants.this, "selectedRestaurantDisplay");
         add(new Label("selectedRestaurant", mLabel));
-      
+
         pickPanel = new PickRestaurantPanel("pickPanel", getDefaultModel(), service);
         add(pickPanel);
-        restaurantFormPanel = new RestaurantFormPanel("restaurantFormPanel", 
+        restaurantFormPanel = new ValidatingRestaurantFormPanel("restaurantFormPanel",
                 propModel, service);
         add(restaurantFormPanel);
-        
+
         add(new AddDeleteRestaurantPanel("addDeletePanel"));
 
-        
+
     }
 
     /**
