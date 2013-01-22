@@ -37,7 +37,7 @@ public final class PickRestaurantPanel extends Panel {
      * The model is a Restaurant object
      */
     public PickRestaurantPanel(String id, IModel model, IRestaurantService service) {
-        super(id, model);
+        super(id,model);
         this.service = service;
    //     this.pickRestaurantPanelModel = model;
         logger.debug("pick restaurant panel "+model.getObject().toString());
@@ -67,10 +67,22 @@ public final class PickRestaurantPanel extends Panel {
    //     this.pickRestaurantPanelModel = pickRestaurantPanelModel;
        // this.setDefaultModel(selectedRestaurantModel);
         logger.debug("sent in set "+selectedRestaurantModel.getObject());
-        Object z = selectedRestaurantModel.getObject();
-        this.setDefaultModelObject(z);
-        getContainingPage().setSelectedRestaurantModel(selectedRestaurantModel);
-        logger.debug("Panel is now "+ this.getDefaultModel().getObject().toString());
+       // Object z = selectedRestaurantModel.getObject();
+      //  this.setDefaultModelObject(z);
+        
+        Restaurant cR = (Restaurant)selectedRestaurantModel.getObject();
+        Restaurant nR =  copyRestaurant(cR);
+        RestaurantReloadableEntityModel copyModel = new
+        RestaurantReloadableEntityModel(nR,selectedRestaurantModel.getService());
+        
+        
+        getContainingPage().setSelectedRestaurantModel(copyModel);
+        
+        
+        
+        
+        
+       // logger.debug("Panel is now "+ this.getDefaultModel().getObject().toString());
     }
 
     /**
@@ -78,6 +90,18 @@ public final class PickRestaurantPanel extends Panel {
      */
     public MaintainRestaurants getContainingPage() {
         return (MaintainRestaurants) getParent();
+    }
+
+    private Restaurant copyRestaurant(Restaurant cR) {
+        Restaurant newCopy = new Restaurant();
+        newCopy.setCity(cR.getCity());
+        newCopy.setId(cR.getId());
+        newCopy.setName(cR.getName());
+        newCopy.setState(cR.getState());
+        newCopy.setVersion(cR.getVersion());
+        newCopy.setZipCode(cR.getZipCode());
+        
+        return newCopy;
     }
 
     //////////////////////////////
