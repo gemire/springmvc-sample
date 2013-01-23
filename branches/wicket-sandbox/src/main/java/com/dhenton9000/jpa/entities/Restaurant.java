@@ -6,25 +6,20 @@ package com.dhenton9000.jpa.entities;
 
 import com.dhenton9000.jpa.domain.Identifiable;
 import java.io.Serializable;
-import java.util.Set;
 import javax.persistence.Basic;
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
-import javax.persistence.Lob;
-import javax.persistence.ManyToMany;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  *
@@ -43,9 +38,11 @@ public class Restaurant implements Identifiable<Integer>, Serializable {
     private Integer id;
     private String name;
     private Integer version;
+    private String versionString;
     private String zipCode;
     private String city;
     private String state;
+    private final Logger logger = LoggerFactory.getLogger(Restaurant.class);
 
     public Restaurant() {
     }
@@ -96,8 +93,6 @@ public class Restaurant implements Identifiable<Integer>, Serializable {
         hash = 71 * hash + (this.id != null ? this.id.hashCode() : 0);
         return hash;
     }
-
-    
 
     @Override
     @Transient
@@ -177,9 +172,52 @@ public class Restaurant implements Identifiable<Integer>, Serializable {
     public void setState(String state) {
         this.state = state;
     }
-    
+
     @Override
     public String toString() {
-        return getName()+" {"+getPrimaryKey()+"}";
+        return getName() + " {" + getPrimaryKey() + "}";
+    }
+
+    /**
+     * @return the versionString
+     */
+    @XmlTransient
+    @Transient
+    public String getVersionString() {
+        return versionString;
+    }
+
+    /**
+     * @param versionString the versionString to set
+     */
+    public void setVersionString(String versionString) {
+        this.versionString = versionString;
+    }
+
+    /**
+     * move the integer value to the string value
+     */
+    public void scatter() {
+        String var = "";
+        if (this.getVersion() != null) {
+            logger.debug("scattering "+this.getVersion());
+            var = this.getVersion().toString();
+        }
+        this.setVersionString(var);
+    }
+
+    /**
+     * move the string value to the integer value
+     */
+    public void gather() {
+        String var = this.getVersionString();
+        Integer i = null;
+        if (var != null) {
+            try {
+                i = Integer.parseInt(var);
+            } catch (Exception err) {
+            }
+        }
+        this.setVersion(i);
     }
 }
