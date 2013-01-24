@@ -8,7 +8,10 @@ import com.dhenton9000.jpa.entities.Restaurant;
 import com.dhenton9000.wicket.models.RestaurantReloadableEntityModel;
 
 /**
- *
+ * A class that represents an event from the various Panel components
+ * It will return a Restaurant or Model depending on its source. The 
+ * target (MaintainRestaurantsTwo) will know what to look for.
+ * 
  * @author dhenton
  */
 public class RestaurantEvent {

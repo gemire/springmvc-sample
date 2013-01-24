@@ -5,7 +5,6 @@
 package com.dhenton9000.wicket.pages.maintenance.restaurant.two;
 
 import com.dhenton9000.jpa.entities.Restaurant;
-import com.dhenton9000.wicket.pages.maintenance.restaurant.MaintainRestaurants;
 import org.apache.wicket.event.Broadcast;
 import org.apache.wicket.markup.html.basic.Label;
 import org.apache.wicket.markup.html.form.Button;

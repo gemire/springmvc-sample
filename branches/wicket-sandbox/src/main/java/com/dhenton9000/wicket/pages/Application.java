@@ -15,7 +15,6 @@ import com.dhenton9000.wicket.pages.resources.ImageRefPage;
 import com.dhenton9000.wicket.pages.resources.ImageResourceReference;
 import com.dhenton9000.wicket.pages.repeater.FormInputWithList;
 import com.dhenton9000.wicket.pages.repeater.SimpleListViewRepeater;
-import com.dhenton9000.wicket.pages.maintenance.restaurant.MaintainRestaurants;
 import com.dhenton9000.wicket.pages.security.AuthenticatedWebPage;
 import com.dhenton9000.wicket.pages.security.SandboxSession;
 import com.dhenton9000.wicket.pages.security.SignIn;
@@ -134,8 +133,8 @@ public class Application extends WebApplication {
             CompoundUserPage.class,LightboxPage.class,MaintainRestaurantsTwo.class,
             ApplicationsUsers.class,SimpleEventPage.class,
             SimpleListViewRepeater.class, MaintainApplications.class,
-            FormInputWithList.class, ModalInputPage.class,
-            MaintainRestaurants.class};
+            FormInputWithList.class, ModalInputPage.class
+            };
 
         for (Class page : pageArray) {
             this.mountPage(page.getSimpleName(), page);

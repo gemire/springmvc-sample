@@ -9,7 +9,7 @@ import com.dhenton9000.wicket.pages.events.SimpleEventPage;
 import com.dhenton9000.wicket.pages.form.explore.ExploreFormPage;
 import com.dhenton9000.wicket.pages.form.sample.CompoundUserPage;
 import com.dhenton9000.wicket.pages.form.sample.UserPage;
-import com.dhenton9000.wicket.pages.maintenance.restaurant.MaintainRestaurants;
+
 import com.dhenton9000.wicket.pages.maintenance.security.MaintainApplications;
 import com.dhenton9000.wicket.pages.maintenance.restaurant.two.MaintainRestaurantsTwo;
 import com.dhenton9000.wicket.pages.modal.ModalInputPage;
@@ -56,7 +56,6 @@ public final class NavPanel extends TemplatePanel {
         add(new BookmarkablePageLink<Void>("maintainApplicationsLink", MaintainApplications.class));
         add(new BookmarkablePageLink<Void>("refreshingViewLink", FormInputWithList.class));
         add(new BookmarkablePageLink<Void>("modalInputPageLink",ModalInputPage.class));
-        add(new BookmarkablePageLink<Void>("maintainRestaurantsLink",MaintainRestaurants.class));
         add(new BookmarkablePageLink<Void>("lightBoxPageLink",LightboxPage.class));
         add(new BookmarkablePageLink<Void>("simpleEventPageLink",SimpleEventPage.class)); 
         add(new BookmarkablePageLink<Void>("exploreFormPageLink",ExploreFormPage.class)); 
