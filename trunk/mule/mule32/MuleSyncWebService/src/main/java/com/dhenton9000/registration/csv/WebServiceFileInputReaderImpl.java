@@ -59,10 +59,12 @@ public class WebServiceFileInputReaderImpl implements WebServiceFileInputReader 
                 nextTransmission.setRegistrationDetails(details);
                 Calendar dateCal = convertDate(dataMap.get("date"));
                 nextTransmission.setRegistrationDate(dateCal);
+                log.info("begin transmission "+nextTransmission.getName());
                 webServiceTransmitter.transmit(nextTransmission);
+                 log.info("done transmission "+nextTransmission.getName());
             }
         } catch (Exception err) {
-            log.error("web service error: " + err.getMessage(), err);
+            log.error("web service error: " + err.getMessage());
         } finally {
             try {
                 reader.close();

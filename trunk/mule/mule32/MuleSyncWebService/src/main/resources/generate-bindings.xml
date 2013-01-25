@@ -12,7 +12,7 @@
 	<target name="WSDLToJava">
 		<java classname="org.apache.cxf.tools.wsdlto.WSDLToJava" fork="true">
 			<arg value="-p" />
-			<arg value="com.dhenton9000.registration.components.ws" />
+			<arg value="com.dhenton9000.registration.bindings" />
 			<arg value="-d" />
 			<arg value="src/main/java" />
 			<arg value="-b" />
