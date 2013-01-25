@@ -119,6 +119,7 @@ public class CsvMuleComponent implements Callable {
                     .getProperty("originalFileName", PropertyScope.OUTBOUND);
             tResult.setFileName(fileName);
             tResult.setMessage(null);
+            tResult.setProcessingType(getProcessingType());
 
             DefaultMuleMessage dM = new DefaultMuleMessage(request, muleEventContext.getMuleContext());
             MuleMessage reply = null;
