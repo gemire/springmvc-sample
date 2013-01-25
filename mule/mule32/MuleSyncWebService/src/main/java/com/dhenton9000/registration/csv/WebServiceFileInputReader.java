@@ -10,12 +10,10 @@ package com.dhenton9000.registration.csv;
  */
 
 
-import java.io.File;
-import java.io.IOException;
 import java.io.InputStream;
 
 /**
- * This interface is for processing files for the wrapper system
+ * This interface is for processing files 
  * 
  * @author dhenton
  * 
