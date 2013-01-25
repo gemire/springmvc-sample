@@ -15,6 +15,7 @@ public class TransmitResult {
     private long lineNumber = -1L;
     private String lineContents = null;
     private String fileName = null;
+    private String processingType = null;
 
     /**
      * @return the successful
@@ -133,6 +134,20 @@ public class TransmitResult {
             return false;
         }
         return true;
+    }
+
+    /**
+     * @return the processingType
+     */
+    public String getProcessingType() {
+        return processingType;
+    }
+
+    /**
+     * @param processingType the processingType to set
+     */
+    public void setProcessingType(String processingType) {
+        this.processingType = processingType;
     }
 
     
