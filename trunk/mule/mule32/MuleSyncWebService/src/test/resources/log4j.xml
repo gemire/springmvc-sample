@@ -40,6 +40,15 @@ zzzzzzzzzzzzzzzzzzzzzzz
         <level value="INFO"/>
     </logger>
     
+     <logger name="httpclient.wire.header">
+        <level value="ERROR"/>
+    </logger>
+    
+     <logger name=" httpclient.wire.content">
+        <level value="ERROR"/>
+    </logger>
+    
+   
     <logger name="org.apache">
         <level value="ERROR"/>
     </logger>
