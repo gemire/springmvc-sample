@@ -5,15 +5,15 @@
 package com.dhenton9000.registration.csv;
 
 import com.dhenton9000.registration.bindings.RegisterInput;
+import com.dhenton9000.registration.bindings.RegisterResponse;
 import java.io.InputStream;
+import org.apache.log4j.*;
 import org.mule.DefaultMuleMessage;
 import org.mule.api.MuleEventContext;
 import org.mule.api.MuleException;
+import org.mule.api.MuleMessage;
 import org.mule.api.lifecycle.Callable;
 import org.mule.api.transport.PropertyScope;
-import org.apache.log4j.*;
-import org.mule.api.MuleMessage;
-import com.dhenton9000.registration.bindings.RegisterResponse;
 
 /**
  * This mule component delegates to the WebServiceFileInputReader which
