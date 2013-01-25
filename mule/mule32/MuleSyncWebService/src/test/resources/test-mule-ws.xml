@@ -23,27 +23,26 @@ http://www.springframework.org/schema/security http://www.springframework.org/sc
 http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.0.xsd 
 http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/3.2/mule.xsd ">
 	
- <!-- wsdl http://localhost:9091/registration?wsdl -->
+    <!-- wsdl http://localhost:9091/registration?wsdl -->
   
     <global-property name="FILE_FOLDER_ROOT" value="src/test/resources/input/" />
      
      
     <spring:beans>
-
-        <spring:bean name="csvProcessor" id="csvProcessor" 
+        <spring:bean name="csvProcessor" 
                      class="com.dhenton9000.registration.csv.CsvMuleComponent" >
             <spring:property name="fileReader">
-                <spring:bean class=" com.dhenton9000.registration.csv.WebServiceFileInputReaderImpl" />
-            </spring:property>
-             
-            <spring:property name="dispatchDestination">
-                <spring:bean class="java.lang.String">
-                    <spring:constructor-arg>
-                        <spring:value>vm://registrationWebClientDispatch</spring:value>
-                    </spring:constructor-arg>
+                <spring:bean class=" com.dhenton9000.registration.csv.WebServiceFileInputReaderImpl">
+                    <spring:property name="lineProcessor">
+                        <spring:bean
+                                class="com.dhenton9000.registration.csv.RegistrationLineProcessor" />
+                    </spring:property>
                 </spring:bean>
             </spring:property>
-            
+            <spring:property name="processingType" value="registrations" />
+            <spring:property name="dispatchDestination" value="vm://registrationWebClientDispatch"   />
+            <spring:property name="errorDestination" value="vm://registrationWebErrorDispatch"   />   
+      
         </spring:bean>
     </spring:beans>
      
@@ -51,7 +50,7 @@ http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/cor
     <file:connector name="inputConnector"
                     writeToDirectory="${FILE_FOLDER_ROOT}done"
                     autoDelete="true" pollingFrequency="1000" fileAge="1000"
-                    moveToPattern="#[function:datestamp]-#[header:originalFilename].xml"
+                    moveToPattern="#[function:datestamp]-#[header:originalFilename]"
                     workDirectory="${FILE_FOLDER_ROOT}working" workFileNamePattern="#[function:uuid]-#[header:originalFilename].tmp"
                     moveToDirectory="${FILE_FOLDER_ROOT}done" />
     
@@ -61,10 +60,10 @@ http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/cor
     <flow name="MuleWebFlow" doc:name="MuleWebFlow">
         <http:inbound-endpoint exchange-pattern="request-response"
                                address="http://localhost:9091/registration" doc:name="HTTP">
-      <!--  </http:inbound-endpoint> -->
+            <!--  </http:inbound-endpoint> -->
             <cxf:jaxws-service validationEnabled="true" wsdlLocation="RegistrationService.wsdl"
                         
-			serviceClass="com.dhenton9000.registration.components.ws.RegistrationServiceWSDLImpl"
+                               serviceClass="com.dhenton9000.registration.components.ws.RegistrationServiceWSDLImpl"
                                enableMuleSoapHeaders="true">
 
                 <cxf:outFaultInterceptors>
@@ -82,7 +81,7 @@ http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/cor
     </flow>
     
     
-         <!-- csv file input to the web service -->
+    <!-- csv file input to the web service -->
     <flow name="inputCSVFileFlow">
         <file:inbound-endpoint
             path="${FILE_FOLDER_ROOT}input"
@@ -97,11 +96,18 @@ http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/cor
     <flow name="registrationWebClientFlow">
         <vm:inbound-endpoint path="registrationWebClientDispatch" exchange-pattern="request-response" />
         <http:outbound-endpoint    exchange-pattern="request-response"
-                                   address="http://@localhost:9091/registration">	 
+                                   address="http://localhost:9091/registration">	 
             <cxf:jaxws-client
                 serviceClass="com.dhenton9000.registration.components.ws.RegistrationServiceWSDL"
                 operation="register" />
         </http:outbound-endpoint>
+    </flow>
+
+    <flow name="registrationErrorFlow">
+        
+        <vm:inbound-endpoint path="registrationWebErrorDispatch" exchange-pattern="one-way" />
+        <log-component />
+        
     </flow>
 
     

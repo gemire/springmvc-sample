@@ -32,10 +32,12 @@ public class WebServiceFileInputReaderImpl implements WebServiceFileInputReader 
     private static final char DEFAULT_SEPARATOR = ',';
     private static final char DEFAULT_QUOTE_CHARACTER = '"';
     private static Logger log = LogManager.getLogger(WebServiceFileInputReaderImpl.class);
+    private LineProcessor lineProcessor;
 
     @Override
     public void processInput(InputStream input) {
         RegisterInput nextTransmission = null;
+        long lineCounter = 0;
         CSVReader reader = null;
         try {
 
@@ -48,20 +50,15 @@ public class WebServiceFileInputReaderImpl implements WebServiceFileInputReader 
             List<String> columnLabels = Collections.unmodifiableList(Arrays.asList(line));
             // now start the loop of the file body
             while ((line = reader.readNext()) != null) {
-                nextTransmission = new RegisterInput();
+                lineCounter ++;
+                
                 Map<String, String> dataMap = loadMapLine(line, columnLabels);
-                //name,password,plan,length,date
-                nextTransmission.setName(dataMap.get("name"));
-                nextTransmission.setPassword(dataMap.get("password"));
-                RegistrationDetails details = new RegistrationDetails();
-                details.setMonths(BigInteger.valueOf(Long.parseLong(dataMap.get("length"))));
-                details.setPaymentPlan(dataMap.get("plan"));
-                nextTransmission.setRegistrationDetails(details);
-                Calendar dateCal = convertDate(dataMap.get("date"));
-                nextTransmission.setRegistrationDate(dateCal);
-                log.info("begin transmission "+nextTransmission.getName());
-                webServiceTransmitter.transmit(nextTransmission);
-                 log.info("done transmission "+nextTransmission.getName());
+                nextTransmission = getLineProcessor().processLine(dataMap);
+                log.debug("begin transmission "+nextTransmission.getName());
+                
+                webServiceTransmitter.transmit(nextTransmission,lineCounter,line);
+                
+                log.debug("done transmission "+nextTransmission.getName());
             }
         } catch (Exception err) {
             log.error("web service error: " + err.getMessage());
@@ -102,26 +99,23 @@ public class WebServiceFileInputReaderImpl implements WebServiceFileInputReader 
         } //
         return dataMap;
     }
-    
+
     /**
-     * convert the dates in the csv file which are in the form '12/10/2011'
-     * @param dateString
-     * @return 
+     * @return the lineProcessor
      */
-    Calendar convertDate(String dateString)
-    {
-        Calendar dateCal = Calendar.getInstance();
-        SimpleDateFormat df = new SimpleDateFormat("MM/dd/yyyy");
-        try {
-            Date dateVar = df.parse(dateString);
-            dateCal.setTime(dateVar);
-        } catch (ParseException ex) {
-            
-            throw new RuntimeException("could not parse '"+dateString+"' ");
-        }
-       
-        return dateCal;
+    public LineProcessor getLineProcessor() {
+        return lineProcessor;
     }
+
+    /**
+     * @param lineProcessor the lineProcessor to set
+     */
+    public void setLineProcessor(LineProcessor lineProcessor) {
+        this.lineProcessor = lineProcessor;
+    }
+    
+   
+
     
     
     
