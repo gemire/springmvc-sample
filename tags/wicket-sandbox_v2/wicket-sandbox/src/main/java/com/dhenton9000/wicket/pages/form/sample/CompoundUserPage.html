@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:wicket="http://wicket.apache.org">
+
+
+    <body>
+
+        <wicket:extend>
+
+
+            <div wicket:id="feedback"></div>
+            <form wicket:id="compoundUserForm">
+                <p>
+                    <label>Name</label>: <input wicket:id="name" type="text"
+                                                size="20" />
+                </p>
+                <p>
+                    <label>Age</label>: <input wicket:id="age" type="text"
+                                               size="3" />
+                </p>
+                <p>
+                    <label>NickName</label>: <input wicket:id="nickName" type="text"
+                                                    size="20" />
+                </p>
+
+
+                <table cellpadding="4">
+                    <tr>
+                        <td>
+                             <span wicket:id="userNumber">
+			  <label><wicket:message key="select.a.number" /> (RadioGroup)</label>			  
+				<span wicket:id="numbers">
+					<input type="radio" wicket:id="radio"/><label wicket:id="number" style="display:inline"></label>
+				</span>
+			  </span>
+
+                        </td>    
+
+                    </tr>   
+               </table>
+
+
+
+
+                <input type="submit" value="Register" />
+            </form>
+        </wicket:extend>
+    </body>
+</html>
+
