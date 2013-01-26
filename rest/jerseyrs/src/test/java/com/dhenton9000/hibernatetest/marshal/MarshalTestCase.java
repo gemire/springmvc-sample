@@ -82,7 +82,7 @@ public class MarshalTestCase {
     {
        
         UsersDAO gDAO = (UsersDAO) ctx.getBean("usersDAO");
-        Users k = gDAO.findById("ted");
+        Users k = gDAO.findById("gaw");
         log.debug("$$$$$$$$$$$$$$$$$$$$ "+k);
         UsersConverter kConvert = new UsersConverter(k);
          
