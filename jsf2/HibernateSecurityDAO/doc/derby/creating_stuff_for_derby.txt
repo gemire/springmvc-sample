@@ -1,3 +1,0 @@
-http://netbeans.org/kb/docs/ide/java-db.html#starting
-the table creation scripts with there qualifications will create the 
-schemas inside the database
