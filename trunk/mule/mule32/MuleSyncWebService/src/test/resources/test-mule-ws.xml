@@ -29,13 +29,22 @@ http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/cor
      
      
     <spring:beans>
+        
+        <spring:bean name="DocumentToSoapMessage" class="org.mule.module.saaj.DocumentToSOAPMessageTransformer">
+            <spring:property name="propagateHeaders" value="false" />
+        </spring:bean>
+      
+        <spring:bean name="SoapMessageToDocument" class="org.mule.module.saaj.SOAPMessageToDocumentTransformer">
+            <spring:property name="throwExceptionOnFault" value="true" />
+        </spring:bean>
+        
         <spring:bean name="csvProcessor" 
                      class="com.dhenton9000.registration.csv.CsvMuleComponent" >
             <spring:property name="fileReader">
                 <spring:bean class=" com.dhenton9000.registration.csv.WebServiceFileInputReaderImpl">
                     <spring:property name="lineProcessor">
                         <spring:bean
-                                class="com.dhenton9000.registration.csv.RegistrationLineProcessor" />
+                            class="com.dhenton9000.registration.csv.RegistrationLineProcessor" />
                     </spring:property>
                 </spring:bean>
             </spring:property>
@@ -44,8 +53,36 @@ http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/cor
             <spring:property name="errorDestination" value="vm://registrationWebErrorDispatch"   />   
       
         </spring:bean>
-    </spring:beans>
      
+        <spring:bean name="RegistrationJaxbContext"
+                     class="javax.xml.bind.JAXBContext" factory-method="newInstance">
+            <!-- colon-separated list of package names where JAXB classes exist -->
+            <spring:constructor-arg
+                value="com.dhenton9000.registration.bindings" />
+        </spring:bean>
+         
+    </spring:beans>
+    
+    <mulexml:dom-to-xml-transformer name="DomToXml" />
+    <mulexml:xml-to-dom-transformer name="XmlToDom" returnClass="org.w3c.dom.Document" />
+    <mulexml:xml-prettyprinter-transformer name="XmlPrettyPrinter" />
+    
+    
+    <mulexml:jaxb-object-to-xml-transformer
+        name="RegisterInputToString" returnClass="java.lang.String"
+                                     jaxbContext-ref="RegistrationJaxbContext" />
+
+    <mulexml:jaxb-xml-to-object-transformer
+        name="StringToRegisterInput"
+        returnClass="com.dhenton9000.registration.bindings.RegisterInput"
+        jaxbContext-ref="RegistrationJaxbContext" />
+    
+    <mulexml:jaxb-xml-to-object-transformer
+        name="StringToRegisterResponse"
+        returnClass="com.dhenton9000.registration.bindings.RegisterResponse"
+        jaxbContext-ref="RegistrationJaxbContext" />
+    
+    
      
     <file:connector name="inputConnector"
                     writeToDirectory="${FILE_FOLDER_ROOT}done"
@@ -57,9 +94,9 @@ http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/cor
     
     <file:connector name="outputConnector" />
      
-    <flow name="MuleWebFlow" doc:name="MuleWebFlow">
+    <flow name="MuleWebServiceFlow">
         <http:inbound-endpoint exchange-pattern="request-response"
-                               address="http://localhost:9091/registration" doc:name="HTTP">
+                               address="http://localhost:9091/registration">
             <!--  </http:inbound-endpoint> -->
             <cxf:jaxws-service validationEnabled="true" wsdlLocation="RegistrationService.wsdl"
                         
@@ -94,12 +131,26 @@ http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/cor
 
     
     <flow name="registrationWebClientFlow">
-        <vm:inbound-endpoint path="registrationWebClientDispatch" exchange-pattern="request-response" />
-        <http:outbound-endpoint    exchange-pattern="request-response"
-                                   address="http://localhost:9091/registration">	 
-            <cxf:jaxws-client
-                serviceClass="com.dhenton9000.registration.components.ws.RegistrationServiceWSDL"
-                operation="register" />
+        
+        <vm:inbound-endpoint path="registrationWebClientDispatch" 
+                             responseTransformer-refs="SoapMessageToDocument 
+                               DomToXml StringToRegisterResponse"
+                             exchange-pattern="request-response" />
+        
+        <message-properties-transformer>
+            <add-message-property key="Content-Type" value="application/soap+xml" />
+        </message-properties-transformer>
+        <transformer ref="RegisterInputToString" />
+        <transformer ref="XmlToDom" />
+        <transformer ref="DocumentToSoapMessage" />
+        
+        
+        <http:outbound-endpoint   
+            exchange-pattern="request-response"
+            address="http://localhost:9091/registration">	 
+            <!--      <cxf:jaxws-client
+            serviceClass="com.dhenton9000.registration.components.ws.RegistrationServiceWSDL"
+            operation="register" /> -->
         </http:outbound-endpoint>
     </flow>
 
