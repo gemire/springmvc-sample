@@ -23,7 +23,7 @@ import javax.validation.Payload;
 @Retention(RetentionPolicy.RUNTIME)
 @Constraint(validatedBy = PasswordVerificationValidator.class)
 public @interface PasswordVerification {
- 
+    // this is set as a key see ValidationMessages.properties
     String message() default "{newuser.passwordverification}";
  
     Class<?>[] groups() default {};
