@@ -32,7 +32,7 @@ public class JSR303Sample implements Serializable {
 	// The email
 	private String email;
  
-	@NotNull
+	@NotNull(message="You must enter an email")
 	@Email
 	@Size(min=4,max=255)
 	public String getEmail() {
@@ -75,7 +75,7 @@ public class JSR303Sample implements Serializable {
 	private Integer age;
  
 	@NotNull
-	@Max(140)
+	@Max(65)
 	@Min(18)
 	public Integer getAge() {
 		return this.age;
