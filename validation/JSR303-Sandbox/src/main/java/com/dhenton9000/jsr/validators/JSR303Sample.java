@@ -17,6 +17,12 @@ import org.hibernate.validator.constraints.Email;
     <property name="messageInterpolator" ref="webLocaleInterpolator" />
 </bean>
  * 
+ * using groups in JSR 303 http://www.jroller.com/eyallupu/entry/jsr_303_beans_validation_using
+ * 
+ *http://carinae.net/2009/12/integration-of-jsr-303-bean-validation-standard-and-wicket-1-4/
+ * @author dhenton
+ * 
+ * 
  * @author dhenton
  */
  
