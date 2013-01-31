@@ -4,6 +4,7 @@
  */
 package com.dhenton9000.jpa.entities.inheritance;
 
+import com.dhenton9000.jpa.domain.Identifiable;
 import java.io.Serializable;
 import java.util.Date;
 import java.util.Set;
@@ -27,11 +28,10 @@ import javax.persistence.Temporal;
  */
 @Entity
 @Inheritance(strategy = InheritanceType.JOINED)
-@DiscriminatorColumn(name="TYPE", discriminatorType=DiscriminatorType.INTEGER)
-public class Person implements Serializable {
+@DiscriminatorColumn(name = "TYPE", discriminatorType = DiscriminatorType.INTEGER)
+public class Person implements Serializable, Identifiable<Integer> {
 
     private static final long serialVersionUID = -2175150694352541150L;
-
     private Integer id = null;
     private String firstName = null;
     private String lastName = null;
@@ -42,7 +42,7 @@ public class Person implements Serializable {
      * Gets id (primary key).
      */
     @Id
-    @GeneratedValue(strategy=GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.AUTO)
     public Integer getId() {
         return id;
     }
@@ -83,16 +83,18 @@ public class Person implements Serializable {
     }
 
     /**
-     * Gets list of <code>PersonAddress</code>es.
+     * Gets list of
+     * <code>PersonAddress</code>es.
      */
-    @OneToMany(fetch=FetchType.EAGER, cascade=CascadeType.ALL)
-    @JoinColumn(name="PERSON_ID", nullable=false)
+    @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @JoinColumn(name = "PERSON_ID", nullable = false)
     public Set<PersonAddress> getPersonAddresses() {
         return PersonAddresses;
     }
 
     /**
-     * Sets list of <code>PersonAddress</code>es.
+     * Sets list of
+     * <code>PersonAddress</code>es.
      */
     public void setPersonAddresses(Set<PersonAddress> PersonAddresses) {
         this.PersonAddresses = PersonAddresses;
@@ -129,7 +131,20 @@ public class Person implements Serializable {
         return result;
     }
 
-    
+    @Override
+    public Integer getPrimaryKey() {
+        return getId();
+    }
 
+    @Override
+    public void setPrimaryKey(Integer id) {
+        
+            setId((Integer) id);
+        
+    }
+
+    @Override
+    public boolean isPrimaryKeySet() {
+        return id != null;
+    }
 }
-                
