@@ -4,6 +4,7 @@
  */
 package com.dhenton9000.jpa.entities.inheritance;
 
+import javax.persistence.Column;
 import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
 import javax.persistence.Table;
@@ -24,6 +25,7 @@ public class Professional extends Person {
     /**
      * Gets company name.
      */
+    @Column(name = "COMPANY_NAME", length = 50)
     public String getCompanyName() {
         return companyName;
     }

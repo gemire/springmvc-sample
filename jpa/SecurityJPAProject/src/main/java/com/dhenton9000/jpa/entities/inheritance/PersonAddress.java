@@ -10,6 +10,7 @@ import java.util.Date;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -52,10 +53,15 @@ public class PersonAddress implements Serializable {
     @Column(name = "CREATED")
     @Temporal(TemporalType.TIMESTAMP)
     private Date created;
-    @JoinColumn(name = "PERSON_ID", referencedColumnName = "ID")
-    @ManyToOne
+   
+    @ManyToOne(fetch=FetchType.LAZY,optional=false)
+    @JoinColumn(name = "PERSON_ID", referencedColumnName = "ID", nullable = false, insertable = false, updatable = false)
     private Person personId;
 
+   
+    
+    
+    
     public PersonAddress() {
     }
 

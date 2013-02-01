@@ -9,6 +9,7 @@ import java.io.Serializable;
 import java.util.Date;
 import java.util.Set;
 import javax.persistence.CascadeType;
+import javax.persistence.Column;
 import javax.persistence.DiscriminatorColumn;
 import javax.persistence.DiscriminatorType;
 import javax.persistence.Entity;
@@ -21,6 +22,7 @@ import javax.persistence.InheritanceType;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
 import javax.persistence.Temporal;
+import javax.persistence.Transient;
 
 /**
  *
@@ -57,6 +59,7 @@ public class Person implements Serializable, Identifiable<Integer> {
     /**
      * Gets first name.
      */
+    @Column(name = "FIRST_NAME", length = 50)
     public String getFirstName() {
         return firstName;
     }
@@ -71,6 +74,7 @@ public class Person implements Serializable, Identifiable<Integer> {
     /**
      * Gets last name.
      */
+    @Column(name = "LAST_NAME", length = 50)
     public String getLastName() {
         return lastName;
     }
@@ -104,6 +108,7 @@ public class Person implements Serializable, Identifiable<Integer> {
      * Gets date created.
      */
     @Temporal(javax.persistence.TemporalType.DATE)
+    @Column(name = "CREATED")
     public Date getCreated() {
         return created;
     }
@@ -132,18 +137,20 @@ public class Person implements Serializable, Identifiable<Integer> {
     }
 
     @Override
+    @Transient
     public Integer getPrimaryKey() {
         return getId();
     }
 
     @Override
     public void setPrimaryKey(Integer id) {
-        
-            setId((Integer) id);
-        
+
+        setId((Integer) id);
+
     }
 
     @Override
+    @Transient
     public boolean isPrimaryKeySet() {
         return id != null;
     }

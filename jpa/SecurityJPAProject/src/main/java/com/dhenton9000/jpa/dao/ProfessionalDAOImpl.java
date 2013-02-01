@@ -10,11 +10,13 @@ import com.dhenton9000.jpa.entities.inheritance.Professional;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Repository;
 
 /**
  *
  * @author dhenton
  */
+@Repository
 public class ProfessionalDAOImpl
 
 extends BaseHibernateGenericDaoImpl<Professional, Integer> 
