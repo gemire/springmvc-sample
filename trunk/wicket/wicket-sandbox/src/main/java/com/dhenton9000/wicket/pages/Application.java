@@ -69,6 +69,14 @@ public class Application extends WebApplication {
     @Override
     public void init() {
         super.init();
+
+
+        // used for selenium testing
+        //http://www.wijsmullerbros.nl/content/wicket-selenium
+        getDebugSettings().setOutputComponentPath(true);
+
+
+
         IComponentInstantiationListener spListener =
                 new SpringComponentInjector(this, applicationContext, true);
         this.getComponentInstantiationListeners().add(spListener);
@@ -128,13 +136,12 @@ public class Application extends WebApplication {
     private void mountPages() {
 
         Class pageArray[] = {
-         
-            HomePage.class, UserPage.class,ExploreFormPage.class,
-            CompoundUserPage.class,LightboxPage.class,MaintainRestaurantsTwo.class,
-            ApplicationsUsers.class,SimpleEventPage.class,
+            HomePage.class, UserPage.class, ExploreFormPage.class,
+            CompoundUserPage.class, LightboxPage.class, MaintainRestaurantsTwo.class,
+            ApplicationsUsers.class, SimpleEventPage.class,
             SimpleListViewRepeater.class, MaintainApplications.class,
             FormInputWithList.class, ModalInputPage.class
-            };
+        };
 
         for (Class page : pageArray) {
             this.mountPage(page.getSimpleName(), page);
