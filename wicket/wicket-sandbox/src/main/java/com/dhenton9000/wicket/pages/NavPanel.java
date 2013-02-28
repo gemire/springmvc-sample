@@ -13,9 +13,10 @@ import com.dhenton9000.wicket.pages.form.sample.UserPage;
 import com.dhenton9000.wicket.pages.maintenance.security.MaintainApplications;
 import com.dhenton9000.wicket.pages.maintenance.restaurant.two.MaintainRestaurantsTwo;
 import com.dhenton9000.wicket.pages.modal.ModalInputPage;
+import com.dhenton9000.wicket.pages.onhover.OnHoverPage;
 import com.dhenton9000.wicket.pages.repeater.FormInputWithList;
 import com.dhenton9000.wicket.pages.repeater.SimpleListViewRepeater;
-import com.dhenton9000.wicket.pages.resources.LightboxPage;
+import com.dhenton9000.wicket.pages.lightbox.LightboxPage;
 import org.apache.wicket.markup.html.link.BookmarkablePageLink;
 import org.apache.wicket.model.IModel;
 
@@ -60,7 +61,7 @@ public final class NavPanel extends TemplatePanel {
         add(new BookmarkablePageLink<Void>("simpleEventPageLink",SimpleEventPage.class)); 
         add(new BookmarkablePageLink<Void>("exploreFormPageLink",ExploreFormPage.class)); 
         add(new BookmarkablePageLink<Void>("maintainRestaurantsTwoLink",MaintainRestaurantsTwo.class));
-        
+        add(new BookmarkablePageLink<Void>("onHoverPageLink",OnHoverPage.class));
         // this isn't needed see Application.java for a mount 
         // that allows for a more normal url
         // add(new BookmarkablePageLink<Void>("refPageLink", ImageRefPage.class));
