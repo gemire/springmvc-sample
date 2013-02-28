@@ -20,7 +20,8 @@ import com.dhenton9000.wicket.pages.security.SandboxSession;
 import com.dhenton9000.wicket.pages.security.SignIn;
 import com.dhenton9000.wicket.pages.maintenance.security.MaintainApplications;
 import com.dhenton9000.wicket.pages.maintenance.restaurant.two.MaintainRestaurantsTwo;
-import com.dhenton9000.wicket.pages.resources.LightboxPage;
+import com.dhenton9000.wicket.pages.onhover.OnHoverPage;
+import com.dhenton9000.wicket.pages.lightbox.LightboxPage;
 import org.apache.wicket.RestartResponseAtInterceptPageException;
 import org.apache.wicket.Session;
 import org.apache.wicket.application.IComponentInstantiationListener;
@@ -138,7 +139,7 @@ public class Application extends WebApplication {
         Class pageArray[] = {
             HomePage.class, UserPage.class, ExploreFormPage.class,
             CompoundUserPage.class, LightboxPage.class, MaintainRestaurantsTwo.class,
-            ApplicationsUsers.class, SimpleEventPage.class,
+            ApplicationsUsers.class, SimpleEventPage.class,OnHoverPage.class,
             SimpleListViewRepeater.class, MaintainApplications.class,
             FormInputWithList.class, ModalInputPage.class
         };

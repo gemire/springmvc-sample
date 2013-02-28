@@ -2,7 +2,7 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.dhenton9000.wicket.pages.resources;
+package com.dhenton9000.wicket.pages.lightbox;
 
 import com.dhenton9000.wicket.pages.TemplatePage;
 import org.apache.wicket.markup.head.CssReferenceHeaderItem;
@@ -64,12 +64,12 @@ public final class LightboxPage extends TemplatePage {
 
     private ExternalLink createPixDisplayLink(String imgValue) {
         ResourceReference imagesResourceReference =
-                new PackageResourceReference(LightboxPage.class, "images/lightbox/" + imgValue + ".jpg");
+                new PackageResourceReference(LightboxPage.class, "images/" + imgValue + ".jpg");
       //  PageParameters imageParameters = new PageParameters();
         CharSequence urlForImage = getRequestCycle().urlFor(imagesResourceReference, null);
         ExternalLink a1Link = new ExternalLink(imgValue + "_link", urlForImage.toString());
         a1Link.add(new Image(imgValue + "_thumb",
-                new PackageResourceReference(LightboxPage.class, "images/lightbox/" + imgValue + "_thumb.jpg")));
+                new PackageResourceReference(LightboxPage.class, "images/" + imgValue + "_thumb.jpg")));
         return a1Link;
     }
 }
