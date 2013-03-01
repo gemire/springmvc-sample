@@ -39,28 +39,7 @@ public class MuleLauncher {
 
             MuleContext context = muleContextFactory.createMuleContext(configBuilder);
             context.start();
-            LocalMuleClient localMuleClient = context.getClient();
-            RegisterInput re = new RegisterInput();
-            RegistrationDetails details = new RegistrationDetails();
-            details.setMonths(BigInteger.valueOf(55L));
-            details.setPaymentPlan("bozo");
-            re.setName("fred");
-            re.setPassword("ted");
-            re.setRegistrationDate(Calendar.getInstance());
-            re.setRegistrationDetails(details);
-
-            MuleMessage mm = new DefaultMuleMessage(re, context);
-            MuleMessage reply = localMuleClient.send("vm://registrationWebClientDispatch", mm);
-            JAXBUnmarshallerTransformer tr = (JAXBUnmarshallerTransformer) context.getRegistry().get("stringToResponse");
-            RegisterResponse response = null;
-            try {
-                response = (RegisterResponse) tr.transform(reply.getPayloadAsString());
-
-            } catch (TransformerException ex) {
-                log.error("transformer problem " + ex.getMessage());
-            }
-
-            log.debug("From main the reply is '" + response.getResponseInformation()+"'");
+           
 
             // context.stop();
             // context.dispose();

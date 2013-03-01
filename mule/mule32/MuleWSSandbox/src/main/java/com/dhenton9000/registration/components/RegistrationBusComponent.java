@@ -9,7 +9,7 @@ import org.apache.log4j.LogManager;
 import org.apache.log4j.Logger;
 
 /**
- *
+ * This class processes messages placed on the activemq queue
  * @author dhenton
  */
 public class RegistrationBusComponent  {
