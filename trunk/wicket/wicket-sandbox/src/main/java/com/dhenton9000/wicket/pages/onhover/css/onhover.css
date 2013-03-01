@@ -39,6 +39,8 @@
 }
 .tooltip {
     color: #D8000C;
+    margin:8px;
+    padding:8px;
     cursor:pointer;
     border: red thick solid;
     background-color: #FFBABA;

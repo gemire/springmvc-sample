@@ -6,18 +6,21 @@
 
         <wicket:extend>
             <h2>On Hover In Wicket</h2>
-            
-        <!--    
-        <div class="info">Info message</div>
-        <div class="success">Successful operation message</div>
-        <div class="warning">Warning message</div>
-        <div class="error">Error message</div>
-        -->
-            
-        <span wicket:id="hoverLabel"></span>
-            
+
+            <form wicket:id="hoverForm">
+                <table cellpadding="5" cellspacing="5">
+                    <tr><th>Hover Text</th>
+                        <td><input wicket:id="hoverText" type="text" size="20" /></td></tr>
+                    <tr><td><input type="Submit" value="Submit" /></td></tr>
+
+
+                </table>
+            </form>
+
+            <span wicket:id="hoverLabel"></span>
+
         </wicket:extend>
-        
-        
+
+
     </body>
 </html>
