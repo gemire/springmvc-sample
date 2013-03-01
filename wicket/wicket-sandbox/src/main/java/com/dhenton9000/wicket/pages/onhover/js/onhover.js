@@ -18,12 +18,15 @@ $(document).ready(function() {
         
         
     var showTooltip = function(event) {
-        $('div.tooltip').remove();
-
-        $('<div id="hoverMessage" class="tooltip">' + $(this).attr('toolTipText') +'</div>')
-        .appendTo('body');
-
-        changeTooltipPosition(event);
+        tText = $(this).attr('toolTipText');
+        if (tText.toString().length > 0)
+        { 
+            $('div.tooltip').remove();
+            $('<div id="hoverMessage" class="tooltip">' + tText +'</div>')
+            .appendTo('body');
+            changeTooltipPosition(event);
+        }
+        
     };
         
         
