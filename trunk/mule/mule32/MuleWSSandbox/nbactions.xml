@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<actions>
+        <action>
+            <actionName>CUSTOM-compile no-tests</actionName>
+            <displayName>compile no-tests</displayName>
+            <goals>
+                <goal>clean:clean</goal>
+                <goal>mule:attach-test-resources</goal>
+                <goal>resources:resources</goal>
+                <goal>compiler:compile</goal>
+                <goal>resources:testResources</goal>
+                <goal>compiler:testCompile</goal>
+            </goals>
+            <properties>
+                <skipTests>true</skipTests>
+            </properties>
+        </action>
+    </actions>
