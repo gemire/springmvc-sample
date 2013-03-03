@@ -22,7 +22,7 @@ $(document).ready(function() {
         if (tText.toString().length > 0)
         { 
             $('div.tooltip').remove();
-            $('<div id="hoverMessage" class="tooltip">' + tText +'</div>')
+            $('<div id="hoverMessageDivBlock" class="tooltip">' + tText +'</div>')
             .appendTo('body');
             changeTooltipPosition(event);
         }
