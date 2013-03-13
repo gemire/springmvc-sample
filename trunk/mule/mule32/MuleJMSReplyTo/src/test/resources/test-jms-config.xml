@@ -29,7 +29,7 @@ http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/cor
     
     
     <spring:beans>
-        <spring:import resource="embedded-activemq-broker.xml" />
+        <spring:import resource="remote-activemq-broker.xml" />
          
     </spring:beans>
     
@@ -46,6 +46,10 @@ http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/cor
         <jms:inbound-endpoint queue="testProcess.in" connector-ref="jms-connector" doc:name="JMS"/>
         <echo-component doc:name="Echo"/>
         <component class="com.dhenton9000.jms.components.JmsTestComponent" />
+           <message-properties-transformer>
+			<add-message-property key="timeToLive"
+				value="50000" />
+		</message-properties-transformer> 
          <jms:outbound-endpoint queue="testProcess.reply" connector-ref="jms-connector" doc:name="JMS"/>
     </flow>
      
