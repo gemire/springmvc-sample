@@ -2,7 +2,9 @@ package com.dhenton9000.registration.components.ws;
 
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.util.Map;
 import javax.xml.namespace.QName;
+import javax.xml.ws.BindingProvider;
 import javax.xml.ws.WebEndpoint;
 import javax.xml.ws.WebServiceClient;
 import javax.xml.ws.WebServiceFeature;
@@ -67,5 +69,39 @@ public class RegistrationServiceWSDLClient extends Service {
     public RegistrationServiceWSDL getRegistrationServiceWSDLSOAP(WebServiceFeature... features) {
         return super.getPort(RegistrationServiceWSDLSOAP, RegistrationServiceWSDL.class, features);
     }
+    
+    
+     /**
+     * create a client 
+     * @param wsdlClasspathLocation RegistrationService.wsdl
+     * @param somepathToSomeService registration
+     * @param port 9091
+     * @return the configured client http://localhost:9091/registration
+     * see wiki entry on mule for more parameters
+     */
+    public static RegistrationServiceWSDL createPort(String wsdlClasspathLocation,
+            String somepathToSomeService, String port) {
+
+        ClassLoader cl = Thread.currentThread().getContextClassLoader();
+        URL wsdlURL = cl.getResource(wsdlClasspathLocation);
+
+        RegistrationServiceWSDL svc =
+                (new RegistrationServiceWSDLClient(wsdlURL)).getRegistrationServiceWSDLSOAP();
+        BindingProvider bindingPort = (BindingProvider) svc;
+        Map<String, Object> requestContext =
+                bindingPort.getRequestContext();
+        requestContext.put(BindingProvider.ENDPOINT_ADDRESS_PROPERTY,
+                "http://localhost:" + port + "/"+somepathToSomeService);
+
+        return svc;
+    }
+    
+    
+    public static RegistrationServiceWSDL createPort()
+    {
+        return createPort("RegistrationService.wsdl","registration","9091");
+    }
+    
+    
 
 }
