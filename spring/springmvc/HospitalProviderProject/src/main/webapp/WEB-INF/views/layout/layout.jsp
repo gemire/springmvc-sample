@@ -6,10 +6,10 @@
 
 <%
 
- 
 
-String path = request.getContextPath();
-String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.getServerPort()+path+"/";
+
+    String path = request.getContextPath();
+    String basePath = request.getScheme() + "://" + request.getServerName() + ":" + request.getServerPort() + path + "/";
 
 %>
 
@@ -18,39 +18,41 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 
 
 <html>
-	<head>
-		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-		<title><tiles:insertAttribute name="title" ignore="true" />
-		</title>
-		 
-		<base href="<%= basePath %>" />
-		<script type="text/javascript"  src="js/jquery-1.6.2.min.js"></script>
- 		<script type="text/javascript"  src="js/json.min.js"></script>
-		<link rel="stylesheet" href="css/newmain.css" type="text/css"></link>
-		
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <title><tiles:insertAttribute name="title" ignore="true" />
+        </title>
 
-	</head>
-	<body>
-		<div id="header">
-			<tiles:insertAttribute name="header" />
-		</div>
+        <base href="<%= basePath%>" />
+        <script type="text/javascript"  src="js/jquery.js"></script>
+        <script type="text/javascript"  src="js/json.min.js"></script>
+        <link rel="stylesheet" href="css/newmain.css" type="text/css"></link>
+        <script type="text/javascript" src="js/tree.jquery.js"></script>
+        <link rel="stylesheet" href="js/jqtree.css">
+        <script src="js/jquery.cookie.js"></script>
 
-		<div id="menu">
-			<tiles:insertAttribute name="menu" />
-		</div>
-		<div id="body">
-			<div class="column header1" id="subTitle">
-				<tiles:getAsString name="subTitle" />
-				
-			</div>
-			<div id="innerBody">
-			<tiles:insertAttribute name="body" />  
-			</div>
-		</div>
-	
-		<div id="footer">
-			<tiles:insertAttribute name="footer" />
-		</div>
-	</body>
-	
+    </head>
+    <body>
+        <div id="header">
+            <tiles:insertAttribute name="header" />
+        </div>
+
+        <div id="menu">
+            <tiles:insertAttribute name="menu" />
+        </div>
+        <div id="body">
+            <div class="column header1" id="subTitle">
+                <tiles:getAsString name="subTitle" />
+
+            </div>
+            <div id="innerBody">
+                <tiles:insertAttribute name="body" />  
+            </div>
+        </div>
+
+        <div id="footer">
+            <tiles:insertAttribute name="footer" />
+        </div>
+    </body>
+
 </html>

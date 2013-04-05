@@ -46,9 +46,11 @@ zzzzzzzzzzzzzzzzzzzzzzz
  <logger name="org.hibernate">
         <level value="WARN"/>
     </logger>
-
+ <logger name="org.apache">
+        <level value="WARN"/>
+    </logger>
     <root>
-        <priority value="ERROR"/>
+        <priority value="DEBUG"/>
         <appender-ref ref="CONSOLE"/>
         <appender-ref ref="FILE"/>
     </root>

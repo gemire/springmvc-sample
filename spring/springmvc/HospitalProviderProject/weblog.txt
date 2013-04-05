@@ -81,3 +81,10 @@ Caused by: org.springframework.beans.factory.NoSuchBeanDefinitionException: No b
 	at org.springframework.beans.factory.support.AbstractBeanFactory.getBean(AbstractBeanFactory.java:194)
 	at org.springframework.beans.factory.support.BeanDefinitionValueResolver.resolveReference(BeanDefinitionValueResolver.java:323)
 	... 68 more
+2013-04-05 14:33:29,611 | INFO   | org.apache.tiles.context.AbstractTilesApplicationContextFactory |   76 | Initializing Tiles2 application context. . .
+2013-04-05 14:33:29,620 | INFO   | org.apache.tiles.context.AbstractTilesApplicationContextFactory |   95 | Finished initializing Tiles2 application context.
+2013-04-05 14:33:29,649 | DEBUG  | org.apache.commons.digester.Digester | 2011 | register('-//Apache Software Foundation//DTD Tiles Configuration 2.0//EN', 'jar:file:/home/dhenton/NetBeansProjects/HospitalProviderProject/target/work/webapp/WEB-INF/lib/tiles-core-2.2.2.jar!/org/apache/tiles/resources/tiles-config_2_0.dtd'
+2013-04-05 14:33:29,650 | DEBUG  | org.apache.commons.digester.Digester | 2011 | register('-//Apache Software Foundation//DTD Tiles Configuration 2.1//EN', 'jar:file:/home/dhenton/NetBeansProjects/HospitalProviderProject/target/work/webapp/WEB-INF/lib/tiles-core-2.2.2.jar!/org/apache/tiles/resources/tiles-config_2_1.dtd'
+2013-04-05 14:33:29,658 | INFO   | org.apache.tiles.access.TilesAccess |  113 | Publishing TilesContext for context: org.springframework.web.servlet.view.tiles2.SpringTilesApplicationContextFactory$SpringWildcardServletTilesApplicationContext
+2013-04-05 14:33:48,407 | INFO   | org.apache.tiles.access.TilesAccess |  108 | Removing TilesContext for context: org.springframework.web.servlet.view.tiles2.SpringTilesApplicationContextFactory$SpringWildcardServletTilesApplicationContext
+2013-04-05 14:34:31,173 | INFO   | com.dhenton9000.spring.mvc.controllers.NodeController |   46 | form Provider3
