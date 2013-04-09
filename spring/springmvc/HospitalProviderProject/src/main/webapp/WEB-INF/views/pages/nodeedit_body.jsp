@@ -63,21 +63,21 @@
             $('#name').val(node.name);
         }
     );
- });
+    });
  
  
- function sendTree()
-{
+    function sendTree()
+    {
            
-	    var bean =  eval($('#tree1').tree('toJson'))[0];
-	    var url = "/neo4j/app/node/forms/sendDivision.json";
-	    $.postJSON(url, bean, function(returnJSONObj) {
-                var tttt = JSON.stringify(returnJSONObj);
-	        alert(tttt);
-	    });
+        var bean =  eval($('#tree1').tree('toJson'))[0];
+        var url = "/neo4j/app/node/forms/sendDivision.json";
+        $.postJSON(url, bean, function(returnJSONObj) {
+            //  var tttt = JSON.stringify(returnJSONObj);
+            $('#tree1').tree('loadData', returnJSONObj);
+        });
 
 	
-}
+    }
  
  
  

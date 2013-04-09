@@ -6,6 +6,7 @@ package com.dhenton9000.neo4j.hospital.json;
 
 import java.util.ArrayList;
 import java.util.List;
+import org.codehaus.jackson.annotate.JsonProperty;
 import org.codehaus.jackson.annotate.JsonTypeName;
 
 /**
@@ -17,6 +18,7 @@ public class Provider implements HospitalNode {
 
      
     private String name;
+    private boolean is_open = false;
    // private String type;
     private Long id;
     private List<HospitalNode> children =  new ArrayList<HospitalNode>();
@@ -75,8 +77,14 @@ public class Provider implements HospitalNode {
         this.name = name;
     }
 
-     
- 
+    
+    public void setisOpen(boolean t) {
+        is_open = t;
+    }
+
+    public boolean isOpen() {
+       return is_open;
+    }
      
      
     

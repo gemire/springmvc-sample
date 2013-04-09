@@ -5,6 +5,7 @@
 package com.dhenton9000.neo4j.hospital.json;
 
 import java.util.List;
+import org.codehaus.jackson.annotate.JsonProperty;
 import org.codehaus.jackson.annotate.JsonSubTypes;
 import org.codehaus.jackson.annotate.JsonTypeInfo;
 import org.codehaus.jackson.annotate.JsonTypeInfo.As;
@@ -31,6 +32,8 @@ public interface HospitalNode {
     void setId(Long id);
     //public String getNodeType();
     //public void setNodeType(String t);
-   
-     
+   @JsonProperty(value="is_open")
+   void setisOpen(boolean t);
+   @JsonProperty(value="is_open")
+   boolean isOpen(); 
 }
