@@ -5,6 +5,7 @@
 package com.dhenton9000.neo4j.hospital.json;
 
 import java.io.IOException;
+import java.util.List;
 import org.neo4j.graphdb.Node;
 import org.neo4j.graphdb.RelationshipType;
 
@@ -90,4 +91,10 @@ public interface JSONHospitalService {
      */
     public Division attachFullTree(Division d);
     
+    /**
+     * 
+     * @param list of nodes
+     * @return JSON array
+     */
+    public String divArrayToString(List<HospitalNode> list) throws IOException;
 }
