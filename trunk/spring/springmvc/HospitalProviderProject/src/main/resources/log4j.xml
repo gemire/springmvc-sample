@@ -42,6 +42,13 @@ zzzzzzzzzzzzzzzzzzzzzzz
     <logger name="org.springframework">
         <level value="ERROR"/>
     </logger>
+     <logger name="org.mortbay.log">
+        <level value="ERROR"/>
+    </logger>
+     <logger name="com.sun.jersey">
+        <level value="ERROR"/>
+    </logger>
+    
 
  <logger name="org.hibernate">
         <level value="WARN"/>
