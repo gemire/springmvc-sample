@@ -5,6 +5,7 @@
 package com.dhenton9000.neo4j.hospital.json;
 
 import java.io.IOException;
+import java.util.List;
 import org.codehaus.jackson.map.ObjectMapper;
 import org.neo4j.graphdb.Direction;
 import org.neo4j.graphdb.GraphDatabaseService;
@@ -75,10 +76,15 @@ public class JSONHospitalServiceImpl implements JSONHospitalService {
 
     @Override
     public String structureToString(Division root) throws IOException {
-        String temp = mapper.defaultPrettyPrintingWriter().writeValueAsString(root);
+        String temp = mapper.writerWithDefaultPrettyPrinter().writeValueAsString(root);
         return temp;
     }
-
+    @Override
+     public String divArrayToString(List<HospitalNode> root) throws IOException {
+        String temp = mapper.writerWithDefaultPrettyPrinter().writeValueAsString(root);
+        return temp;
+    }
+    
     @Override
     public Division stringToStructure(String jsonString) throws IOException {
         return mapper.readValue(jsonString, Division.class);

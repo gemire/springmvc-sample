@@ -4,6 +4,7 @@
  */
 package com.dhenton9000.neo4j.hospital.json;
 
+import java.util.ArrayList;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.junit.AfterClass;
@@ -42,5 +43,10 @@ public class JSONSerializationTest {
     public void testWebSample() throws Exception
     {
         Division d2 = jsonService.stringToStructure(SAMPLE);
+        ArrayList<Division> dList = new ArrayList<Division>();
+        dList.add(d2);
+        String fred = jsonService.divArrayToString(dList);
+        logger.debug("\n\n\n"+fred+"\n\n");
+        
     }
 }
