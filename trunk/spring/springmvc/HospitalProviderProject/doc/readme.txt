@@ -57,3 +57,6 @@ public class Neo4jServerConfig implements Configurator {
         return new HashSet<>();
     }
 }
+======================
+
+http://www.mkyong.com/spring-mvc/spring-3-mvc-and-json-example/
