@@ -91,7 +91,11 @@ public class NodeController {
         try {
             h = jService.stringToStructure(divisionAsJSON);
             h.setName(h.getName() + "ZZZZZZ");
-            divisionAsJSON = jService.structureToString((Division) h);
+            
+            
+            
+            
+            divisionAsJSON = "["+jService.structureToString((Division) h)+"]";
         } catch (IOException ex) {
             log.error("cannot create Hospital Node " + ex.getMessage());
             retStat = HttpStatus.FAILED_DEPENDENCY;

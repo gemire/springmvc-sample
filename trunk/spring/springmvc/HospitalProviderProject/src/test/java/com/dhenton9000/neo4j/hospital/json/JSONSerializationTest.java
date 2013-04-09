@@ -27,12 +27,14 @@ public class JSONSerializationTest {
 
         Division d = new Division();
         d.setName("get a job");
+        d.setisOpen(true);
 
         String s = jsonService.structureToString(d);
         logger.debug("\n\n"+s+"\n\n");
          logger.debug("\n\n"+SAMPLE+"\n\n");
         Division d2 = jsonService.stringToStructure(s);
         assertEquals(d.getName(),d2.getName());
+        assertEquals(d.isOpen(),d2.isOpen());
 
     }
     
