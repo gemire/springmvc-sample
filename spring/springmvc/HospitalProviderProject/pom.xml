@@ -91,7 +91,7 @@
                             <directory>src/main/webapp/WEB-INF</directory>
                             <!--  
                      							<excludes>
-                                            								<exclude>**/*.jsp</exclude>
+                                                    								<exclude>**/*.jsp</exclude>
                      							</excludes>
                      							-->
                             <includes>
@@ -370,13 +370,13 @@
             <artifactId>spring-context</artifactId>
             <version>${org.springframework.version}</version>
             
-        <exclusions>
-            <!-- Exclude Commons Logging in favor of SLF4j -->
-            <exclusion>
-                <groupId>commons-logging</groupId>
-                <artifactId>commons-logging</artifactId>
-            </exclusion>
-        </exclusions>
+            <exclusions>
+                <!-- Exclude Commons Logging in favor of SLF4j -->
+                <exclusion>
+                    <groupId>commons-logging</groupId>
+                    <artifactId>commons-logging</artifactId>
+                </exclusion>
+            </exclusions>
             
         </dependency>
 
@@ -459,12 +459,12 @@
             <artifactId>spring-test</artifactId>
             <version>${org.springframework.version}</version>
             <exclusions>
-            <!-- Exclude Commons Logging in favor of SLF4j -->
-            <exclusion>
-                <groupId>commons-logging</groupId>
-                <artifactId>commons-logging</artifactId>
-            </exclusion>
-        </exclusions>
+                <!-- Exclude Commons Logging in favor of SLF4j -->
+                <exclusion>
+                    <groupId>commons-logging</groupId>
+                    <artifactId>commons-logging</artifactId>
+                </exclusion>
+            </exclusions>
             <scope>test</scope>
         </dependency>
 
@@ -542,8 +542,9 @@
         <dependency>
             <groupId>org.neo4j.app</groupId>
             <artifactId>neo4j-server</artifactId>
-            <version>1.8</version>
+            <version>${neo4j.version}</version>
             <type>jar</type>
+            
             <exclusions>
                 <exclusion>
                     <artifactId>commons-logging</artifactId>
@@ -559,5 +560,30 @@
                 </exclusion>
             </exclusions>
         </dependency>
+        <dependency>
+            <groupId>org.neo4j.app</groupId>
+            <artifactId>neo4j-server</artifactId>
+            <version>${neo4j.version}</version>
+            <type>jar</type>        
+            <classifier>static-web</classifier>
+            
+            
+             <exclusions>
+                <exclusion>
+                    <artifactId>commons-logging</artifactId>
+                    <groupId>commons-logging</groupId>
+                </exclusion>
+                <exclusion>
+                    <artifactId>logback-access</artifactId>
+                    <groupId>ch.qos.logback</groupId>
+                </exclusion>
+                <exclusion>
+                    <artifactId>logback-classic</artifactId>
+                    <groupId>ch.qos.logback</groupId>
+                </exclusion>
+            </exclusions>
+            
+        </dependency>  
+        
     </dependencies>
 </project>
