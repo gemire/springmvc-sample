@@ -43,7 +43,7 @@ public class JSONSerializationTest {
     public void testWebSample() throws Exception
     {
         Division d2 = jsonService.stringToStructure(SAMPLE);
-        ArrayList<Division> dList = new ArrayList<Division>();
+        ArrayList<HospitalNode> dList = new ArrayList<HospitalNode>();
         dList.add(d2);
         String fred = jsonService.divArrayToString(dList);
         logger.debug("\n\n\n"+fred+"\n\n");
