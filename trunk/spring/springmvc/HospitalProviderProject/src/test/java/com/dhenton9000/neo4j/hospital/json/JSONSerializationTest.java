@@ -1,0 +1,44 @@
+/*
+ * To change this template, choose Tools | Templates
+ * and open the template in the editor.
+ */
+package com.dhenton9000.neo4j.hospital.json;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.junit.AfterClass;
+import static org.junit.Assert.*;
+import org.junit.BeforeClass;
+import org.junit.Ignore;
+import org.junit.Test;
+
+/**
+ *
+ * @author dhenton
+ */
+public class JSONSerializationTest {
+
+    private final Logger logger = LoggerFactory.getLogger(JSONSerializationTest.class);
+    private static JSONHospitalServiceImpl jsonService = new JSONHospitalServiceImpl();
+    private static final String SAMPLE = "{\"type\":\"Division\",\"id\":1,\"name\":\"Alpha\",\"children\":[{\"type\":\"Division\",\"id\":2,\"name\":\"Division2\"},{\"type\":\"Provider\",\"id\":3,\"name\":\"Provider2\",\"children\":[{\"type\":\"Provider\",\"id\":4,\"name\":\"Provider4\"}]},{\"type\":\"Provider\",\"id\":5,\"name\":\"Provider3\"}]}";
+
+    @Test
+    public void checkStringToNode() throws Exception {
+
+        Division d = new Division();
+        d.setName("get a job");
+
+        String s = jsonService.structureToString(d);
+        logger.debug("\n\n"+s+"\n\n");
+         logger.debug("\n\n"+SAMPLE+"\n\n");
+        Division d2 = jsonService.stringToStructure(s);
+        assertEquals(d.getName(),d2.getName());
+
+    }
+    
+    @Test
+    public void testWebSample() throws Exception
+    {
+        Division d2 = jsonService.stringToStructure(SAMPLE);
+    }
+}

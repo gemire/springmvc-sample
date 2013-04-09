@@ -64,6 +64,28 @@
         }
     );
  });
+ 
+ 
+ function sendTree()
+{
+           
+	    var bean =  eval($('#tree1').tree('toJson'))[0];
+	    var url = "/neo4j/app/node/forms/sendDivision.json";
+	    $.postJSON(url, bean, function(returnJSONObj) {
+                var tttt = JSON.stringify(returnJSONObj);
+	        alert(tttt);
+	    });
+
+	
+}
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
 </script>
 
 </head>
@@ -85,6 +107,8 @@
             <tr><td colspan="2"><input type="submit" value="Edit Node"></td></tr>
         </table>
     </form:form>
+    <hr/>
+    <button onclick="sendTree()">Send Tree</button>
 </div>
 
 
