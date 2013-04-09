@@ -43,6 +43,12 @@
 		</property>
 		<property name="viewResolvers">
 			<list>
+         
+           <bean class="org.springframework.web.servlet.view.json.MappingJacksonJsonView">
+                    <property name="prefixJson" value="false" />
+                    <property name="objectMapper" ref="jacksonObjectMapper" />
+            </bean>
+         
 				<!-- will look to the id of a bean in this or other files for view -->
 				<bean class="org.springframework.web.servlet.view.BeanNameViewResolver" />
 				<!--
