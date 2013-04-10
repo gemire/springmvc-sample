@@ -4,8 +4,11 @@
  */
 package com.dhenton9000.neo4j.hospital.json;
 
+import com.dhenton9000.spring.mvc.controllers.JSONTestbedController;
 import java.io.IOException;
 import java.util.List;
+import org.apache.log4j.LogManager;
+import org.apache.log4j.Logger;
 import org.codehaus.jackson.map.ObjectMapper;
 import org.neo4j.graphdb.Direction;
 import org.neo4j.graphdb.GraphDatabaseService;
@@ -23,24 +26,37 @@ public class JSONHospitalServiceImpl implements JSONHospitalService {
 
     private GraphDatabaseService neo4jDb;
     private ObjectMapper mapper = new ObjectMapper();
+    private static Logger log = LogManager.getLogger(JSONHospitalServiceImpl.class);
 
     @Override
     public Division attachFullTree(Division d) {
         Transaction tx = getNeo4jDb().beginTx();
+        Node rootNode = null;
+        String nodeLabel = d.getName();
         try {
             Node graphRefNode = getNeo4jDb().getReferenceNode();
-            String nodeLabel = d.getName();
-            Node rootNode = createAndAttachDivisionNode(graphRefNode, nodeLabel);
+            log.debug("got in attach "+nodeLabel);
+            rootNode = createAndAttachDivisionNode(graphRefNode, nodeLabel);
             d.setId(rootNode.getId());
             for (HospitalNode dChild : d.getChildren()) {
                 attachSubTree(dChild, rootNode);
             }
 
             tx.success();
-        } finally {
+            
+        } 
+        catch(Exception err)
+        {
+            log.error("error in attachFullTree\n "+err.getClass().getName()+
+                    " "+err.getMessage());
+        }
+        finally {
             tx.finish();
         }
-        return d;
+        
+        
+        return buildDivisonFromDb(nodeLabel);
+         
     }
 
     private void attachSubTree(HospitalNode subD, Node parent) {
@@ -94,6 +110,10 @@ public class JSONHospitalServiceImpl implements JSONHospitalService {
     public Division buildDivisonFromDb(String startDivisionLabel) {
         Division root = new Division();
         Node dItem = getDivisionNode(startDivisionLabel);
+        if (dItem == null)
+        {
+            throw new RuntimeException("cannot find a node for '"+startDivisionLabel+"'");
+        }
         String nextItem = (String) dItem.getProperty(DIVISION_DISPLAY_PROPERTY);
         root.setName(nextItem);
         root.setId(dItem.getId());

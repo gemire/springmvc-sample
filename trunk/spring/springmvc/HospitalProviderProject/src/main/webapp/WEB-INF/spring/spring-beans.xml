@@ -9,7 +9,9 @@
 		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
 		http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc-3.0.xsd">
 
-    <bean id="jsonServiceBean" class="com.dhenton9000.neo4j.hospital.json.JSONHospitalServiceImpl" /> 
+    <bean id="jsonServiceBean" class="com.dhenton9000.neo4j.hospital.json.JSONHospitalServiceImpl"> 
+        <property name="neo4jDb" ref="graphDatabaseService" />
+    </bean>
            
     
       
@@ -28,19 +30,19 @@
     <bean id="config" class="com.dhenton9000.neo4j.Neo4jServerConfig">
         <constructor-arg> 
             <map>
-                  <entry key="org.neo4j.server.webserver.address" value="127.0.0.1"/>  
+                <entry key="org.neo4j.server.webserver.address" value="127.0.0.1"/>  
                 <entry key="org.neo4j.server.webserver.port" value="6666"/>
                 <entry key="org.neo4j.server.webserver.limit.executiontime" value="2000"/>
                 
             </map>
         </constructor-arg>     
     </bean>
-<!--
-    <bean id="serverWrapper" class="org.neo4j.server.WrappingNeoServerBootstrapper" init-method="start" destroy-method="stop">
-        <constructor-arg index="0" ref="graphDatabaseService"/>
-        <constructor-arg index="1" ref="config"/>
-    </bean>
--->
+    <!--
+        <bean id="serverWrapper" class="org.neo4j.server.WrappingNeoServerBootstrapper" init-method="start" destroy-method="stop">
+            <constructor-arg index="0" ref="graphDatabaseService"/>
+            <constructor-arg index="1" ref="config"/>
+        </bean>
+    -->
    
 
 </beans>

@@ -48,9 +48,7 @@ l<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 
 
     $(function() {
-        $('#tree1').tree({
-            data: fred 
-        });
+        $('#tree1').tree({data: fred});
  
 
         $('#tree1').bind(
@@ -61,8 +59,9 @@ l<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
             $('#id').val(node.id);
             $('#type').val(node.type);
             $('#name').val(node.name);
-        }
-    );
+        });
+        
+        
     });
  
  
@@ -76,8 +75,8 @@ l<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
         $.postJSON(url, bean, function(returnJSONObj) {
                rBean = new Array();
                rBean.push(returnJSONObj);
-               //var tttt = JSON.stringify(rBean);
-               //alert(tttt);
+               var tttt = JSON.stringify(rBean);
+               alert(tttt);
               $('#tree1').tree('loadData', rBean);
         });
 

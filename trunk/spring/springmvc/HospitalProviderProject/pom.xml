@@ -47,6 +47,7 @@
                         </configuration>
                     </execution>
                 </executions>
+                <version>1.8</version>
             </plugin>
 
             <plugin>
@@ -55,6 +56,7 @@
                     <webappDirectory>${basedir}/src/main/webapp</webappDirectory>
                     <warSourceDirectory>${basedir}/src/main/webapp</warSourceDirectory>
                 </configuration>
+                <version>2.3</version>
             </plugin>
             <plugin>
                 <artifactId>maven-compiler-plugin</artifactId>
@@ -62,6 +64,7 @@
                     <source>1.5</source>
                     <target>1.5</target>
                 </configuration>
+                <version>3.0</version>
             </plugin>
 
             <plugin>
@@ -77,6 +80,7 @@
                         </fileset>
                     </filesets>
                 </configuration>
+                 <version>2.5</version>
             </plugin>
 
             <plugin>
@@ -590,6 +594,20 @@
             </exclusions>
             
         </dependency>
-
+        
+        <dependency>
+            <groupId>org.neo4j</groupId>
+            <artifactId>neo4j-testing-utils</artifactId>
+            <version>1.8-SNAPSHOT</version>
+          
+            <type>jar</type>
+            <exclusions>
+                <exclusion>
+                    <artifactId>neo4j-graphviz</artifactId>
+                    <groupId>org.neo4j</groupId>
+                </exclusion>
+            </exclusions>
+        </dependency>
+        
     </dependencies>
 </project>
