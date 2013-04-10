@@ -9,6 +9,8 @@ import com.dhenton9000.neo4j.hospital.json.HospitalNode;
 import com.dhenton9000.neo4j.hospital.json.JSONHospitalService;
 import com.dhenton9000.spring.mvc.model.NodeFormBean;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.logging.Level;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
@@ -66,41 +68,45 @@ public class NodeController {
         return destinationItem;
     }
 
-    @RequestMapping(value = "{name}/sendDivisionTwo", produces={"application/json"},consumes={"application/json"} ,method = RequestMethod.POST)
+    @RequestMapping(value = "{name}/sendDivisionTwo", 
+            produces={"application/json"},
+            consumes={"application/json"} ,
+            method = RequestMethod.POST)
     public @ResponseBody
-    Division getShopInJSON(@PathVariable String name,@RequestBody Division divIN) {
-
-        divIN.setName(divIN.getName() + "@@@@@"+name);
+    Division sendDivisionTwo(@PathVariable String name,
+    @RequestBody Division divIN) {
+        log.debug("div name "+divIN.getName());
+        divIN.setName(divIN.getName() + name);
         return divIN;
     }
 
-    @RequestMapping(value = "sendDivision",  method = RequestMethod.POST)
-    public ResponseEntity<String> sendDivision(@RequestBody String divisionAsJSON) {
-        HttpHeaders headers = new HttpHeaders();
-        String t = "IN\n\n" + divisionAsJSON + "\n\n";
-        log.info(t);
-        HospitalNode h = null;
-        HttpStatus retStat = HttpStatus.OK;
-        try {
-            h = jService.stringToStructure(divisionAsJSON);
-            h.setName(h.getName() + "ZZZZZZ");
-
-
-
-
-            divisionAsJSON = "[" + jService.structureToString((Division) h) + "]";
-        } catch (IOException ex) {
-            log.error("cannot create Hospital Node " + ex.getMessage());
-            retStat = HttpStatus.FAILED_DEPENDENCY;
-            divisionAsJSON = ex.getMessage();
-        }
-
-        t = "OUT\n\n" + divisionAsJSON + "\n\n";
-        log.info(t);
-        headers.setContentType(MediaType.APPLICATION_JSON);
-        return new ResponseEntity<String>(divisionAsJSON,
-                headers, retStat);
-    }
+//    @RequestMapping(value = "sendDivision",  method = RequestMethod.POST)
+//    public ResponseEntity<String> sendDivision(@RequestBody String divisionAsJSON) {
+//        HttpHeaders headers = new HttpHeaders();
+//        String t = "IN\n\n" + divisionAsJSON + "\n\n";
+//        log.info(t);
+//        HospitalNode h = null;
+//        HttpStatus retStat = HttpStatus.OK;
+//        try {
+//            h = jService.stringToStructure(divisionAsJSON);
+//            h.setName(h.getName() + "ZZZZZZ");
+//
+//
+//
+//
+//            divisionAsJSON = "[" + jService.structureToString((Division) h) + "]";
+//        } catch (IOException ex) {
+//            log.error("cannot create Hospital Node " + ex.getMessage());
+//            retStat = HttpStatus.FAILED_DEPENDENCY;
+//            divisionAsJSON = ex.getMessage();
+//        }
+//
+//        t = "OUT\n\n" + divisionAsJSON + "\n\n";
+//        log.info(t);
+//        headers.setContentType(MediaType.APPLICATION_JSON);
+//        return new ResponseEntity<String>(divisionAsJSON,
+//                headers, retStat);
+//    }
 
     /**
      * @return the jService

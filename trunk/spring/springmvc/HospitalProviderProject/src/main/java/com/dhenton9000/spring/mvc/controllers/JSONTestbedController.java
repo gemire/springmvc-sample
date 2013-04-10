@@ -43,9 +43,9 @@ public class JSONTestbedController {
      @RequestMapping(value = "doBook", 
              produces={"application/json"},
              consumes={"application/json"} ,
-             method = {RequestMethod.POST,RequestMethod.GET})
+             method = {RequestMethod.POST})
     public @ResponseBody
-    TestBook getShopInJSON(@RequestBody TestBook book) {
+    TestBook getTestBook(@RequestBody TestBook book) {
          log.debug("got book: "+book);
          book.setAuthor(book.getAuthor()+"XXX");
          return book;
