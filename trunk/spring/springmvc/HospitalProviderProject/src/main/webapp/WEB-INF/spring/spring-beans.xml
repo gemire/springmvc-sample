@@ -12,7 +12,7 @@
     <bean id="jsonServiceBean" class="com.dhenton9000.neo4j.hospital.json.JSONHospitalServiceImpl" /> 
            
     
- <!--       
+      
     <bean id="graphDatabaseService" class="org.neo4j.kernel.EmbeddedGraphDatabase" destroy-method="shutdown">
         <constructor-arg index="0" value="/home/dhenton/neo4j/data/graph.db"/>
         <constructor-arg index="1">
@@ -35,12 +35,12 @@
             </map>
         </constructor-arg>     
     </bean>
-
+<!--
     <bean id="serverWrapper" class="org.neo4j.server.WrappingNeoServerBootstrapper" init-method="start" destroy-method="stop">
         <constructor-arg index="0" ref="graphDatabaseService"/>
         <constructor-arg index="1" ref="config"/>
     </bean>
-        
-   -->   
+-->
+   
 
 </beans>
