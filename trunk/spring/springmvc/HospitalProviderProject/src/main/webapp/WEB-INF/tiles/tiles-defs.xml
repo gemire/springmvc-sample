@@ -28,7 +28,13 @@
 		<put-attribute name="body"
 			value="/WEB-INF/views/pages/nodeedit_body.jsp" />
 	</definition>
-        
+         <definition name="tiles.json.testbed" 
+                    extends="tiles.base.definition">
+		<put-attribute name="title" value="JSON Test Bed" />
+		<put-attribute name="subTitle" value="JSON Test Bed" />
+		<put-attribute name="body"
+			value="/WEB-INF/views/pages/json_testbed_body.jsp" />
+	</definition>
         
 
 </tiles-definitions> 
