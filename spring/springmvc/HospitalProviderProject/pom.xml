@@ -169,14 +169,14 @@
             <groupId>org.neo4j</groupId>
             <artifactId>neo4j</artifactId>
             <version>${neo4j.version}</version>
-            <scope>compile</scope>
+            
         </dependency>
         
         <dependency>
             <groupId>org.neo4j</groupId>
             <artifactId>neo4j-utils</artifactId>
             <version>1.2-1.2</version>
-            <scope>compile</scope>
+            
         </dependency>
         <dependency>
             <groupId>cglib</groupId>
@@ -583,7 +583,7 @@
                 </exclusion>
             </exclusions>
             
-        </dependency>  
-        
+        </dependency>
+
     </dependencies>
 </project>
