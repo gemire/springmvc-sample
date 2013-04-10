@@ -24,12 +24,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.bind.annotation.SessionAttributes;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -70,39 +65,37 @@ public class NodeController {
         String destinationItem = DESTINATION_TILE;
         return destinationItem;
     }
-    /*
-     @RequestMapping(value = "sendDivision", method = RequestMethod.POST)
-     public String sendDivision(@RequestBody String divisionAsJSON) {    
 
-     String t = "bonzo\n" + divisionAsJSON;
-     log.info("t is " + t);
-     return DESTINATION_TILE;
+    @RequestMapping(value = "{name}/sendDivisionTwo", produces={"application/json"},consumes={"application/json"} ,method = RequestMethod.POST)
+    public @ResponseBody
+    Division getShopInJSON(@PathVariable String name,@RequestBody Division divIN) {
 
-     }
-     */
+        divIN.setName(divIN.getName() + "@@@@@"+name);
+        return divIN;
+    }
 
-    @RequestMapping(value = "sendDivision", method = RequestMethod.POST)
+    @RequestMapping(value = "sendDivision",  method = RequestMethod.POST)
     public ResponseEntity<String> sendDivision(@RequestBody String divisionAsJSON) {
         HttpHeaders headers = new HttpHeaders();
-        String t = "IN\n\n" + divisionAsJSON+"\n\n";
+        String t = "IN\n\n" + divisionAsJSON + "\n\n";
         log.info(t);
         HospitalNode h = null;
         HttpStatus retStat = HttpStatus.OK;
         try {
             h = jService.stringToStructure(divisionAsJSON);
             h.setName(h.getName() + "ZZZZZZ");
-            
-            
-            
-            
-            divisionAsJSON = "["+jService.structureToString((Division) h)+"]";
+
+
+
+
+            divisionAsJSON = "[" + jService.structureToString((Division) h) + "]";
         } catch (IOException ex) {
             log.error("cannot create Hospital Node " + ex.getMessage());
             retStat = HttpStatus.FAILED_DEPENDENCY;
             divisionAsJSON = ex.getMessage();
         }
 
-        t = "OUT\n\n" + divisionAsJSON+"\n\n";
+        t = "OUT\n\n" + divisionAsJSON + "\n\n";
         log.info(t);
         headers.setContentType(MediaType.APPLICATION_JSON);
         return new ResponseEntity<String>(divisionAsJSON,

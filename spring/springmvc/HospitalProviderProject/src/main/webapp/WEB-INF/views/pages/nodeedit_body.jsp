@@ -79,6 +79,18 @@
 	
     }
  
+ function sendTreeTwo()
+    {
+           
+        var bean =  eval($('#tree1').tree('toJson'))[0];
+        var url = "/neo4j/app/node/forms/fred/sendDivisionTwo.json";
+        $.postJSON(url, bean, function(returnJSONObj) {
+              var tttt = JSON.stringify(returnJSONObj);
+             alert(tttt);
+        });
+
+	
+    }
  
  
  
@@ -108,7 +120,8 @@
         </table>
     </form:form>
     <hr/>
-    <button onclick="sendTree()">Send Tree</button>
+    <p><button onclick="sendTree()">Send Tree</button></p>
+    <p><button onclick="sendTreeTwo()">Send Tree 2</button></p>
 </div>
 
 
