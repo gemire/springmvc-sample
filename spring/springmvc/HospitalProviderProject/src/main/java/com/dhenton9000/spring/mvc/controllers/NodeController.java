@@ -80,33 +80,7 @@ public class NodeController {
         return divIN;
     }
 
-//    @RequestMapping(value = "sendDivision",  method = RequestMethod.POST)
-//    public ResponseEntity<String> sendDivision(@RequestBody String divisionAsJSON) {
-//        HttpHeaders headers = new HttpHeaders();
-//        String t = "IN\n\n" + divisionAsJSON + "\n\n";
-//        log.info(t);
-//        HospitalNode h = null;
-//        HttpStatus retStat = HttpStatus.OK;
-//        try {
-//            h = jService.stringToStructure(divisionAsJSON);
-//            h.setName(h.getName() + "ZZZZZZ");
-//
-//
-//
-//
-//            divisionAsJSON = "[" + jService.structureToString((Division) h) + "]";
-//        } catch (IOException ex) {
-//            log.error("cannot create Hospital Node " + ex.getMessage());
-//            retStat = HttpStatus.FAILED_DEPENDENCY;
-//            divisionAsJSON = ex.getMessage();
-//        }
-//
-//        t = "OUT\n\n" + divisionAsJSON + "\n\n";
-//        log.info(t);
-//        headers.setContentType(MediaType.APPLICATION_JSON);
-//        return new ResponseEntity<String>(divisionAsJSON,
-//                headers, retStat);
-//    }
+
 
     /**
      * @return the jService

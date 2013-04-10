@@ -40,13 +40,13 @@ zzzzzzzzzzzzzzzzzzzzzzz
         <level value="DEBUG"/>
     </logger>
     <logger name="org.springframework">
-        <level value="DEBUG"/>
+        <level value="ERROR"/>
     </logger>
      <logger name="org.mortbay.log">
-        <level value="DEBUG"/>
+        <level value="ERROR"/>
     </logger>
      <logger name="com.sun.jersey">
-        <level value="DEBUG"/>
+        <level value="ERROR"/>
     </logger>
     
 
