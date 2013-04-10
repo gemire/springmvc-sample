@@ -82,11 +82,14 @@
  function sendTreeTwo()
     {
            
-        var bean =  eval($('#tree1').tree('toJson'))[0];
+       var bean =  eval($('#tree1').tree('toJson'))[0];
         var url = "/neo4j/app/node/forms/fred/sendDivisionTwo.json";
         $.postJSON(url, bean, function(returnJSONObj) {
-              var tttt = JSON.stringify(returnJSONObj);
-             alert(tttt);
+               rBean = new Array();
+               rBean.push(returnJSONObj);
+               //var tttt = JSON.stringify(rBean);
+               //alert(tttt);
+              $('#tree1').tree('loadData', rBean);
         });
 
 	
