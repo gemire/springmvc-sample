@@ -12,6 +12,8 @@ import static org.junit.Assert.*;
 import org.junit.BeforeClass;
 import org.junit.Ignore;
 import org.junit.Test;
+import org.springframework.http.MediaType;
+import org.springframework.http.converter.json.MappingJacksonHttpMessageConverter;
 
 /**
  *
@@ -19,6 +21,8 @@ import org.junit.Test;
  */
 public class JSONSerializationTest {
 
+    private MappingJacksonHttpMessageConverter converter = 
+            new MappingJacksonHttpMessageConverter();
     private final Logger logger = LoggerFactory.getLogger(JSONSerializationTest.class);
     private static JSONHospitalServiceImpl jsonService = new JSONHospitalServiceImpl();
     private static final String SAMPLE = "{\"type\":\"Division\",\"id\":1,\"name\":\"Alpha\",\"children\":[{\"type\":\"Division\",\"id\":2,\"name\":\"Division2\"},{\"type\":\"Provider\",\"id\":3,\"name\":\"Provider2\",\"children\":[{\"type\":\"Provider\",\"id\":4,\"name\":\"Provider4\"}]},{\"type\":\"Provider\",\"id\":5,\"name\":\"Provider3\"}]}";
@@ -36,7 +40,9 @@ public class JSONSerializationTest {
         Division d2 = jsonService.stringToStructure(s);
         assertEquals(d.getName(),d2.getName());
         assertEquals(d.isOpen(),d2.isOpen());
-
+        boolean b = converter.canRead(Division.class,MediaType.APPLICATION_JSON);
+        assertTrue(b);
+         
     }
     
     @Test

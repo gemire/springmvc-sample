@@ -24,11 +24,11 @@
             </map>
         </constructor-arg> 
     </bean>
-
+<!--
     <bean id="config" class="com.dhenton9000.neo4j.Neo4jServerConfig">
         <constructor-arg> 
             <map>
-                <!-- <entry key="org.neo4j.server.webserver.address" value="127.0.0.1"/> -->
+                  <entry key="org.neo4j.server.webserver.address" value="127.0.0.1"/>  
                 <entry key="org.neo4j.server.webserver.port" value="6666"/>
                 <entry key="org.neo4j.server.webserver.limit.executiontime" value="2000"/>
                 
@@ -41,6 +41,6 @@
         <constructor-arg index="1" ref="config"/>
     </bean>
         
-      
+   -->   
 
 </beans>
