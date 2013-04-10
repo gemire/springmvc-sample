@@ -8,9 +8,9 @@
 		http://www.springframework.org/schema/context         http://www.springframework.org/schema/context/spring-context-3.1.xsd
 		http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc-3.1.xsd">
 
-	<!-- Configures the @Controller programming model -->
-	
+	<!-- Configures the @Controller programming model -->	
 	<context:annotation-config   />
+        <!-- configures things like RequestBody ResponseBody Json handling -->
         <mvc:annotation-driven   />
 	<mvc:interceptors>
 		<bean id="webContentInterceptor"
