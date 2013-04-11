@@ -4,10 +4,10 @@
  */
 package com.dhenton9000.spring.mvc.controllers;
 
-import com.dhenton9000.neo4j.hospital.json.Division;
 import com.dhenton9000.neo4j.hospital.json.JSONHospitalService;
-import com.dhenton9000.neo4j.hospital.json.TestBook;
 import com.dhenton9000.spring.mvc.model.NodeFormBean;
+import java.util.Iterator;
+import java.util.Set;
 import javax.servlet.http.HttpSession;
 import org.apache.log4j.LogManager;
 import org.apache.log4j.Logger;
@@ -16,11 +16,9 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -38,9 +36,7 @@ public class JSONTestbedController {
     public static final String BEAN_NAME = "nodeFormBean";
     @Autowired
     private JSONHospitalService jService;
- 
- 
- 
+
     @RequestMapping(value = "home", method = RequestMethod.GET)
     public ModelAndView showFormInInitialState() {
 
@@ -48,36 +44,85 @@ public class JSONTestbedController {
 
     }
 
-    @RequestMapping(value = "doBook",
-    produces = {"application/json"},
-    consumes = {"application/json"},
-    method = {RequestMethod.POST})
-    public @ResponseBody
-    TestBook getTestBook(@RequestBody TestBook book) {
-        log.debug("got book: " + book);
-        book.setAuthor(book.getAuthor() + "XXX");
-        return book;
-    }
-
+//    @RequestMapping(value = "doBook",
+//    produces = {"application/json"},
+//    consumes = {"application/json"},
+//    method = {RequestMethod.POST})
+//    public @ResponseBody
+//    TestBook getTestBook(@RequestBody TestBook book) {
+//        log.debug("got book: " + book);
+//        book.setAuthor(book.getAuthor() + "XXX");
+//        return book;
+//    }
     @RequestMapping(value = "maintainNode", method = RequestMethod.POST)
-    public ModelAndView maintainNode(@ModelAttribute(BEAN_NAME) 
-            NodeFormBean form,
+    public ModelAndView maintainAddNode(@RequestParam(required = true, value = "submit") String submitFlag,
+            @ModelAttribute(BEAN_NAME) NodeFormBean form,
             BindingResult result,
             WebRequest webRequest, HttpSession session, Model model) {
-        log.info("maintainNode " + form.getName());
+        log.info("maintainAddNode " + form.getName());
+        log.info("submit is " + submitFlag);
         DivInfo d = new DivInfo();
-        d.id="maintain";
-        return new ModelAndView(DESTINATION_TILE,PARENT_ID_KEY,d);
+        d.id = "maintain";
+        
+         Set<String> s =  webRequest.getParameterMap().keySet();
+        String[] atNames = webRequest.getAttributeNames(WebRequest.SCOPE_REQUEST);
+        Iterator<String> iter = s.iterator();
+        while(iter.hasNext())
+        {
+            String k =  iter.next();
+            String t = webRequest.getParameter(k);
+            
+              //  log.info("x "+t);
+            
+        }
+        
+        for (String a:atNames )
+        {
+           Object j =   webRequest.getAttribute(a, WebRequest.SCOPE_REQUEST);
+          ///  log.debug("attr "+a+ "item --> "+j);
+        }
+       
+        Set<String> modelS = model.asMap().keySet();
+        Iterator<String> iterS = modelS.iterator();
+        while(iterS.hasNext())
+        {
+           String k = iterS.next();
+           log.info("model "+k + " -- > "+model.asMap().get(k));
+        }
+        
+        
+        
+        return new ModelAndView(DESTINATION_TILE, PARENT_ID_KEY, d);
     }
+    /*
+     @RequestMapping(value = "maintainNode", method = RequestMethod.POST,
+     params = "Delete This Node")
+     public ModelAndView maintainDeleteNode(@ModelAttribute(BEAN_NAME) NodeFormBean form,
+     BindingResult result,
+     WebRequest webRequest, HttpSession session, Model model) {
+     log.info("maintainDeleteNode " + form.getName());
+     DivInfo d = new DivInfo();
+     d.id = "maintain";
+     return new ModelAndView(DESTINATION_TILE, PARENT_ID_KEY, d);
+     }
+     */
+//    @RequestMapping(value = "{name}/createTree", method = RequestMethod.GET)
+//    public @ResponseBody
+//    Division createTree(@PathVariable String name){
+//        log.debug("name is "+name);
+//        Division div = new Division();
+//        div.setName(name);
+//        Division newDiv = jService.attachFullTree(div);
+//        return newDiv;
+//    }
 
-    @RequestMapping(value = "{name}/createTree", method = RequestMethod.GET)
-    public @ResponseBody
-    Division createTree(@PathVariable String name){
-        log.debug("name is "+name);
-        Division div = new Division();
-        div.setName(name);
-        Division newDiv = jService.attachFullTree(div);
-        return newDiv;
+    @RequestMapping(value = "createTree", method = RequestMethod.POST)
+    public ModelAndView createTree(@ModelAttribute(BEAN_NAME) NodeFormBean form,
+            BindingResult result,
+            WebRequest webRequest, HttpSession session, Model model) {
+        log.info("createTree " + form.getName());
+
+        return new ModelAndView(DESTINATION_TILE);
     }
 
     /**
@@ -93,10 +138,9 @@ public class JSONTestbedController {
     public void setjService(JSONHospitalService jService) {
         this.jService = jService;
     }
-    
-    
-    public class DivInfo
-    {
+
+    public class DivInfo {
+
         private String id = null;
 
         /**
@@ -112,10 +156,5 @@ public class JSONTestbedController {
         public void setId(String id) {
             this.id = id;
         }
-        
-                
     }
-    
-    
-    
 }
