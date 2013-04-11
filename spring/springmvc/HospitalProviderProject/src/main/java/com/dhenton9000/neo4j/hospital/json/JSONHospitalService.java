@@ -62,6 +62,7 @@ public interface JSONHospitalService {
      * Lookup a division node by its label. 
      * @param nodeName
      * @return null if nothing found
+     * @throws RuntimeException if more than one value found;
      */
     Node getDivisionNode(String nodeName);
 
