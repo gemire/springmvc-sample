@@ -46,10 +46,14 @@
 
 
 <div style="position:absolute;top: 150px; left: 400px">
-
+    <h4>Current Node</h4>
+    ${parentInfo.id} ${parentInfo.name} 
+    
+    
+    
     <p>
     <h4>New Node Data</h4>
-    <form:form id="form" method="post" modelAttribute="434" action="${baseURL}json/testbed/maintainNode">
+    <form:form id="form" method="post" action="${baseURL}json/testbed/maintainNode">
 
         <table cellpadding="4" cellspacing="4">
             <tr><th>Type:</th><td><input name="type" id="type" ></td></tr>
@@ -62,16 +66,15 @@
 
 <p>
 <h4>Create New Tree</h4>
-<form:form id="form" method="post" modelAttribute="r43" action="${baseURL}json/testbed/createTree">
+<form:form id="form" method="post"  action="${baseURL}json/testbed/createTree">
 
     <table cellpadding="4" cellspacing="4">
-        <tr><th>Type:</th><td><input name="type" id="type" ></td></tr>
-        <tr><th>Label:</th><td><input name="name" id="name" ></td></tr>
+        <tr><th>Name:</th><td><input name="name" id="name" ></td></tr>
         <tr><td colspan="2"><input type="submit" value="Create New Tree"></td></tr>
 
     </table>
 </form:form>
-<button onclick="testParent()">Parent</button>
+
 </div>
 
 

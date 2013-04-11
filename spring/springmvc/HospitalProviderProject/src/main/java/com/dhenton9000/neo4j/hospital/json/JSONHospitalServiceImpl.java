@@ -29,34 +29,34 @@ public class JSONHospitalServiceImpl implements JSONHospitalService {
     private static Logger log = LogManager.getLogger(JSONHospitalServiceImpl.class);
 
     @Override
-    public Division attachFullTree(Division d) {
+    public Division attachFullTree(Division d) throws HospitalServiceException {
         Transaction tx = getNeo4jDb().beginTx();
         Node rootNode = null;
         String nodeLabel = d.getName();
-        try {
-            Node graphRefNode = getNeo4jDb().getReferenceNode();
-            log.debug("got in attach "+nodeLabel);
-            rootNode = createAndAttachDivisionNode(graphRefNode, nodeLabel);
-            d.setId(rootNode.getId());
-            for (HospitalNode dChild : d.getChildren()) {
-                attachSubTree(dChild, rootNode);
-            }
+        Node testNode = getDivisionNode(nodeLabel);
+        if (testNode == null) {
+            try {
+                Node graphRefNode = getNeo4jDb().getReferenceNode();
+                log.debug("got in attach " + nodeLabel);
+                rootNode = createAndAttachDivisionNode(graphRefNode, nodeLabel);
+                d.setId(rootNode.getId());
+                for (HospitalNode dChild : d.getChildren()) {
+                    attachSubTree(dChild, rootNode);
+                }
 
-            tx.success();
-            
-        } 
-        catch(Exception err)
-        {
-            log.error("error in attachFullTree\n "+err.getClass().getName()+
-                    " "+err.getMessage());
+                tx.success();
+
+            } catch (Exception err) {
+                log.error("error in attachFullTree\n " + err.getClass().getName()
+                        + " " + err.getMessage());
+            } finally {
+                tx.finish();
+            }
+            return buildDivisonFromDb(nodeLabel);
+        } else {
+            throw new HospitalServiceException("node already exists " + nodeLabel);
         }
-        finally {
-            tx.finish();
-        }
-        
-        
-        return buildDivisonFromDb(nodeLabel);
-         
+
     }
 
     private void attachSubTree(HospitalNode subD, Node parent) {
@@ -95,12 +95,13 @@ public class JSONHospitalServiceImpl implements JSONHospitalService {
         String temp = mapper.writerWithDefaultPrettyPrinter().writeValueAsString(root);
         return temp;
     }
+
     @Override
-     public String divArrayToString(List<HospitalNode> root) throws IOException {
+    public String divArrayToString(List<HospitalNode> root) throws IOException {
         String temp = mapper.writerWithDefaultPrettyPrinter().writeValueAsString(root);
         return temp;
     }
-    
+
     @Override
     public Division stringToStructure(String jsonString) throws IOException {
         return mapper.readValue(jsonString, Division.class);
@@ -110,9 +111,8 @@ public class JSONHospitalServiceImpl implements JSONHospitalService {
     public Division buildDivisonFromDb(String startDivisionLabel) {
         Division root = new Division();
         Node dItem = getDivisionNode(startDivisionLabel);
-        if (dItem == null)
-        {
-            throw new RuntimeException("cannot find a node for '"+startDivisionLabel+"'");
+        if (dItem == null) {
+            throw new RuntimeException("cannot find a node for '" + startDivisionLabel + "'");
         }
         String nextItem = (String) dItem.getProperty(DIVISION_DISPLAY_PROPERTY);
         root.setName(nextItem);
@@ -194,8 +194,12 @@ public class JSONHospitalServiceImpl implements JSONHospitalService {
     @Override
     public Node getDivisionNode(String nodeName) {
 
-        Node dItem =
-                getDivisionIndex().get(DIVISION_DISPLAY_PROPERTY, nodeName).getSingle();
+        Node dItem = null;
+        try {
+            dItem = getDivisionIndex().get(DIVISION_DISPLAY_PROPERTY, nodeName).getSingle();
+        } catch (RuntimeException rrr) {
+            throw new RuntimeException("getDivisionNode found more than one node for '"+nodeName+"'");
+        }
         return dItem;
     }
 

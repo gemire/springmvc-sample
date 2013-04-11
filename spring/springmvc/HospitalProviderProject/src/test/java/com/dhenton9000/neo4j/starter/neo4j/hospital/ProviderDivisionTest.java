@@ -6,26 +6,17 @@ package com.dhenton9000.neo4j.starter.neo4j.hospital;
 
 import com.dhenton9000.neo4j.hospital.json.Division;
 import com.dhenton9000.neo4j.hospital.json.HospitalNode;
-import com.dhenton9000.neo4j.hospital.json.JSONHospitalService;
 import com.dhenton9000.neo4j.hospital.json.JSONHospitalServiceImpl;
 import com.dhenton9000.neo4j.hospital.json.Provider;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.List;
 import org.codehaus.jackson.map.ObjectMapper;
 import org.junit.After;
+import static org.junit.Assert.*;
 import org.junit.Before;
 import org.junit.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import static org.junit.Assert.*;
-import org.junit.Ignore;
-import org.neo4j.cypher.ExecutionEngine;
-import org.neo4j.cypher.ExecutionResult;
-import org.neo4j.graphdb.Node;
-import org.neo4j.graphdb.Transaction;
-import org.neo4j.kernel.impl.util.StringLogger;
 
 /**
  * uses simple tree to test writing an entire tree to an impermanent neo4j db
@@ -71,7 +62,8 @@ public class ProviderDivisionTest extends HospitalTestBase {
     }
     
    
-    private Division getSampleRoot() {
+    @Override
+    protected Division getSampleRoot() {
 
         ArrayList<HospitalNode> children = new ArrayList<HospitalNode>();
         Division d = null;

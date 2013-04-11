@@ -42,7 +42,7 @@ public interface JSONHospitalService {
     /**
      * Build a division object from a point in the tree using the start
      * points division label. For example, build the entire tree starting
-     * from the node 'Midwest'. It will include providers
+     * from an existing  node, e.g.  'Midwest'.  
      * 
      * @param startDivisionLabel
      * @return an assembled division object
@@ -88,8 +88,10 @@ public interface JSONHospitalService {
      * @param d the graph as as division, this is only a sample, ids will
      * be filled in when attached
      * @return the root Division with the id now filled in
+     * @throws  when there is a service error, eg trying to attach a division
+     * that already exists
      */
-    public Division attachFullTree(Division d);
+    public Division attachFullTree(Division d) throws HospitalServiceException;
     
     /**
      * 
