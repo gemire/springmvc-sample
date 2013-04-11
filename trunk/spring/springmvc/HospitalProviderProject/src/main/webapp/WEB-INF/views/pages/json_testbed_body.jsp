@@ -15,9 +15,9 @@
 -->
 <script>
     
-    var currentParentId = '${parentInfo.id}';
+    var currentParentId = '${currentTree.id}';
     var sampleTree = "{\"type\": \"Division\",\"id\": 1,\"label\": \"Alpha\",\"children\":[]}";
-    var treeData = [];
+    var treeData = [${currentTree.treeData}];
 
 
     $(function() {
@@ -46,10 +46,7 @@
 
 
 <div style="position:absolute;top: 150px; left: 400px">
-    <h4>Current Node</h4>
-    ${parentInfo.id} ${parentInfo.name} 
-    
-    
+    <h4>Current Node</h4>   
     
     <p>
     <h4>New Node Data</h4>
