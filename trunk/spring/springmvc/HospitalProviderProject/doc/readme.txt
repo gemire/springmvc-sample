@@ -61,3 +61,7 @@ public class Neo4jServerConfig implements Configurator {
 ======================
 
 http://www.mkyong.com/spring-mvc/spring-3-mvc-and-json-example/
+
+
+spring form tags reference
+http://static.springsource.org/spring/docs/2.0.8/reference/spring-form.tld.html
