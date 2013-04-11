@@ -5,8 +5,11 @@
 package com.dhenton9000.neo4j.starter.neo4j.hospital;
 
 
+import com.dhenton9000.neo4j.hospital.json.Division;
+import com.dhenton9000.neo4j.hospital.json.HospitalNode;
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Map;
 import org.neo4j.graphdb.GraphDatabaseService;
 import org.neo4j.graphdb.factory.GraphDatabaseFactory;
@@ -113,4 +116,45 @@ public class HospitalTestBase {
             }
         });
     }
+    
+    
+    protected Division getSampleRoot() {
+
+        ArrayList<HospitalNode> children = new ArrayList<HospitalNode>();
+        Division d = null;
+        Division root = new Division();
+        root.setName("Alpha");
+
+
+        d = new Division();
+        d.setName("Manny");
+
+
+        children.add(d);
+
+        d = new Division();
+        d.setName("Moe");
+        children.add(d);
+
+        ArrayList<HospitalNode> d2 = new ArrayList<HospitalNode>();
+        d.setChildren(d2);
+
+        d = new Division();
+        d.setName("Huey");
+        d2.add(d);
+        d = new Division();
+        d.setName("Dewey");
+        d2.add(d);
+        d = new Division();
+        d.setName("Louie");
+        d2.add(d);
+
+        d = new Division();
+        d.setName("Jack");
+        children.add(d);
+        root.setChildren(children);
+        return root;
+
+    }
+
 }
