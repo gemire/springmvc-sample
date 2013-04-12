@@ -4,7 +4,7 @@
  */
 package com.dhenton9000.spring.mvc.controllers;
 
-import com.dhenton9000.neo4j.hospital.json.JSONHospitalService;
+import com.dhenton9000.neo4j.hospital.service.HospitalService;
 import com.dhenton9000.spring.mvc.model.NodeFormBean;
 import java.util.Iterator;
 import java.util.Set;
@@ -35,7 +35,7 @@ public class JSONTestbedController {
     public static final String PARENT_ID_KEY = "parentInfo";
     public static final String BEAN_NAME = "nodeFormBean";
     @Autowired
-    private JSONHospitalService jService;
+    private HospitalService jService;
 
     @RequestMapping(value = "home", method = RequestMethod.GET)
     public ModelAndView showFormInInitialState() {
@@ -81,14 +81,14 @@ public class JSONTestbedController {
     /**
      * @return the jService
      */
-    public JSONHospitalService getjService() {
+    public HospitalService getjService() {
         return jService;
     }
 
     /**
      * @param jService the jService to set
      */
-    public void setjService(JSONHospitalService jService) {
+    public void setjService(HospitalService jService) {
         this.jService = jService;
     }
 

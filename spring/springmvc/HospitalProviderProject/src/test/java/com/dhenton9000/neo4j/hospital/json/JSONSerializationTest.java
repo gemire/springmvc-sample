@@ -4,6 +4,7 @@
  */
 package com.dhenton9000.neo4j.hospital.json;
 
+import com.dhenton9000.neo4j.hospital.service.HospitalServiceImpl;
 import java.util.ArrayList;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -24,7 +25,7 @@ public class JSONSerializationTest {
     private MappingJacksonHttpMessageConverter converter = 
             new MappingJacksonHttpMessageConverter();
     private final Logger logger = LoggerFactory.getLogger(JSONSerializationTest.class);
-    private static JSONHospitalServiceImpl jsonService = new JSONHospitalServiceImpl();
+    private static HospitalServiceImpl jsonService = new HospitalServiceImpl();
     private static final String SAMPLE = "{\"type\":\"Division\",\"id\":1,\"name\":\"Alpha\",\"children\":[{\"type\":\"Division\",\"id\":2,\"name\":\"Division2\"},{\"type\":\"Provider\",\"id\":3,\"name\":\"Provider2\",\"children\":[{\"type\":\"Provider\",\"id\":4,\"name\":\"Provider4\"}]},{\"type\":\"Provider\",\"id\":5,\"name\":\"Provider3\"}]}";
 
     @Test

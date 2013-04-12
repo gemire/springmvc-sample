@@ -4,10 +4,10 @@
  */
 package com.dhenton9000.neo4j;
 
-import com.dhenton9000.neo4j.hospital.json.JSONHospitalService;
+import com.dhenton9000.neo4j.hospital.service.HospitalService;
+import static org.junit.Assert.*;
 import org.junit.Before;
 import org.junit.Test;
-import static org.junit.Assert.*;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
@@ -23,7 +23,7 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 public class ServerStartupTest {
     
     @Autowired
-    JSONHospitalService jsonService;
+    HospitalService jsonService;
     
     
     @Before

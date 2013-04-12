@@ -6,7 +6,7 @@ package com.dhenton9000.spring.mvc.controllers;
 
 import com.dhenton9000.neo4j.hospital.json.Division;
 import com.dhenton9000.neo4j.hospital.json.HospitalNode;
-import com.dhenton9000.neo4j.hospital.json.JSONHospitalService;
+import com.dhenton9000.neo4j.hospital.service.HospitalService;
 import com.dhenton9000.spring.mvc.model.NodeFormBean;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -45,7 +45,7 @@ public class NodeController {
     public static final String DESTINATION_TILE = "tiles.node.edit";
     public static final String RESULTS_KEY = "results";
     @Autowired
-    private JSONHospitalService jService;
+    private HospitalService jService;
 
     @RequestMapping(value = "home", method = RequestMethod.GET)
     public ModelAndView showFormInInitialState() {
@@ -85,14 +85,14 @@ public class NodeController {
     /**
      * @return the jService
      */
-    public JSONHospitalService getjService() {
+    public HospitalService getjService() {
         return jService;
     }
 
     /**
      * @param jService the jService to set
      */
-    public void setjService(JSONHospitalService jService) {
+    public void setjService(HospitalService jService) {
         this.jService = jService;
     }
 }
