@@ -4,13 +4,17 @@
  */
 package com.dhenton9000.neo4j.hospital.service;
 
+import com.dhenton9000.neo4j.hospital.json.Division;
 import com.dhenton9000.neo4j.hospital.json.HospitalNode;
+import com.dhenton9000.neo4j.hospital.json.HospitalServiceException;
+import com.dhenton9000.neo4j.hospital.json.Provider;
 import org.neo4j.graphdb.GraphDatabaseService;
 import org.neo4j.graphdb.Node;
 import org.neo4j.graphdb.RelationshipType;
 
 /**
  * The Dao directly handles Neo4j nodes and indices
+ *
  * @author dhenton
  */
 public interface HospitalNeo4jDao {
@@ -30,14 +34,26 @@ public interface HospitalNeo4jDao {
 
     public enum NODE_TYPE {
 
-        TYPE, DIVISIONS, PROVIDERS, DISTRICTS
+        TYPE, DIVISIONS, PROVIDERS
     }
+
+    /**
+     * remove a node and handle all indices
+     *
+     * @param n1
+     */
+    void removeNode(Node n1);
 
     Node createAndAttachDivisionNode(Node parent, String nodeLabel);
 
     Node createAndAttachProviderNode(Node parent, String nodeLabel);
 
+    Division attachFullTree(Division d) throws HospitalServiceException;
+
+    Division buildDivisonFromDb(String startDivisionLabel);
     
+    Node changeNodeLabel(Node n1, String newLabel);
+
     /**
      * @return the neo4jDb
      */
@@ -47,34 +63,60 @@ public interface HospitalNeo4jDao {
      * @param neo4jDb the neo4jDb to set
      */
     void setNeo4jDb(GraphDatabaseService neo4jDb);
-    
-       /**
-     * For a given live node compute its label. This takes into account that 
+
+    /**
+     * For a given live node compute its label. This takes into account that
      * labels for Divisions are stored in one place, for providers in another
+     *
      * @param currentNode
-     * @return 
+     * @return
      */
     String getDisplayMessage(Node currentNode);
 
     /**
-     * Lookup a division node by its label. 
+     * Lookup a division node by its label.
+     *
      * @param nodeName
      * @return null if nothing found
      * @throws RuntimeException if more than one value found;
      */
     Node getDivisionNode(String nodeName);
+    
+     /**
+     * Lookup a division node by its label.
+     *
+     * @param nodeName
+     * @return null if nothing found
+     * @throws RuntimeException if more than one value found;
+     */
+    Node getProviderNode(String nodeName);
 
     /**
      * attach subtree of nodes to a parent node
+     *
      * @param subD
-     * @param parent 
+     * @param parent
+     * 
      */
-    void attachSubTree(HospitalNode subD, Node parent);
+    void attachSubTree(HospitalNode subD, Node parent) throws HospitalServiceException ;
 
     /**
      * Determine the node type to the enum
+     *
      * @param node
-     * @return 
+     * @return
      */
-    public NODE_TYPE getNodeType(Node node);
+    NODE_TYPE getNodeType(Node node);
+    
+    /**
+     * Attach a provider to a parent
+     * @param parent
+     * @param p
+     * @return the provider or null if parent not found
+     */
+    Provider attachProvider(Division parent, Provider p);
+
+  
+
+
 }
