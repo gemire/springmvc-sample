@@ -4,7 +4,9 @@
  */
 package com.dhenton9000.neo4j.hospital;
 
-import com.dhenton9000.neo4j.hospital.json.JSONHospitalServiceImpl;
+import com.dhenton9000.neo4j.hospital.service.HospitalNeo4jDao;
+import com.dhenton9000.neo4j.hospital.service.HospitalNeo4jDaoImpl;
+import com.dhenton9000.neo4j.hospital.service.HospitalServiceImpl;
 import com.dhenton9000.neo4j.utils.DatabaseHelper;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -28,7 +30,13 @@ public class HospitalDbMaker {
     public static final String PROGRAM_NAME = "Blue Cross";
     private GraphDatabaseService graphDb;
     public static final String DB_LOCATION = "/home/dhenton/neo4j/mydata/hospital.db";
-    private JSONHospitalServiceImpl jService = new JSONHospitalServiceImpl();
+    private HospitalServiceImpl jService = new HospitalServiceImpl();
+    
+    private  HospitalNeo4jDao  hospitalNeo4jDao = new HospitalNeo4jDaoImpl();
+  
+
+    
+    
     public static final HashMap<String, List<String>> divisionMap = new HashMap<String, List<String>>();
     String[] division1 = {"Maine", "New Hampshire", "Vermont",
         "Massachusetts", "Rhode Island", "Connecticut"};
@@ -91,7 +99,7 @@ public class HospitalDbMaker {
 
             String label = "D" + String.format("%03d", districtNumber);
             Node districtNode =
-                    jService.createAndAttachDivisionNode(rootNode, label);
+                    hospitalNeo4jDao.createAndAttachDivisionNode(rootNode, label);
             addProviders(districtNode);
         }
 
@@ -104,7 +112,7 @@ public class HospitalDbMaker {
             providerNumber++;;
 
             String label = "P" + String.format("%03d", providerNumber);
-            jService.createAndAttachProviderNode(rootNode, label);
+            hospitalNeo4jDao.createAndAttachProviderNode(rootNode, label);
           //  providerNode.setProperty(PROVIDER_DISPLAY_PROPERTY, label);
 
 
@@ -117,10 +125,10 @@ public class HospitalDbMaker {
 
         String[] labels = {"Northeast", "Midwest", "South", "West"};
         Node refNode = graphDb.getReferenceNode();
-        Node rootNode = jService.createAndAttachDivisionNode(refNode, PROGRAM_NAME);
+        Node rootNode = hospitalNeo4jDao.createAndAttachDivisionNode(refNode, PROGRAM_NAME);
 
         for (String label : labels) {
-            jService.createAndAttachDivisionNode(rootNode, label);
+            hospitalNeo4jDao.createAndAttachDivisionNode(rootNode, label);
 
         }
 
@@ -147,16 +155,16 @@ public class HospitalDbMaker {
 
     private void doRegionAndAddStates(String region, int start, int stop) {
 
-        Node regionNode = jService.getDivisionNode(region);
+        Node regionNode = hospitalNeo4jDao.getDivisionNode(region);
 
         //  Node regionNode = indexDivisionsDisplay.get(DIVISION_DISPLAY_PROPERTY, region).getSingle();
         for (int i = start; i < stop; i++) {
             List<String> items = divisionMap.get(divisionName[i]);
             // Node divNode = graphDb.createNode();
             String divLabel = divisionName[i];
-            Node divNode = jService.createAndAttachDivisionNode(regionNode, divLabel);
+            Node divNode = hospitalNeo4jDao.createAndAttachDivisionNode(regionNode, divLabel);
             for (String stateLabel : items) {
-                Node stateNode = jService.createAndAttachDivisionNode(divNode, stateLabel);
+                Node stateNode = hospitalNeo4jDao.createAndAttachDivisionNode(divNode, stateLabel);
                 stateArray.add(stateNode);
             }
         }
@@ -167,9 +175,8 @@ public class HospitalDbMaker {
     public void doDBCreate() throws Exception {
 
         Transaction tx = graphDb.beginTx();
-        jService.setNeo4jDb(graphDb);
-
-
+        hospitalNeo4jDao.setNeo4jDb(graphDb);
+        
         try {
 
             setUpDivisions();
