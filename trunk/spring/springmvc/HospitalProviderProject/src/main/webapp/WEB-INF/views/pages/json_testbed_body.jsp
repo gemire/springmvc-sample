@@ -15,9 +15,9 @@
 -->
 <script>
     
-    var currentParentId = '${currentTree.id}';
-    var sampleTree = "{\"type\": \"Division\",\"id\": 1,\"label\": \"Alpha\",\"children\":[]}";
-    var treeData = [${currentTree.treeData}];
+   
+    
+    var treeData = [${treeData}];
 
 
     $(function() {
@@ -29,9 +29,9 @@
         function(event) {
             // The clicked node is 'event.node'
             var node = event.node;
-            $('#idEdit').val(node.id);
-            $('#typeEdit').val(node.type);
-            $('#nameEdit').val(node.name);
+            $('#maintainId').html(node.id);
+            $('#maintainType').html(node.type);
+            $('#maintainName').val(node.name);
         });
                 
     }); 
@@ -46,28 +46,59 @@
 
 
 <div style="position:absolute;top: 150px; left: 400px">
-    <h4>Current Node</h4>   
-    
-    <p>
-    <h4>New Node Data</h4>
-    <form:form id="form" method="post" action="${baseURL}json/testbed/maintainNode">
+    <h4>Current Node</h4>  
 
+
+
+
+    <p>
+    <h4>Maintain Current Node Data</h4>
+    <form:form id="form" method="post"  modelAttribute="maintainTreeFormBean" action="${baseURL}json/testbed/maintainNode">
+        <div>
+
+            <c:if test="${not empty message}">
+                <div id="message" class="${message.type}">${message.text}</div>	
+            </c:if>
+            <s:bind path="*">
+                <c:if test="${status.error}">
+                    <form:errors cssClass="error" />
+                </c:if>
+            </s:bind>
+
+
+        </div>
         <table cellpadding="4" cellspacing="4">
-            <tr><th>Type:</th><td><input name="type" id="type" ></td></tr>
-            <tr><th>Label:</th><td><input name="name" id="name" ></td></tr>
-            <tr><td colspan="2"><input type="submit" name="submit" value="Add"></td></tr>
-            <tr><td colspan="2"><input type="submit" name="submit" value="Delete"></td></tr>
+            <tr><th>Id:</th><td><span id="maintainId"  /></td></tr>
+            <tr><th>Type:</th><td><span id="maintainType" /></td></tr>
+            <tr><th>Name:</th><td><form:input path="name" id="maintainName" /></td></tr>
+            <tr>
+                <td><input type="submit" id="maintainNodeSave" name="submit" value="Save"></td> 
+                <td><input type="submit" id="maintainNodeDelete" name="submit" value="Delete"></td>
+            </tr>
         </table>
     </form:form>
 </p>
 
 <p>
 <h4>Create New Tree</h4>
-<form:form id="form" method="post"  action="${baseURL}json/testbed/createTree">
+<form:form id="form" method="post"  modelAttribute="createTreeFormBean" action="${baseURL}json/testbed/createTree">
+    <div>
 
+        <c:if test="${not empty message}">
+            <div id="message" class="${message.type}">${message.text}</div>	
+        </c:if>
+        <s:bind path="*">
+            <c:if test="${status.error}">
+                <form:errors cssClass="error" />
+            </c:if>
+        </s:bind>
+
+
+    </div>
     <table cellpadding="4" cellspacing="4">
-        <tr><th>Name:</th><td><input name="name" id="name" ></td></tr>
-        <tr><td colspan="2"><input type="submit" value="Create New Tree"></td></tr>
+        <tr><th>Name:</th><td><form:input path="name" id="createTreeName" /></td></tr>
+        <tr><td colspan="2"><input id="createTreeSubmit" 
+                                   type="submit" value="Create New Tree"></td></tr>
 
     </table>
 </form:form>

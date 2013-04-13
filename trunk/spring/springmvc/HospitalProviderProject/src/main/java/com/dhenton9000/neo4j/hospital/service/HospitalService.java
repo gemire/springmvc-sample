@@ -80,4 +80,13 @@ public interface HospitalService {
      */
     Provider attachProvider(Division parent, Provider provider)
             throws HospitalServiceException;
+    
+    /**
+     * create a initial node off of the neo4j root with the divisionLabel as
+     * name
+     * @param divisionLabel
+     * @return the division
+     * @throws HospitalServiceException if duplicated
+     */
+    Division createInitialDivision(String divisionLabel) throws HospitalServiceException;
 }

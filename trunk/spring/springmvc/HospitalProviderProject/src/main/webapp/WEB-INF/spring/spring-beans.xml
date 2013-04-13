@@ -9,11 +9,13 @@
 		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
 		http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc-3.0.xsd">
 
-    <bean id="jsonServiceBean" class="com.dhenton9000.neo4j.hospital.json.JSONHospitalServiceImpl"> 
-        <property name="neo4jDb" ref="graphDatabaseService" />
+    <bean id="jsonServiceBean" class="com.dhenton9000.neo4j.hospital.service.HospitalServiceImpl"> 
+        <property name="hospitalDao" ref="daoBean" />
     </bean>
            
-    
+     <bean id="daoBean" class="com.dhenton9000.neo4j.hospital.service.HospitalNeo4jDaoImpl"> 
+        <property name="neo4jDb" ref="graphDatabaseService" />
+    </bean>
       
     <bean id="graphDatabaseService" class="org.neo4j.kernel.EmbeddedGraphDatabase" destroy-method="shutdown">
         <constructor-arg index="0" value="/home/dhenton/neo4j/data/graph.db"/>

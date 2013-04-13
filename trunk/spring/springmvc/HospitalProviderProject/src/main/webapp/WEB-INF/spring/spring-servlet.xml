@@ -28,6 +28,12 @@
 	</mvc:interceptors>
 
 
+	<bean id="messageSource"
+		class="org.springframework.context.support.ResourceBundleMessageSource">
+		<property name="basename" value="message" />
+	</bean>
+
+ 
 
 	<import resource="controllers.xml" />
 

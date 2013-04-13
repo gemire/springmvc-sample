@@ -13,6 +13,7 @@ import java.util.List;
 import org.apache.log4j.LogManager;
 import org.apache.log4j.Logger;
 import org.codehaus.jackson.map.ObjectMapper;
+import org.neo4j.graphdb.Node;
 
 /**
  * Service class for processing JSON for the Provider structures
@@ -77,6 +78,16 @@ public class HospitalServiceImpl implements HospitalService  {
             throws HospitalServiceException {
         
          return getHospitalDao().attachProvider(parent,p);
+    }
+
+    public Division createInitialDivision(String divisionLabel) throws HospitalServiceException {
+        
+        Division d = new Division();
+        Node n = getHospitalDao().createInitialNode(divisionLabel);
+        d.setId(new Long(n.getId()));
+        d.setName(divisionLabel);
+        d.setisOpen(true);
+        return d;
     }
 
   
