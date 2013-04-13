@@ -8,19 +8,14 @@ import com.dhenton9000.neo4j.hospital.json.Division;
 import com.dhenton9000.neo4j.hospital.json.HospitalNode;
 import com.dhenton9000.neo4j.hospital.json.HospitalServiceException;
 import com.dhenton9000.neo4j.hospital.json.Provider;
-import com.dhenton9000.neo4j.hospital.service.HospitalNeo4jDao;
-import com.dhenton9000.neo4j.hospital.service.HospitalNeo4jDaoImpl;
-import com.dhenton9000.neo4j.hospital.service.HospitalService;
-import com.dhenton9000.neo4j.hospital.service.HospitalServiceImpl;
-import org.codehaus.jackson.map.ObjectMapper;
+import com.dhenton9000.neo4j.hospital.service.HospitalNeo4jDao.NODE_TYPE;
 import org.junit.After;
+import static org.junit.Assert.*;
 import org.junit.Before;
 import org.junit.Test;
+import org.neo4j.graphdb.Node;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import static org.junit.Assert.*;
-import org.junit.Ignore;
-import org.neo4j.graphdb.Node;
 
 /**
  *
@@ -32,6 +27,7 @@ public class HospitalDaoTest extends HospitalTestBase {
     private HospitalNeo4jDao hospitalNeo4jDao = new HospitalNeo4jDaoImpl();
     private HospitalServiceImpl hospitalService = new HospitalServiceImpl();
     private static final String PROVIDER_SAMPLE_NAME = "manjack";
+    private static final int SAMPLE_TREE_SIZE = 7;
 
     @Before
     public void before() {
@@ -64,12 +60,17 @@ public class HospitalDaoTest extends HospitalTestBase {
     @Test
     public void testDeletingNode() throws Exception {
         setupSampleInDb();
+        assertEquals(SAMPLE_TREE_SIZE,
+                hospitalNeo4jDao.getAllNodesForType(NODE_TYPE.DIVISIONS).size());
+         assertEquals(0,
+                hospitalNeo4jDao.getAllNodesForType(NODE_TYPE.PROVIDERS).size());
         Node n1 = hospitalNeo4jDao.getDivisionNode("Manny");
         assertNotNull(n1);
         hospitalNeo4jDao.removeNode(n1);
         n1 = hospitalNeo4jDao.getDivisionNode("Manny");
         assertNull(n1);
-
+        assertEquals(SAMPLE_TREE_SIZE - 1,
+                hospitalNeo4jDao.getAllNodesForType(NODE_TYPE.DIVISIONS).size());
         //  n1 = hospitalNeo4jDao.getProviderNode(PROVIDER_SAMPLE_NAME);
         //   assertNotNull(n1);
 
@@ -87,10 +88,14 @@ public class HospitalDaoTest extends HospitalTestBase {
         Node n1 = hospitalNeo4jDao.getDivisionNode(PROVIDER_SAMPLE_NAME);
         assertNull(n1);
         n1 = hospitalNeo4jDao.getProviderNode(PROVIDER_SAMPLE_NAME);
-        assertNull(n1);
+        assertNotNull(n1);
+        assertEquals(SAMPLE_TREE_SIZE,
+                hospitalNeo4jDao.getAllNodesForType(NODE_TYPE.DIVISIONS).size());
+        assertEquals(1,
+                hospitalNeo4jDao.getAllNodesForType(NODE_TYPE.PROVIDERS).size());
     }
 
-    @Ignore
+    @Test
     public void testEditingNodeLabel() throws Exception {
         setupSampleInDb();
         Node n1 = hospitalNeo4jDao.getDivisionNode("Manny");
@@ -100,15 +105,18 @@ public class HospitalDaoTest extends HospitalTestBase {
         assertNull(n1);
         n1 = hospitalNeo4jDao.getDivisionNode("bozon");
         assertNotNull(n1);
-
+        assertEquals(SAMPLE_TREE_SIZE,
+                hospitalNeo4jDao.getAllNodesForType(NODE_TYPE.DIVISIONS).size());
     }
 
     private Division setupSampleInDbWithProviderTheRightWay() throws Exception {
         Division d = getSampleRoot();
-        Division huey = (Division) d.getChildren().get(1).getChildren().get(2);
+        Division huey = (Division) d.getChildren().get(1).getChildren().get(0);
+        assertNotNull(huey);
+        assertEquals("Huey", huey.getName());
         Provider p = new Provider();
         p.setName(PROVIDER_SAMPLE_NAME);
-        huey.getChildren().add(p);
+        d = hospitalService.attachFullTree(d);
         p = hospitalService.attachProvider(huey, p);
         return d;
     }
@@ -116,6 +124,7 @@ public class HospitalDaoTest extends HospitalTestBase {
     private Division setupSampleInDbWithProviderTheWrongWay() throws Exception {
         Division d = getSampleRoot();
         HospitalNode huey = d.getChildren().get(1).getChildren().get(2);
+
         Provider p = new Provider();
         p.setName(PROVIDER_SAMPLE_NAME);
         huey.getChildren().add(p);
