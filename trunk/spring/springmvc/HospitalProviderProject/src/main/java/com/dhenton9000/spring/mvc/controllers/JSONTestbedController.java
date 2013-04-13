@@ -34,7 +34,7 @@ import org.springframework.web.servlet.ModelAndView;
  */
 @Controller
 @RequestMapping("json/testbed/*")
-@SessionAttributes({"createTreeFormBean", "maintainTreeFormBean"})
+@SessionAttributes({"createTreeFormBean", "maintainTreeFormBean","treeData"})
 public class JSONTestbedController {
 
     private static Logger log = LogManager.getLogger(JSONTestbedController.class);
@@ -51,6 +51,7 @@ public class JSONTestbedController {
         HashMap map = new HashMap<String, Object>();
         map.put(MAINTAIN_BEAN_NAME, new FormBean());
         map.put(CREATE_TREE_BEAN_NAME, new FormBean());
+        map.put(TREE_DATA_KEY, "");
         return new ModelAndView(DESTINATION_TILE, map);
 
     }
@@ -80,10 +81,13 @@ public class JSONTestbedController {
     }
 
     @RequestMapping(value = "createTree", method = RequestMethod.POST)
-    public ModelAndView createTree(@ModelAttribute(CREATE_TREE_BEAN_NAME) FormBean form,
+    public ModelAndView createTree(
+            @ModelAttribute(TREE_DATA_KEY) String treeDataOld,
+            @ModelAttribute(CREATE_TREE_BEAN_NAME) FormBean form,
             BindingResult result,
             WebRequest webRequest, HttpSession session, Model model) {
         log.info("createTree " + form.getName());
+        log.info("treeDataOld "+treeDataOld);
         Object[] vargs = new Object[1];
         vargs[0] = "";
         String treeData = "";
@@ -96,6 +100,7 @@ public class JSONTestbedController {
             name = name.trim();
             if (StringUtils.isEmpty(name)) {
                 result.reject("empty.name");
+                treeData = treeDataOld;
             } else {
                 treeData = jService.structureToString(
                         jService.createInitialDivision(name));
@@ -107,7 +112,7 @@ public class JSONTestbedController {
             log.error("Hospital error " + ex.getMessage());
             vargs[0] = ex.getMessage();
             result.reject("duplicate.error", vargs, "Tree already exists");
-
+            treeData = treeDataOld;
 
 
 
@@ -116,6 +121,7 @@ public class JSONTestbedController {
             vargs[0] = ioerr.getMessage();
             result.rejectValue("name", "io.error", vargs,
                     "default io error");
+            treeData = treeDataOld;
         }
         return new ModelAndView(DESTINATION_TILE, TREE_DATA_KEY, treeData);
     }
