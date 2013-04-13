@@ -8,7 +8,7 @@ package com.dhenton9000.spring.mvc.model;
  *
  * @author dhenton
  */
-public class NodeFormBean {
+public class FormBean {
     private Long id = null;
     private String name = null;
     private String type = null;

@@ -7,7 +7,7 @@ package com.dhenton9000.spring.mvc.controllers;
 import com.dhenton9000.neo4j.hospital.json.Division;
 import com.dhenton9000.neo4j.hospital.json.HospitalNode;
 import com.dhenton9000.neo4j.hospital.service.HospitalService;
-import com.dhenton9000.spring.mvc.model.NodeFormBean;
+import com.dhenton9000.spring.mvc.model.FormBean;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
@@ -51,7 +51,7 @@ public class NodeController {
     public ModelAndView showFormInInitialState() {
 
         return new ModelAndView(DESTINATION_TILE, FORMBEAN_KEY,
-                new NodeFormBean());
+                new FormBean());
 
     }
 
@@ -60,7 +60,7 @@ public class NodeController {
     //delete the current node
     //edit the current node
     @RequestMapping(value = "nodeForm", method = RequestMethod.POST)
-    public String addForm(@ModelAttribute("nodeFormBean") NodeFormBean form,
+    public String addForm(@ModelAttribute("nodeFormBean") FormBean form,
             BindingResult result,
             WebRequest webRequest, HttpSession session, Model model) {
         log.info("form " + form.getName());
