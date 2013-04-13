@@ -8,6 +8,7 @@ import com.dhenton9000.neo4j.hospital.json.Division;
 import com.dhenton9000.neo4j.hospital.json.HospitalNode;
 import com.dhenton9000.neo4j.hospital.json.HospitalServiceException;
 import com.dhenton9000.neo4j.hospital.json.Provider;
+import java.util.List;
 import org.neo4j.graphdb.GraphDatabaseService;
 import org.neo4j.graphdb.Node;
 import org.neo4j.graphdb.RelationshipType;
@@ -43,7 +44,9 @@ public interface HospitalNeo4jDao {
      * @param n1
      */
     void removeNode(Node n1);
-
+    
+    Node createInitialNode(String nodeLabel);
+    
     Node createAndAttachDivisionNode(Node parent, String nodeLabel);
 
     Node createAndAttachProviderNode(Node parent, String nodeLabel);
@@ -54,6 +57,8 @@ public interface HospitalNeo4jDao {
     
     Node changeNodeLabel(Node n1, String newLabel);
 
+    public List<Node> getAllNodesForType(NODE_TYPE type);
+    
     /**
      * @return the neo4jDb
      */

@@ -9,7 +9,9 @@ import com.dhenton9000.neo4j.hospital.json.HospitalNode;
 import com.dhenton9000.neo4j.hospital.json.HospitalServiceException;
 import com.dhenton9000.neo4j.hospital.json.Provider;
 import com.dhenton9000.neo4j.utils.DatabaseHelper;
+import java.util.ArrayList;
 import java.util.Iterator;
+import java.util.List;
 import org.apache.log4j.LogManager;
 import org.apache.log4j.Logger;
 import org.neo4j.graphdb.Direction;
@@ -18,6 +20,7 @@ import org.neo4j.graphdb.Node;
 import org.neo4j.graphdb.Relationship;
 import org.neo4j.graphdb.Transaction;
 import org.neo4j.graphdb.index.Index;
+import org.neo4j.graphdb.index.IndexHits;
 
 /**
  *
@@ -188,6 +191,7 @@ public class HospitalNeo4jDaoImpl implements HospitalNeo4jDao {
                 rel.delete();
             }
             currentIndex.remove(n1);
+            getTypeIndex().remove(n1);
             n1.delete();
             tx.success();
 
@@ -287,8 +291,51 @@ public class HospitalNeo4jDaoImpl implements HospitalNeo4jDao {
 
     }
 
-    public Node changeNodeLabel(Node n1, String manjack) {
+    public List<Node> getAllNodesForType(NODE_TYPE type) {
+        IndexHits hits = getTypeIndex().get(NODE_TYPE.TYPE.toString(), type.toString());
+        Iterator iter = hits.iterator();
+        ArrayList<Node> hitList = new ArrayList<Node>();
+        while (iter.hasNext()) {
+            Node j = (Node) iter.next();
+            hitList.add(j);
 
+        }
+        return hitList;
+    }
+
+    @Override
+    public Node changeNodeLabel(Node n1, String newLabel) {
+
+        NODE_TYPE type = getNodeType(n1);
+        Transaction tx = getNeo4jDb().beginTx();
+        Index<Node> currentIndex = null;
+        String currentProperty = null;
+
+        try {
+            switch (type) {
+                case DIVISIONS:
+                    currentIndex = getDivisionIndex();
+                    currentProperty = DIVISION_DISPLAY_PROPERTY;
+                    break;
+
+                case PROVIDERS:
+                    currentIndex = getProviderIndex();
+                    currentProperty = PROVIDER_DISPLAY_PROPERTY;
+                    break;
+            }// end switch
+
+
+            currentIndex.remove(n1);
+            n1.setProperty(currentProperty, newLabel);
+            currentIndex.add(n1, DIVISION_DISPLAY_PROPERTY, newLabel);
+            tx.success();
+
+        } catch (Exception err) {
+            log.error("error in removeNode\n " + err.getClass().getName()
+                    + " " + err.getMessage());
+        } finally {
+            tx.finish();
+        }
 
 
 
@@ -298,21 +345,25 @@ public class HospitalNeo4jDaoImpl implements HospitalNeo4jDao {
     public Provider attachProvider(Division parent, Provider p) {
 
         Node parentNode = getDivisionNode(parent.getName());
+        log.debug("begin attach provider for parent "
+                + parent.getName() + " provider " + p.getName());
         if (parentNode == null) {
+            log.debug("couldn't find parent node");
             return null;
         }
-        Transaction tx = getNeo4jDb().beginTx();
 
+        Transaction tx = getNeo4jDb().beginTx();
+        log.debug("start transaction");
 
         try {
             if (parent.getChildren().size() > 0 && parent.getChildren().get(0) instanceof Division) {
                 throw new HospitalServiceException("cannot add a provider to parent with Divisons "
-                        +"remove the divisions first");
+                        + "remove the divisions first");
             }
-
-            createAndAttachDivisionNode(parentNode, p.getName());
+            log.debug("start attach");
+            createAndAttachProviderNode(parentNode, p.getName());
             tx.success();
-
+            log.debug("finished tx");
             // } catch (HospitalServiceException herr){
             //     throw new HospitalServiceException(herr.getMessage());
         } catch (Exception err) {
@@ -324,5 +375,10 @@ public class HospitalNeo4jDaoImpl implements HospitalNeo4jDao {
 
 
         return p;
+    }
+
+    public Node createInitialNode(String nodeLabel) {
+        Node parent = getNeo4jDb().getReferenceNode();
+        return createAndAttachDivisionNode(parent, nodeLabel);
     }
 }
