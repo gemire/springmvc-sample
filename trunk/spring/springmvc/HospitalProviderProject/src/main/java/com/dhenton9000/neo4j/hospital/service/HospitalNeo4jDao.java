@@ -12,6 +12,7 @@ import java.util.List;
 import org.neo4j.graphdb.GraphDatabaseService;
 import org.neo4j.graphdb.Node;
 import org.neo4j.graphdb.RelationshipType;
+import org.neo4j.graphdb.Transaction;
 
 /**
  * The Dao directly handles Neo4j nodes and indices
@@ -23,9 +24,12 @@ public interface HospitalNeo4jDao {
     public static final String DIVISION_DISPLAY_PROPERTY = "division_display_property";
     public static final String PROVIDER_DISPLAY_PROPERTY = "provider_display_property";
     public static final String DIVISION_DISPLAY_INDEX = "division_display_index";
+    public static final String TYPE_INDEX_PROPERTY = "TYPE";
     public static final String PROVIDER_DISPLAY_INDEX = "provider_display_index";
     public static final String PROVIDER_DB_KEY = "provider_db_key";
     public static final String TYPE_INDEX = "type_index";
+
+   
 
     public enum RelationshipTypes implements RelationshipType {
 
@@ -35,7 +39,7 @@ public interface HospitalNeo4jDao {
 
     public enum NODE_TYPE {
 
-        TYPE, DIVISIONS, PROVIDERS
+        DIVISIONS, PROVIDERS
     }
 
     /**
@@ -44,20 +48,74 @@ public interface HospitalNeo4jDao {
      * @param n1
      */
     void removeNode(Node n1);
+    /**
+     * create a node attached immediately to the neo4j root. In business terms,
+     * this is the company 
+     * @param nodeLabel
+     * @return 
+     */
+    Node createInitialNode(String nodeLabel) 
+            throws HospitalServiceException;
     
-    Node createInitialNode(String nodeLabel);
     
-    Node createAndAttachDivisionNode(Node parent, String nodeLabel);
+      /**
+     * Attach a divisions node with the provided label to the parent
+     * @param parent
+     * @param nodeLabel
+     * @return
+     * @throws HospitalServiceException on duplicate request 
+     */
+    Node createAndAttachDivisionNode(Node parent, String nodeLabel) 
+            throws HospitalServiceException;
 
-    Node createAndAttachProviderNode(Node parent, String nodeLabel);
+    /**
+     * Attach a provider node with the provided label to the parent
+     * @param parent
+     * @param nodeLabel
+     * @return
+     * @throws HospitalServiceException on duplicate request or if trying
+     * to attach to an illegal node
+     */
+    Node createAndAttachProviderNode(Node parent, String nodeLabel) throws HospitalServiceException;
 
+    /**
+     * Persist a division and all its children. Return a pointer to the
+     * division with its id
+     * @param d
+     * @return
+     * @throws HospitalServiceException 
+     */
     Division attachFullTree(Division d) throws HospitalServiceException;
 
-    Division buildDivisonFromDb(String startDivisionLabel);
-    
+    /**
+     * build a complete division tree from the persistence store
+     * @param startDivisionLabel
+     * @return 
+     */
+    Division buildDivisionFromDb(String startDivisionLabel);
+    /**
+     * change the label on an existing node
+     * @param n1
+     * @param newLabel
+     * @return 
+     */
     Node changeNodeLabel(Node n1, String newLabel);
 
-    public List<Node> getAllNodesForType(NODE_TYPE type);
+    /**
+     * Get all the nodes under the given type
+     * @param type
+     * @return 
+     */
+    List<Node> getAllNodesForType(NODE_TYPE type);
+    /**
+     * return a node by its neo4j id
+     * @param id
+     * @return 
+     */
+    Node getNodeById(Long id);
+    
+  
+    
     
     /**
      * @return the neo4jDb
@@ -118,8 +176,9 @@ public interface HospitalNeo4jDao {
      * @param parent
      * @param p
      * @return the provider or null if parent not found
+     * @throws when the parent already has divisions attached
      */
-    Provider attachProvider(Division parent, Provider p);
+    Provider attachProvider(Division parent, Provider p) throws HospitalServiceException ;
 
   
 

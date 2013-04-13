@@ -4,6 +4,7 @@
  */
 package com.dhenton9000.neo4j.hospital;
 
+import com.dhenton9000.neo4j.hospital.json.HospitalServiceException;
 import com.dhenton9000.neo4j.hospital.service.HospitalNeo4jDao;
 import com.dhenton9000.neo4j.hospital.service.HospitalNeo4jDaoImpl;
 import com.dhenton9000.neo4j.hospital.service.HospitalServiceImpl;
@@ -79,7 +80,7 @@ public class HospitalDbMaker {
     
     
      */
-    private void doDistricts() {
+    private void doDistricts() throws HospitalServiceException {
 
 
         for (Node state : stateArray) {
@@ -89,7 +90,7 @@ public class HospitalDbMaker {
 
     }
 
-    private void addDistrictsAndProviders(Node rootNode) {
+    private void addDistrictsAndProviders(Node rootNode) throws HospitalServiceException {
 
         Double d = Math.random() * 5d;
         int numDist = d.intValue() + 2;
@@ -105,7 +106,7 @@ public class HospitalDbMaker {
 
     }
 
-    private void addProviders(Node rootNode) {
+    private void addProviders(Node rootNode) throws HospitalServiceException {
         Double d = Math.random() * 3d;
         int numProviders = d.intValue() + 2;
         for (int i = 0; i < numProviders; i++) {
@@ -120,7 +121,7 @@ public class HospitalDbMaker {
         }
     }
 
-    private void doRegions() {
+    private void doRegions() throws HospitalServiceException {
 
 
         String[] labels = {"Northeast", "Midwest", "South", "West"};
@@ -153,7 +154,7 @@ public class HospitalDbMaker {
 
     }
 
-    private void doRegionAndAddStates(String region, int start, int stop) {
+    private void doRegionAndAddStates(String region, int start, int stop) throws HospitalServiceException {
 
         Node regionNode = hospitalNeo4jDao.getDivisionNode(region);
 

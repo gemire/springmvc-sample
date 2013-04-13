@@ -9,11 +9,15 @@ import com.dhenton9000.neo4j.hospital.json.HospitalNode;
 import com.dhenton9000.neo4j.hospital.json.HospitalServiceException;
 import com.dhenton9000.neo4j.hospital.json.Provider;
 import com.dhenton9000.neo4j.hospital.service.HospitalNeo4jDao.NODE_TYPE;
+import java.util.Iterator;
 import org.junit.After;
 import static org.junit.Assert.*;
 import org.junit.Before;
 import org.junit.Test;
+import org.neo4j.graphdb.Direction;
 import org.neo4j.graphdb.Node;
+import org.neo4j.graphdb.Relationship;
+import org.neo4j.graphdb.Transaction;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -42,6 +46,52 @@ public class HospitalDaoTest extends HospitalTestBase {
     }
 
     @Test
+    public void testAttachProviderReturnsNullWhenSentGarbage() throws Exception {
+        setupSampleInDb();
+        Division d = new Division();
+        d.setName("foonman");
+        Provider p = new Provider();
+        Provider z = hospitalNeo4jDao.attachProvider(d, p);
+        assertNull(z);
+    }
+
+    @Test(expected = HospitalServiceException.class)
+    public void testCantAttachProviderToDivNodeWithDivChildren() 
+            throws Exception {
+        Division d = setupSampleInDb();
+        Provider p = new Provider();
+        hospitalNeo4jDao.attachProvider(d, p);
+    }
+
+    public void testCanAttachProviderToDivNodeWithProviderChildren() 
+            throws Exception {
+        
+        Division d = getSampleRoot();
+        Division huey = (Division) d.getChildren().get(1).getChildren().get(0);
+        assertNotNull(huey);
+        assertEquals("Huey", huey.getName());
+        Provider p = new Provider();
+        p.setName(PROVIDER_SAMPLE_NAME);
+        d = hospitalService.attachFullTree(d);
+        hospitalService.attachProvider(huey, p);
+        Provider p2 = new Provider();
+        p.setName("bonzo");
+        hospitalService.attachProvider(huey, p2);
+        Node hueyNode = hospitalNeo4jDao.getDivisionNode(huey.getName());
+        Iterator<Relationship> iter = 
+                hueyNode.getRelationships(Direction.OUTGOING).iterator();
+        int cc = 0;
+        while (iter.hasNext())
+        {
+            cc++;
+        }
+        assertEquals(2,cc);
+        
+        
+        
+    }
+
+    @Test
     public void testGettingNodesByName() throws Exception {
         Division d = setupSampleInDb();
         assertNotNull(d.getId());
@@ -58,11 +108,27 @@ public class HospitalDaoTest extends HospitalTestBase {
     }
 
     @Test
+    public void testRemoveNodeForProvider() throws Exception {
+        Provider p = setupSampleInDbWithProviderTheRightWay();
+        assertEquals(SAMPLE_TREE_SIZE,
+                hospitalNeo4jDao.getAllNodesForType(NODE_TYPE.DIVISIONS).size());
+        assertEquals(1,
+                hospitalNeo4jDao.getAllNodesForType(NODE_TYPE.PROVIDERS).size());
+        Node pNode = hospitalNeo4jDao.getProviderNode(p.getName());
+        assertNotNull(pNode);
+        hospitalNeo4jDao.removeNode(pNode);
+        assertEquals(SAMPLE_TREE_SIZE,
+                hospitalNeo4jDao.getAllNodesForType(NODE_TYPE.DIVISIONS).size());
+        assertEquals(0,
+                hospitalNeo4jDao.getAllNodesForType(NODE_TYPE.PROVIDERS).size());
+    }
+
+    @Test
     public void testDeletingNode() throws Exception {
         setupSampleInDb();
         assertEquals(SAMPLE_TREE_SIZE,
                 hospitalNeo4jDao.getAllNodesForType(NODE_TYPE.DIVISIONS).size());
-         assertEquals(0,
+        assertEquals(0,
                 hospitalNeo4jDao.getAllNodesForType(NODE_TYPE.PROVIDERS).size());
         Node n1 = hospitalNeo4jDao.getDivisionNode("Manny");
         assertNotNull(n1);
@@ -96,7 +162,105 @@ public class HospitalDaoTest extends HospitalTestBase {
     }
 
     @Test
-    public void testEditingNodeLabel() throws Exception {
+    public void testCannotDeleteANodeWithChildren() throws Exception {
+    }
+
+    @Test
+    public void testThatIdsAreFilledIN() throws Exception {
+        Division d = setupSampleInDb();
+        assertNotNull(d.getId());
+
+    }
+
+    @Test(expected = RuntimeException.class)
+    public void testBuildFromDBSWithUnknownNodeThrowsException() {
+        hospitalNeo4jDao.buildDivisionFromDb("get a job");
+    }
+
+    @Test
+    public void testBuildDivisionFromDb() throws Exception {
+        Division d = getSampleRoot();
+        Division huey = (Division) d.getChildren().get(1).getChildren().get(0);
+        assertNotNull(huey);
+        assertEquals("Huey", huey.getName());
+        Provider p = new Provider();
+        p.setName(PROVIDER_SAMPLE_NAME);
+        d = hospitalService.attachFullTree(d);
+        p = hospitalService.attachProvider(huey, p);
+
+        Division newD = hospitalNeo4jDao.buildDivisionFromDb(d.getName());
+
+
+
+        Division newHuey = (Division) newD.getChildren().get(1).getChildren().get(0);
+        assertEquals(huey.getName(), newHuey.getName());
+
+
+
+
+
+
+
+
+
+    }
+
+    @Test
+    public void testGeNodesReturnNullForNull() {
+        Node t = hospitalNeo4jDao.getDivisionNode(null);
+        assertNull(t);
+        t = hospitalNeo4jDao.getProviderNode(null);
+        assertNull(t);
+    }
+
+    @Test(expected = HospitalServiceException.class)
+    public void throwHospitalServiceExceptionWhenTryingToAttachDuplicate() throws Exception {
+        Node initial = hospitalNeo4jDao.createInitialNode("initial");
+        Transaction tx = hospitalNeo4jDao.getNeo4jDb().beginTx();
+        try {
+            hospitalNeo4jDao.createAndAttachDivisionNode(initial, PROVIDER_SAMPLE_NAME);
+            hospitalNeo4jDao.createAndAttachDivisionNode(initial, PROVIDER_SAMPLE_NAME);
+            tx.success();
+
+        } finally {
+            tx.finish();
+        }
+    }
+
+    @Test
+    public void testDisplayForProvider() throws Exception {
+        Node initial = hospitalNeo4jDao.createInitialNode("initial");
+        Transaction tx = hospitalNeo4jDao.getNeo4jDb().beginTx();
+        Node p = null;
+        try {
+            Node d = hospitalNeo4jDao.createAndAttachDivisionNode(initial, "div");
+            p = hospitalNeo4jDao.createAndAttachProviderNode(d, PROVIDER_SAMPLE_NAME);
+            tx.success();
+
+        } finally {
+            tx.finish();
+        }
+
+        assertEquals(PROVIDER_SAMPLE_NAME, hospitalNeo4jDao.getDisplayMessage(p));
+
+    }
+
+    @Test(expected = HospitalServiceException.class)
+    public void throwHospitalServiceExceptionWhenTryingToAttachDuplicateMixed() throws Exception {
+        Node initial = hospitalNeo4jDao.createInitialNode("initial");
+        Transaction tx = hospitalNeo4jDao.getNeo4jDb().beginTx();
+        try {
+            Node d = hospitalNeo4jDao.createAndAttachProviderNode(initial, PROVIDER_SAMPLE_NAME);
+            hospitalNeo4jDao.createAndAttachProviderNode(d, PROVIDER_SAMPLE_NAME);
+            tx.success();
+
+        } finally {
+            tx.finish();
+        }
+    }
+
+    @Test
+    public void testChangeNodeLabelForDivision() throws Exception {
         setupSampleInDb();
         Node n1 = hospitalNeo4jDao.getDivisionNode("Manny");
         assertNotNull(n1);
@@ -109,7 +273,24 @@ public class HospitalDaoTest extends HospitalTestBase {
                 hospitalNeo4jDao.getAllNodesForType(NODE_TYPE.DIVISIONS).size());
     }
 
-    private Division setupSampleInDbWithProviderTheRightWay() throws Exception {
+    @Test
+    public void testChangeNodeLabelForProvider() throws Exception {
+        Provider p = setupSampleInDbWithProviderTheRightWay();
+        Node n1 = hospitalNeo4jDao.getProviderNode(PROVIDER_SAMPLE_NAME);
+        assertNotNull(n1);
+        hospitalNeo4jDao.changeNodeLabel(n1, "bozon");
+        n1 = hospitalNeo4jDao.getProviderNode(PROVIDER_SAMPLE_NAME);
+        assertNull(n1);
+        n1 = hospitalNeo4jDao.getProviderNode("bozon");
+        assertNotNull(n1);
+        assertEquals(1,
+                hospitalNeo4jDao.getAllNodesForType(NODE_TYPE.PROVIDERS).size());
+
+
+
+    }
+
+    private Provider setupSampleInDbWithProviderTheRightWay() throws Exception {
         Division d = getSampleRoot();
         Division huey = (Division) d.getChildren().get(1).getChildren().get(0);
         assertNotNull(huey);
@@ -118,7 +299,7 @@ public class HospitalDaoTest extends HospitalTestBase {
         p.setName(PROVIDER_SAMPLE_NAME);
         d = hospitalService.attachFullTree(d);
         p = hospitalService.attachProvider(huey, p);
-        return d;
+        return p;
     }
 
     private Division setupSampleInDbWithProviderTheWrongWay() throws Exception {

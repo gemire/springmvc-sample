@@ -64,15 +64,17 @@ public class HospitalServiceImpl implements HospitalService  {
         this.hospitalDao = hospitalDao;
     }
 
-    public Division attachFullTree(Division d) throws HospitalServiceException {
+    public Division attachFullTree(Division d) 
+            throws HospitalServiceException {
         return getHospitalDao().attachFullTree(d);
     }
 
     public Division buildDivisonFromDb(String startDivisionLabel) {
-         return getHospitalDao().buildDivisonFromDb(startDivisionLabel);
+         return getHospitalDao().buildDivisionFromDb(startDivisionLabel);
     }
 
-    public Provider attachProvider(Division parent, Provider p) {
+    public Provider attachProvider(Division parent, Provider p) 
+            throws HospitalServiceException {
         
          return getHospitalDao().attachProvider(parent,p);
     }
