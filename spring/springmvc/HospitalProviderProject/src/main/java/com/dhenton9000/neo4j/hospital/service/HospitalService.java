@@ -78,5 +78,6 @@ public interface HospitalService {
      * @param parent
      * @return the Provider with a real id or null if parent not found
      */
-    Provider attachProvider(Division parent, Provider provider);
+    Provider attachProvider(Division parent, Provider provider)
+            throws HospitalServiceException;
 }

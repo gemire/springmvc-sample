@@ -33,22 +33,32 @@ public class HospitalNeo4jDaoImpl implements HospitalNeo4jDao {
     private DatabaseHelper dbHelper = new DatabaseHelper();
 
     @Override
-    public Node createAndAttachDivisionNode(Node parent, String nodeLabel) {
+    public Node createAndAttachDivisionNode(Node parent, String nodeLabel)
+            throws HospitalServiceException {
+
+        if (nodelAlreadyPresent(nodeLabel)) {
+            throw new HospitalServiceException("Node already exists for '" + nodeLabel + "'");
+        }
         Node currentNode = getNeo4jDb().createNode();
         parent.createRelationshipTo(currentNode, RelationshipTypes.IS_DIVIDED_INTO);
-        getTypeIndex().add(currentNode, NODE_TYPE.TYPE.toString(), NODE_TYPE.DIVISIONS.toString());
-        currentNode.setProperty(NODE_TYPE.TYPE.toString(), NODE_TYPE.DIVISIONS.toString());
+        getTypeIndex().add(currentNode, TYPE_INDEX_PROPERTY, NODE_TYPE.DIVISIONS.toString());
+        currentNode.setProperty(TYPE_INDEX_PROPERTY, NODE_TYPE.DIVISIONS.toString());
         getDivisionIndex().add(currentNode, DIVISION_DISPLAY_PROPERTY, nodeLabel);
         currentNode.setProperty(DIVISION_DISPLAY_PROPERTY, nodeLabel);
         return currentNode;
     }
 
     @Override
-    public Node createAndAttachProviderNode(Node parent, String nodeLabel) {
+    public Node createAndAttachProviderNode(Node parent, String nodeLabel)
+            throws HospitalServiceException {
+
+        if (nodelAlreadyPresent(nodeLabel)) {
+            throw new HospitalServiceException("Node already exists for '" + nodeLabel + "'");
+        }
         Node currentNode = getNeo4jDb().createNode();
         parent.createRelationshipTo(currentNode, RelationshipTypes.DERIVES_SERVICE_FROM);
-        getTypeIndex().add(currentNode, NODE_TYPE.TYPE.toString(), NODE_TYPE.PROVIDERS.toString());
-        currentNode.setProperty(NODE_TYPE.TYPE.toString(), NODE_TYPE.PROVIDERS.toString());
+        getTypeIndex().add(currentNode, TYPE_INDEX_PROPERTY, NODE_TYPE.PROVIDERS.toString());
+        currentNode.setProperty(TYPE_INDEX_PROPERTY, NODE_TYPE.PROVIDERS.toString());
         getProviderIndex().add(currentNode, PROVIDER_DISPLAY_PROPERTY, nodeLabel);
         currentNode.setProperty(PROVIDER_DISPLAY_PROPERTY, nodeLabel);
         return currentNode;
@@ -100,19 +110,16 @@ public class HospitalNeo4jDaoImpl implements HospitalNeo4jDao {
                 lVar = (String) currentNode.getProperty(PROVIDER_DISPLAY_PROPERTY);
                 break;
 
-            default:
-                throw new RuntimeException(" got fault " + currentNode.toString());
+
         }
         return lVar;
     }
 
     @Override
     public NODE_TYPE getNodeType(Node node) {
-        String t = (String) node.getProperty(NODE_TYPE.TYPE.toString());
+        String t = (String) node.getProperty(TYPE_INDEX_PROPERTY);
         NODE_TYPE res = NODE_TYPE.valueOf(t);
-        if (res == null) {
-            throw new RuntimeException("got node type error " + t);
-        }
+
         return res;
     }
 
@@ -194,10 +201,6 @@ public class HospitalNeo4jDaoImpl implements HospitalNeo4jDao {
             getTypeIndex().remove(n1);
             n1.delete();
             tx.success();
-
-        } catch (Exception err) {
-            log.error("error in removeNode\n " + err.getClass().getName()
-                    + " " + err.getMessage());
         } finally {
             tx.finish();
         }
@@ -221,15 +224,11 @@ public class HospitalNeo4jDaoImpl implements HospitalNeo4jDao {
 
                 tx.success();
                 //dbHelper.dumpGraphToConsole(neo4jDb);
-            } catch (HospitalServiceException herr) {
-                throw new HospitalServiceException(herr.getMessage());
-            } catch (Exception err) {
-                log.error("error in attachFullTree\n " + err.getClass().getName()
-                        + " " + err.getMessage());
+  
             } finally {
                 tx.finish();
             }
-            return buildDivisonFromDb(nodeLabel);
+            return buildDivisionFromDb(nodeLabel);
         } else {
             throw new HospitalServiceException("node already exists " + nodeLabel);
         }
@@ -237,7 +236,7 @@ public class HospitalNeo4jDaoImpl implements HospitalNeo4jDao {
     }
 
     @Override
-    public Division buildDivisonFromDb(String startDivisionLabel) {
+    public Division buildDivisionFromDb(String startDivisionLabel) {
         Division root = new Division();
         Node dItem = getDivisionNode(startDivisionLabel);
         if (dItem == null) {
@@ -271,8 +270,6 @@ public class HospitalNeo4jDaoImpl implements HospitalNeo4jDao {
                         hNode = new Provider();
                         break;
 
-                    default:
-                        throw new RuntimeException(" got fault " + currentNode.toString());
                 }
 
 
@@ -292,7 +289,7 @@ public class HospitalNeo4jDaoImpl implements HospitalNeo4jDao {
     }
 
     public List<Node> getAllNodesForType(NODE_TYPE type) {
-        IndexHits hits = getTypeIndex().get(NODE_TYPE.TYPE.toString(), type.toString());
+        IndexHits hits = getTypeIndex().get(TYPE_INDEX_PROPERTY, type.toString());
         Iterator iter = hits.iterator();
         ArrayList<Node> hitList = new ArrayList<Node>();
         while (iter.hasNext()) {
@@ -327,12 +324,10 @@ public class HospitalNeo4jDaoImpl implements HospitalNeo4jDao {
 
             currentIndex.remove(n1);
             n1.setProperty(currentProperty, newLabel);
-            currentIndex.add(n1, DIVISION_DISPLAY_PROPERTY, newLabel);
+            currentIndex.add(n1, currentProperty, newLabel);
             tx.success();
 
-        } catch (Exception err) {
-            log.error("error in removeNode\n " + err.getClass().getName()
-                    + " " + err.getMessage());
+
         } finally {
             tx.finish();
         }
@@ -342,7 +337,8 @@ public class HospitalNeo4jDaoImpl implements HospitalNeo4jDao {
         return n1;
     }
 
-    public Provider attachProvider(Division parent, Provider p) {
+    public Provider attachProvider(Division parent, Provider p)
+            throws HospitalServiceException {
 
         Node parentNode = getDivisionNode(parent.getName());
         log.debug("begin attach provider for parent "
@@ -360,15 +356,14 @@ public class HospitalNeo4jDaoImpl implements HospitalNeo4jDao {
                 throw new HospitalServiceException("cannot add a provider to parent with Divisons "
                         + "remove the divisions first");
             }
+            
             log.debug("start attach");
             createAndAttachProviderNode(parentNode, p.getName());
             tx.success();
             log.debug("finished tx");
             // } catch (HospitalServiceException herr){
             //     throw new HospitalServiceException(herr.getMessage());
-        } catch (Exception err) {
-            log.error("error in attachFullTree\n " + err.getClass().getName()
-                    + " " + err.getMessage());
+
         } finally {
             tx.finish();
         }
@@ -377,8 +372,41 @@ public class HospitalNeo4jDaoImpl implements HospitalNeo4jDao {
         return p;
     }
 
-    public Node createInitialNode(String nodeLabel) {
+    @Override
+    public Node createInitialNode(String nodeLabel)
+            throws HospitalServiceException {
         Node parent = getNeo4jDb().getReferenceNode();
-        return createAndAttachDivisionNode(parent, nodeLabel);
+        Node initialNode = null;
+        Transaction tx = getNeo4jDb().beginTx();
+        try {
+            initialNode = createAndAttachDivisionNode(parent, nodeLabel);
+            tx.success();
+
+        } finally {
+            tx.finish();
+        }
+
+        return initialNode;
+    }
+
+    private boolean nodelAlreadyPresent(String nodeLabel) {
+
+        Node testNode = null;
+        boolean isPresent = false;
+        testNode = getDivisionNode(nodeLabel);
+        if (testNode != null) {
+            return true;
+        }
+
+        testNode = getProviderNode(nodeLabel);
+        if (testNode != null) {
+            return true;
+        }
+
+        return isPresent;
+    }
+
+    public Node getNodeById(Long id) {
+        throw new UnsupportedOperationException("Not supported yet.");
     }
 }

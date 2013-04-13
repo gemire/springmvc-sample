@@ -52,5 +52,6 @@ public class JSONTest {
         assertEquals(bookSample, g);
         TestBook t2 = converter.getObjectMapper().readValue(g,TestBook.class);
         assertEquals(testBook.getAuthor(), t2.getAuthor());
+        t2.toString();
     }
 }

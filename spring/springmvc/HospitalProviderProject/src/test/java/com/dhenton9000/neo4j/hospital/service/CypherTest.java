@@ -99,7 +99,7 @@ public class CypherTest extends HospitalTestBase {
     }
 
     @Test
-    public void testCypher() throws IOException {
+    public void testCypher() throws  Exception {
  
         Transaction tx = hospitalNeo4jDao.getNeo4jDb().beginTx();
         try {
