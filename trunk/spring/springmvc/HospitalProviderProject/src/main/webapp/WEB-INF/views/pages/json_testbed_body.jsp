@@ -34,6 +34,11 @@
             $('#maintainName').val(node.name);
             $('#insertParentName').val(node.name);
         });
+        
+        selectedNode = '${maintainTreeFormBean.id}';
+        selectedNodeVal = parseInt(selectedNode);
+        var node = $('#tree1').tree('getNodeById', selectedNodeVal);
+        $('#tree1').tree('selectNode', node);
                 
     }); 
 </script>
@@ -106,8 +111,8 @@
 
         </div>
         <table cellpadding="4" cellspacing="4">
-            <tr><th>Id:</th><td><span id="maintainId"  /></td></tr>
-            <tr><th>Type:</th><td><span id="maintainType" /></td></tr>
+            <tr><th>Id:</th><td><span id="maintainId">${maintainTreeFormBean.id}</span></td></tr>
+            <tr><th>Type:</th><td><span id="maintainType">${maintainTreeFormBean.type}</span></td></tr>
             <tr><th>Name:</th><td><form:input path="name" id="maintainName" /></td></tr>
             <tr>
                 <td><input type="submit"  class="myButton"  id="maintainNodeSave" name="submit" value="Save"></td> 
@@ -132,7 +137,7 @@
                 </c:if>
             </s:bind>
         </span>
-        <form:hidden id="insertParentName" path="parentName" />
+        <form:hidden id="insertParentName"  path="parentName" />
         <table cellpadding="4" cellspacing="4">
         <tr><th>Name:</th>
         <td><form:input path="name" id="insertName" /></td>

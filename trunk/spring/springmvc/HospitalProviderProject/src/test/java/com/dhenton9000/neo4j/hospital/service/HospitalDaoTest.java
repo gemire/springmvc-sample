@@ -111,32 +111,32 @@ public class HospitalDaoTest extends HospitalTestBase {
     public void testRemoveNodeForProvider() throws Exception {
         Provider p = setupSampleInDbWithProviderTheRightWay();
         assertEquals(SAMPLE_TREE_SIZE,
-                hospitalNeo4jDao.getAllNodesForType(NODE_TYPE.DIVISIONS).size());
+                hospitalNeo4jDao.getAllNodesForType(NODE_TYPE.Division).size());
         assertEquals(1,
-                hospitalNeo4jDao.getAllNodesForType(NODE_TYPE.PROVIDERS).size());
+                hospitalNeo4jDao.getAllNodesForType(NODE_TYPE.Provider).size());
         Node pNode = hospitalNeo4jDao.getProviderNode(p.getName());
         assertNotNull(pNode);
         hospitalNeo4jDao.removeNode(pNode);
         assertEquals(SAMPLE_TREE_SIZE,
-                hospitalNeo4jDao.getAllNodesForType(NODE_TYPE.DIVISIONS).size());
+                hospitalNeo4jDao.getAllNodesForType(NODE_TYPE.Division).size());
         assertEquals(0,
-                hospitalNeo4jDao.getAllNodesForType(NODE_TYPE.PROVIDERS).size());
+                hospitalNeo4jDao.getAllNodesForType(NODE_TYPE.Provider).size());
     }
 
     @Test
     public void testDeletingNode() throws Exception {
         setupSampleInDb();
         assertEquals(SAMPLE_TREE_SIZE,
-                hospitalNeo4jDao.getAllNodesForType(NODE_TYPE.DIVISIONS).size());
+                hospitalNeo4jDao.getAllNodesForType(NODE_TYPE.Division).size());
         assertEquals(0,
-                hospitalNeo4jDao.getAllNodesForType(NODE_TYPE.PROVIDERS).size());
+                hospitalNeo4jDao.getAllNodesForType(NODE_TYPE.Provider).size());
         Node n1 = hospitalNeo4jDao.getDivisionNode("Manny");
         assertNotNull(n1);
         hospitalNeo4jDao.removeNode(n1);
         n1 = hospitalNeo4jDao.getDivisionNode("Manny");
         assertNull(n1);
         assertEquals(SAMPLE_TREE_SIZE - 1,
-                hospitalNeo4jDao.getAllNodesForType(NODE_TYPE.DIVISIONS).size());
+                hospitalNeo4jDao.getAllNodesForType(NODE_TYPE.Division).size());
         //  n1 = hospitalNeo4jDao.getProviderNode(PROVIDER_SAMPLE_NAME);
         //   assertNotNull(n1);
 
@@ -156,9 +156,9 @@ public class HospitalDaoTest extends HospitalTestBase {
         n1 = hospitalNeo4jDao.getProviderNode(PROVIDER_SAMPLE_NAME);
         assertNotNull(n1);
         assertEquals(SAMPLE_TREE_SIZE,
-                hospitalNeo4jDao.getAllNodesForType(NODE_TYPE.DIVISIONS).size());
+                hospitalNeo4jDao.getAllNodesForType(NODE_TYPE.Division).size());
         assertEquals(1,
-                hospitalNeo4jDao.getAllNodesForType(NODE_TYPE.PROVIDERS).size());
+                hospitalNeo4jDao.getAllNodesForType(NODE_TYPE.Provider).size());
     }
 
     @Test
@@ -261,7 +261,7 @@ public class HospitalDaoTest extends HospitalTestBase {
         n1 = hospitalNeo4jDao.getDivisionNode("bozon");
         assertNotNull(n1);
         assertEquals(SAMPLE_TREE_SIZE,
-                hospitalNeo4jDao.getAllNodesForType(NODE_TYPE.DIVISIONS).size());
+                hospitalNeo4jDao.getAllNodesForType(NODE_TYPE.Division).size());
     }
 
     @Test
@@ -275,7 +275,7 @@ public class HospitalDaoTest extends HospitalTestBase {
         n1 = hospitalNeo4jDao.getProviderNode("bozon");
         assertNotNull(n1);
         assertEquals(1,
-                hospitalNeo4jDao.getAllNodesForType(NODE_TYPE.PROVIDERS).size());
+                hospitalNeo4jDao.getAllNodesForType(NODE_TYPE.Provider).size());
 
 
 

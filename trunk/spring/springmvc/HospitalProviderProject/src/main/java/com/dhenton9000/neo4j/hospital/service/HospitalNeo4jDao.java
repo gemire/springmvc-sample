@@ -38,7 +38,7 @@ public interface HospitalNeo4jDao {
 
     public enum NODE_TYPE {
 
-        DIVISIONS, PROVIDERS
+        Division, Provider
     }
 
     /**
