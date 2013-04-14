@@ -18,7 +18,7 @@ public class Division implements HospitalNode {
     
     
     private String name;
-    private boolean is_open = false;
+    private boolean is_open = true;
    // private String type;
     private Long id;
     private List<HospitalNode> children =  new ArrayList<HospitalNode>();
