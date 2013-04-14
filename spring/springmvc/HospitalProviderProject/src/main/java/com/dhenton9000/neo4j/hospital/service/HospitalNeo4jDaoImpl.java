@@ -10,10 +10,14 @@ import com.dhenton9000.neo4j.hospital.json.HospitalServiceException;
 import com.dhenton9000.neo4j.hospital.json.Provider;
 import com.dhenton9000.neo4j.utils.DatabaseHelper;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
 import org.apache.log4j.LogManager;
 import org.apache.log4j.Logger;
+import org.neo4j.cypher.ExecutionEngine;
+import org.neo4j.cypher.ExecutionResult;
 import org.neo4j.graphdb.Direction;
 import org.neo4j.graphdb.GraphDatabaseService;
 import org.neo4j.graphdb.Node;
@@ -224,7 +228,7 @@ public class HospitalNeo4jDaoImpl implements HospitalNeo4jDao {
 
                 tx.success();
                 //dbHelper.dumpGraphToConsole(neo4jDb);
-  
+
             } finally {
                 tx.finish();
             }
@@ -356,7 +360,7 @@ public class HospitalNeo4jDaoImpl implements HospitalNeo4jDao {
                 throw new HospitalServiceException("cannot add a provider to parent with Divisons "
                         + "remove the divisions first");
             }
-            
+
             log.debug("start attach");
             createAndAttachProviderNode(parentNode, p.getName());
             tx.success();
@@ -408,5 +412,33 @@ public class HospitalNeo4jDaoImpl implements HospitalNeo4jDao {
 
     public Node getNodeById(Long id) {
         throw new UnsupportedOperationException("Not supported yet.");
+    }
+
+    public Map<String, String> getInitialNodes()   {
+        HashMap<String, String> items = new HashMap<String, String>();
+        String q = "start n=node(0) match n-[IS_DIVIDED_INTO*1]->b "
+                + "return b.division_display_property "
+                + "as name, ID(b) as id";
+
+        ExecutionEngine engine = new ExecutionEngine(getNeo4jDb());
+
+        log.info(" q\n" + q);
+        final ExecutionResult executionResult = engine.execute(q);
+
+        Iterator<Map<String, Object>> columnsData = executionResult.javaIterator();
+
+
+        while (columnsData.hasNext()) {
+            Map<String, Object> z = columnsData.next();
+            String nameString = (String) z.get("name");
+            Long key = (Long) z.get("id");
+            items.put(key.toString(), nameString);
+        }
+
+        if (items.isEmpty()) {
+            return null;
+        } else {
+            return items;
+        }
     }
 }

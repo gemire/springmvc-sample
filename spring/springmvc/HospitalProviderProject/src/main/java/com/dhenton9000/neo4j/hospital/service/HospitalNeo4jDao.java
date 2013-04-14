@@ -9,6 +9,7 @@ import com.dhenton9000.neo4j.hospital.json.HospitalNode;
 import com.dhenton9000.neo4j.hospital.json.HospitalServiceException;
 import com.dhenton9000.neo4j.hospital.json.Provider;
 import java.util.List;
+import java.util.Map;
 import org.neo4j.graphdb.GraphDatabaseService;
 import org.neo4j.graphdb.Node;
 import org.neo4j.graphdb.RelationshipType;
@@ -180,7 +181,13 @@ public interface HospitalNeo4jDao {
      */
     Provider attachProvider(Division parent, Provider p) throws HospitalServiceException ;
 
-  
+    /**
+     * get a map of the first nodes, or tree start points, with the id as
+     * key and name/label as value returns null if nothing found
+     * @return
+     * 
+     */
+    Map<String,String> getInitialNodes()  ;
 
 
 }
