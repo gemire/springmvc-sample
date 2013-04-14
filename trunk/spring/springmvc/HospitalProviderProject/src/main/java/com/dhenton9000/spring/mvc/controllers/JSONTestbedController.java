@@ -7,6 +7,7 @@ package com.dhenton9000.spring.mvc.controllers;
 import com.dhenton9000.neo4j.hospital.json.HospitalServiceException;
 import com.dhenton9000.neo4j.hospital.service.HospitalService;
 import com.dhenton9000.spring.mvc.model.FormBean;
+import com.dhenton9000.spring.mvc.model.InsertNodeBean;
 import com.dhenton9000.spring.mvc.model.SelectTreeBean;
 import java.io.IOException;
 import java.util.HashMap;
@@ -32,7 +33,7 @@ import org.springframework.web.servlet.ModelAndView;
  */
 @Controller
 @RequestMapping("json/testbed/*")
-@SessionAttributes({"createTreeFormBean", "maintainTreeFormBean", "treeData"})
+@SessionAttributes({"createTreeFormBean","selectTreeFormBean","insertNodeFormBean" ,"maintainTreeFormBean", "treeData"})
 public class JSONTestbedController {
 
     private static Logger log = LogManager.getLogger(JSONTestbedController.class);
@@ -41,6 +42,7 @@ public class JSONTestbedController {
     public static final String MAINTAIN_BEAN_NAME = "maintainTreeFormBean";
     public static final String CREATE_TREE_BEAN_NAME = "createTreeFormBean";
     public static final String SELECT_TREE_BEAN_NAME = "selectTreeFormBean";
+    public static final String INSERT_TREE_BEAN_NAME = "insertNodeFormBean";
     public static final String SELECT_TREE_LIST_KEY = "treeSelectList";
     @Autowired
     private HospitalService jService;
@@ -62,6 +64,25 @@ public class JSONTestbedController {
         return new ModelAndView(DESTINATION_TILE, map);
     }
 
+    @RequestMapping(value = "insertNode", method = RequestMethod.POST)
+    public ModelAndView insertNode(@ModelAttribute(TREE_DATA_KEY) String treeDataOld,
+     @ModelAttribute(SELECT_TREE_BEAN_NAME) SelectTreeBean sform,
+            @ModelAttribute(INSERT_TREE_BEAN_NAME) InsertNodeBean form,
+            BindingResult result,
+            WebRequest webRequest, HttpSession session, Model model) {
+        log.info("ZZZZ " + form.getName() + " parent " + form.getParentName()
+                +" select tree "+ sform.getSelectedTree());
+        String parentLabel = form.getParentName();
+        String newDivisionLabel = form.getName();
+        jService.attachDivisionbyLabels(parentLabel,newDivisionLabel);
+        
+        
+        HashMap map = createDefaultMap();
+        map.put(TREE_DATA_KEY, treeDataOld);
+        map.put(SELECT_TREE_BEAN_NAME, sform);
+        return new ModelAndView(DESTINATION_TILE, map);
+    }
+
     @RequestMapping(value = "selectTree", method = RequestMethod.POST)
     public ModelAndView selectTree(@ModelAttribute(SELECT_TREE_BEAN_NAME) SelectTreeBean form) {
         HashMap<String, Object> map = createDefaultMap();
@@ -71,7 +92,7 @@ public class JSONTestbedController {
 
 
         try {
-          treeData =  jService.structureToString(jService.buildDivisonFromDb(name));
+            treeData = jService.structureToString(jService.buildDivisonFromDb(name));
         } catch (Exception ioerr) {
             log.error("io error " + ioerr.getMessage());
         }
@@ -82,6 +103,7 @@ public class JSONTestbedController {
 
     @RequestMapping(value = "createTree", method = RequestMethod.POST)
     public ModelAndView createTree(
+            @ModelAttribute(SELECT_TREE_BEAN_NAME) SelectTreeBean sform,
             @ModelAttribute(TREE_DATA_KEY) String treeDataOld,
             @ModelAttribute(CREATE_TREE_BEAN_NAME) FormBean form,
             BindingResult result,
@@ -105,6 +127,7 @@ public class JSONTestbedController {
             } else {
                 treeData = jService.structureToString(
                         jService.createInitialDivision(name));
+                sform.setSelectedTree(name);
             }
 
 
@@ -127,7 +150,8 @@ public class JSONTestbedController {
         }
         HashMap<String, Object> map = createDefaultMap();
         map.put(TREE_DATA_KEY, treeData);
-        map.put(CREATE_TREE_BEAN_NAME,form);
+        map.put(CREATE_TREE_BEAN_NAME, form);
+        map.put(SELECT_TREE_BEAN_NAME,sform);
         return new ModelAndView(DESTINATION_TILE, map);
     }
 
@@ -149,6 +173,7 @@ public class JSONTestbedController {
         HashMap<String, Object> map = new HashMap<String, Object>();
         map.put(MAINTAIN_BEAN_NAME, new FormBean());
         map.put(CREATE_TREE_BEAN_NAME, new FormBean());
+        map.put(INSERT_TREE_BEAN_NAME, new InsertNodeBean());
         map.put(TREE_DATA_KEY, "");
         map.put(SELECT_TREE_BEAN_NAME, new SelectTreeBean());
         map.put(SELECT_TREE_LIST_KEY, jService.getInitialTreeMap());
