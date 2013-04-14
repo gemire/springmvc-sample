@@ -97,4 +97,11 @@ public interface HospitalService {
      * @return 
      */
     public Map<String,String> getInitialTreeMap();
+
+    /**
+     * attach a new Division to an existing Divison as parentLabel
+     * @param parentLabel
+     * @param newDivisionLabel 
+     */
+    public void attachDivisionbyLabels(String parentLabel, String newDivisionLabel);
 }
