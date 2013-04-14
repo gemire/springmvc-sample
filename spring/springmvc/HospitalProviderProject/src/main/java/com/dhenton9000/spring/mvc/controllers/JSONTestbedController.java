@@ -4,7 +4,10 @@
  */
 package com.dhenton9000.spring.mvc.controllers;
 
+import com.dhenton9000.neo4j.hospital.json.Division;
 import com.dhenton9000.neo4j.hospital.json.HospitalServiceException;
+import com.dhenton9000.neo4j.hospital.service.HospitalNeo4jDao;
+import com.dhenton9000.neo4j.hospital.service.HospitalNeo4jDao.NODE_TYPE;
 import com.dhenton9000.neo4j.hospital.service.HospitalService;
 import com.dhenton9000.spring.mvc.model.FormBean;
 import com.dhenton9000.spring.mvc.model.InsertNodeBean;
@@ -103,25 +106,37 @@ public class JSONTestbedController {
     }
 
     @RequestMapping(value = "selectTree", method = RequestMethod.POST)
-    public ModelAndView selectTree(@ModelAttribute(SELECT_TREE_BEAN_NAME) SelectTreeBean form) {
+    public ModelAndView selectTree(@ModelAttribute(SELECT_TREE_BEAN_NAME) 
+            SelectTreeBean form,
+            @ModelAttribute(MAINTAIN_BEAN_NAME) 
+            FormBean maintainForm) {
         HashMap<String, Object> map = createDefaultMap();
         String name = form.getSelectedTree();
         map.put(SELECT_TREE_BEAN_NAME, form);
+        
+        
         String treeData = "";
 
 
         try {
-            treeData = jService.structureToString(jService.buildDivisonFromDb(name));
+            Division newDiv = jService.buildDivisonFromDb(name);
+            maintainForm.setName(name);
+            maintainForm.setId(newDiv.getId());
+            maintainForm.setType(NODE_TYPE.Division.toString());
+            treeData = jService.structureToString(newDiv);
         } catch (Exception ioerr) {
             log.error("io error " + ioerr.getMessage());
         }
-
+        map.put(MAINTAIN_BEAN_NAME,maintainForm);
         map.put(TREE_DATA_KEY, treeData);
         return new ModelAndView(DESTINATION_TILE, map);
     }
 
     @RequestMapping(value = "createTree", method = RequestMethod.POST)
     public ModelAndView createTree(
+             
+            @ModelAttribute(MAINTAIN_BEAN_NAME) 
+            FormBean maintainForm,
             @ModelAttribute(SELECT_TREE_BEAN_NAME) SelectTreeBean sform,
             @ModelAttribute(TREE_DATA_KEY) String treeDataOld,
             @ModelAttribute(CREATE_TREE_BEAN_NAME) FormBean form,
@@ -144,9 +159,12 @@ public class JSONTestbedController {
                 log.error("empty name in createTree!");
                 treeData = treeDataOld;
             } else {
-                treeData = jService.structureToString(
-                        jService.createInitialDivision(name));
+                Division newDiv = jService.createInitialDivision(name);
+                treeData = jService.structureToString(newDiv);
                 sform.setSelectedTree(name);
+                maintainForm.setName(name);
+                maintainForm.setId(newDiv.getId());
+                maintainForm.setType(NODE_TYPE.Division.toString());
             }
 
         } catch (HospitalServiceException ex) {
@@ -167,6 +185,7 @@ public class JSONTestbedController {
         map.put(TREE_DATA_KEY, treeData);
         map.put(CREATE_TREE_BEAN_NAME, form);
         map.put(SELECT_TREE_BEAN_NAME, sform);
+        map.put(MAINTAIN_BEAN_NAME, maintainForm);
         return new ModelAndView(DESTINATION_TILE, map);
     }
 

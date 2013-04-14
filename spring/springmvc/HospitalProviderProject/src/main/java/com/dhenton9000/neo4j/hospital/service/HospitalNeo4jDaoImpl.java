@@ -45,8 +45,8 @@ public class HospitalNeo4jDaoImpl implements HospitalNeo4jDao {
         }
         Node currentNode = getNeo4jDb().createNode();
         parent.createRelationshipTo(currentNode, RelationshipTypes.IS_DIVIDED_INTO);
-        getTypeIndex().add(currentNode, TYPE_INDEX_PROPERTY, NODE_TYPE.DIVISIONS.toString());
-        currentNode.setProperty(TYPE_INDEX_PROPERTY, NODE_TYPE.DIVISIONS.toString());
+        getTypeIndex().add(currentNode, TYPE_INDEX_PROPERTY, NODE_TYPE.Division.toString());
+        currentNode.setProperty(TYPE_INDEX_PROPERTY, NODE_TYPE.Division.toString());
         getDivisionIndex().add(currentNode, DIVISION_DISPLAY_PROPERTY, nodeLabel);
         currentNode.setProperty(DIVISION_DISPLAY_PROPERTY, nodeLabel);
         return currentNode;
@@ -61,8 +61,8 @@ public class HospitalNeo4jDaoImpl implements HospitalNeo4jDao {
         }
         Node currentNode = getNeo4jDb().createNode();
         parent.createRelationshipTo(currentNode, RelationshipTypes.DERIVES_SERVICE_FROM);
-        getTypeIndex().add(currentNode, TYPE_INDEX_PROPERTY, NODE_TYPE.PROVIDERS.toString());
-        currentNode.setProperty(TYPE_INDEX_PROPERTY, NODE_TYPE.PROVIDERS.toString());
+        getTypeIndex().add(currentNode, TYPE_INDEX_PROPERTY, NODE_TYPE.Provider.toString());
+        currentNode.setProperty(TYPE_INDEX_PROPERTY, NODE_TYPE.Provider.toString());
         getProviderIndex().add(currentNode, PROVIDER_DISPLAY_PROPERTY, nodeLabel);
         currentNode.setProperty(PROVIDER_DISPLAY_PROPERTY, nodeLabel);
         return currentNode;
@@ -105,12 +105,12 @@ public class HospitalNeo4jDaoImpl implements HospitalNeo4jDao {
         NODE_TYPE type = getNodeType(currentNode);
         String lVar = "";
         switch (type) {
-            case DIVISIONS:
+            case Division:
 
                 lVar = (String) currentNode.getProperty(DIVISION_DISPLAY_PROPERTY);
                 break;
 
-            case PROVIDERS:
+            case Provider:
                 lVar = (String) currentNode.getProperty(PROVIDER_DISPLAY_PROPERTY);
                 break;
 
@@ -184,11 +184,11 @@ public class HospitalNeo4jDaoImpl implements HospitalNeo4jDao {
 
         try {
             switch (type) {
-                case DIVISIONS:
+                case Division:
                     currentIndex = getDivisionIndex();
                     break;
 
-                case PROVIDERS:
+                case Provider:
                     currentIndex = getProviderIndex();
                     break;
             }// end switch
@@ -265,12 +265,12 @@ public class HospitalNeo4jDaoImpl implements HospitalNeo4jDao {
                 Node currentNode = r.getEndNode();
                 NODE_TYPE type = getNodeType(currentNode);
                 switch (type) {
-                    case DIVISIONS:
+                    case Division:
 
                         hNode = new Division();
                         break;
 
-                    case PROVIDERS:
+                    case Provider:
                         hNode = new Provider();
                         break;
 
@@ -314,12 +314,12 @@ public class HospitalNeo4jDaoImpl implements HospitalNeo4jDao {
 
         try {
             switch (type) {
-                case DIVISIONS:
+                case Division:
                     currentIndex = getDivisionIndex();
                     currentProperty = DIVISION_DISPLAY_PROPERTY;
                     break;
 
-                case PROVIDERS:
+                case Provider:
                     currentIndex = getProviderIndex();
                     currentProperty = PROVIDER_DISPLAY_PROPERTY;
                     break;

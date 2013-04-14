@@ -107,6 +107,15 @@ public class HospitalServiceTest extends HospitalTestBase {
         String t = (String) items.get("Alpha");
         assertEquals("Alpha",t);
     }
+    
+    @Test
+    public void checkThatGetInitialTreeMapCanHandleNothing() throws Exception
+    {
+        Map<String, String> items = hospitalService.getInitialTreeMap();
+        assertNotNull(items);
+        assertEquals(0,items.size());
+        
+    }
 
     @Test
     public void testAttachDivisionbyLabels()

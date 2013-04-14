@@ -24,16 +24,11 @@ import org.neo4j.graphdb.Node;
  *
  * @author dhenton
  */
-public class HospitalServiceImpl implements HospitalService  {
+public class HospitalServiceImpl implements HospitalService {
 
-    
     private ObjectMapper mapper = new ObjectMapper();
     private final Logger log = LogManager.getLogger(HospitalServiceImpl.class);
     private HospitalNeo4jDao hospitalDao = null;
-
-  
-   
-   
 
     @Override
     public String structureToString(Division root) throws IOException {
@@ -52,9 +47,6 @@ public class HospitalServiceImpl implements HospitalService  {
         return mapper.readValue(jsonString, Division.class);
     }
 
-   
-
-   
     /**
      * @return the hospitalDao
      */
@@ -69,23 +61,23 @@ public class HospitalServiceImpl implements HospitalService  {
         this.hospitalDao = hospitalDao;
     }
 
-    public Division attachFullTree(Division d) 
+    public Division attachFullTree(Division d)
             throws HospitalServiceException {
         return getHospitalDao().attachFullTree(d);
     }
 
     public Division buildDivisonFromDb(String startDivisionLabel) {
-         return getHospitalDao().buildDivisionFromDb(startDivisionLabel);
+        return getHospitalDao().buildDivisionFromDb(startDivisionLabel);
     }
 
-    public Provider attachProvider(Division parent, Provider p) 
+    public Provider attachProvider(Division parent, Provider p)
             throws HospitalServiceException {
-        
-         return getHospitalDao().attachProvider(parent,p);
+
+        return getHospitalDao().attachProvider(parent, p);
     }
 
     public Division createInitialDivision(String divisionLabel) throws HospitalServiceException {
-        
+
         Division d = new Division();
         Node n = getHospitalDao().createInitialNode(divisionLabel);
         d.setId(new Long(n.getId()));
@@ -95,26 +87,21 @@ public class HospitalServiceImpl implements HospitalService  {
     }
 
     public Map<String, String> getInitialTreeMap() {
-        Map<String,String> n = new HashMap<String,String>();
+        Map<String, String> n = new HashMap<String, String>();
         Map<String, String> m = getHospitalDao().getInitialNodes();
-        Set<String> kSet = m.keySet();
-        Iterator<String> iter = kSet.iterator();
-        while (iter.hasNext())
-        {
-            String k = m.get(iter.next());
-            n.put(k,k);
+        if (m != null) {
+            Set<String> kSet = m.keySet();
+            Iterator<String> iter = kSet.iterator();
+            while (iter.hasNext()) {
+                String k = m.get(iter.next());
+                n.put(k, k);
+            }
         }
         return n;
     }
 
-    public void attachDivisionbyLabels(String parentLabel, 
-        String newDivisionLabel)  throws HospitalServiceException {
-        getHospitalDao().attachDivisionbyLabels(parentLabel,newDivisionLabel) ;      
+    public void attachDivisionbyLabels(String parentLabel,
+            String newDivisionLabel) throws HospitalServiceException {
+        getHospitalDao().attachDivisionbyLabels(parentLabel, newDivisionLabel);
     }
-
-  
-
-
-
-    
 }
