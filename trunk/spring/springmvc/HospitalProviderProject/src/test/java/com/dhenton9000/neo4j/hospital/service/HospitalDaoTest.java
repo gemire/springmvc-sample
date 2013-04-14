@@ -10,6 +10,7 @@ import com.dhenton9000.neo4j.hospital.json.HospitalServiceException;
 import com.dhenton9000.neo4j.hospital.json.Provider;
 import com.dhenton9000.neo4j.hospital.service.HospitalNeo4jDao.NODE_TYPE;
 import java.util.Iterator;
+import java.util.Map;
 import org.junit.After;
 import static org.junit.Assert.*;
 import org.junit.Before;
@@ -56,16 +57,16 @@ public class HospitalDaoTest extends HospitalTestBase {
     }
 
     @Test(expected = HospitalServiceException.class)
-    public void testCantAttachProviderToDivNodeWithDivChildren() 
+    public void testCantAttachProviderToDivNodeWithDivChildren()
             throws Exception {
         Division d = setupSampleInDb();
         Provider p = new Provider();
         hospitalNeo4jDao.attachProvider(d, p);
     }
 
-    public void testCanAttachProviderToDivNodeWithProviderChildren() 
+    public void testCanAttachProviderToDivNodeWithProviderChildren()
             throws Exception {
-        
+
         Division d = getSampleRoot();
         Division huey = (Division) d.getChildren().get(1).getChildren().get(0);
         assertNotNull(huey);
@@ -78,17 +79,16 @@ public class HospitalDaoTest extends HospitalTestBase {
         p.setName("bonzo");
         hospitalService.attachProvider(huey, p2);
         Node hueyNode = hospitalNeo4jDao.getDivisionNode(huey.getName());
-        Iterator<Relationship> iter = 
+        Iterator<Relationship> iter =
                 hueyNode.getRelationships(Direction.OUTGOING).iterator();
         int cc = 0;
-        while (iter.hasNext())
-        {
+        while (iter.hasNext()) {
             cc++;
         }
-        assertEquals(2,cc);
-        
-        
-        
+        assertEquals(2, cc);
+
+
+
     }
 
     @Test
@@ -194,15 +194,6 @@ public class HospitalDaoTest extends HospitalTestBase {
 
         Division newHuey = (Division) newD.getChildren().get(1).getChildren().get(0);
         assertEquals(huey.getName(), newHuey.getName());
-
-
-
-
-
-
-
-
-
     }
 
     @Test
@@ -286,6 +277,20 @@ public class HospitalDaoTest extends HospitalTestBase {
         assertEquals(1,
                 hospitalNeo4jDao.getAllNodesForType(NODE_TYPE.PROVIDERS).size());
 
+
+
+    }
+
+    @Test
+    public void testGetInitialNodesWithSomething() throws Exception {
+        String[] a = {"a1", "a2", "a3"};
+        Map<String, String> items = hospitalNeo4jDao.getInitialNodes();
+        assertNull(items);
+        for (String t : a) {
+            hospitalNeo4jDao.createInitialNode(t);
+        }
+        items = hospitalNeo4jDao.getInitialNodes();
+        assertEquals(a.length, items.size());
 
 
     }

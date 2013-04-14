@@ -10,6 +10,7 @@ import com.dhenton9000.neo4j.hospital.json.HospitalServiceException;
 import com.dhenton9000.neo4j.hospital.json.Provider;
 import java.io.IOException;
 import java.util.List;
+import java.util.Map;
 
 /**
  * This service handles divisions and providers. There should never be any
@@ -89,4 +90,11 @@ public interface HospitalService {
      * @throws HospitalServiceException if duplicated
      */
     Division createInitialDivision(String divisionLabel) throws HospitalServiceException;
+
+    /**
+     * create a map of the initial first nodes in the db
+     * key is the label of the node, as is the value
+     * @return 
+     */
+    public Map<String,String> getInitialTreeMap();
 }

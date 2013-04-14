@@ -39,71 +39,89 @@
 
 </head>
 
-<div style="position:absolute;top: 150px; left: 10px">
-    <h4>Nodes</h4> 
-    <div  id="tree1"></div>
-</div>
+ 
+    <div style="position:absolute; top: 70px; left: 10px">
+        <h3>Select A Tree</h3>
+        <form:form id="form" method="post"  modelAttribute="selectTreeFormBean" action="${baseURL}json/testbed/selectTree">
+            <span class="linespacer">
+            <form:select id="selectATree" path="selectedTree">             
+                <form:option  value="NONE" label="---"/>
+                <form:options items="${treeSelectList}" />
+            </form:select> 
+            </span>
+            <span  class="linespacer">
+                <input id="selectTreeSubmit" class="myButton"
+                                           type="submit" value="Select">
+            </span>
+        </form:form>     
+    </div>   
 
 
-<div style="position:absolute;top: 150px; left: 400px">
-    <h4>Current Node</h4>  
+    <div style="position:absolute; top: 70px;  left: 400px">     
+        <h3>Create New Tree</h3>
+        <form:form id="form" method="post"  modelAttribute="createTreeFormBean" action="${baseURL}json/testbed/createTree">
+            <span   class="linespacer">
+                <s:bind path="*">
+                    <c:if test="${status.error}">
+                        <form:errors cssClass="error" />
+                    </c:if>
+                </s:bind>
+            </span>
+            <table cellpadding="4" cellspacing="4">
+                <tr><th>Name:</th><td><form:input path="name" id="createTreeName" /></td>
+                    <td><input id="createTreeSubmit"  class="myButton"
+                                           type="submit" value="Create New Tree"></td></tr>
 
-
-
-
-    <p>
-    <h4>Maintain Current Node Data</h4>
-    <form:form id="form" method="post"  modelAttribute="maintainTreeFormBean" action="${baseURL}json/testbed/maintainNode">
-        <div>
-
-            <c:if test="${not empty message}">
-                <div id="message" class="${message.type}">${message.text}</div>	
-            </c:if>
-            <s:bind path="*">
-                <c:if test="${status.error}">
-                    <form:errors cssClass="error" />
-                </c:if>
-            </s:bind>
-
-
-        </div>
-        <table cellpadding="4" cellspacing="4">
-            <tr><th>Id:</th><td><span id="maintainId"  /></td></tr>
-            <tr><th>Type:</th><td><span id="maintainType" /></td></tr>
-            <tr><th>Name:</th><td><form:input path="name" id="maintainName" /></td></tr>
-            <tr>
-                <td><input type="submit" id="maintainNodeSave" name="submit" value="Save"></td> 
-                <td><input type="submit" id="maintainNodeDelete" name="submit" value="Delete"></td>
-            </tr>
-        </table>
-    </form:form>
-</p>
-
-<p>
-<h4>Create New Tree</h4>
-<form:form id="form" method="post"  modelAttribute="createTreeFormBean" action="${baseURL}json/testbed/createTree">
-    <div>
-
-        <c:if test="${not empty message}">
-            <div id="message" class="${message.type}">${message.text}</div>	
-        </c:if>
-        <s:bind path="*">
-            <c:if test="${status.error}">
-                <form:errors cssClass="error" />
-            </c:if>
-        </s:bind>
-
-
+            </table>
+        </form:form>
     </div>
-    <table cellpadding="4" cellspacing="4">
-        <tr><th>Name:</th><td><form:input path="name" id="createTreeName" /></td></tr>
-        <tr><td colspan="2"><input id="createTreeSubmit" 
-                                   type="submit" value="Create New Tree"></td></tr>
+ 
 
-    </table>
-</form:form>
 
-</div>
+
+
+ 
+    <div style="position:absolute;top: 250px; left: 10px">
+        <h3>Nodes</h3> 
+        <div  id="tree1"></div>
+    </div>
+
+
+    <div style="position:absolute;top: 250px;   left: 400px">
+        <h3>Current Node</h3>  
+        <p>
+        <h4>Maintain Current Node Data</h4>
+        <form:form id="form" method="post"  modelAttribute="maintainTreeFormBean" action="${baseURL}json/testbed/maintainNode">
+            <div>
+
+                <c:if test="${not empty message}">
+                    <div id="message" class="${message.type}">${message.text}</div>	
+                </c:if>
+                <s:bind path="*">
+                    <c:if test="${status.error}">
+                        <form:errors cssClass="error" />
+                    </c:if>
+                </s:bind>
+
+
+            </div>
+            <table cellpadding="4" cellspacing="4">
+                <tr><th>Id:</th><td><span id="maintainId"  /></td></tr>
+                <tr><th>Type:</th><td><span id="maintainType" /></td></tr>
+                <tr><th>Name:</th><td><form:input path="name" id="maintainName" /></td></tr>
+                <tr>
+                    <td><input type="submit"  class="myButton"  id="maintainNodeSave" name="submit" value="Save"></td> 
+                    <td><input type="submit"  class="myButton"  id="maintainNodeDelete" name="submit" value="Delete"></td>
+                </tr>
+            </table>
+        </form:form>
+        </p>
+    </div>
+ 
+ 
+
+
+
 
 
 

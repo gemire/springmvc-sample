@@ -9,7 +9,11 @@ import com.dhenton9000.neo4j.hospital.json.HospitalNode;
 import com.dhenton9000.neo4j.hospital.json.HospitalServiceException;
 import com.dhenton9000.neo4j.hospital.json.Provider;
 import java.io.IOException;
+import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
+import java.util.Set;
 import org.apache.log4j.LogManager;
 import org.apache.log4j.Logger;
 import org.codehaus.jackson.map.ObjectMapper;
@@ -88,6 +92,19 @@ public class HospitalServiceImpl implements HospitalService  {
         d.setName(divisionLabel);
         d.setisOpen(true);
         return d;
+    }
+
+    public Map<String, String> getInitialTreeMap() {
+        Map<String,String> n = new HashMap<String,String>();
+        Map<String, String> m = getHospitalDao().getInitialNodes();
+        Set<String> kSet = m.keySet();
+        Iterator<String> iter = kSet.iterator();
+        while (iter.hasNext())
+        {
+            String k = m.get(iter.next());
+            n.put(k,k);
+        }
+        return n;
     }
 
   

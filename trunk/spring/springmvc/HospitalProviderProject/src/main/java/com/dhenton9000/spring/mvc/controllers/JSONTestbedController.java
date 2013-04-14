@@ -7,11 +7,9 @@ package com.dhenton9000.spring.mvc.controllers;
 import com.dhenton9000.neo4j.hospital.json.HospitalServiceException;
 import com.dhenton9000.neo4j.hospital.service.HospitalService;
 import com.dhenton9000.spring.mvc.model.FormBean;
+import com.dhenton9000.spring.mvc.model.SelectTreeBean;
 import java.io.IOException;
 import java.util.HashMap;
-import java.util.Iterator;
-import java.util.Set;
-import java.util.logging.Level;
 import javax.servlet.http.HttpSession;
 import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.LogManager;
@@ -34,7 +32,7 @@ import org.springframework.web.servlet.ModelAndView;
  */
 @Controller
 @RequestMapping("json/testbed/*")
-@SessionAttributes({"createTreeFormBean", "maintainTreeFormBean","treeData"})
+@SessionAttributes({"createTreeFormBean", "maintainTreeFormBean", "treeData"})
 public class JSONTestbedController {
 
     private static Logger log = LogManager.getLogger(JSONTestbedController.class);
@@ -42,42 +40,44 @@ public class JSONTestbedController {
     public static final String TREE_DATA_KEY = "treeData";
     public static final String MAINTAIN_BEAN_NAME = "maintainTreeFormBean";
     public static final String CREATE_TREE_BEAN_NAME = "createTreeFormBean";
+    public static final String SELECT_TREE_BEAN_NAME = "selectTreeFormBean";
+    public static final String SELECT_TREE_LIST_KEY = "treeSelectList";
     @Autowired
     private HospitalService jService;
 
     @RequestMapping(value = "home", method = RequestMethod.GET)
     public ModelAndView showFormInInitialState() {
-
-        HashMap map = new HashMap<String, Object>();
-        map.put(MAINTAIN_BEAN_NAME, new FormBean());
-        map.put(CREATE_TREE_BEAN_NAME, new FormBean());
-        map.put(TREE_DATA_KEY, "");
+        HashMap map = createDefaultMap();
         return new ModelAndView(DESTINATION_TILE, map);
 
     }
 
-//    @RequestMapping(value = "doBook",
-//    produces = {"application/json"},
-//    consumes = {"application/json"},
-//    method = {RequestMethod.POST})
-//    public @ResponseBody
-//    TestBook getTestBook(@RequestBody TestBook book) {
-//        log.debug("got book: " + book);
-//        book.setAuthor(book.getAuthor() + "XXX");
-//        return book;
-//    }
     @RequestMapping(value = "maintainNode", method = RequestMethod.POST)
     public ModelAndView maintainAddNode(@RequestParam(required = true,
             value = "submit") String submitFlag,
             @ModelAttribute(MAINTAIN_BEAN_NAME) FormBean form) {
         log.info("maintainAddNode " + form.getName());
         log.info("submit is " + submitFlag);
-        DivInfo d = new DivInfo();
-        d.id = "maintain";
-        d.setName(form.getName());
-        d.setType(form.getType());;
+        HashMap map = createDefaultMap();
+        return new ModelAndView(DESTINATION_TILE, map);
+    }
 
-        return new ModelAndView(DESTINATION_TILE);
+    @RequestMapping(value = "selectTree", method = RequestMethod.POST)
+    public ModelAndView selectTree(@ModelAttribute(SELECT_TREE_BEAN_NAME) SelectTreeBean form) {
+        HashMap<String, Object> map = createDefaultMap();
+        String name = form.getSelectedTree();
+        map.put(SELECT_TREE_BEAN_NAME, form);
+        String treeData = "";
+
+
+        try {
+          treeData =  jService.structureToString(jService.buildDivisonFromDb(name));
+        } catch (Exception ioerr) {
+            log.error("io error " + ioerr.getMessage());
+        }
+
+        map.put(TREE_DATA_KEY, treeData);
+        return new ModelAndView(DESTINATION_TILE, map);
     }
 
     @RequestMapping(value = "createTree", method = RequestMethod.POST)
@@ -87,7 +87,7 @@ public class JSONTestbedController {
             BindingResult result,
             WebRequest webRequest, HttpSession session, Model model) {
         log.info("createTree " + form.getName());
-        log.info("treeDataOld "+treeDataOld);
+        log.info("treeDataOld " + treeDataOld);
         Object[] vargs = new Object[1];
         vargs[0] = "";
         String treeData = "";
@@ -100,6 +100,7 @@ public class JSONTestbedController {
             name = name.trim();
             if (StringUtils.isEmpty(name)) {
                 result.reject("empty.name");
+                log.error("empty name in createTree!");
                 treeData = treeDataOld;
             } else {
                 treeData = jService.structureToString(
@@ -112,6 +113,7 @@ public class JSONTestbedController {
             log.error("Hospital error " + ex.getMessage());
             vargs[0] = ex.getMessage();
             result.reject("duplicate.error", vargs, "Tree already exists");
+            log.error("duplicate name in createTree!");
             treeData = treeDataOld;
 
 
@@ -123,7 +125,10 @@ public class JSONTestbedController {
                     "default io error");
             treeData = treeDataOld;
         }
-        return new ModelAndView(DESTINATION_TILE, TREE_DATA_KEY, treeData);
+        HashMap<String, Object> map = createDefaultMap();
+        map.put(TREE_DATA_KEY, treeData);
+        map.put(CREATE_TREE_BEAN_NAME,form);
+        return new ModelAndView(DESTINATION_TILE, map);
     }
 
     /**
@@ -140,52 +145,13 @@ public class JSONTestbedController {
         this.jService = jService;
     }
 
-    public class DivInfo {
-
-        private String id = null;
-        private String type = null;
-        private String name = null;
-
-        /**
-         * @return the id
-         */
-        public String getId() {
-            return id;
-        }
-
-        /**
-         * @param id the id to set
-         */
-        public void setId(String id) {
-            this.id = id;
-        }
-
-        /**
-         * @return the type
-         */
-        public String getType() {
-            return type;
-        }
-
-        /**
-         * @param type the type to set
-         */
-        public void setType(String type) {
-            this.type = type;
-        }
-
-        /**
-         * @return the name
-         */
-        public String getName() {
-            return name;
-        }
-
-        /**
-         * @param name the name to set
-         */
-        public void setName(String name) {
-            this.name = name;
-        }
+    private HashMap<String, Object> createDefaultMap() {
+        HashMap<String, Object> map = new HashMap<String, Object>();
+        map.put(MAINTAIN_BEAN_NAME, new FormBean());
+        map.put(CREATE_TREE_BEAN_NAME, new FormBean());
+        map.put(TREE_DATA_KEY, "");
+        map.put(SELECT_TREE_BEAN_NAME, new SelectTreeBean());
+        map.put(SELECT_TREE_LIST_KEY, jService.getInitialTreeMap());
+        return map;
     }
 }
