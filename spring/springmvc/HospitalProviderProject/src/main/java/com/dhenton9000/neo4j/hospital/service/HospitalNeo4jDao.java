@@ -30,8 +30,6 @@ public interface HospitalNeo4jDao {
     public static final String PROVIDER_DB_KEY = "provider_db_key";
     public static final String TYPE_INDEX = "type_index";
 
-   
-
     public enum RelationshipTypes implements RelationshipType {
 
         IS_DIVIDED_INTO,
@@ -49,75 +47,82 @@ public interface HospitalNeo4jDao {
      * @param n1
      */
     void removeNode(Node n1);
+
     /**
      * create a node attached immediately to the neo4j root. In business terms,
-     * this is the company 
+     * this is the company
+     *
      * @param nodeLabel
-     * @return 
+     * @return
      */
-    Node createInitialNode(String nodeLabel) 
+    Node createInitialNode(String nodeLabel)
             throws HospitalServiceException;
-    
-    
-      /**
+
+    /**
      * Attach a divisions node with the provided label to the parent
+     *
      * @param parent
      * @param nodeLabel
      * @return
-     * @throws HospitalServiceException on duplicate request 
+     * @throws HospitalServiceException on duplicate request
      */
-    Node createAndAttachDivisionNode(Node parent, String nodeLabel) 
+    Node createAndAttachDivisionNode(Node parent, String nodeLabel)
             throws HospitalServiceException;
 
     /**
      * Attach a provider node with the provided label to the parent
+     *
      * @param parent
      * @param nodeLabel
      * @return
-     * @throws HospitalServiceException on duplicate request or if trying
-     * to attach to an illegal node
+     * @throws HospitalServiceException on duplicate request or if trying to
+     * attach to an illegal node
      */
     Node createAndAttachProviderNode(Node parent, String nodeLabel) throws HospitalServiceException;
 
     /**
-     * Persist a division and all its children. Return a pointer to the
-     * division with its id
+     * Persist a division and all its children. Return a pointer to the division
+     * with its id
+     *
      * @param d
      * @return
-     * @throws HospitalServiceException 
+     * @throws HospitalServiceException
      */
     Division attachFullTree(Division d) throws HospitalServiceException;
 
     /**
      * build a complete division tree from the persistence store
+     *
      * @param startDivisionLabel
-     * @return 
+     * @return
      */
     Division buildDivisionFromDb(String startDivisionLabel);
+
     /**
      * change the label on an existing node
+     *
      * @param n1
      * @param newLabel
-     * @return 
+     * @return
      */
     Node changeNodeLabel(Node n1, String newLabel);
 
     /**
      * Get all the nodes under the given type
+     *
      * @param type
-     * @return 
+     * @return
      */
     List<Node> getAllNodesForType(NODE_TYPE type);
+
     /**
      * return a node by its neo4j id
+     *
      * @param id
-     * @return 
+     * @return
      */
     Node getNodeById(Long id);
-    
-  
-    
-    
+
     /**
      * @return the neo4jDb
      */
@@ -145,8 +150,8 @@ public interface HospitalNeo4jDao {
      * @throws RuntimeException if more than one value found;
      */
     Node getDivisionNode(String nodeName);
-    
-     /**
+
+    /**
      * Lookup a division node by its label.
      *
      * @param nodeName
@@ -160,9 +165,9 @@ public interface HospitalNeo4jDao {
      *
      * @param subD
      * @param parent
-     * 
+     *
      */
-    void attachSubTree(HospitalNode subD, Node parent) throws HospitalServiceException ;
+    void attachSubTree(HospitalNode subD, Node parent) throws HospitalServiceException;
 
     /**
      * Determine the node type to the enum
@@ -171,23 +176,33 @@ public interface HospitalNeo4jDao {
      * @return
      */
     NODE_TYPE getNodeType(Node node);
-    
+
     /**
      * Attach a provider to a parent
+     *
      * @param parent
      * @param p
      * @return the provider or null if parent not found
      * @throws when the parent already has divisions attached
      */
-    Provider attachProvider(Division parent, Provider p) throws HospitalServiceException ;
+    Provider attachProvider(Division parent, Provider p) throws HospitalServiceException;
 
     /**
-     * get a map of the first nodes, or tree start points, with the id as
-     * key and name/label as value returns null if nothing found
+     * get a map of the first nodes, or tree start points, with the id as key
+     * and name/label as value returns null if nothing found
+     *
      * @return
-     * 
+     *
      */
-    Map<String,String> getInitialNodes()  ;
+    Map<String, String> getInitialNodes();
 
-
+    /**
+     * attach a new node to an existing parent
+     * @param parentLabel
+     * @param newDivisionLabel
+     * @throws HospitalServiceException if parent doesn't exist, 
+     * if request label is a duplicate, if requested label is for a Provider
+     */
+    void attachDivisionbyLabels(String parentLabel,
+            String newDivisionLabel) throws HospitalServiceException;
 }

@@ -33,7 +33,7 @@ import org.springframework.web.servlet.ModelAndView;
  */
 @Controller
 @RequestMapping("json/testbed/*")
-@SessionAttributes({"createTreeFormBean","selectTreeFormBean","insertNodeFormBean" ,"maintainTreeFormBean", "treeData"})
+@SessionAttributes({"createTreeFormBean", "selectTreeFormBean", "insertNodeFormBean", "maintainTreeFormBean", "treeData"})
 public class JSONTestbedController {
 
     private static Logger log = LogManager.getLogger(JSONTestbedController.class);
@@ -66,20 +66,39 @@ public class JSONTestbedController {
 
     @RequestMapping(value = "insertNode", method = RequestMethod.POST)
     public ModelAndView insertNode(@ModelAttribute(TREE_DATA_KEY) String treeDataOld,
-     @ModelAttribute(SELECT_TREE_BEAN_NAME) SelectTreeBean sform,
+            @ModelAttribute(SELECT_TREE_BEAN_NAME) SelectTreeBean sform,
             @ModelAttribute(INSERT_TREE_BEAN_NAME) InsertNodeBean form,
             BindingResult result,
             WebRequest webRequest, HttpSession session, Model model) {
         log.info("ZZZZ " + form.getName() + " parent " + form.getParentName()
-                +" select tree "+ sform.getSelectedTree());
+                + " select tree " + sform.getSelectedTree());
         String parentLabel = form.getParentName();
         String newDivisionLabel = form.getName();
-        jService.attachDivisionbyLabels(parentLabel,newDivisionLabel);
-        
-        
+        String treeId = sform.getSelectedTree();
+        Object[] vargs = new Object[1];
+        vargs[0] = "";
+        String treeData = "";
+        try {
+            jService.attachDivisionbyLabels(parentLabel, newDivisionLabel);
+            treeData = jService.structureToString(jService.buildDivisonFromDb(treeId));
+        } catch (HospitalServiceException ex) {
+            log.error("Hospital error " + ex.getMessage());
+            vargs[0] = ex.getMessage();
+            result.reject("hospital.error", vargs, "Hospital Problem");
+            treeData = treeDataOld;
+
+        } catch (IOException ioerr) {
+            log.error("io error " + ioerr.getMessage());
+            vargs[0] = ioerr.getMessage();
+            result.rejectValue("name", "io.error", vargs,
+                    "default io error");
+            treeData = treeDataOld;
+        }
+
         HashMap map = createDefaultMap();
-        map.put(TREE_DATA_KEY, treeDataOld);
+        map.put(TREE_DATA_KEY, treeData);
         map.put(SELECT_TREE_BEAN_NAME, sform);
+        map.put(INSERT_TREE_BEAN_NAME,form);
         return new ModelAndView(DESTINATION_TILE, map);
     }
 
@@ -130,16 +149,12 @@ public class JSONTestbedController {
                 sform.setSelectedTree(name);
             }
 
-
-
         } catch (HospitalServiceException ex) {
             log.error("Hospital error " + ex.getMessage());
             vargs[0] = ex.getMessage();
             result.reject("duplicate.error", vargs, "Tree already exists");
             log.error("duplicate name in createTree!");
             treeData = treeDataOld;
-
-
 
         } catch (IOException ioerr) {
             log.error("io error " + ioerr.getMessage());
@@ -151,7 +166,7 @@ public class JSONTestbedController {
         HashMap<String, Object> map = createDefaultMap();
         map.put(TREE_DATA_KEY, treeData);
         map.put(CREATE_TREE_BEAN_NAME, form);
-        map.put(SELECT_TREE_BEAN_NAME,sform);
+        map.put(SELECT_TREE_BEAN_NAME, sform);
         return new ModelAndView(DESTINATION_TILE, map);
     }
 

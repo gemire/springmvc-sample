@@ -341,6 +341,22 @@ public class HospitalNeo4jDaoImpl implements HospitalNeo4jDao {
         return n1;
     }
 
+    public void attachDivisionbyLabels(String parentLabel,
+            String newDivisionLabel) throws HospitalServiceException {
+        Node parentNode = getDivisionNode(parentLabel);
+        if (parentNode == null) {
+            throw new HospitalServiceException("cannot find node '" + parentLabel + "'");
+        }
+        Transaction tx = getNeo4jDb().beginTx();
+        try {
+            createAndAttachDivisionNode(parentNode, newDivisionLabel);
+            tx.success();
+        } finally {
+            tx.finish();
+        }
+
+    }
+
     public Provider attachProvider(Division parent, Provider p)
             throws HospitalServiceException {
 
@@ -414,7 +430,7 @@ public class HospitalNeo4jDaoImpl implements HospitalNeo4jDao {
         throw new UnsupportedOperationException("Not supported yet.");
     }
 
-    public Map<String, String> getInitialNodes()   {
+    public Map<String, String> getInitialNodes() {
         HashMap<String, String> items = new HashMap<String, String>();
         String q = "start n=node(0) match n-[IS_DIVIDED_INTO*1]->b "
                 + "return b.division_display_property "

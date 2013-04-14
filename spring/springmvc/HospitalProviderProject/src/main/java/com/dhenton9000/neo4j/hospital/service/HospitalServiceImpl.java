@@ -107,8 +107,9 @@ public class HospitalServiceImpl implements HospitalService  {
         return n;
     }
 
-    public void attachDivisionbyLabels(String parentLabel, String newDivisionLabel) {
-        throw new UnsupportedOperationException("Not supported yet.");
+    public void attachDivisionbyLabels(String parentLabel, 
+        String newDivisionLabel)  throws HospitalServiceException {
+        getHospitalDao().attachDivisionbyLabels(parentLabel,newDivisionLabel) ;      
     }
 
   

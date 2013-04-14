@@ -18,12 +18,6 @@ public class HospitalServiceException extends Exception {
         super(message);
     }
 
-    public HospitalServiceException(String message, Throwable cause) {
-        super(message, cause);
-    }
-
-    public HospitalServiceException(Throwable cause) {
-        super(cause);
-    }
+   
     
 }

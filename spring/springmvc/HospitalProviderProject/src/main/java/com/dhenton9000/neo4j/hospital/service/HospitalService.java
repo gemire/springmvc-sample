@@ -102,6 +102,8 @@ public interface HospitalService {
      * attach a new Division to an existing Divison as parentLabel
      * @param parentLabel
      * @param newDivisionLabel 
+     * @throws when parent node is not found or new label is a duplicate
      */
-    public void attachDivisionbyLabels(String parentLabel, String newDivisionLabel);
+    public void attachDivisionbyLabels(String parentLabel, 
+            String newDivisionLabel) throws HospitalServiceException;
 }
