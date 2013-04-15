@@ -14,6 +14,7 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.LogManager;
 import org.apache.log4j.Logger;
 import org.neo4j.cypher.ExecutionEngine;
@@ -43,6 +44,9 @@ public class HospitalNeo4jDaoImpl implements HospitalNeo4jDao {
         if (nodelAlreadyPresent(nodeLabel)) {
             throw new HospitalServiceException("Node already exists for '" + nodeLabel + "'");
         }
+        if (StringUtils.isBlank(nodeLabel)) {
+            throw new HospitalServiceException("Cannot create node with empty label");
+        }
         Node currentNode = getNeo4jDb().createNode();
         parent.createRelationshipTo(currentNode, RelationshipTypes.IS_DIVIDED_INTO);
         getTypeIndex().add(currentNode, TYPE_INDEX_PROPERTY, NODE_TYPE.Division.toString());
@@ -58,6 +62,9 @@ public class HospitalNeo4jDaoImpl implements HospitalNeo4jDao {
 
         if (nodelAlreadyPresent(nodeLabel)) {
             throw new HospitalServiceException("Node already exists for '" + nodeLabel + "'");
+        }
+        if (StringUtils.isBlank(nodeLabel)) {
+            throw new HospitalServiceException("Cannot create node with empty label");
         }
         Node currentNode = getNeo4jDb().createNode();
         parent.createRelationshipTo(currentNode, RelationshipTypes.DERIVES_SERVICE_FROM);
