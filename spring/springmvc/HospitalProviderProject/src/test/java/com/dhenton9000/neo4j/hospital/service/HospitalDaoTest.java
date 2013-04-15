@@ -161,6 +161,63 @@ public class HospitalDaoTest extends HospitalTestBase {
                 hospitalNeo4jDao.getAllNodesForType(NODE_TYPE.Provider).size());
     }
 
+    @Test(expected = HospitalServiceException.class)
+    public void testCreateAndAttachDivisionNodeWontAllowEmpty()
+            throws Exception {
+
+        hospitalNeo4jDao.createInitialNode("");
+    }
+
+    @Test(expected = HospitalServiceException.class)
+    public void testCreateAndAttachDivisionNodeWontAllowNull()
+            throws Exception {
+
+        hospitalNeo4jDao.createInitialNode(null);
+    }
+
+    @Test(expected = HospitalServiceException.class)
+    public void testCreateAndAttachDivisionNodeWontAllowSpace()
+            throws Exception {
+
+        hospitalNeo4jDao.createInitialNode(" ");
+    }
+
+    @Test(expected = HospitalServiceException.class)
+    public void testCreateAndAttachProviderNodeWontAllowEmpty()
+            throws Exception {
+
+        hospitalNeo4jDao.createInitialNode("a");
+        Division d = new Division();
+        d.setName("a");
+        Provider p = new Provider();
+        p.setName("");
+        hospitalNeo4jDao.attachProvider(d, p);
+    }
+
+    @Test(expected = HospitalServiceException.class)
+    public void testCreateAndAttachProviderNodeWontAllowNull()
+            throws Exception {
+
+        hospitalNeo4jDao.createInitialNode("a");
+        Division d = new Division();
+        d.setName("a");
+        Provider p = new Provider();
+        p.setName(null);
+        hospitalNeo4jDao.attachProvider(d, p);
+    }
+
+    @Test(expected = HospitalServiceException.class)
+    public void testCreateAndAttachProviderNodeWontAllowSpace()
+            throws Exception {
+
+        hospitalNeo4jDao.createInitialNode("a");
+        Division d = new Division();
+        d.setName("a");
+        Provider p = new Provider();
+        p.setName(" ");
+        hospitalNeo4jDao.attachProvider(d, p);
+    }
+
     @Test
     public void testCannotDeleteANodeWithChildren() throws Exception {
     }

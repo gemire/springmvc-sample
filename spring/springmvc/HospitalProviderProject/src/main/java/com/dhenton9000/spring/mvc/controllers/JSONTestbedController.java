@@ -70,6 +70,7 @@ public class JSONTestbedController {
     @RequestMapping(value = "insertNode", method = RequestMethod.POST)
     public ModelAndView insertNode(@ModelAttribute(TREE_DATA_KEY) String treeDataOld,
             @ModelAttribute(SELECT_TREE_BEAN_NAME) SelectTreeBean sform,
+            @ModelAttribute(MAINTAIN_BEAN_NAME) FormBean mform,
             @ModelAttribute(INSERT_TREE_BEAN_NAME) InsertNodeBean form,
             BindingResult result,
             WebRequest webRequest, HttpSession session, Model model) {
@@ -101,7 +102,11 @@ public class JSONTestbedController {
         HashMap map = createDefaultMap();
         map.put(TREE_DATA_KEY, treeData);
         map.put(SELECT_TREE_BEAN_NAME, sform);
+        mform.setName(parentLabel);
+        map.put(MAINTAIN_BEAN_NAME,mform);
         map.put(INSERT_TREE_BEAN_NAME,form);
+         log.info("ZZZZ 2" + form.getName() + " parent " + form.getParentName()
+                + " select tree " + sform.getSelectedTree());
         return new ModelAndView(DESTINATION_TILE, map);
     }
 
