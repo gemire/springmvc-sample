@@ -31,13 +31,13 @@ import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.servlet.ModelAndView;
 
 /**
- * node/forms/json/sendDivision
+ *  
  *
  * @author dhenton
  */
-@Controller
-@RequestMapping("node/forms/*")
-@SessionAttributes("nodeFormBean")
+//@Controller
+//@RequestMapping("node/forms/*")
+//@SessionAttributes("nodeFormBean")
 public class NodeController {
 
     private static Logger log = LogManager.getLogger(NodeController.class);

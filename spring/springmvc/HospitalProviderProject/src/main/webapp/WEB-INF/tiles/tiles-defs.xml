@@ -26,7 +26,7 @@
 		<put-attribute name="title" value="Node Editing Page" />
 		<put-attribute name="subTitle" value="Node Editing Page" />
 		<put-attribute name="body"
-			value="/WEB-INF/views/pages/nodeedit_body.jsp" />
+			value="/WEB-INF/views/pages/single_nodeedit_body.jsp" />
 	</definition>
          <definition name="tiles.json.testbed" 
                     extends="tiles.base.definition">
