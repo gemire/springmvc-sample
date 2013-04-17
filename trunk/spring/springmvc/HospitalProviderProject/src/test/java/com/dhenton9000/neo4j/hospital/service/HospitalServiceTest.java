@@ -5,6 +5,7 @@
 package com.dhenton9000.neo4j.hospital.service;
 
 import com.dhenton9000.neo4j.hospital.json.Division;
+import com.dhenton9000.neo4j.hospital.json.HospitalNode;
 import com.dhenton9000.neo4j.hospital.json.HospitalServiceException;
 import com.dhenton9000.neo4j.hospital.json.Provider;
 import java.util.Iterator;
@@ -90,31 +91,28 @@ public class HospitalServiceTest extends HospitalTestBase {
 
     }
 
-     
-    
     @Test
     public void testBuildDivisonFromDb() throws Exception {
         setupSampleInDb();
         Division items = hospitalService.buildDivisonFromDb("Alpha");
-        assertEquals(new Long(1),items.getId()); 
+        assertEquals(new Long(1), items.getId());
     }
-    
+
     @Test
     public void testGetInitialTreeMap() throws Exception {
         setupSampleInDb();
         Map<String, String> items = hospitalService.getInitialTreeMap();
-        assertEquals(1,items.keySet().size());
+        assertEquals(1, items.keySet().size());
         String t = (String) items.get("Alpha");
-        assertEquals("Alpha",t);
+        assertEquals("Alpha", t);
     }
-    
+
     @Test
-    public void checkThatGetInitialTreeMapCanHandleNothing() throws Exception
-    {
+    public void checkThatGetInitialTreeMapCanHandleNothing() throws Exception {
         Map<String, String> items = hospitalService.getInitialTreeMap();
         assertNotNull(items);
-        assertEquals(0,items.size());
-        
+        assertEquals(0, items.size());
+
     }
 
     @Test
@@ -147,6 +145,37 @@ public class HospitalServiceTest extends HospitalTestBase {
         Provider p = setupSampleInDbWithProviderTheRightWay();
         hospitalService.attachDivisionbyLabels(p.getName(), "Blotto");
 
+
+    }
+
+    @Test
+    public void testGetByIdGivesNull() throws Exception {
+        Provider p = setupSampleInDbWithProviderTheRightWay();
+        HospitalNode node = hospitalService.getNodeById(new Long(109));
+        assertNull(node);
+
+    }
+
+    @Test
+    public void testGetById() throws Exception {
+        Provider p = setupSampleInDbWithProviderTheRightWay();
+        HospitalNode node = hospitalService.getNodeById(new Long(2));
+        assertNotNull(node);
+        if (node instanceof Provider) {
+            fail("got a provider that's bad");
+        }
+        assertEquals("Manny", node.getName());
+    }
+
+    @Test
+    public void testGetByIdForProvider() throws Exception {
+        Provider p = setupSampleInDbWithProviderTheRightWay();
+        Node z1 = hospitalNeo4jDao.getProviderNode(p.getName());
+        HospitalNode node = hospitalService.getNodeById(z1.getId());
+        assertNotNull(node);
+        if (node instanceof Division) {
+            fail("got a division that's bad");
+        }
 
     }
 

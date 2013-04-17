@@ -16,7 +16,6 @@ public class MaintainTreeFormBean {
     private String insertParentName = "";
     private String insertName = "";
     private String maintainName = "";
-    private String maintainId = "";
     private String maintainType = "";
     private String createTreeName = "";
     private String selectedTree = "NONE";
@@ -66,20 +65,7 @@ public class MaintainTreeFormBean {
         this.maintainName = maintainName;
     }
 
-    /**
-     * @return the maintainId
-     */
-    public String getMaintainId() {
-        return maintainId;
-    }
-
-    /**
-     * @param maintainId the maintainId to set
-     */
-    public void setMaintainId(String maintainId) {
-        this.maintainId = maintainId;
-    }
-
+   
     /**
      * @return the maintainType
      */

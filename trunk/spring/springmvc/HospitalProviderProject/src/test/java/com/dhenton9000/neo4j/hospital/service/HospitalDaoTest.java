@@ -312,7 +312,9 @@ public class HospitalDaoTest extends HospitalTestBase {
         setupSampleInDb();
         Node n1 = hospitalNeo4jDao.getDivisionNode("Manny");
         assertNotNull(n1);
-        hospitalNeo4jDao.changeNodeLabel(n1, "bozon");
+        Division mannyDiv = new Division();
+        mannyDiv.setName("Manny");
+        hospitalNeo4jDao.changeNodeLabel(mannyDiv, "bozon");
         n1 = hospitalNeo4jDao.getDivisionNode("Manny");
         assertNull(n1);
         n1 = hospitalNeo4jDao.getDivisionNode("bozon");
@@ -322,11 +324,38 @@ public class HospitalDaoTest extends HospitalTestBase {
     }
 
     @Test
+    public void testChangeNodeLabelForDivisionIsOkayWithSameThing() throws Exception {
+        setupSampleInDb();
+        Node n1 = hospitalNeo4jDao.getDivisionNode("Manny");
+        assertNotNull(n1);
+        Division mannyDiv = new Division();
+        mannyDiv.setName("Manny");
+        hospitalNeo4jDao.changeNodeLabel(mannyDiv, "Manny");
+
+    }
+
+    @Test(expected = HospitalServiceException.class)
+    public void testChangeNodeLabelForDivisionThrowsErrorOnDuplicate() throws Exception {
+        setupSampleInDb();
+        Node n1 = hospitalNeo4jDao.getDivisionNode("Manny");
+        assertNotNull(n1);
+        Division mannyDiv = new Division();
+        mannyDiv.setName("Manny");
+        hospitalNeo4jDao.changeNodeLabel(mannyDiv, "Huey");
+        // this will produce a runtime exception so throw an error before
+        // in changeNodeLabel
+        hospitalNeo4jDao.getDivisionNode("Huey");
+
+    }
+
+    @Test
     public void testChangeNodeLabelForProvider() throws Exception {
         Provider p = setupSampleInDbWithProviderTheRightWay();
         Node n1 = hospitalNeo4jDao.getProviderNode(PROVIDER_SAMPLE_NAME);
         assertNotNull(n1);
-        hospitalNeo4jDao.changeNodeLabel(n1, "bozon");
+        Provider bozonDiv = new Provider();
+        bozonDiv.setName(PROVIDER_SAMPLE_NAME);
+        hospitalNeo4jDao.changeNodeLabel(bozonDiv, "bozon");
         n1 = hospitalNeo4jDao.getProviderNode(PROVIDER_SAMPLE_NAME);
         assertNull(n1);
         n1 = hospitalNeo4jDao.getProviderNode("bozon");

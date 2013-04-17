@@ -30,9 +30,14 @@
             // The clicked node is 'event.node'
             var node = event.node;
             $('#maintainId').html(node.id);
+            $('#maintainIdHidden1').val(node.id);
+            $('#maintainIdHidden2').val(node.id);
+            $('#maintainIdHidden3').val(node.id);
+            $('#maintainIdHidden4').val(node.id);
             $('#maintainType').html(node.type);
             $('#maintainName').val(node.name);
             $('#insertParentName').val(node.name);
+            
         });
         
         selectedNode = '${maintainTreeFormBean.selectedNodeId}';
@@ -68,6 +73,7 @@
             <input id="selectTreeSubmit" class="myButton"
                    type="submit" value="Select">
         </span>
+         <form:hidden path="selectedNodeId" id="maintainIdHidden4" />
     </form:form>     
 </div>   
 
@@ -82,6 +88,7 @@
                            type="submit" value="Create New Tree"></td></tr>
 
         </table>
+                 <form:hidden path="selectedNodeId" id="maintainIdHidden3" />
     </form:form>
 </div>
 
@@ -101,7 +108,7 @@
     <h3>Maintain Current Node Data</h3>
     <form:form id="form" method="post"  modelAttribute="maintainTreeFormBean" action="${baseURL}node/forms/maintainNode">
         <table cellpadding="4" cellspacing="4">
-            <tr><th>Id:</th><td><span id="maintainId">${maintainTreeFormBean.maintainId}</span></td></tr>
+            <tr><th>Id:</th><td><span id="maintainId">${maintainTreeFormBean.selectedNodeId}</span></td></tr>
             <tr><th>Type:</th><td><span id="maintainType">${maintainTreeFormBean.maintainType}</span></td></tr>
             <tr><th>Name:</th><td><form:input path="maintainName" id="maintainName" /></td></tr>
             <tr>
@@ -109,6 +116,7 @@
                 <td><input type="submit"  class="myButton"  id="maintainNodeDelete" name="submit" value="Delete"></td>
             </tr>
         </table>
+            <form:hidden path="selectedNodeId" id="maintainIdHidden2" />
     </form:form>
 
 </div>
@@ -127,8 +135,10 @@
                 <td><form:input path="insertName" id="insertName" /></td>
                 <td><input type="submit"  class="myButton"  id="insertNodeSubmit" name="submit" value="Insert"></td>
             </tr></table>
+                <form:hidden path="selectedNodeId" id="maintainIdHidden1" />
         </form:form>
 
 </div>
+
 
 
