@@ -185,11 +185,19 @@ public class HospitalNeo4jDaoImpl implements HospitalNeo4jDao {
     }
 
     @Override
-    public void removeNode(Node n1) {
+    public void removeNode(Node n1) throws HospitalServiceException {
         NODE_TYPE type = getNodeType(n1);
         Transaction tx = getNeo4jDb().beginTx();
         Index<Node> currentIndex = null;
-
+        Iterable<Relationship> iterOut = n1.getRelationships(Direction.OUTGOING);
+        Iterator<Relationship> i2 =iterOut.iterator();
+        int cc = 0;
+        if (i2.hasNext())
+        {
+            throw new HospitalServiceException("Cannot remove a Node with Children");
+        }
+        
+        
         try {
             switch (type) {
                 case Division:
