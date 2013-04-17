@@ -12,5 +12,5 @@
 	<div class="menuDiv">
 		<a href="<c:out value="${baseURL}home.html"/>">Home</a>
                 <a href="<c:out value="${baseURL}node/forms/home.html"/>">Node Edit</a>
-		<a href="<c:out value="${baseURL}json/testbed/home.html"/>">JSON Test Bed</a> 
+		 
 	</div>

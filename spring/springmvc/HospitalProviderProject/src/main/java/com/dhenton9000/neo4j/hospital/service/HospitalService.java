@@ -106,4 +106,15 @@ public interface HospitalService {
      */
     public void attachDivisionbyLabels(String parentLabel, 
             String newDivisionLabel) throws HospitalServiceException;
+    
+    /**
+     * change the label of a node
+     * @param newLabel
+     * @throws HospitalServiceException 
+     */
+    public void
+            changeLabel(HospitalNode hospitalNode, String newLabel) 
+            throws HospitalServiceException;
+
+    public HospitalNode getNodeById(Long parseLong);
 }

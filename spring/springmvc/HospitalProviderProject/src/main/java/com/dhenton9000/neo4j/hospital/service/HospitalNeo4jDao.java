@@ -105,7 +105,7 @@ public interface HospitalNeo4jDao {
      * @param newLabel
      * @return
      */
-    Node changeNodeLabel(Node n1, String newLabel);
+    Node changeNodeLabel(HospitalNode n1, String newLabel)  throws HospitalServiceException;
 
     /**
      * Get all the nodes under the given type
@@ -121,7 +121,7 @@ public interface HospitalNeo4jDao {
      * @param id
      * @return
      */
-    Node getNodeById(Long id);
+    HospitalNode getNodeById(Long id);
 
     /**
      * @return the neo4jDb

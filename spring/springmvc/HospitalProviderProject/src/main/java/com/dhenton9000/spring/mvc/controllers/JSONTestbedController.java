@@ -34,9 +34,9 @@ import org.springframework.web.servlet.ModelAndView;
  *
  * @author dhenton
  */
-@Controller
-@RequestMapping("json/testbed/*")
-@SessionAttributes({"createTreeFormBean", "selectTreeFormBean", "insertNodeFormBean", "maintainTreeFormBean", "treeData"})
+//@Controller
+//@RequestMapping("json/testbed/*")
+//@SessionAttributes({"createTreeFormBean", "selectTreeFormBean", "insertNodeFormBean", "maintainTreeFormBean", "treeData"})
 public class JSONTestbedController {
 
     private static Logger log = LogManager.getLogger(JSONTestbedController.class);

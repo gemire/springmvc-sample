@@ -104,4 +104,12 @@ public class HospitalServiceImpl implements HospitalService {
             String newDivisionLabel) throws HospitalServiceException {
         getHospitalDao().attachDivisionbyLabels(parentLabel, newDivisionLabel);
     }
+
+    public void changeLabel(HospitalNode hospitalNode, String newLabel) throws HospitalServiceException {
+         getHospitalDao().changeNodeLabel(hospitalNode,newLabel);
+    }
+
+    public HospitalNode getNodeById(Long parseLong) {
+        return  getHospitalDao().getNodeById(parseLong);
+    }
 }

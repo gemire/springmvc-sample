@@ -22,6 +22,7 @@ import org.neo4j.cypher.ExecutionResult;
 import org.neo4j.graphdb.Direction;
 import org.neo4j.graphdb.GraphDatabaseService;
 import org.neo4j.graphdb.Node;
+import org.neo4j.graphdb.NotFoundException;
 import org.neo4j.graphdb.Relationship;
 import org.neo4j.graphdb.Transaction;
 import org.neo4j.graphdb.index.Index;
@@ -312,27 +313,46 @@ public class HospitalNeo4jDaoImpl implements HospitalNeo4jDao {
     }
 
     @Override
-    public Node changeNodeLabel(Node n1, String newLabel) {
-
-        NODE_TYPE type = getNodeType(n1);
-        Transaction tx = getNeo4jDb().beginTx();
+    public Node changeNodeLabel(HospitalNode hNode, String newLabel) throws HospitalServiceException {
+        NODE_TYPE type = null;
+        if (hNode instanceof Division) {
+            type = NODE_TYPE.Division;
+        } else if (hNode instanceof Provider) {
+            type = NODE_TYPE.Provider;
+        }
+        String oldLabel = hNode.getName();
+        if (type == null) {
+            throw new RuntimeException("node type not found ");
+        }
         Index<Node> currentIndex = null;
         String currentProperty = null;
+        Node n1 = null;
 
+
+        switch (type) {
+            case Division:
+                currentIndex = getDivisionIndex();
+                currentProperty = DIVISION_DISPLAY_PROPERTY;
+                n1 = this.getDivisionNode(oldLabel);
+                break;
+
+            case Provider:
+                currentIndex = getProviderIndex();
+                currentProperty = PROVIDER_DISPLAY_PROPERTY;
+                n1 = this.getProviderNode(oldLabel);
+                break;
+        }// end switch
+
+        if (oldLabel.equals(newLabel)) {
+            return n1;
+        }
+
+        if (nodelAlreadyPresent(newLabel)) {
+            throw new HospitalServiceException("Node already present '" + newLabel + "'");
+
+        }
+        Transaction tx = getNeo4jDb().beginTx();
         try {
-            switch (type) {
-                case Division:
-                    currentIndex = getDivisionIndex();
-                    currentProperty = DIVISION_DISPLAY_PROPERTY;
-                    break;
-
-                case Provider:
-                    currentIndex = getProviderIndex();
-                    currentProperty = PROVIDER_DISPLAY_PROPERTY;
-                    break;
-            }// end switch
-
-
             currentIndex.remove(n1);
             n1.setProperty(currentProperty, newLabel);
             currentIndex.add(n1, currentProperty, newLabel);
@@ -433,8 +453,32 @@ public class HospitalNeo4jDaoImpl implements HospitalNeo4jDao {
         return isPresent;
     }
 
-    public Node getNodeById(Long id) {
-        throw new UnsupportedOperationException("Not supported yet.");
+    public HospitalNode getNodeById(Long id) {
+        Node n1 = null;
+        try {
+            n1 = getNeo4jDb().getNodeById(id);
+        } catch (NotFoundException err) {
+            return null;
+        }
+        HospitalNode h = null;
+        NODE_TYPE type = getNodeType(n1);
+        String currentProperty = null;
+
+        switch (type) {
+            case Division:
+                h = new Division();
+                currentProperty = DIVISION_DISPLAY_PROPERTY;
+                break;
+
+            case Provider:
+                h = new Provider();
+                currentProperty = PROVIDER_DISPLAY_PROPERTY;
+                break;
+        }// end switch
+        h.setId(n1.getId());
+        String p = (String) n1.getProperty(currentProperty);
+        h.setName(p);
+        return h;
     }
 
     public Map<String, String> getInitialNodes() {
