@@ -46,7 +46,7 @@ public interface HospitalNeo4jDao {
      *
      * @param n1
      */
-    void removeNode(Node n1);
+    void removeNode(Node n1) throws HospitalServiceException;
 
     /**
      * create a node attached immediately to the neo4j root. In business terms,
