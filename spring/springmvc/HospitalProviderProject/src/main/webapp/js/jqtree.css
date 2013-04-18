@@ -1,5 +1,6 @@
 ul.jqtree-tree {
     margin-left: 12px;
+    font-size: 15px;
 }
 
 ul.jqtree-tree,
@@ -28,7 +29,6 @@ ul.jqtree-tree .jqtree-toggler {
     left: -1.5em;
     top: 30%;
     *top: 0;  /* fix for ie7 */
-    font-size: 12px;
     line-height: 12px;
     font-family: arial;  /* fix for ie9 */
     border-bottom: none;
@@ -58,6 +58,7 @@ ul.jqtree-tree li.jqtree-folder.jqtree-closed {
 
 ul.jqtree-tree li.jqtree-folder .jqtree-title {
     margin-left: 0;
+    
 }
 
 ul.jqtree-tree .jqtree-toggler.jqtree-closed {
@@ -83,7 +84,7 @@ ul.jqtree-tree li.jqtree-ghost span {
 }
 
 ul.jqtree-tree li.jqtree-ghost span.jqtree-circle {
-    background-image: url(jqtree-circle.png);
+    background-image: url(js/jqtree-circle.png);
     background-repeat: no-repeat;
     height: 8px;
     width: 8px;
@@ -137,3 +138,5 @@ ul.jqtree-tree li.jqtree-selected > .jqtree-element:hover {
 ul.jqtree-tree .jqtree-moving > .jqtree-element .jqtree-title {
     outline: dashed 1px #0000ff;
 }
+
+ 
