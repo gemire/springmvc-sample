@@ -105,11 +105,27 @@ public class HospitalServiceImpl implements HospitalService {
         getHospitalDao().attachDivisionbyLabels(parentLabel, newDivisionLabel);
     }
 
-    public void changeLabel(HospitalNode hospitalNode, String newLabel) throws HospitalServiceException {
-         getHospitalDao().changeNodeLabel(hospitalNode,newLabel);
+    public void changeLabel(HospitalNode hospitalNode, String newLabel) 
+            throws HospitalServiceException {
+        getHospitalDao().changeNodeLabel(hospitalNode, newLabel);
     }
 
     public HospitalNode getNodeById(Long parseLong) {
-        return  getHospitalDao().getNodeById(parseLong);
+        return getHospitalDao().getNodeById(parseLong);
+    }
+
+    public void deleteNode(HospitalNode h) throws HospitalServiceException {
+
+        if (h.getName() == null) {
+            return;
+        }
+        Node n1 = getHospitalDao().getDivisionNode(h.getName());
+        if (n1 == null) {
+            n1 = getHospitalDao().getProviderNode(h.getName());
+        }
+        if (n1 == null) {
+            return;
+        }
+        getHospitalDao().removeNode(n1);
     }
 }
