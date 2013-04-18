@@ -48,96 +48,108 @@
     }); 
 </script>
 
-</head>
+<style>
+    div.formBlock {
+
+        border: 2px solid #59445A;
+       	padding: 5px 10px 5px 10px;
+        margin:   5px 10px 5px 10px;
+        font-weight: bold;
+        display: block;
+
+    }
+</style>
 
 
-<div style="position:absolute; top: 70px; left: 10px">
-    <h3>Select A Tree</h3>
-    <form:form id="form" method="post"  modelAttribute="maintainTreeFormBean" action="${baseURL}node/forms/selectTree">
-        <div   class="linespacer">
+
+
+<div style="position:absolute;top: 50px; left: 10px">
+
+    <form:form modelAttribute="maintainTreeFormBean"  >
+        
             <s:bind path="*">
                 <c:if test="${status.error}">
+                    <div class="formBlock">
                     <form:errors cssClass="error" />
+                    </div>
                 </c:if>
             </s:bind>
-        </div>
+        
 
-
-        <span class="linespacer">
-            <form:select id="selectATree" path="selectedTree">             
-                <form:option  value="NONE" label="---"/>
-                <form:options items="${maintainTreeFormBean.treeSelectList}" />
-            </form:select> 
-        </span>
-        <span  class="linespacer">
-            <input id="selectTreeSubmit" class="myButton"
-                   type="submit" value="Select">
-        </span>
-         <form:hidden path="selectedNodeId" id="maintainIdHidden4" />
-    </form:form>     
-</div>   
-
-
-<div style="position:absolute; top: 70px;  left: 300px">     
-    <h3>Create New Tree</h3>
-    <form:form id="form" method="post"  modelAttribute="maintainTreeFormBean" action="${baseURL}node/forms/createTree">
-
-        <table cellpadding="4" cellspacing="4">
-            <tr><th>Name:</th><td><form:input path="createTreeName" id="createTreeName" /></td>
-                <td><input id="createTreeSubmit"  class="myButton"
-                           type="submit" value="Create New Tree"></td></tr>
-
-        </table>
-                 <form:hidden path="selectedNodeId" id="maintainIdHidden3" />
     </form:form>
+
+
+    <div class="formBlock">
+        <h3>Select A Tree</h3>
+        <form:form id="formSelect" method="post"  modelAttribute="maintainTreeFormBean" action="${baseURL}node/forms/selectTree">
+
+
+            <span class="linespacer">
+                <form:select id="selectATree" path="selectedTree">             
+                    <form:option  value="NONE" label="---"/>
+                    <form:options items="${maintainTreeFormBean.treeSelectList}" />
+                </form:select> 
+            </span>
+            <span  class="linespacer">
+                <input id="selectTreeSubmit" class="myButton"
+                       type="submit" value="Select">
+            </span>
+            <form:hidden path="selectedNodeId" id="maintainIdHidden4" />
+        </form:form>     
+    </div>
+
+
+    <div class="formBlock">
+        <h3>Create New Tree</h3>
+        <form:form id="formCreate" method="post"  modelAttribute="maintainTreeFormBean" action="${baseURL}node/forms/createTree">
+
+            <table cellpadding="4" cellspacing="4">
+                <tr><th>Name:</th><td><form:input path="createTreeName" id="createTreeName" /></td>
+                    <td><input id="createTreeSubmit"  class="myButton"
+                               type="submit" value="Create New Tree"></td></tr>
+
+            </table>
+            <form:hidden path="selectedNodeId" id="maintainIdHidden3" />
+        </form:form>
+    </div>
+
+
+    <div class="formBlock">
+        <h3>Maintain Current Node Data</h3>
+        <form:form id="formMaintain" method="post"  modelAttribute="maintainTreeFormBean" action="${baseURL}node/forms/maintainNode">
+            <table cellpadding="4" cellspacing="4">
+                <tr><th>Id:</th><td><span id="maintainId">${maintainTreeFormBean.selectedNodeId}</span></td></tr>
+                <tr><th>Type:</th><td><span id="maintainType">${maintainTreeFormBean.maintainType}</span></td></tr>
+                <tr><th>Name:</th><td><form:input path="maintainName" id="maintainName" /></td>
+                    <td><input type="submit"  class="myButton"  id="maintainNodeSave" name="submit" value="Save"></td> 
+                    <td><input type="submit"  class="myButton"  id="maintainNodeDelete" name="submit" value="Delete"></td>
+                </tr>
+            </table>
+            <form:hidden path="selectedNodeId" id="maintainIdHidden2" />
+        </form:form>
+    </div>
+
+
+    <div class="formBlock">
+        <h3>Insert Node At Current</h3>
+
+        <form:form id="formInsert" method="post"  modelAttribute="maintainTreeFormBean" action="${baseURL}node/forms/insertNode">
+
+            <form:hidden id="insertParentName"  path="insertParentName" />
+            <table cellpadding="4" cellspacing="4">
+                <tr><th>Name:</th>
+                    <td><form:input path="insertName" id="insertName" /></td>
+                    <td><input type="submit"  class="myButton"  id="insertNodeSubmit" name="submit" value="Insert"></td>
+                </tr></table>
+                <form:hidden path="selectedNodeId" id="maintainIdHidden1" />
+            </form:form>
+    </div>
 </div>
 
 
-
-
-
-
-<div style="position:absolute;top: 250px; left: 10px">
+<div style="position:absolute;top: 50px; left: 550px">
     <h3>Nodes</h3> 
     <div  id="tree1"></div>
-</div>
-
-
-<div style="position:absolute;top: 250px;   left: 300px">
-
-    <h3>Maintain Current Node Data</h3>
-    <form:form id="form" method="post"  modelAttribute="maintainTreeFormBean" action="${baseURL}node/forms/maintainNode">
-        <table cellpadding="4" cellspacing="4">
-            <tr><th>Id:</th><td><span id="maintainId">${maintainTreeFormBean.selectedNodeId}</span></td></tr>
-            <tr><th>Type:</th><td><span id="maintainType">${maintainTreeFormBean.maintainType}</span></td></tr>
-            <tr><th>Name:</th><td><form:input path="maintainName" id="maintainName" /></td></tr>
-            <tr>
-                <td><input type="submit"  class="myButton"  id="maintainNodeSave" name="submit" value="Save"></td> 
-                <td><input type="submit"  class="myButton"  id="maintainNodeDelete" name="submit" value="Delete"></td>
-            </tr>
-        </table>
-            <form:hidden path="selectedNodeId" id="maintainIdHidden2" />
-    </form:form>
-
-</div>
-
-
-
-<div style="position:absolute;top: 250px;   left: 650px">
-
-    <h3>Insert Node At Current</h3>
-
-    <form:form id="form" method="post"  modelAttribute="maintainTreeFormBean" action="${baseURL}node/forms/insertNode">
-
-        <form:hidden id="insertParentName"  path="insertParentName" />
-        <table cellpadding="4" cellspacing="4">
-            <tr><th>Name:</th>
-                <td><form:input path="insertName" id="insertName" /></td>
-                <td><input type="submit"  class="myButton"  id="insertNodeSubmit" name="submit" value="Insert"></td>
-            </tr></table>
-                <form:hidden path="selectedNodeId" id="maintainIdHidden1" />
-        </form:form>
-
 </div>
 
 
