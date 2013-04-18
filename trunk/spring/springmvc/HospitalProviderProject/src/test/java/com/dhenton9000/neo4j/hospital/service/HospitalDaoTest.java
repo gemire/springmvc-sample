@@ -130,15 +130,10 @@ public class HospitalDaoTest extends HospitalTestBase {
                 hospitalNeo4jDao.getAllNodesForType(NODE_TYPE.Division).size());
         assertEquals(0,
                 hospitalNeo4jDao.getAllNodesForType(NODE_TYPE.Provider).size());
-        Node n1 = hospitalNeo4jDao.getDivisionNode("Manny");
+        Node n1 = hospitalNeo4jDao.getDivisionNode("Moe");
         assertNotNull(n1);
         hospitalNeo4jDao.removeNode(n1);
-        n1 = hospitalNeo4jDao.getDivisionNode("Manny");
-        assertNull(n1);
-        assertEquals(SAMPLE_TREE_SIZE - 1,
-                hospitalNeo4jDao.getAllNodesForType(NODE_TYPE.Division).size());
-        //  n1 = hospitalNeo4jDao.getProviderNode(PROVIDER_SAMPLE_NAME);
-        //   assertNotNull(n1);
+        
 
     }
 

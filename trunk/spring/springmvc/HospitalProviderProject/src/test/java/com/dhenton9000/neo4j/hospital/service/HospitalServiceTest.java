@@ -62,8 +62,8 @@ public class HospitalServiceTest extends HospitalTestBase {
                 + "  \"children\" : [ ],\n"
                 + "  \"is_open\" : true\n"
                 + "}";
-
-        assertEquals(ex, t);
+       Division k = hospitalService.stringToStructure(t);
+       assertEquals(d.getName(),k.getName());
 
     }
 
