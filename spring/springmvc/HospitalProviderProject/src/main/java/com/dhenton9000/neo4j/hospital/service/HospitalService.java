@@ -117,4 +117,8 @@ public interface HospitalService {
             throws HospitalServiceException;
 
     public HospitalNode getNodeById(Long parseLong);
+    
+    
+    public void deleteNode(HospitalNode h) 
+            throws HospitalServiceException;
 }

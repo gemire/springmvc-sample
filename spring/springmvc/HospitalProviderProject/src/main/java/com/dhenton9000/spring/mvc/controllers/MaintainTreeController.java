@@ -66,48 +66,66 @@ public class MaintainTreeController {
         vargs[0] = "";
         String treeRootName = maintainForm.getSelectedTree();
 
-        if (submitFlag.trim().equals(SAVE_LABEL)) {
-            HospitalNode h =
-                    jService.getNodeById(Long.parseLong(maintainForm.getSelectedNodeId()));
-            log.debug("h label " + h.getName() + " maintain label " + newLabel
-                    + " selected id " + maintainForm.getSelectedNodeId());
-            if (!h.getName().equals(newLabel)) {
+        long nodeId = -1L;
+        try {
+            nodeId = Long.parseLong(maintainForm.getSelectedNodeId());
+        } catch (Exception err) {
+            vargs[0] = "You must select a node for deleting";
+            result.reject("hospital.error", vargs, "Hospital Problem");
+            return new ModelAndView(DESTINATION_TILE, FORMBEAN_KEY, maintainForm);
+        }
 
-                try {
+        HospitalNode h = jService.getNodeById(nodeId);
+        //TODO: handle case where you are changing the name of the tree root
+
+        try {
+            if (submitFlag.trim().equals(SAVE_LABEL)) {
+
+                log.debug("h label " + h.getName() + " maintain label " + newLabel
+                        + " selected id " + maintainForm.getSelectedNodeId());
+                if (!h.getName().equals(newLabel)) {
+                    String oldName = h.getName();
                     log.debug("beginning change ");
                     jService.changeLabel(h, newLabel);
-                    //requery the tree
-                    //clear the variable 
-                    
+
+                    String valToUse = null;
+                    if (oldName.equals(treeRootName)) {
+                        valToUse = newLabel;
+                    } else {
+                        valToUse = treeRootName;
+                    }
                     maintainForm.setTreeData(
-                            jService.structureToString(jService
-                            .buildDivisonFromDb(treeRootName)));
+                            jService.structureToString(jService.buildDivisonFromDb(valToUse)));
+                    maintainForm.setSelectedTree(valToUse);
+                }// end if different
+            }
+            if (submitFlag.equals(DELETE_LABEL)) {
+                jService.deleteNode(h);
+                maintainForm.setMaintainName("");
+                maintainForm.setSelectedNodeId("");
+                if (!h.getName().equals(treeRootName)) {
+                    maintainForm.setTreeData(
+                            jService.structureToString(jService.buildDivisonFromDb(treeRootName)));
 
-                } catch (HospitalServiceException ex) {
-                    vargs[0] = ex.getMessage();
-                    result.reject("hospital.error", vargs, "Hospital Problem");
-                } catch (IOException ioerr) {
-                    log.error("io error " + ioerr.getMessage());
-                    vargs[0] = ioerr.getMessage();
-                    result.rejectValue("name", "io.error", vargs,
-                            "default io error");
-
+                } else {
+                    maintainForm.setTreeData("");
+                    maintainForm.setSelectedTree("NONE");
+                    maintainForm.getTreeSelectList().remove(treeRootName);
                 }
+            }
 
-            }// end if different
+
+
+        } catch (HospitalServiceException ex) {
+            vargs[0] = ex.getMessage();
+            result.reject("hospital.error", vargs, "Hospital Problem");
+        } catch (IOException ioerr) {
+            log.error("io error " + ioerr.getMessage());
+            vargs[0] = ioerr.getMessage();
+            result.rejectValue("name", "io.error", vargs,
+                    "default io error");
 
         }
-        if (submitFlag.equals(DELETE_LABEL)) {
-            
-            
-            
-            
-            
-            
-            
-            
-        }
-
         return new ModelAndView(DESTINATION_TILE, FORMBEAN_KEY, maintainForm);
 
     }
