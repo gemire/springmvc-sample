@@ -21,8 +21,9 @@
             </resource>
         </resources>
         <plugins>
-
-
+    
+   
+            
             <plugin>
                 <groupId>org.codehaus.mojo</groupId>
                 <artifactId>build-helper-maven-plugin</artifactId>
@@ -87,9 +88,36 @@
                 <groupId>org.mortbay.jetty</groupId>
                 <artifactId>maven-jetty-plugin</artifactId>
                 <version>6.1.26</version>
+                
+                
+                 <executions>
+                        <execution>
+                            <id>start-jetty</id>
+                            <phase>pre-integration-test</phase>
+                            <goals>
+                                <goal>run</goal>
+                            </goals>
+                            <configuration>
+                                <scanIntervalSeconds>0</scanIntervalSeconds>
+                                <daemon>true</daemon>
+                            </configuration>
+                        </execution>
+                        <execution>
+                            <id>stop-jetty</id>
+                            <phase>post-integration-test</phase>
+                            <goals>
+                                <goal>stop</goal>
+                            </goals>
+                        </execution>
+                    </executions>
+                
+                
+                
                 <configuration>
                     <contextPath>/neo4j</contextPath>
                     <scanIntervalSeconds>10</scanIntervalSeconds>
+                    <stopKey>foo</stopKey>
+                    <stopPort>9999</stopPort>
                     <scanTargetPatterns>
                         <scanTargetPattern>
                             <directory>src/main/webapp/WEB-INF</directory>
@@ -114,13 +142,45 @@
                 </configuration>
             </plugin>
 
-
+  <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-surefire-plugin</artifactId>
+                    <configuration>
+                        <!-- Skip the normal tests, we'll run the integration-tests only -->
+                        <skip>true</skip>
+                        <excludes>
+                        </excludes>
+                        <includes>
+                            <include>com/**</include>
+                        </includes>
+                    </configuration>
+                    <executions>
+                        <execution>
+                            <phase>integration-test</phase>
+                            <goals>
+                                <goal>test</goal>
+                            </goals>
+                            <configuration>
+                                <skip>false</skip>
+                                <includes>
+                                    <include>com/**</include>
+                                </includes>
+                                <excludes>
+                                </excludes>
+                            </configuration>
+                        </execution>
+                    </executions>
+                </plugin>
 
         </plugins>
     </build>
    
            <reporting>
                 <plugins>
+                    
+                
+                    
+                    
                         <plugin>
                                 <!-- http://maven.apache.org/plugins/maven-surefire-report-plugin/ -->
                                 <groupId>org.apache.maven.plugins</groupId>
@@ -131,6 +191,9 @@
                                 <!-- surefire uses a new jvm, MAVEN_OPTS are ignored, so you better set the memory options here -->
                                         <argLine>-Xmx512m -XX:MaxPermSize=256m</argLine>
                                 </configuration>
+                                
+                                
+                                
                         </plugin>
                         <plugin>
                                 <!-- http://maven.apache.org/plugins/maven-javadoc-plugin/ -->
@@ -213,6 +276,7 @@
         <org.aspectj-version>1.6.9</org.aspectj-version>
         <slf4j.version>1.7.5</slf4j.version>
         <neo4j.version>1.8</neo4j.version>
+        <selenium.version>2.32.0</selenium.version>
          
     </properties>
 
@@ -254,6 +318,23 @@
 
     <dependencies>
 
+      
+         <dependency>
+        <groupId>org.seleniumhq.selenium</groupId>
+        <artifactId>selenium-java</artifactId>
+        <version>${selenium.version}</version>
+         <scope>test</scope> 
+    </dependency> 
+    
+    <dependency>
+        <groupId>org.seleniumhq.selenium</groupId>
+        <artifactId>selenium-server</artifactId>
+        <version>${selenium.version}</version>
+        <scope>test</scope> 
+    </dependency>  
+       
+        
+        
           <dependency>
             <groupId>org.neo4j</groupId>
             <artifactId>neo4j-lucene-index</artifactId>
@@ -665,7 +746,7 @@
             <classifier>static-web</classifier>
             
             
-             <exclusions>
+            <exclusions>
                 <exclusion>
                     <artifactId>commons-logging</artifactId>
                     <groupId>commons-logging</groupId>
