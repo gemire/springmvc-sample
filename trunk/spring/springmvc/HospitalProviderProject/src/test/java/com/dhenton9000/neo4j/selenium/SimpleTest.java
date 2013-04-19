@@ -20,13 +20,31 @@ public class SimpleTest extends HospitalNeo4jSeleniumTestBase {
 
     private final Logger logger = LoggerFactory.getLogger(SimpleTest.class);
 
-    @Ignore
-    public void beforeTests() {
+        
+    
+    @Test
+    public void testGetName() {
         
         
-        String selectedNode = go().selectATree(2).getSelectedNodeName();
+        String selectedNode = go().selectATree(1).getSelectedNodeName();
         String formText = this.getFormText("maintainName");
         assertEquals(formText,selectedNode);
          
+    }
+    
+    @Test
+    public void testGetNodeId()
+    {
+        Long selectedNode = go().selectATree(1).getSelectedNodeId();
+        assertEquals(new Long(3),selectedNode);
+    }
+    
+    @Test
+    public void testAddANodeToCurrent()
+    {
+        Long rootId = go().selectATree("alpha").getSelectedNodeId();
+        String selectedNode = selectNode(rootId.intValue()+2).getSelectedNodeName();
+        String formText = this.getFormText("maintainName");
+        assertEquals(formText,selectedNode);
     }
 }

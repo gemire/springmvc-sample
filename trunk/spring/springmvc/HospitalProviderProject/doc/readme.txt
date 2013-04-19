@@ -79,3 +79,38 @@ function selectNode()
     $('#tree1').tree('selectNode', $('#tree1').tree('getNodeById', 3));
     
 }
+
+
+
+function selectByName(treeData)
+{
+   searchString = $('#nodeInformation').val();
+   console.debug(searchString);
+   var node = recurseName(treeData[0],searchString);
+    if (typeof node === "undefined") 
+    {
+		"-1";
+	}
+	else
+	{
+		return node.id;
+	}
+}
+
+function recurseName(item,searchString)
+{
+	 if (item == null)
+	    return null;
+	    
+	 if (item.name == searchString)
+	 {
+		 return item;
+	 }
+	 for (i=0;i<item.children.length;i++)
+	 {
+		return recurseName(item.children[i],searchString);
+		
+	 }
+	  
+	 
+}
