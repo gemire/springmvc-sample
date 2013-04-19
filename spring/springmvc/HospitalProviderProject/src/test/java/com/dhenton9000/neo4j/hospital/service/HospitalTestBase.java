@@ -11,6 +11,7 @@ import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Map;
+import org.apache.commons.io.FileUtils;
 import org.neo4j.graphdb.GraphDatabaseService;
 import org.neo4j.graphdb.factory.GraphDatabaseFactory;
 import org.neo4j.test.ImpermanentGraphDatabase;
@@ -154,6 +155,18 @@ public class HospitalTestBase {
         children.add(d);
         root.setChildren(children);
         return root;
+
+    }
+    
+    public static void blowAwayDb(String dbDir) throws IOException
+    {
+        File dbDirFile = new File(dbDir); 
+        
+       if (dbDirFile.exists() && dbDirFile.isDirectory())
+       {
+           
+           FileUtils.cleanDirectory(dbDirFile);
+       }    
 
     }
 
