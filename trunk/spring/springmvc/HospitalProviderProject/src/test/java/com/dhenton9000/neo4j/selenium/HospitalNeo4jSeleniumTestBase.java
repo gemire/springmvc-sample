@@ -4,19 +4,10 @@
  */
 package com.dhenton9000.neo4j.selenium;
 
-import com.dhenton9000.neo4j.hospital.HospitalDbMaker;
-import com.dhenton9000.neo4j.hospital.service.HospitalTestBase;
-import com.google.common.base.Charsets;
-import com.google.common.io.Resources;
-import java.io.IOException;
-import java.net.URL;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 import org.junit.BeforeClass;
-import org.openqa.selenium.By;
-import org.openqa.selenium.JavascriptExecutor;
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebElement;
+import org.openqa.selenium.*;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.support.ui.Select;
 import org.slf4j.Logger;
@@ -34,11 +25,12 @@ public class HospitalNeo4jSeleniumTestBase {
     protected static WebDriver driver;
     private static final String FIND_NODE_NAME_SCRIPT =
             "return $('#tree1').tree('getSelectedNode').name";
-     private static final String FIND_NODE_ID_SCRIPT =
+    private static final String FIND_NODE_ID_SCRIPT =
             "return $('#tree1').tree('getSelectedNode').id";
     private String UNDEFINED = "undefined";
     private String SELECT_NODE_SCRIPT_FORMAT = "$('#tree1').tree('selectNode', $('#tree1').tree('getNodeById', %d));";
     private String HOME_PAGE = "http://localhost:7070/neo4j";
+    private String GET_ID_FOR_NAME_FORMAT = "return getNodeIdForName('%s')";
 
     @BeforeClass
     public static void beforeClass() {
@@ -49,11 +41,22 @@ public class HospitalNeo4jSeleniumTestBase {
 
     }
 
+    protected int getNodeIdForName(String name) {
+        Object[] parms = new Object[1];
+        parms[0] = name;
+        String t = String.format(GET_ID_FOR_NAME_FORMAT, parms);
+        String id = (String) js.executeScript(t, parms);
+        int nodeId = -1;
+        try {
+            nodeId = Integer.parseInt(id);
+        } catch (Exception err) {
+        }
+        return nodeId;
+    }
+
     // create a tree
     // get the newly selected node remember its id
     //
-    
-    
     protected HospitalNeo4jSeleniumTestBase createTree(String treeName) {
 
         WebElement c = driver.findElement(By.id("createTreeName"));
@@ -62,15 +65,35 @@ public class HospitalNeo4jSeleniumTestBase {
         subButton.click();
         return this;
     }
-    
-    protected HospitalNeo4jSeleniumTestBase removeNode(String nodeName) {
 
-        
+    protected HospitalNeo4jSeleniumTestBase removeNode(String nodeName) {
+        int id = getNodeIdForName(nodeName);
+        selectNode(id);
+        WebElement delButton = driver.findElement(By.id("maintainNodeDelete"));
+        delButton.click();
         return this;
     }
-    
 
-    
+    protected String getErrorText() {
+        String errorText = null;
+
+        WebElement c = null;
+        try {
+            c = driver.findElement(By.className("error"));
+            
+        } catch (NoSuchElementException ex) {
+            return null;
+        }
+        if (c == null)
+        {
+            return null;
+        }
+        if (c.isDisplayed()) {
+            errorText = c.getText();
+        }
+        return errorText;
+    }
+
     protected String getFormText(String textboxId) {
         WebElement c = driver.findElement(By.id(textboxId));
         return c.getAttribute("value");
@@ -83,23 +106,21 @@ public class HospitalNeo4jSeleniumTestBase {
         return this;
     }
 
-    protected HospitalNeo4jSeleniumTestBase addNodeToCurrent(String newNodeLabel)
-    {
-        
+    protected HospitalNeo4jSeleniumTestBase addNodeToCurrent(String newNodeLabel) {
+
         WebElement c = driver.findElement(By.id("insertName"));
         c.sendKeys(newNodeLabel);
         WebElement subButton = driver.findElement(By.id("insertNodeSubmit"));
         subButton.click();
-        
+
         return this;
     }
-    
-    
-    
+
     /**
      * select a node via the jquery Tree
+     *
      * @param nodeId
-     * @return 
+     * @return
      */
     protected HospitalNeo4jSeleniumTestBase selectNode(int nodeId) {
         Object[] obj = new Object[0];
@@ -110,7 +131,8 @@ public class HospitalNeo4jSeleniumTestBase {
 
     /**
      * get the selected node from the jquery tree
-     * @return 
+     *
+     * @return
      */
     protected String getSelectedNodeName() {
         String name = null;
@@ -122,8 +144,8 @@ public class HospitalNeo4jSeleniumTestBase {
 
         return name;
     }
-    
-     protected Long getSelectedNodeId() {
+
+    protected Long getSelectedNodeId() {
         Long name = null;
         Object[] obj = new Object[0];
         name = (Long) js.executeScript(FIND_NODE_ID_SCRIPT, obj);

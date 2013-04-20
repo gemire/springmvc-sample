@@ -16,14 +16,39 @@
 <script>
     
    
-    
+    function getNodeIdForName(searchString)
+    {
+        var node = recurseName(treeData[0],searchString);
+        if (typeof node === "undefined") 
+        {
+            "-1";
+        }
+        else
+        {
+            return node.id+"";
+        }
+    }
+
+    function recurseName(item,searchString)
+    {
+        if (item == null)
+            return null;
+	    
+        if (item.name == searchString)
+        {
+            return item;
+        }
+        for (i=0;i<item.children.length;i++)
+        {
+            return recurseName(item.children[i],searchString);
+		
+        }	 
+    }
+   
+    /////////////////////////////////////////////////////  
     var treeData = [${maintainTreeFormBean.treeData}];
-
-
     $(function() {
         $('#tree1').tree({data: treeData});
- 
-
         $('#tree1').bind(
         'tree.select',
         function(event) {
@@ -52,10 +77,11 @@
     div.formBlock {
 
         border: 2px solid #59445A;
-       	padding: 5px 10px 5px 10px;
-        margin:   5px 10px 5px 10px;
+       	padding: 2px 5px 2px 5px;
+        margin:   2px 5px 5px 5px;
         font-weight: bold;
         display: block;
+        width: 400px;
 
     }
 </style>
@@ -63,18 +89,18 @@
 
 
 
-<div style="position:absolute;top: 50px; left: 10px">
+<div>
 
-    <form:form modelAttribute="maintainTreeFormBean"  >
-        
-            <s:bind path="*">
-                <c:if test="${status.error}">
-                    <div class="formBlock">
+    <form:form id="errorForm" modelAttribute="maintainTreeFormBean"  >
+
+        <s:bind path="*">
+            <c:if test="${status.error}">
+                <div class="formBlock" id="errorBlock">
                     <form:errors cssClass="error" />
-                    </div>
-                </c:if>
-            </s:bind>
-        
+                </div>
+            </c:if>
+        </s:bind>
+
 
     </form:form>
 
