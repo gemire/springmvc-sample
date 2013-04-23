@@ -81,7 +81,7 @@
         margin:   2px 5px 5px 5px;
         font-weight: bold;
         display: block;
-        width: 400px;
+        width: 550px;
 
     }
 </style>
@@ -173,7 +173,7 @@
 </div>
 
 
-<div style="position:absolute;top: 50px; left: 550px">
+<div style="position:absolute;top: 50px; left: 600px">
     <h3>Nodes</h3> 
     <div  id="tree1"></div>
 </div>

@@ -147,7 +147,7 @@
                     <artifactId>maven-surefire-plugin</artifactId>
                     <configuration>
                         <!-- Skip the normal tests, we'll run the integration-tests only -->
-                        <skip>true</skip>
+                        <skip>false</skip>
                         <excludes>
                         </excludes>
                         <includes>
