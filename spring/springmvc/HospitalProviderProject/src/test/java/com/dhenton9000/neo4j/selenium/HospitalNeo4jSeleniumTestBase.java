@@ -6,10 +6,13 @@ package com.dhenton9000.neo4j.selenium;
 
 import java.util.List;
 import java.util.concurrent.TimeUnit;
+import java.util.logging.Level;
 import org.junit.BeforeClass;
 import org.openqa.selenium.*;
 import org.openqa.selenium.firefox.FirefoxDriver;
+import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.Select;
+import org.openqa.selenium.support.ui.WebDriverWait;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -20,6 +23,7 @@ import org.slf4j.LoggerFactory;
 public class HospitalNeo4jSeleniumTestBase {
 
     protected static JavascriptExecutor js;
+    private static final int DEFAULT_DELAY = 1;
     private final static Logger logger =
             LoggerFactory.getLogger(HospitalNeo4jSeleniumTestBase.class);
     protected static WebDriver driver;
@@ -31,6 +35,7 @@ public class HospitalNeo4jSeleniumTestBase {
     private String SELECT_NODE_SCRIPT_FORMAT = "$('#tree1').tree('selectNode', $('#tree1').tree('getNodeById', %d));";
     private String HOME_PAGE = "http://localhost:7070/neo4j";
     private String GET_ID_FOR_NAME_FORMAT = "return getNodeIdForName('%s')";
+    private String SELECT_NODE_FOR_NAME = "$('#tree1').tree('selectNode', $('#tree1').tree('getNodeById', getNodeIdForName('%s')));";
 
     @BeforeClass
     public static void beforeClass() {
@@ -38,6 +43,7 @@ public class HospitalNeo4jSeleniumTestBase {
         driver.manage().timeouts().pageLoadTimeout(15, TimeUnit.SECONDS);
         driver.manage().timeouts().implicitlyWait(2, TimeUnit.SECONDS);
         js = (JavascriptExecutor) driver;
+
 
     }
 
@@ -60,6 +66,7 @@ public class HospitalNeo4jSeleniumTestBase {
     protected HospitalNeo4jSeleniumTestBase createTree(String treeName) {
 
         WebElement c = driver.findElement(By.id("createTreeName"));
+        c.clear();
         c.sendKeys(treeName);
         WebElement subButton = driver.findElement(By.id("createTreeSubmit"));
         subButton.click();
@@ -80,12 +87,11 @@ public class HospitalNeo4jSeleniumTestBase {
         WebElement c = null;
         try {
             c = driver.findElement(By.className("error"));
-            
+
         } catch (NoSuchElementException ex) {
             return null;
         }
-        if (c == null)
-        {
+        if (c == null) {
             return null;
         }
         if (c.isDisplayed()) {
@@ -109,10 +115,28 @@ public class HospitalNeo4jSeleniumTestBase {
     protected HospitalNeo4jSeleniumTestBase addNodeToCurrent(String newNodeLabel) {
 
         WebElement c = driver.findElement(By.id("insertName"));
+        c.clear();
         c.sendKeys(newNodeLabel);
         WebElement subButton = driver.findElement(By.id("insertNodeSubmit"));
         subButton.click();
 
+        return this;
+    }
+
+     protected HospitalNeo4jSeleniumTestBase pause() {
+    
+
+        new WebDriverWait(driver, 5)
+               .until(ExpectedConditions.presenceOfElementLocated(
+                By.id("tree1")));
+
+        return this;
+    }
+
+    protected HospitalNeo4jSeleniumTestBase selectNode(String nodeName) {
+        Object[] obj = new Object[0];
+        String t = String.format(SELECT_NODE_FOR_NAME, nodeName);
+        js.executeScript(t, obj);
         return this;
     }
 

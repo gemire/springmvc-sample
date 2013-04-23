@@ -19,7 +19,7 @@ public class SimpleTest extends HospitalNeo4jSeleniumTestBase {
 
     private final Logger logger = LoggerFactory.getLogger(SimpleTest.class);
 
-    @Test
+    @Ignore
     public void testGetName() {
 
 
@@ -29,25 +29,34 @@ public class SimpleTest extends HospitalNeo4jSeleniumTestBase {
 
     }
 
-    @Test
+    @Ignore
     public void testGetNodeId() {
         Long selectedNode = go().selectATree(1).getSelectedNodeId();
         assertEquals(new Long(1), selectedNode);
     }
 
-    @Test
+    @Ignore
     public void testGetNodeIdForName() {
         int t = go().selectATree("snarf").getNodeIdForName("b1");
         assertEquals(8, t);
     }
 
-    @Test
+    @Ignore
     public void testDelete() {
         go().createTree("monsoon").addNodeToCurrent("bratwurst").removeNode("bratwurst").removeNode("monsoon");
 
     }
 
+    
     @Test
+    public void testFindNodeByName()
+    {
+         
+    }
+    
+    
+    
+    @Ignore
     public void testFindErrors() {
         go().createTree("monsoon");
         String t = getErrorText();
@@ -59,7 +68,7 @@ public class SimpleTest extends HospitalNeo4jSeleniumTestBase {
 
     }
 
-    @Test
+    @Ignore
     public void testGetNodeIdForNameFail() {
         int t = go().selectATree("snarf").getNodeIdForName("gasbag");
         assertEquals(-1, t);
