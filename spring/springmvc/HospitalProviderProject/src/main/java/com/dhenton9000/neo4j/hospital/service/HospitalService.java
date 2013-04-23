@@ -99,12 +99,13 @@ public interface HospitalService {
     public Map<String,String> getInitialTreeMap();
 
     /**
-     * attach a new Division to an existing Divison as parentLabel
+     * attach a new Division to an existing Division as parentLabel
      * @param parentLabel
      * @param newDivisionLabel 
+     * @return the new Division's id
      * @throws when parent node is not found or new label is a duplicate
      */
-    public void attachDivisionbyLabels(String parentLabel, 
+    public Long attachDivisionbyLabels(String parentLabel, 
             String newDivisionLabel) throws HospitalServiceException;
     
     /**

@@ -141,8 +141,10 @@ public class MaintainTreeController {
         vargs[0] = "";
 
         try {
-            jService.attachDivisionbyLabels(parentLabel, newDivisionLabel);
+            Long itemValue = jService.attachDivisionbyLabels(parentLabel, newDivisionLabel);
             maintainForm.setTreeData(jService.structureToString(jService.buildDivisonFromDb(treeRootName)));
+            maintainForm.setSelectedNodeId(itemValue.toString());
+            
         } catch (HospitalServiceException ex) {
             log.error("Hospital error " + ex.getMessage());
             vargs[0] = ex.getMessage();

@@ -190,14 +190,13 @@ public class HospitalNeo4jDaoImpl implements HospitalNeo4jDao {
         Transaction tx = getNeo4jDb().beginTx();
         Index<Node> currentIndex = null;
         Iterable<Relationship> iterOut = n1.getRelationships(Direction.OUTGOING);
-        Iterator<Relationship> i2 =iterOut.iterator();
+        Iterator<Relationship> i2 = iterOut.iterator();
         int cc = 0;
-        if (i2.hasNext())
-        {
+        if (i2.hasNext()) {
             throw new HospitalServiceException("Cannot remove a Node with Children");
         }
-        
-        
+
+
         try {
             switch (type) {
                 case Division:
@@ -376,20 +375,22 @@ public class HospitalNeo4jDaoImpl implements HospitalNeo4jDao {
         return n1;
     }
 
-    public void attachDivisionbyLabels(String parentLabel,
+    public Long attachDivisionbyLabels(String parentLabel,
             String newDivisionLabel) throws HospitalServiceException {
         Node parentNode = getDivisionNode(parentLabel);
+        Long d = null;
         if (parentNode == null) {
             throw new HospitalServiceException("cannot find node '" + parentLabel + "'");
         }
         Transaction tx = getNeo4jDb().beginTx();
         try {
-            createAndAttachDivisionNode(parentNode, newDivisionLabel);
+            Node n = createAndAttachDivisionNode(parentNode, newDivisionLabel);
+            d = n.getId();
             tx.success();
         } finally {
             tx.finish();
         }
-
+        return d;
     }
 
     public Provider attachProvider(Division parent, Provider p)
@@ -516,4 +517,6 @@ public class HospitalNeo4jDaoImpl implements HospitalNeo4jDao {
             return items;
         }
     }
+
+    
 }

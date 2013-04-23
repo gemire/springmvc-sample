@@ -199,9 +199,10 @@ public interface HospitalNeo4jDao {
      * attach a new node to an existing parent
      * @param parentLabel
      * @param newDivisionLabel
+     * @return id of the new Division
      * @throws HospitalServiceException if parent doesn't exist, 
      * if request label is a duplicate, if requested label is for a Provider
      */
-    void attachDivisionbyLabels(String parentLabel,
+    Long attachDivisionbyLabels(String parentLabel,
             String newDivisionLabel) throws HospitalServiceException;
 }
