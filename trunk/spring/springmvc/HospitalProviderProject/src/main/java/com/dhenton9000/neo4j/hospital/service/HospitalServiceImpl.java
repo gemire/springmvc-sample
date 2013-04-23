@@ -100,12 +100,12 @@ public class HospitalServiceImpl implements HospitalService {
         return n;
     }
 
-    public void attachDivisionbyLabels(String parentLabel,
+    public Long attachDivisionbyLabels(String parentLabel,
             String newDivisionLabel) throws HospitalServiceException {
-        getHospitalDao().attachDivisionbyLabels(parentLabel, newDivisionLabel);
+        return getHospitalDao().attachDivisionbyLabels(parentLabel, newDivisionLabel);
     }
 
-    public void changeLabel(HospitalNode hospitalNode, String newLabel) 
+    public void changeLabel(HospitalNode hospitalNode, String newLabel)
             throws HospitalServiceException {
         getHospitalDao().changeNodeLabel(hospitalNode, newLabel);
     }
