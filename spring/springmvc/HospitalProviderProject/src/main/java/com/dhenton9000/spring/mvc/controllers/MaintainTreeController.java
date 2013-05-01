@@ -86,6 +86,8 @@ public class MaintainTreeController {
 
                     String valToUse = null;
                     if (oldName.equals(treeRootName)) {
+                        // you changed the root
+                        maintainForm.setTreeSelectList(jService.getInitialTreeMap());
                         valToUse = newLabel;
                     } else {
                         valToUse = treeRootName;
@@ -93,6 +95,8 @@ public class MaintainTreeController {
                     maintainForm.setTreeData(
                             jService.structureToString(jService.buildDivisonFromDb(valToUse)));
                     maintainForm.setSelectedTree(valToUse);
+                    
+                    
                 }// end if different
             }
             if (submitFlag.equals(DELETE_LABEL)) {
@@ -110,6 +114,8 @@ public class MaintainTreeController {
                 }
             }
 
+                maintainForm.setCreateTreeName("");
+                maintainForm.setInsertName("");
 
 
         } catch (HospitalServiceException ex) {
@@ -140,6 +146,7 @@ public class MaintainTreeController {
             Long itemValue = jService.attachDivisionbyLabels(parentLabel, newDivisionLabel);
             maintainForm.setTreeData(jService.structureToString(jService.buildDivisonFromDb(treeRootName)));
             maintainForm.setSelectedNodeId(itemValue.toString());
+             maintainForm.setInsertName("");
             
         } catch (HospitalServiceException ex) {
             log.error("Hospital error " + ex.getMessage());
@@ -182,6 +189,7 @@ public class MaintainTreeController {
                 maintainForm.setTreeData(jService.structureToString(newDiv));
                 maintainForm.setSelectedTree(name);
                 maintainForm.setMaintainName(name);
+                maintainForm.setCreateTreeName("");
                 maintainForm.setSelectedNodeId(newDiv.getId().toString());
                 maintainForm.setMaintainType(HospitalNeo4jDao.NODE_TYPE.Division.toString());
             }

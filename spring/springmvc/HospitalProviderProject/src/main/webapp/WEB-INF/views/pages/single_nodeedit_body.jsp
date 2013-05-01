@@ -71,6 +71,24 @@
         $('#tree1').tree('selectNode', node);
                 
     }); 
+    
+    
+    function confirmation(e) {
+        // I need to know which submit button was pressed.
+       if (e.value=='Delete'){
+        var answer = confirm("Confirm Delete")
+            if (answer){
+                    return true;
+            //Continue as intended
+            }
+            else{
+             return false;
+            }
+      }
+}
+    
+    
+    
 </script>
 
 <style>
@@ -147,8 +165,8 @@
                 <tr><th>Id:</th><td><span id="maintainId">${maintainTreeFormBean.selectedNodeId}</span></td></tr>
                 <tr><th>Type:</th><td><span id="maintainType">${maintainTreeFormBean.maintainType}</span></td></tr>
                 <tr><th>Name:</th><td><form:input path="maintainName" id="maintainName" /></td>
-                    <td><input type="submit"  class="myButton"  id="maintainNodeSave" name="submit" value="Save"></td> 
-                    <td><input type="submit"  class="myButton"  id="maintainNodeDelete" name="submit" value="Delete"></td>
+                    <td><input type="submit"  class="myButton" onclick="return confirmation(this);" id="maintainNodeSave" name="submit" value="Save"></td> 
+                    <td><input type="submit"  class="myButton" onclick="return confirmation(this);" id="maintainNodeDelete" name="submit" value="Delete"></td>
                 </tr>
             </table>
             <form:hidden path="selectedNodeId" id="maintainIdHidden2" />
@@ -173,7 +191,7 @@
 </div>
 
 
-<div style="position:absolute;top: 50px; left: 600px">
+<div style="position:absolute;top: 50px; left: 600px; width: 350px; height: 500px;overflow:auto">
     <h3>Nodes</h3> 
     <div  id="tree1"></div>
 </div>
