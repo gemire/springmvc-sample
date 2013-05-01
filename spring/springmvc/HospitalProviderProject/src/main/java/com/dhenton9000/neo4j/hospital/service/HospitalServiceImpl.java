@@ -66,8 +66,16 @@ public class HospitalServiceImpl implements HospitalService {
         return getHospitalDao().attachFullTree(d);
     }
 
-    public Division buildDivisonFromDb(String startDivisionLabel) {
-        return getHospitalDao().buildDivisionFromDb(startDivisionLabel);
+    public Division buildDivisonFromDb(String startDivisionLabel)
+            throws HospitalServiceException {
+        Division d = null;
+        try {
+            d = getHospitalDao().buildDivisionFromDb(startDivisionLabel);
+        } catch (Exception err) {
+            throw new HospitalServiceException(err.getMessage());
+        }
+
+        return d;
     }
 
     public Provider attachProvider(Division parent, Provider p)

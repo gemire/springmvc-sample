@@ -9,13 +9,9 @@ import com.dhenton9000.neo4j.hospital.json.HospitalNode;
 import com.dhenton9000.neo4j.hospital.json.HospitalServiceException;
 import com.dhenton9000.neo4j.hospital.service.HospitalNeo4jDao;
 import com.dhenton9000.neo4j.hospital.service.HospitalService;
-import com.dhenton9000.spring.mvc.model.FormBean;
 import com.dhenton9000.spring.mvc.model.MaintainTreeFormBean;
-import com.dhenton9000.spring.mvc.model.SelectTreeBean;
 import java.io.IOException;
-import java.util.HashMap;
 import java.util.Map;
-import java.util.logging.Level;
 import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.LogManager;
 import org.apache.log4j.Logger;
@@ -70,7 +66,7 @@ public class MaintainTreeController {
         try {
             nodeId = Long.parseLong(maintainForm.getSelectedNodeId());
         } catch (Exception err) {
-            vargs[0] = "You must select a node for deleting";
+            vargs[0] = "You must select a node for deleting or saving";
             result.reject("hospital.error", vargs, "Hospital Problem");
             return new ModelAndView(DESTINATION_TILE, FORMBEAN_KEY, maintainForm);
         }
@@ -218,7 +214,10 @@ public class MaintainTreeController {
             String newTreeData = jService.structureToString(newDiv);
             maintainForm.setTreeData(newTreeData);
         } catch (Exception ioerr) {
-            log.error("io error " + ioerr.getMessage());
+            log.warn("io error " + ioerr.getMessage());
+            maintainForm.setTreeData("");
+            maintainForm.setMaintainName("");
+            maintainForm.setSelectedNodeId("");
         }
 
         return new ModelAndView(DESTINATION_TILE, FORMBEAN_KEY, maintainForm);

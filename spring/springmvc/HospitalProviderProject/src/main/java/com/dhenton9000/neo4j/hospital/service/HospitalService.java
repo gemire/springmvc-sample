@@ -28,7 +28,8 @@ public interface HospitalService {
      * @param startDivisionLabel
      * @return an assembled division object
      */
-    Division buildDivisonFromDb(String startDivisionLabel);
+    Division buildDivisonFromDb(String startDivisionLabel)
+            throws HospitalServiceException;
 
     /**
      * given a proper JSON string, return the division object
