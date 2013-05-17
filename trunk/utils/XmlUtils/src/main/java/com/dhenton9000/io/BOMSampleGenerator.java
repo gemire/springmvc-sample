@@ -15,7 +15,7 @@ import java.util.logging.Logger;
  * @author dhenton
  */
 public class BOMSampleGenerator {
-    public static final String SAMPLE_TEXT = "alpha\nbeta\ngamma\n";
+    public static final String SAMPLE_TEXT = "alpha,beta,gamma\n1,2,3\n";
 
     public void saveFile(String file, String data,boolean addBOM) throws IOException {
 // Use UTF-8 with BOM mark format
