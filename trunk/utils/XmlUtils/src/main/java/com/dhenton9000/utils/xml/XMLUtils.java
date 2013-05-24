@@ -458,13 +458,13 @@ public final class XMLUtils {
          * null if not needed
 	 * @param cLoader the classloader, if null, 
          * defaults to system classloader
-         * 
+         * <pre>
          *  Validator validator = XMLUtils.createValidator("wsdl/mySchema.xsd",
          *    new ClasspathResolver("wsdl"), this.getClass().getClassLoader());
 	 *	StringReader stringReader = new StringReader(xmlToValidate);
 	 *	validator.validate(new StreamSource(stringReader));
 	 *	stringReader.close();
-         * 
+         * </pre>
          * If no errors thrown then the xmlToValidate is valid
          * 
          * @see{com.dhenton9000.utils.xml.ClassspathResolver}
