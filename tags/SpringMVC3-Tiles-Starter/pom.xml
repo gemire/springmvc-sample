@@ -2,13 +2,13 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
     <modelVersion>4.0.0</modelVersion>
-    <groupId>com.dhenton9000.neo4j.hierarchical</groupId>
-    <artifactId>HospitalProviderProject</artifactId>
+    <groupId>com.dhenton9000.spring.mvc3.tiles</groupId>
+    <artifactId>SpringMVC3-Tiles-Starter</artifactId>
     <version>1.0-SNAPSHOT</version>
     <packaging>war</packaging>
-    <name>HospitalProviderProject</name>
+    <name>SpringMVC3-Tiles-Starter</name>
  
-    <description>HospitalProviderProject</description>
+    <description>SpringMVC3-Tiles-Starter is a simple Tiles 2 Spring MVC3 skeleton app</description>
     <build>
         <sourceDirectory>${basedir}/src/main/java</sourceDirectory>
         <outputDirectory>${basedir}/src/main/webapp/WEB-INF/classes</outputDirectory>
