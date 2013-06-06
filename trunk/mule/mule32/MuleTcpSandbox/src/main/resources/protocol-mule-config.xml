@@ -4,14 +4,11 @@
       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
       xmlns:spring="http://www.springframework.org/schema/beans"
       xmlns:tcp="http://www.mulesoft.org/schema/mule/tcp"
-    xsi:schemaLocation="
+      xsi:schemaLocation="
         http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/3.2/mule.xsd
         http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.0.xsd   
         http://www.mulesoft.org/schema/mule/tcp http://www.mulesoft.org/schema/mule/tcp/3.2/mule-tcp.xsd">
   
-     <tcp:connector name="tcpConnector">
-		<tcp:length-protocol payloadOnly="true"/>
-    </tcp:connector>
     
        
     <spring:beans>
@@ -20,20 +17,25 @@
                      class="com.mule.example.tcp.Echo"  
                      scope="singleton" />
          
-    
+        <spring:bean id="protocol" 
+                     class="com.mule.example.tcp.AlphaProtocol"  
+                     scope="singleton" />
         
     </spring:beans>
    
-    
+    <tcp:connector name="protocolConnector" receiveBufferSize="64" serverSoTimeout="125" clientSoTimeout="125" sendBufferSize="64" >
+        <!-- <tcp:custom-protocol ref="protocol"   />  -->
+        <tcp:eof-protocol payloadOnly="false" />
+    </tcp:connector>
  
     <byte-array-to-object-transformer name="byteArrayToObject" />
 
-    <tcp:endpoint name="tcpendpoint" host="localhost" port="4444" connector-ref="tcpConnector" exchange-pattern="request-response" transformer-refs="byteArrayToObject" responseTransformer-refs="byteArrayToObject"/>
+    <tcp:endpoint name="protocolendpoint" host="localhost" port="4444" connector-ref="protocolConnector" exchange-pattern="request-response" transformer-refs="byteArrayToObject" responseTransformer-refs="byteArrayToObject"/>
 
     <flow name="Test">
-        <tcp:inbound-endpoint ref="tcpendpoint"/>
+        <tcp:inbound-endpoint ref="protocolendpoint"/>
         <component>
-            <singleton-object class="com.mule.example.tcp.Echo"/>
+            <spring-object bean="reporter" />
         </component>
     </flow>
 
