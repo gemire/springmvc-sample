@@ -27,7 +27,7 @@ public class MuleLauncher {
         try {
 
             SpringXmlConfigurationBuilder configBuilder = new SpringXmlConfigurationBuilder(
-                    "test-mule-config.xml");
+                    "protocol-mule-config.xml");
 
             MuleContext context = muleContextFactory.createMuleContext(configBuilder);
             context.start();

@@ -8,5 +8,11 @@ public class Echo
         data.setId(data.getId()+1);
         return data;
     }
+    
+    
+    public String echoString(String t)
+    {
+        return t;
+    }
 
 }

@@ -36,8 +36,8 @@ zzzzzzzzzzzzzzzzzzzzzzz
         </layout>
     </appender>
 
-    <logger name="com.dhenton9000">
-        <level value="INFO"/>
+    <logger name="com.mule.example.tcp">
+        <level value="DEBUG"/>
     </logger>
     <logger name="org.springframework">
         <level value="ERROR"/>
