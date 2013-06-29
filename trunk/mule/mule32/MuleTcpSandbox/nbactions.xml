@@ -9,4 +9,14 @@
                 <goal>antrun:run</goal>
             </goals>
         </action>
+        <action>
+            <actionName>CUSTOM-compile no tests</actionName>
+            <displayName>compile no tests</displayName>
+            <goals>
+                <goal>compile</goal>
+            </goals>
+            <properties>
+                <skipTests>true</skipTests>
+            </properties>
+        </action>
     </actions>

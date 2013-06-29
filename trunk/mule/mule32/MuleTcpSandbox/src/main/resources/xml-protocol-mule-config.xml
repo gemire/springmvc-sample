@@ -14,26 +14,26 @@
     <spring:beans>
      
         <spring:bean id="reporter" 
-                     class="com.mule.example.tcp.Echo"  
+                     class="com.dhenton9000.example.tcp.Echo"  
                      scope="singleton" />
-         
+        
         <spring:bean id="protocol" 
-                     class="com.mule.example.tcp.AlphaProtocol"  
+                     class="com.dhenton9000.example.tcp.MyXMLEOFMessageProtocol"  
                      scope="singleton" />
         
     </spring:beans>
    
-    <tcp:connector name="protocolConnector" receiveBufferSize="64" serverSoTimeout="125" clientSoTimeout="125" sendBufferSize="64" >
-        <!-- <tcp:custom-protocol ref="protocol"   />  -->
-        <tcp:eof-protocol payloadOnly="false" />
+    <tcp:connector name="xmlProtocolConnector" receiveBufferSize="640" serverSoTimeout="125" clientSoTimeout="125" sendBufferSize="64" >
+        <tcp:custom-protocol ref="protocol"   />  
+        <!-- <tcp:xml-eof-protocol  />  -->
     </tcp:connector>
  
     <byte-array-to-object-transformer name="byteArrayToObject" />
 
-    <tcp:endpoint name="protocolendpoint" host="localhost" port="4444" connector-ref="protocolConnector" exchange-pattern="request-response" transformer-refs="byteArrayToObject" responseTransformer-refs="byteArrayToObject"/>
+    <tcp:endpoint  name="xmlProtocolendpoint" host="localhost" port="4444" connector-ref="xmlProtocolConnector" exchange-pattern="request-response" transformer-refs="byteArrayToObject" responseTransformer-refs="byteArrayToObject"/>
 
     <flow name="Test">
-        <tcp:inbound-endpoint ref="protocolendpoint"/>
+        <tcp:inbound-endpoint ref="xmlProtocolendpoint"/>
         <component>
             <spring-object bean="reporter" />
         </component>
