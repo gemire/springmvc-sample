@@ -17,7 +17,7 @@
     <spring:beans>
      
         <spring:bean id="reporter" 
-                     class="com.mule.example.tcp.Echo"  
+                     class="com.dhenton9000.example.tcp.Echo"  
                      scope="singleton" />
          
     
