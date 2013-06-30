@@ -33,6 +33,7 @@ public class MyXMLEOFMessageProtocol extends AbstractByteProtocol {
 
     public MyXMLEOFMessageProtocol() {
         super(STREAM_OK);
+        this.setRethrowExceptionOnRead(true);
     }
 
     public Object read(InputStream is) throws IOException {
