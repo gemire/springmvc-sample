@@ -21,19 +21,23 @@ import org.slf4j.LoggerFactory;
 
 /**
  * Extend {@link org.mule.transport.tcp.protocols.XmlMessageProtocol} to
- * continue reading until either a new message or EOF is found.
+ * continue reading until either a new message or EOF is found. A new message
+ * is defined by an endtag (xmlPattern) in the form of '</endtag>' set in 
+ * the spring config.<br>
+ * The buffer size is also set in the config, as it needs to be somewhat less
+ * than a full message to force rereading the buffer
  */
 public class MyXMLEOFMessageProtocol extends AbstractByteProtocol {
 
-    private static final String XML_PATTERN = "<?xml";
-    private static final int READ_BUFFER_SIZE = 4096;
-    private static final int PUSHBACK_BUFFER_SIZE = READ_BUFFER_SIZE * 2;
     private ConcurrentMap pbMap = new ConcurrentHashMap();
     private static final Logger logger = LoggerFactory.getLogger(MyXMLEOFMessageProtocol.class);
 
+    private int readBufferSize = 50;
+    private String xmlPattern = null;
+    
     public MyXMLEOFMessageProtocol() {
         super(STREAM_OK);
-        this.setRethrowExceptionOnRead(true);
+         
     }
 
     public Object read(InputStream is) throws IOException {
@@ -41,7 +45,7 @@ public class MyXMLEOFMessageProtocol extends AbstractByteProtocol {
         if (null == pbis) {
             
             logger.debug("no pbis creating it ");
-            pbis = new PushbackInputStream(is, PUSHBACK_BUFFER_SIZE);
+            pbis = new PushbackInputStream(is, getReadBufferSize()*2);
             PushbackInputStream prev = (PushbackInputStream) pbMap.putIfAbsent(is, pbis);
             pbis = null == prev ? pbis : prev;
         }
@@ -55,9 +59,9 @@ public class MyXMLEOFMessageProtocol extends AbstractByteProtocol {
             // read until xml pattern is seen (and then pushed back) or no more data
             // to read. return all data as message
             logger.debug("in try ");
-            byte[] buffer = new byte[READ_BUFFER_SIZE];
+            byte[] buffer = new byte[getReadBufferSize()];
             logger.debug("in try 2");
-            StringBuffer message = new StringBuffer(READ_BUFFER_SIZE);
+            StringBuffer message = new StringBuffer(getReadBufferSize());
             int patternIndex = -1;
             boolean repeat;
             logger.debug("in try 4");
@@ -77,7 +81,7 @@ public class MyXMLEOFMessageProtocol extends AbstractByteProtocol {
                     logger.debug("message is now '" + message.toString() + "'");
                     // start search at 2nd character in buffer (index=1) to
                     // indicate whether we have reached a new document.
-                    patternIndex = message.toString().indexOf(XML_PATTERN, 1);
+                    patternIndex = message.toString().indexOf(getXmlPattern(), 1);
                     logger.debug("pattern index of message " + patternIndex);
                     repeat = isRepeat(patternIndex, len, pbis.available());
                     logger.debug("repeat is now " + repeat);
@@ -94,17 +98,15 @@ public class MyXMLEOFMessageProtocol extends AbstractByteProtocol {
                 // ignore the pushed-back characters in the return buffer
                 logger.debug("cleaning up collection");
                 pbis.unread(message.substring(patternIndex, message.length()).getBytes());
-                message.setLength(patternIndex);
+                message.setLength(patternIndex+getXmlPattern().length());
+                logger.debug("message is finally '"+message.toString()+"'");
             }
 
             // TODO encoding here, too...
             return nullEmptyArray(message.toString().getBytes());
 
         } finally {
-            // TODO - this doesn't seem very reliable, since loop above can end
-            // without EOF.  On the other hand, what else can we do?  Entire logic
-            // is not very dependable, IMHO.  XmlMessageEOFProtocol is more likely
-            // to be correct here, I think.
+             
 
             // clear from map if stream has ended
             if (len < 0) {
@@ -113,22 +115,7 @@ public class MyXMLEOFMessageProtocol extends AbstractByteProtocol {
         }
     }
 
-    /**
-     * Show we continue reading? This class, following previous implementations,
-     * only reads while input is saturated.
-     *
-     * @see XmlMessageEOFProtocol
-     *
-     * @param patternIndex The index of the xml tag (or -1 if the next message
-     * not found)
-     * @param len The amount of data read this loop (or -1 if EOF)
-     * @param available The amount of data available to read
-     * @return true if the read should continue
-     */
-    protected boolean isRepeatOne(int patternIndex, int len, int available) {
-        return patternIndex < 0 && len == READ_BUFFER_SIZE && available > 0;
-    }
-
+    
     /**
      * Continue reading til EOF or new document found
      *
@@ -141,4 +128,36 @@ public class MyXMLEOFMessageProtocol extends AbstractByteProtocol {
     protected boolean isRepeat(int patternIndex, int len, int available) {
         return patternIndex < 0;
     }
+
+    /**
+     * @return the xmlPattern
+     */
+    public String getXmlPattern() {
+         
+        return xmlPattern;
+    }
+
+    /**
+     * @param xmlPattern the xmlPattern to set
+     */
+    public void setXmlPattern(String xmlPattern) {
+         
+        this.xmlPattern = xmlPattern;
+    }
+
+    /**
+     * @return the readBufferSize
+     */
+    public int getReadBufferSize() {
+        return readBufferSize;
+    }
+
+    /**
+     * @param readBufferSize the readBufferSize to set
+     */
+    public void setReadBufferSize(int readBufferSize) {
+        this.readBufferSize = readBufferSize;
+    }
+
+    
 }
