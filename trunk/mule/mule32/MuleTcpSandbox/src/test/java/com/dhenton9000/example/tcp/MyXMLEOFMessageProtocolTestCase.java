@@ -33,14 +33,32 @@ public class MyXMLEOFMessageProtocolTestCase {
     public void testRead() throws Exception {
         final String sampleFileName = "test-samples/blockSample.xml";
 
-        String item =  getMessage(sampleFileName);
+        String item = getMessage(sampleFileName);
         InputStream is = ClassLoader.getSystemClassLoader().getResourceAsStream(sampleFileName);
         assertNotNull(is);
-       
+
         String t = null;
         Object out = protocol.read(is);
-        t = new String((byte[]) out );
-        assertEquals(item,t);
+        t = new String((byte[]) out);
+        assertEquals(item, t);
+
+    }
+
+    @Test
+    public void testReadMultiple() throws Exception {
+        final String sampleFileName = "test-samples/multiSample.xml";
+
+        String item = getMessage(sampleFileName);
+        InputStream is = ClassLoader.getSystemClassLoader().getResourceAsStream(sampleFileName);
+        assertNotNull(is);
+
+        String t = null;
+        for (int i = 0; i < 3; i++) {
+            Object out = protocol.read(is);
+            t = new String((byte[]) out);
+            logger.debug(t);
+        }
+       // assertEquals(item, t);
 
     }
 
