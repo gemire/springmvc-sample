@@ -10,8 +10,8 @@
             </goals>
         </action>
         <action>
-            <actionName>CUSTOM-compile no tests</actionName>
-            <displayName>compile no tests</displayName>
+            <actionName>CUSTOM-compile skip tests</actionName>
+            <displayName>compile skip tests</displayName>
             <goals>
                 <goal>compile</goal>
             </goals>

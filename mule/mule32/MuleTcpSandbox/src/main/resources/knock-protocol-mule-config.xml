@@ -14,16 +14,16 @@
     <spring:beans>
      
         <spring:bean id="reporter" 
-                     class="com.dhenton9000.example.tcp.Echo"  
+                     class="com.dhenton9000.example.tcp.knock.mule.KnockKnockUMO"  
                      scope="singleton" />
         
         <spring:bean id="protocol" 
-                     class="com.dhenton9000.example.tcp.MyXMLEOFMessageProtocol"  
+                     class="com.dhenton9000.example.tcp.knock.mule.MuleKnockKnockProtocol"  
                      scope="singleton" />
         
     </spring:beans>
    
-    <tcp:connector  keepSendSocketOpen="true"  name="xmlProtocolConnector" receiveBufferSize="6400" serverSoTimeout="2400" keepAlive="true" socketSoLinger="1500" clientSoTimeout="2500" sendBufferSize="6400" >
+    <tcp:connector  keepSendSocketOpen="true"  name="protocolConnector" receiveBufferSize="6400" serverSoTimeout="6400" keepAlive="true" socketSoLinger="1500" clientSoTimeout="6500" sendBufferSize="6400" >
         <service-overrides messageReceiver="org.mule.transport.tcp.MyTcpMessageReceiver"/>
         <tcp:custom-protocol ref="protocol"  rethrowExceptionOnRead="true" /> 
    
@@ -32,13 +32,15 @@
  
     <byte-array-to-object-transformer name="byteArrayToObject" />
 
-    <tcp:endpoint  responseTimeout="2500" name="xmlProtocolendpoint" host="localhost" port="4444" connector-ref="xmlProtocolConnector" exchange-pattern="request-response" transformer-refs="byteArrayToObject" responseTransformer-refs="byteArrayToObject"/>
+    <tcp:endpoint  responseTimeout="6500" name="protocolendpoint" host="localhost" port="4444" connector-ref="protocolConnector" exchange-pattern="request-response" transformer-refs="byteArrayToObject" responseTransformer-refs="byteArrayToObject"/>
 
     <flow name="Test">
-        <tcp:inbound-endpoint ref="xmlProtocolendpoint"/>
+        <tcp:inbound-endpoint ref="protocolendpoint"/>
+        
         <component>
             <spring-object bean="reporter" />
         </component>
+       
     </flow>
 
 </mule>

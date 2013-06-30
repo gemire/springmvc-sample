@@ -15,7 +15,7 @@ import org.mule.context.DefaultMuleContextFactory;
  *
  * @author dhenton
  */
-public class MuleLauncher {
+public class KnockKnockMuleLauncher {
 
     private static final Logger log = LogManager.getLogger(MuleLauncher.class);
 
@@ -27,7 +27,7 @@ public class MuleLauncher {
         try {
 
             SpringXmlConfigurationBuilder configBuilder = new SpringXmlConfigurationBuilder(
-                    "xml-protocol-mule-config.xml");
+                    "knock-protocol-mule-config.xml");
 
             MuleContext context = muleContextFactory.createMuleContext(configBuilder);
             context.start();

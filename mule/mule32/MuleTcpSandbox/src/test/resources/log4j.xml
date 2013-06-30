@@ -45,6 +45,9 @@ zzzzzzzzzzzzzzzzzzzzzzz
     <logger name="org.mule">
         <level value="INFO"/>
     </logger>
+    <logger name="org.mule.transport.tcp">
+        <level value="DEBUG"/>
+    </logger>
     <logger name="org.hibernate">
         <level value="WARN"/>
     </logger>
