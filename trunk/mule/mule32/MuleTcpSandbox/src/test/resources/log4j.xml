@@ -37,7 +37,7 @@ zzzzzzzzzzzzzzzzzzzzzzz
     </appender>
 
     <logger name="com.dhenton9000.example">
-        <level value="DEBUG"/>
+        <level value="INFO"/>
     </logger>
     <logger name="org.springframework">
         <level value="ERROR"/>
@@ -46,7 +46,7 @@ zzzzzzzzzzzzzzzzzzzzzzz
         <level value="INFO"/>
     </logger>
     <logger name="org.mule.transport.tcp">
-        <level value="DEBUG"/>
+        <level value="ERROR"/>
     </logger>
     <logger name="org.hibernate">
         <level value="WARN"/>
