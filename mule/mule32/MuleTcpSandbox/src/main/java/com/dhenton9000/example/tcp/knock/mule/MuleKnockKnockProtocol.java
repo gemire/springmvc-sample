@@ -21,12 +21,9 @@ import org.slf4j.LoggerFactory;
  */
 public class MuleKnockKnockProtocol extends AbstractByteProtocol {
 
-    private static final String XML_PATTERN = "<?xml";
     private static final int READ_BUFFER_SIZE = 4096;
-    private static final int PUSHBACK_BUFFER_SIZE = READ_BUFFER_SIZE * 2;
-    private ConcurrentMap pbMap = new ConcurrentHashMap();
     private static final Logger logger = LoggerFactory.getLogger(MuleKnockKnockProtocol.class);
-    private KnockKnockProtocol kkp = new KnockKnockProtocol();
+    // private KnockKnockProtocol kkp = new KnockKnockProtocol();
 
     public MuleKnockKnockProtocol() {
         super(STREAM_OK);
@@ -35,30 +32,36 @@ public class MuleKnockKnockProtocol extends AbstractByteProtocol {
 
     @Override
     public Object read(InputStream is) throws IOException {
-        logger.debug("in knock knock protocol");
+        logger.info("in knock knock protocol");
         boolean askedForBye = false;
         BufferedReader in = new BufferedReader(
                 new InputStreamReader(
                 is));
         String inputLine = null;
-        String outputLine = null;
+
 
 
         while ((inputLine = in.readLine()) != null) {
             logger.debug("inputline " + inputLine);
-            outputLine = kkp.processInput(inputLine);
+
             break;
 
         }
-        if (outputLine.equals("Bye") || inputLine.equals("Quit")) {
-            askedForBye = true;
+        if (inputLine != null) {
+            if (inputLine.equals("Bye") || inputLine.equals("Quit")) {
+                askedForBye = true;
 
+            }
         }
-
+        else
+        {
+            return null;
+        }
         if (askedForBye) {
+            logger.info("asked for good bye returning null");
             return null;
         } else {
-            return outputLine;
+            return inputLine;
         }
     }
 }

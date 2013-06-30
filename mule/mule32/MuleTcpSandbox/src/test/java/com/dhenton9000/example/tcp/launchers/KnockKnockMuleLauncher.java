@@ -17,7 +17,7 @@ import org.mule.context.DefaultMuleContextFactory;
  */
 public class KnockKnockMuleLauncher {
 
-    private static final Logger log = LogManager.getLogger(MuleLauncher.class);
+    private static final Logger log = LogManager.getLogger(KnockKnockMuleLauncher.class);
 
     public static void main(String[] args) {
 

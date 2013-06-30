@@ -18,7 +18,9 @@ public class KnockKnockUMO {
          private KnockKnockProtocol p = new KnockKnockProtocol();
     public String echoString(String t)
     {
-        logger.debug("@@@ Echo UMO "+t);
-        return t;
+        logger.info("@@@ Echo UMO "+t);
+        String z = p.processInput(t);
+        logger.info("@@@ processed "+z);
+        return z;
     }
 }

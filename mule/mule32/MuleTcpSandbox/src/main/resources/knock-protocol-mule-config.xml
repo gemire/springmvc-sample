@@ -4,8 +4,10 @@
       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
       xmlns:spring="http://www.springframework.org/schema/beans"
       xmlns:tcp="http://www.mulesoft.org/schema/mule/tcp"
+      xmlns:stdio="http://www.mulesoft.org/schema/mule/stdio"
       xsi:schemaLocation="
         http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/3.2/mule.xsd
+        http://www.mulesoft.org/schema/mule/stdio http://www.mulesoft.org/schema/mule/stdio/3.2/mule-stdio.xsd 
         http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.0.xsd   
         http://www.mulesoft.org/schema/mule/tcp http://www.mulesoft.org/schema/mule/tcp/3.2/mule-tcp.xsd">
   
@@ -22,8 +24,9 @@
                      scope="singleton" />
         
     </spring:beans>
-   
-    <tcp:connector  keepSendSocketOpen="true"  name="protocolConnector" receiveBufferSize="6400" serverSoTimeout="6400" keepAlive="true" socketSoLinger="1500" clientSoTimeout="6500" sendBufferSize="6400" >
+    <stdio:connector name="stdioConnector" promptMessage="Enter: "   />
+
+    <tcp:connector  keepSendSocketOpen="true"  name="protocolConnector" receiveBufferSize="6400" serverSoTimeout="0" keepAlive="true" socketSoLinger="1500" clientSoTimeout="0" sendBufferSize="6400" >
         <service-overrides messageReceiver="org.mule.transport.tcp.MyTcpMessageReceiver"/>
         <tcp:custom-protocol ref="protocol"  rethrowExceptionOnRead="true" /> 
    
@@ -32,15 +35,21 @@
  
     <byte-array-to-object-transformer name="byteArrayToObject" />
 
-    <tcp:endpoint  responseTimeout="6500" name="protocolendpoint" host="localhost" port="4444" connector-ref="protocolConnector" exchange-pattern="request-response" transformer-refs="byteArrayToObject" responseTransformer-refs="byteArrayToObject"/>
+    <tcp:endpoint  responseTimeout="0" name="protocolendpoint" host="localhost" port="4444" connector-ref="protocolConnector" exchange-pattern="request-response" transformer-refs="byteArrayToObject" responseTransformer-refs="byteArrayToObject"/>
 
-    <flow name="Test">
-        <tcp:inbound-endpoint ref="protocolendpoint"/>
+    <flow name="KnockKnockServerFlow">
+        <tcp:inbound-endpoint   name="knockKnockEndpoint" ref="protocolendpoint"/>
         
         <component>
             <spring-object bean="reporter" />
         </component>
-       
+       <stdio:outbound-endpoint system="OUT" connector-ref="stdioConnector"/>
+    </flow>
+    
+    <flow name="KnockKnockConsoleFlow">
+     <stdio:inbound-endpoint system="IN" connector-ref="stdioConnector"/>
+     <tcp:outbound-endpoint   ref="protocolendpoint" />
+    
     </flow>
 
 </mule>

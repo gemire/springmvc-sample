@@ -21,36 +21,32 @@ import org.slf4j.LoggerFactory;
 
 /**
  * Extend {@link org.mule.transport.tcp.protocols.XmlMessageProtocol} to
- * continue reading until either a new message or EOF is found. A new message
- * is defined by an endtag (xmlPattern) in the form of '</endtag>' set in 
- * the spring config.<br>
- * The buffer size is also set in the config, as it needs to be somewhat less
- * than a full message to force rereading the buffer
+ * continue reading until either a new message or EOF is found. A new message is
+ * defined by an endtag (xmlPattern) in the form of '</endtag>' set in the
+ * spring config.<br> The buffer size is also set in the config, as it needs to
+ * be somewhat less than a full message to force rereading the buffer
  */
 public class MyXMLEOFMessageProtocol extends AbstractByteProtocol {
 
     private ConcurrentMap pbMap = new ConcurrentHashMap();
     private static final Logger logger = LoggerFactory.getLogger(MyXMLEOFMessageProtocol.class);
-
     private int readBufferSize = 50;
     private String xmlPattern = "</message>";
-    
+
     public MyXMLEOFMessageProtocol() {
         super(STREAM_OK);
-         
+
     }
 
     public Object read(InputStream is) throws IOException {
         PushbackInputStream pbis = (PushbackInputStream) pbMap.get(is);
         if (null == pbis) {
-            
+
             logger.debug("no pbis creating it ");
-            pbis = new PushbackInputStream(is, getReadBufferSize()*2);
+            pbis = new PushbackInputStream(is, getReadBufferSize() * 2);
             PushbackInputStream prev = (PushbackInputStream) pbMap.putIfAbsent(is, pbis);
             pbis = null == prev ? pbis : prev;
-        }
-        else
-        {
+        } else {
             logger.debug("found stream in map");
         }
 
@@ -92,34 +88,33 @@ public class MyXMLEOFMessageProtocol extends AbstractByteProtocol {
                 }
 
             } while (repeat);
-            logger.debug("out of while loop with patternIndex of "+patternIndex);
+            logger.debug("out of while loop with patternIndex of " + patternIndex);
             if (patternIndex > 0) {
                 // push back the start of the next message and
                 // ignore the pushed-back characters in the return buffer
                 logger.debug("cleaning up collection");
-                logger.debug("pbis resetting\n'"+message.substring(patternIndex, message.length())+"'");
+                logger.debug("pbis resetting\n'" + message.substring(patternIndex, message.length()) + "'");
                 pbis.unread(message.substring(patternIndex, message.length()).getBytes());
-                logger.debug("message before set length\n'"+message.toString());
-                logger.debug("pattern index "+patternIndex);
-                logger.debug("xmlpattern length "+getXmlPattern().length());
-                logger.debug("set length to "+(patternIndex+getXmlPattern().length()));
-                 
-                message.setLength(patternIndex+getXmlPattern().length());
-                logger.debug("message after set length\n'"+message.toString());
-               
+                logger.debug("message before set length\n'" + message.toString());
+                logger.debug("pattern index " + patternIndex);
+                logger.debug("xmlpattern length " + getXmlPattern().length());
+                logger.debug("set length to " + (patternIndex + getXmlPattern().length()));
+
+                message.setLength(patternIndex + getXmlPattern().length());
+                logger.debug("message after set length\n'" + message.toString());
+
                 // now chop off the first item
-                if (message.toString().indexOf(getXmlPattern())== 0)
-                {
-                message = (new StringBuffer()).append(message.substring(getXmlPattern().length()));
+                if (message.toString().indexOf(getXmlPattern()) == 0) {
+                    message = (new StringBuffer()).append(message.substring(getXmlPattern().length()));
                 }
-                 logger.debug("message is finally '"+message.toString()+"'");
+                logger.debug("message is finally '" + message.toString() + "'");
             }
 
             // TODO encoding here, too...
             return nullEmptyArray(message.toString().getBytes());
 
         } finally {
-             
+
 
             // clear from map if stream has ended
             if (len < 0) {
@@ -128,7 +123,6 @@ public class MyXMLEOFMessageProtocol extends AbstractByteProtocol {
         }
     }
 
-    
     /**
      * Continue reading til EOF or new document found
      *
@@ -146,7 +140,7 @@ public class MyXMLEOFMessageProtocol extends AbstractByteProtocol {
      * @return the xmlPattern
      */
     public String getXmlPattern() {
-         
+
         return xmlPattern;
     }
 
@@ -154,7 +148,7 @@ public class MyXMLEOFMessageProtocol extends AbstractByteProtocol {
      * @param xmlPattern the xmlPattern to set
      */
     public void setXmlPattern(String xmlPattern) {
-         
+
         this.xmlPattern = xmlPattern;
     }
 
@@ -171,6 +165,4 @@ public class MyXMLEOFMessageProtocol extends AbstractByteProtocol {
     public void setReadBufferSize(int readBufferSize) {
         this.readBufferSize = readBufferSize;
     }
-
-    
 }
