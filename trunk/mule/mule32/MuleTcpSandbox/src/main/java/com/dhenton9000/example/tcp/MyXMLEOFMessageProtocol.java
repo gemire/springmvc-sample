@@ -97,9 +97,22 @@ public class MyXMLEOFMessageProtocol extends AbstractByteProtocol {
                 // push back the start of the next message and
                 // ignore the pushed-back characters in the return buffer
                 logger.debug("cleaning up collection");
+                logger.debug("pbis resetting\n'"+message.substring(patternIndex, message.length())+"'");
                 pbis.unread(message.substring(patternIndex, message.length()).getBytes());
+                logger.debug("message before set length\n'"+message.toString());
+                logger.debug("pattern index "+patternIndex);
+                logger.debug("xmlpattern length "+getXmlPattern().length());
+                logger.debug("set length to "+(patternIndex+getXmlPattern().length()));
+                 
                 message.setLength(patternIndex+getXmlPattern().length());
-                logger.debug("message is finally '"+message.toString()+"'");
+                logger.debug("message after set length\n'"+message.toString());
+               
+                // now chop off the first item
+                if (message.toString().indexOf(getXmlPattern())== 0)
+                {
+                message = (new StringBuffer()).append(message.substring(getXmlPattern().length()));
+                }
+                 logger.debug("message is finally '"+message.toString()+"'");
             }
 
             // TODO encoding here, too...
