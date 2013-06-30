@@ -2,7 +2,7 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.dhenton9000.example.tcp;
+package com.dhenton9000.example.tcp.launchers;
 
 import org.apache.log4j.*;
 import org.mule.DefaultMuleMessage;
@@ -15,7 +15,7 @@ import org.mule.context.DefaultMuleContextFactory;
  *
  * @author dhenton
  */
-public class KnockKnockMuleLauncher {
+public class MuleLauncher {
 
     private static final Logger log = LogManager.getLogger(MuleLauncher.class);
 
@@ -27,7 +27,7 @@ public class KnockKnockMuleLauncher {
         try {
 
             SpringXmlConfigurationBuilder configBuilder = new SpringXmlConfigurationBuilder(
-                    "knock-protocol-mule-config.xml");
+                    "xml-protocol-mule-config.xml");
 
             MuleContext context = muleContextFactory.createMuleContext(configBuilder);
             context.start();

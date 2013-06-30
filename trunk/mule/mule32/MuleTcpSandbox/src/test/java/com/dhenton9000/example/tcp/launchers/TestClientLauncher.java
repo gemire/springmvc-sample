@@ -2,7 +2,7 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.dhenton9000.example.tcp;
+package com.dhenton9000.example.tcp.launchers;
 
 import java.io.*;
 import java.net.Socket;
