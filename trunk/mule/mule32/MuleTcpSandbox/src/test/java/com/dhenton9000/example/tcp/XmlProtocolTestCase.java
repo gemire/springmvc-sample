@@ -56,7 +56,7 @@ public class XmlProtocolTestCase extends FunctionalTestCase {
     }
 
     @Test
-    public void testMultiBlock() throws Exception {
+    public void testMultiSample() throws Exception {
         MuleClient client = muleContext.getClient();
         String multiMessage = getMessage("test-samples/multiSample.xml");
         assertNotNull(message);
@@ -73,6 +73,29 @@ public class XmlProtocolTestCase extends FunctionalTestCase {
 
         // Assert id returned as expected (note: Echo increments id by 1)
         assertEquals(message, dataObject);
+    }
+    
+    
+    
+    @Test
+    public void testBlockItem() throws Exception
+    {
+        MuleClient client = muleContext.getClient();
+        String multiMessage = getMessage("test-samples/blockSample.xml");
+        assertNotNull(multiMessage);
+        MuleMessage result = client.send("xmlProtocolendpoint", multiMessage.getBytes(), null, -1);
+        
+        assertNotNull(result);
+        assertNull(result.getExceptionPayload());
+        assertFalse(result.getPayload() instanceof NullPayload);
+
+        // Assert that the expected payload has been received.
+        assertTrue(result.getPayload() instanceof String);
+
+        String dataObject = (String) result.getPayload();
+
+        // Assert id returned as expected (note: Echo increments id by 1)
+        assertEquals(multiMessage, dataObject);
     }
 
  

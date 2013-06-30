@@ -19,7 +19,10 @@
         
         <spring:bean id="protocol" 
                      class="com.dhenton9000.example.tcp.MyXMLEOFMessageProtocol"  
-                     scope="singleton" />
+                     scope="singleton">
+            <spring:property name="xmlPattern" value="&lt;/message&gt;" />
+            <spring:property name="readBufferSize" value="50" />
+        </spring:bean>
         
     </spring:beans>
    
