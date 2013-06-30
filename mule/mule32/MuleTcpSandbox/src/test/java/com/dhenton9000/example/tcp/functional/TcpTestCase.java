@@ -5,8 +5,9 @@
  * license, a copy of which has been included with this distribution in the
  * LICENSE.txt file.
  */
-package com.dhenton9000.example.tcp;
+package com.dhenton9000.example.tcp.functional;
 
+import com.dhenton9000.example.tcp.DataObject;
 import com.dhenton9000.example.tcp.DataObject;
 import org.junit.Test;
 import org.mule.api.MuleMessage;

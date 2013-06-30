@@ -5,7 +5,7 @@
  * license, a copy of which has been included with this distribution in the
  * LICENSE.txt file.
  */
-package com.dhenton9000.example.tcp;
+package com.dhenton9000.example.tcp.functional;
 
 import java.io.IOException;
 import java.io.InputStream;
