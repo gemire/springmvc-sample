@@ -33,7 +33,7 @@ public class MyXMLEOFMessageProtocol extends AbstractByteProtocol {
     private static final Logger logger = LoggerFactory.getLogger(MyXMLEOFMessageProtocol.class);
 
     private int readBufferSize = 50;
-    private String xmlPattern = null;
+    private String xmlPattern = "</message>";
     
     public MyXMLEOFMessageProtocol() {
         super(STREAM_OK);
