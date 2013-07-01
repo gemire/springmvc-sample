@@ -67,7 +67,7 @@ public class TestingServer implements Runnable {
                 }
                 else
                 {
-                    throw new RuntimeException("cannot create client socket");
+                    throw new RuntimeException("cannot create client socket "+ex.getMessage());
                 }
             }
 
