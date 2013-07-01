@@ -9,11 +9,15 @@
                 <goal>antrun:run</goal>
             </goals>
         </action>
-        <action>
-            <actionName>CUSTOM-compile skip tests</actionName>
-            <displayName>compile skip tests</displayName>
+         <action>
+            <actionName>CUSTOM-fast compile</actionName>
+            <displayName>fast compile</displayName>
             <goals>
-                <goal>compile</goal>
+                <goal>clean:clean</goal>
+                <goal>resources:resources</goal>
+                <goal>compiler:compile</goal>
+                <goal>resources:testResources</goal>
+                <goal>compiler:testCompile</goal>
             </goals>
             <properties>
                 <skipTests>true</skipTests>
