@@ -28,17 +28,19 @@ public class TestingServer implements Runnable {
     public static final String PREPEND = "I got:";
     public static final String EXIT = "EXIT";
     public static final String KILL = "KILL";
-    private int serverSOTimeout = 0;
+    private int serverSOTimeout = 500;
     private int bufferSize = 512;
     private int portNumber = 4444;
     private int maxConnections = 5;
     private boolean killRequested = false;
     private ArrayList<ThreadConnection> connections = new ArrayList<ThreadConnection>();
     private Thread serverThread;
+    private  ServerSocket serverSocket = null;
 
     @Override
-    public void run()  {
-        ServerSocket serverSocket = null;
+    public void run() {
+
+       
         try {
             serverSocket = new ServerSocket(getPortNumber());
             serverSocket.setSoTimeout(getServerSOTimeout());
@@ -53,26 +55,50 @@ public class TestingServer implements Runnable {
         while ((i++ < getMaxConnections()) || (getMaxConnections() == 0)) {
             logger.debug("in server while loop");
             ThreadConnection connection;
-             if (killRequested)
+            if (killRequested) {
                 break;
+            }
             Socket clientSocket = null;
             try {
                 clientSocket = serverSocket.accept();
             } catch (IOException ex) {
-                throw new RuntimeException("cannot create client socket");
+                if (killRequested)
+                {
+                    break;
+                }
+                else
+                {
+                    throw new RuntimeException("cannot create client socket");
+                }
             }
-           
+
             connection = new ThreadConnection(clientSocket);
             getConnections().add(connection);
             Thread t = new Thread(connection);
             t.start();
-            
+
         }
 
         if (i > getMaxConnections()) {
             throw new RuntimeException("connect max of " + getMaxConnections() + " exceeded");
         }
-        logger.debug("exit server loop with kill "+killRequested);
+        logger.debug("exit server loop with kill " + killRequested);
+
+        for (ThreadConnection conn : getConnections()) {
+            try {
+                conn.getClientSocket().close();
+                logger.debug("closed connection");
+            } catch (IOException ex) {
+                logger.warn("problems closing socket for threadConnection ");
+            }
+        }
+
+        try {
+            serverSocket.close();
+            logger.debug("closed server");
+        } catch (IOException ex) {
+            logger.error("problems closing socket");
+        }
 
     }
 
@@ -88,6 +114,19 @@ public class TestingServer implements Runnable {
         aThis.getClientSocket().close();
         aThis.setActive(false);
 
+    }
+    
+    public void resetServer() throws IOException
+    {
+        for (ThreadConnection conn: connections)
+        {
+            if (conn.getClientSocket().isClosed())
+            {
+                conn.getClientSocket().close();
+            }
+            
+        }
+        connections.clear();
     }
 
     public class ThreadConnection implements Runnable {
@@ -142,10 +181,10 @@ public class TestingServer implements Runnable {
                     logger.debug("in readline of thread connection");
                     input = input + line;
                     messages.add(line);
-                    logger.debug("got '"+line+"'");
-                    
+                    logger.debug("got '" + line + "'");
+
                     out.println(PREPEND + line);
-                    
+
 
                 }
 
@@ -155,7 +194,7 @@ public class TestingServer implements Runnable {
 
 
             } catch (IOException ioe) {
-                logger.error("IOException on socket listen: " + ioe);
+                logger.warn("IOException on socket listen: " + ioe);
 
             }
         }
@@ -198,7 +237,6 @@ public class TestingServer implements Runnable {
 
         }
     }
-    
 
     /**
      * @return the serverSOTimeout
@@ -256,22 +294,17 @@ public class TestingServer implements Runnable {
         this.maxConnections = maxConnections;
     }
 
-    public void startServer() throws Exception
-    {
+    public void startServer() throws Exception {
         serverThread = new Thread(this);
         serverThread.start();
     }
-    
-    
+
     public void killServer() throws Exception {
-         
-        
-        Socket kkSocket = new Socket("localhost", 4444);
-        PrintWriter out = new PrintWriter(kkSocket.getOutputStream(), true);
-        out.println(KILL);
-        killRequested = true;
-        out.close();
-        kkSocket.close();
-        
+
+
+          killRequested = true;
+         if (serverSocket != null)
+            serverSocket.close();
+ 
     }
 }

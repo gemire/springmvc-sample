@@ -12,9 +12,12 @@ import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.net.Socket;
 import org.junit.After;
+import org.junit.AfterClass;
 import org.junit.Before;
 import org.junit.Test;
 import static org.junit.Assert.*;
+import org.junit.BeforeClass;
+import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 /**
  *
@@ -23,21 +26,25 @@ import static org.junit.Assert.*;
 public class TestingServerTestCase {
 
     private static final Logger logger = LoggerFactory.getLogger(TestingServerTestCase.class);
-    private TestingServer server = null;
+    private static TestingServer server = null;
+    // private ClassPathXmlApplicationContext context = new ClassPathXmlApplicationContext("testServer-spring.xml");
 
-    @Before
-    public void beforeTest() throws Exception {
+    @BeforeClass
+    public static void beforeTest() throws Exception {
+        //server = context.getBean(TestingServer.class);
         server = new TestingServer();
         server.startServer();
+        logger.debug("!!!!! started server");
+
     }
 
     @Test
-    public void testSomething() throws Exception {
+    public void testSimpleCall() throws Exception {
         Socket kkSocket = null;
         PrintWriter out = null;
         BufferedReader in = null;
 
-
+        logger.debug("begin testSimpleCall");
         kkSocket = new Socket("localhost", server.getPortNumber());
         out = new PrintWriter(kkSocket.getOutputStream(), true);
         in = new BufferedReader(new InputStreamReader(kkSocket.getInputStream()));
@@ -46,25 +53,61 @@ public class TestingServerTestCase {
         out.flush();
         boolean didExit = false;
         while ((fromServer = in.readLine()) != null) {
-            assertEquals(EXIT,fromServer.toUpperCase().trim());
+
             int test = fromServer.toUpperCase().trim().indexOf(EXIT);
-            if (test > -1)
-            {
+            if (test > -1) {
                 didExit = true;
                 break;
-            }    
-          }
-        logger.info("client ending");
-        assertTrue(didExit);
+            }
+        }
         out.close();
         in.close();
         kkSocket.close();
-        
-        
+        logger.info("endSimpleCall");
+        assertTrue(didExit);
+        assertEquals(1, server.getConnections().size());
+        assertEquals(0, server.getConnections().get(0).getMessages().size());
+
+    }
+
+    @Test
+    public void testCallWithMessages() throws Exception {
+        Socket kkSocket = null;
+        PrintWriter out = null;
+        BufferedReader in = null;
+
+        logger.debug("begin testCallWithMessages");
+        kkSocket = new Socket("localhost", server.getPortNumber());
+        out = new PrintWriter(kkSocket.getOutputStream(), true);
+        in = new BufferedReader(new InputStreamReader(kkSocket.getInputStream()));
+        out.println("Manny");
+        out.println("Moe");
+        out.println("Jack");
+        out.flush();
+        Thread.sleep(100L);
+        out.close();
+        in.close();
+        kkSocket.close();
+        assertEquals(1, server.getConnections().size());
+        assertEquals(3, server.getConnections().get(0).getMessages().size());
+
     }
 
     @After
     public void afterTest() throws Exception {
+        logger.debug("begin after test");
+        try {
+            server.resetServer();
+        } catch (Exception err) {
+            logger.error("after server error " + err.getClass().getName() + " " + err.getMessage());
+        }
+        logger.debug("!!!!! reset server");
+        //Thread.sleep(100);
+    }
+    
+    @AfterClass
+    public static void afterClass() throws Exception
+    {
         server.killServer();
     }
 }
