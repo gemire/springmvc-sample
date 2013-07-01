@@ -27,9 +27,9 @@ public class TestingServer implements Runnable {
     public static final String PREPEND = "I got:";
     public static final String EXIT = "EXIT";
     public static final String KILL = "KILL";
-    private int serverSOTimeout = 500;
+    private int serverSOTimeout = 5500;
     private int bufferSize = 512;
-    private int portNumber = 4444;
+    private int portNumber = 4477;
     private int maxConnections = 5;
     private boolean killRequested = false;
     private ArrayList<ThreadConnection> connections = new ArrayList<ThreadConnection>();
@@ -108,10 +108,10 @@ public class TestingServer implements Runnable {
         return connections;
     }
 
-    protected void removeClient(ThreadConnection aThis) throws IOException {
+    protected void removeClient(ThreadConnection conn) throws IOException {
 
-        aThis.getClientSocket().close();
-        aThis.setActive(false);
+        conn.getClientSocket().close();
+        conn.setActive(false);
 
     }
     
