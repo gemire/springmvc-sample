@@ -14,6 +14,7 @@ import java.io.PrintWriter;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.ArrayList;
+import java.util.logging.Level;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -21,7 +22,7 @@ import org.slf4j.LoggerFactory;
  *
  * @author dhenton
  */
-public class TestingServer {
+public class TestingServer implements Runnable {
 
     private static final Logger logger = LoggerFactory.getLogger(TestingServer.class);
     public static final String PREPEND = "I got:";
@@ -33,8 +34,10 @@ public class TestingServer {
     private int maxConnections = 5;
     private boolean killRequested = false;
     private ArrayList<ThreadConnection> connections = new ArrayList<ThreadConnection>();
+    private Thread serverThread;
 
-    public void startServer() throws Exception {
+    @Override
+    public void run()  {
         ServerSocket serverSocket = null;
         try {
             serverSocket = new ServerSocket(getPortNumber());
@@ -42,26 +45,34 @@ public class TestingServer {
             serverSocket.setReceiveBufferSize(getBufferSize());
 
         } catch (IOException e) {
-            throw new IOException("Could not listen on port: " + getPortNumber() + " " + e.getMessage());
+            throw new RuntimeException("Could not listen on port: " + getPortNumber() + " " + e.getMessage());
 
         }
         int i = 0;
         // start handling connections
         while ((i++ < getMaxConnections()) || (getMaxConnections() == 0)) {
+            logger.debug("in server while loop");
             ThreadConnection connection;
-            Socket clientSocket = serverSocket.accept();
-            if (killRequested)
+             if (killRequested)
                 break;
+            Socket clientSocket = null;
+            try {
+                clientSocket = serverSocket.accept();
+            } catch (IOException ex) {
+                throw new RuntimeException("cannot create client socket");
+            }
+           
             connection = new ThreadConnection(clientSocket);
             getConnections().add(connection);
             Thread t = new Thread(connection);
             t.start();
+            
         }
 
         if (i > getMaxConnections()) {
             throw new RuntimeException("connect max of " + getMaxConnections() + " exceeded");
         }
-
+        logger.debug("exit server loop with kill "+killRequested);
 
     }
 
@@ -128,11 +139,13 @@ public class TestingServer {
 
                 // 'EXIT' means close connection
                 while ((line = in.readLine()) != null && !line.toUpperCase().equals(EXIT)) {
-
+                    logger.debug("in readline of thread connection");
                     input = input + line;
                     messages.add(line);
+                    logger.debug("got '"+line+"'");
+                    
                     out.println(PREPEND + line);
-
+                    
 
                 }
 
@@ -179,12 +192,13 @@ public class TestingServer {
     public static void main(String[] args) {
         try {
             logger.info("beginning test server");
-            (new TestingServer()).startServer();
+            (new TestingServer()).run();
         } catch (Exception ex) {
             logger.error("Main error: " + ex.getClass().getName() + " " + ex.getMessage());
 
         }
     }
+    
 
     /**
      * @return the serverSOTimeout
@@ -242,12 +256,22 @@ public class TestingServer {
         this.maxConnections = maxConnections;
     }
 
+    public void startServer() throws Exception
+    {
+        serverThread = new Thread(this);
+        serverThread.start();
+    }
+    
+    
     public void killServer() throws Exception {
+         
+        
         Socket kkSocket = new Socket("localhost", 4444);
         PrintWriter out = new PrintWriter(kkSocket.getOutputStream(), true);
         out.println(KILL);
         killRequested = true;
         out.close();
         kkSocket.close();
+        
     }
 }
