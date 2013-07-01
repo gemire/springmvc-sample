@@ -11,13 +11,13 @@ import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.net.Socket;
+import java.util.concurrent.CountDownLatch;
+import java.util.concurrent.TimeUnit;
 import org.junit.After;
 import org.junit.AfterClass;
-import org.junit.Before;
 import org.junit.Test;
 import static org.junit.Assert.*;
 import org.junit.BeforeClass;
-import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 /**
  *
@@ -27,12 +27,16 @@ public class TestingServerTestCase {
 
     private static final Logger logger = LoggerFactory.getLogger(TestingServerTestCase.class);
     private static TestingServer server = null;
+    private static final int DELAY = 1;
 
     @BeforeClass
     public static void beforeTest() throws Exception {
         server = new TestingServer();
         server.startServer();
-        logger.debug("!!!!! started server");
+              final CountDownLatch latch = new CountDownLatch(1);
+        latch.await(DELAY, TimeUnit.SECONDS);
+ 
+         logger.debug("!!!!! started server");
 
     }
 
@@ -102,10 +106,9 @@ public class TestingServerTestCase {
         logger.debug("!!!!! reset server");
         //Thread.sleep(100);
     }
-    
+
     @AfterClass
-    public static void afterClass() throws Exception
-    {
+    public static void afterClass() throws Exception {
         server.killServer();
     }
 }
