@@ -43,13 +43,13 @@ zzzzzzzzzzzzzzzzzzzzzzz
         <level value="ERROR"/>
     </logger>
     <logger name="org.mule">
-        <level value="INFO"/>
+        <level value="ERROR"/>
     </logger>
     <logger name="org.mule.transport.tcp">
         <level value="ERROR"/>
     </logger>
-    <logger name="org.hibernate">
-        <level value="WARN"/>
+    <logger name="org.apache">
+        <level value="ERROR"/>
     </logger>
 
     <root>

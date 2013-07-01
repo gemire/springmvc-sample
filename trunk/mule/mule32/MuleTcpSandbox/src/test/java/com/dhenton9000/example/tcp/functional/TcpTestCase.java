@@ -19,6 +19,7 @@ import static org.junit.Assert.*;
 
 public class TcpTestCase extends FunctionalTestCase
 {
+    @Override
     protected String getConfigResources()
     {
         return "tcp-mule-config.xml";
