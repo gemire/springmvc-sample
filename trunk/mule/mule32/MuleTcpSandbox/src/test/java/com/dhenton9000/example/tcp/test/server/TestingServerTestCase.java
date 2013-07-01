@@ -27,11 +27,9 @@ public class TestingServerTestCase {
 
     private static final Logger logger = LoggerFactory.getLogger(TestingServerTestCase.class);
     private static TestingServer server = null;
-    // private ClassPathXmlApplicationContext context = new ClassPathXmlApplicationContext("testServer-spring.xml");
 
     @BeforeClass
     public static void beforeTest() throws Exception {
-        //server = context.getBean(TestingServer.class);
         server = new TestingServer();
         server.startServer();
         logger.debug("!!!!! started server");
