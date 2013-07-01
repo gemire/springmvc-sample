@@ -4,22 +4,21 @@
  */
 package com.dhenton9000.example.tcp.test.server;
 
-import java.io.BufferedInputStream;
 import java.io.BufferedReader;
-import java.io.DataInputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.PrintStream;
-import java.io.PrintWriter;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.ArrayList;
-import java.util.logging.Level;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- *
+ * This class is a simple TCP server that will echo the lines
+ * that are sent to it, with the line terminating in '\n'
+ * It is set to be used in JUNIT tests. Various parameters can be
+ * set on the server prior to starting
  * @author dhenton
  */
 public class TestingServer implements Runnable {
