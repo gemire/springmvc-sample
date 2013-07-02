@@ -30,7 +30,7 @@ zzzzzzzzzzzzzzzzzzzzzzz
 
     <appender name="FILE" class="org.apache.log4j.FileAppender">
         <param name="threshold" value="DEBUG"/>
-        <param name="File" value="./mule-minimal.txt"/>
+        <param name="File" value="./mule-tcp.txt"/>
         <layout class="org.apache.log4j.PatternLayout">
             <param name="ConversionPattern" value="%t | %d | %-5p  | %c | %4L | %l| %m%n"/>
         </layout>
@@ -43,10 +43,10 @@ zzzzzzzzzzzzzzzzzzzzzzz
         <level value="ERROR"/>
     </logger>
     <logger name="org.mule">
-        <level value="ERROR"/>
+        <level value="INFO"/>
     </logger>
     <logger name="org.mule.transport.tcp">
-        <level value="ERROR"/>
+        <level value="DEBUG"/>
     </logger>
     <logger name="org.apache">
         <level value="ERROR"/>
@@ -55,7 +55,7 @@ zzzzzzzzzzzzzzzzzzzzzzz
     <root>
         <priority value="DEBUG"/>
         <appender-ref ref="CONSOLE"/>
-      <!--  <appender-ref ref="FILE"/> -->
+        <appender-ref ref="FILE"/> 
     </root>
 
 </log4j:configuration>

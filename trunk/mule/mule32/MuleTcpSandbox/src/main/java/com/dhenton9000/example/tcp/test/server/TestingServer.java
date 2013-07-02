@@ -39,7 +39,7 @@ public class TestingServer implements Runnable {
     @Override
     public void run() {
 
-       
+        logger.debug("starting run in server");
         try {
             serverSocket = new ServerSocket(getPortNumber());
             serverSocket.setSoTimeout(getServerSOTimeout());
@@ -300,7 +300,8 @@ public class TestingServer implements Runnable {
 
     public void killServer() throws Exception {
 
-
+        logger.debug("calling killserver");
+        
           killRequested = true;
          if (serverSocket != null)
             serverSocket.close();
