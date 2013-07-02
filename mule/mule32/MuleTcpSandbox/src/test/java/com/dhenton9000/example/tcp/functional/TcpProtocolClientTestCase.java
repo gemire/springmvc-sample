@@ -44,7 +44,7 @@ public class TcpProtocolClientTestCase extends FunctionalTestCase
    
 
     @Test
-    public void testMultipleSendsWithFailAfterExit() throws Exception {
+    public void testMultipleSends() throws Exception {
          
         MuleClient client = muleContext.getClient();
  
@@ -53,27 +53,31 @@ public class TcpProtocolClientTestCase extends FunctionalTestCase
         result = client.send("tcpProtocolEndpoint", message+"\n", null);
         assertEquals(PREPEND+message,(String) result.getPayload());
         
-        message = "EXIT";
-        result = client.send("tcpProtocolEndpoint", message+"\n", null);
-        assertEquals(message,(String) result.getPayload());
-       
+        
         logger.debug("beginning bonzo send");
         message = "bonzo";
         result = client.send("tcpProtocolEndpoint", message+"\n", null);
         logger.debug("finishing bonzo send");
+        
+        
+        message = "EXIT";
+        result = client.send("tcpProtocolEndpoint", message+"\n", null);
+        assertEquals(message,(String) result.getPayload());
+       
+        
         assertNotNull(result);
         assertNull(result.getExceptionPayload());
-        assertTrue(result.getPayload() instanceof NullPayload);
-        
+        assertFalse(result.getPayload() instanceof NullPayload);
+        assertEquals(message,(String) result.getPayload());
         
         
         TestingServer t = muleContext.getRegistry().lookupObject(TestingServer.class);
-        assertEquals(1,t.getConnections().get(0).getMessages().size()); 
+        assertEquals(2,t.getConnections().get(0).getMessages().size()); 
     }
     
     
     @Test
-    public void testMultipleSendsWithNewClient() throws Exception {
+    public void testCantSendAfterExit() throws Exception {
         MuleClient client = muleContext.getClient();
  
         String message = "ted";
@@ -87,16 +91,18 @@ public class TcpProtocolClientTestCase extends FunctionalTestCase
        
         client = muleContext.getClient();
          
+        logger.debug("beginning bonzo send");
         message = "bonzo";
         result = client.send("tcpProtocolEndpoint", message+"\n", null);
+        logger.debug("finishing bonzo send");
         
         assertNotNull(result);
         assertNull(result.getExceptionPayload());
-        assertFalse("got null from third call",result.getPayload() instanceof NullPayload);
-        assertEquals(message,(String) result.getPayload());
+        assertTrue("got something expecting null",result.getPayload() instanceof NullPayload);
+         
         
         TestingServer t = muleContext.getRegistry().lookupObject(TestingServer.class);
-        assertEquals(2,t.getConnections().get(0).getMessages().size()); 
+        assertEquals(1,t.getConnections().get(0).getMessages().size()); 
     }
     
 
