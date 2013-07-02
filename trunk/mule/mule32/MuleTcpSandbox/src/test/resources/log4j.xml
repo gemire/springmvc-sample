@@ -43,10 +43,10 @@ zzzzzzzzzzzzzzzzzzzzzzz
         <level value="ERROR"/>
     </logger>
     <logger name="org.mule">
-        <level value="INFO"/>
+        <level value="ERROR"/>
     </logger>
     <logger name="org.mule.transport.tcp">
-        <level value="DEBUG"/>
+        <level value="ERROR"/>
     </logger>
     <logger name="org.apache">
         <level value="ERROR"/>
