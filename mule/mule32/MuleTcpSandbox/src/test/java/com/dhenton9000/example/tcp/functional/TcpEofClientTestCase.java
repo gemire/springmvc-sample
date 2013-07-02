@@ -18,14 +18,14 @@ import static com.dhenton9000.example.tcp.test.server.TestingServer.*;
  *
  * @author dhenton
  */
-public class TcpClientUMOTestCase extends FunctionalTestCase
+public class TcpEofClientTestCase extends FunctionalTestCase
 {
     
 
     @Override
     protected String getConfigResources()
     {
-        return "tcp-mule-client-config.xml";
+        return "tcp-eof-client-config.xml";
     }
     
     
@@ -59,7 +59,7 @@ public class TcpClientUMOTestCase extends FunctionalTestCase
         
        // String dataObject = (String) result.getPayload();
 
-       // Assert id returned as expected (note: Echo increments id by 1)
+       // Assert id returned as expected  
        // assertEquals(PREPEND+message, dataObject);
         
         TestingServer t = muleContext.getRegistry().lookupObject(TestingServer.class);
