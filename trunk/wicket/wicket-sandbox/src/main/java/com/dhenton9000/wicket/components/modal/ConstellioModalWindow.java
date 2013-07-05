@@ -5,7 +5,7 @@ import org.apache.wicket.extensions.ajax.markup.html.modal.ModalWindow;
 @SuppressWarnings("serial")
 public class ConstellioModalWindow extends ModalWindow {
 	
-	public static int MODAL_HEIGHT = 500;
+    public static int MODAL_HEIGHT = 500;
     public int MODAL_WIDTH = 595;
     public static String CSS_MODAL = ModalWindow.CSS_CLASS_GRAY;
     

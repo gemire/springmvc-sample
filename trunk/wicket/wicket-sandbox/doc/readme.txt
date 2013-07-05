@@ -13,3 +13,9 @@ when running in netbeans using run/debug it will call tomcat
 setting up this url
 
 http://localhost:9090/wicket-app/
+
+Setting up the database:
+Use the scripts in the doc folder and check for  user:
+userId: jadmin
+username: John Admin
+password: admin

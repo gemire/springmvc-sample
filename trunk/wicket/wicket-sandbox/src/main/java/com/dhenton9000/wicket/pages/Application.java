@@ -76,9 +76,8 @@ public class Application extends WebApplication {
         // used for selenium testing
         //http://www.wijsmullerbros.nl/content/wicket-selenium
         getDebugSettings().setOutputComponentPath(true);
-
-
-
+        getDebugSettings().setOutputMarkupContainerClassName(true);
+        
         IComponentInstantiationListener spListener =
                 new SpringComponentInjector(this, applicationContext, true);
         this.getComponentInstantiationListeners().add(spListener);
