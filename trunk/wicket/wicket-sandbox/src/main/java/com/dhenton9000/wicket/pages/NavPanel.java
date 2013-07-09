@@ -4,6 +4,7 @@
  */
 package com.dhenton9000.wicket.pages;
 
+import com.dhenton9000.wicket.pages.ajax.AjaxFormPage;
 import com.dhenton9000.wicket.pages.data.ApplicationsUsers;
 import com.dhenton9000.wicket.pages.events.SimpleEventPage;
 import com.dhenton9000.wicket.pages.form.explore.ExploreFormPage;
@@ -62,6 +63,7 @@ public final class NavPanel extends TemplatePanel {
         add(new BookmarkablePageLink<Void>("exploreFormPageLink",ExploreFormPage.class)); 
         add(new BookmarkablePageLink<Void>("maintainRestaurantsTwoLink",MaintainRestaurantsTwo.class));
         add(new BookmarkablePageLink<Void>("onHoverPageLink",OnHoverPage.class));
+        add(new BookmarkablePageLink<Void>("ajaxFormPageLink",AjaxFormPage.class));
         // this isn't needed see Application.java for a mount 
         // that allows for a more normal url
         // add(new BookmarkablePageLink<Void>("refPageLink", ImageRefPage.class));

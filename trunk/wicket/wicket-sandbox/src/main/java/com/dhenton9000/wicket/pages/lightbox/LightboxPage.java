@@ -24,7 +24,7 @@ public final class LightboxPage extends TemplatePage {
 
     private static final JavaScriptResourceReference PIXDISPLAY_JS =
             new JavaScriptResourceReference(LightboxPage.class, "js/pixDisplay.js");
-    private static final JavaScriptResourceReference JQUERY_JS =
+    public static final JavaScriptResourceReference JQUERY_JS =
             new JavaScriptResourceReference(LightboxPage.class, "js/jquery-1.6.2.min.js");
     private static final CssResourceReference PIXDISPLAY_CSS =
             new CssResourceReference(LightboxPage.class, "css/pixDisplay.css");
