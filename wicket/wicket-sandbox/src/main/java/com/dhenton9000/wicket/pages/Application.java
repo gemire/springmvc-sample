@@ -6,6 +6,7 @@
 package com.dhenton9000.wicket.pages;
 
 import com.dhenton9000.wicket.pages.ajax.AjaxFormPage;
+import com.dhenton9000.wicket.pages.behaviors.BehaviorsPage;
 import com.dhenton9000.wicket.pages.data.ApplicationsUsers;
 import com.dhenton9000.wicket.pages.events.SimpleEventPage;
 import com.dhenton9000.wicket.pages.form.explore.ExploreFormPage;
@@ -13,7 +14,6 @@ import com.dhenton9000.wicket.pages.form.sample.CompoundUserPage;
 import com.dhenton9000.wicket.pages.form.sample.UserPage;
 import com.dhenton9000.wicket.pages.modal.ModalInputPage;
 import com.dhenton9000.wicket.pages.resources.ImageRefPage;
-import com.dhenton9000.wicket.pages.resources.ImageResourceReference;
 import com.dhenton9000.wicket.pages.repeater.FormInputWithList;
 import com.dhenton9000.wicket.pages.repeater.SimpleListViewRepeater;
 import com.dhenton9000.wicket.pages.security.AuthenticatedWebPage;
@@ -23,17 +23,21 @@ import com.dhenton9000.wicket.pages.maintenance.security.MaintainApplications;
 import com.dhenton9000.wicket.pages.maintenance.restaurant.two.MaintainRestaurantsTwo;
 import com.dhenton9000.wicket.pages.onhover.OnHoverPage;
 import com.dhenton9000.wicket.pages.lightbox.LightboxPage;
+import com.dhenton9000.wicket.pages.resources.ImageResourceReference;
 import com.dhenton9000.wicket.pages.security.SignOutPage;
+import java.util.TimeZone;
 import org.apache.wicket.RestartResponseAtInterceptPageException;
 import org.apache.wicket.Session;
 import org.apache.wicket.application.IComponentInstantiationListener;
 import org.apache.wicket.authorization.Action;
 import org.apache.wicket.authorization.IAuthorizationStrategy;
-import org.apache.wicket.markup.html.link.BookmarkablePageLink;
+import org.apache.wicket.markup.html.PackageResourceGuard;
 import org.apache.wicket.protocol.http.WebApplication;
+import org.apache.wicket.protocol.http.request.WebClientInfo;
 import org.apache.wicket.request.Request;
 import org.apache.wicket.request.Response;
 import org.apache.wicket.request.component.IRequestableComponent;
+import org.apache.wicket.request.cycle.RequestCycle;
 import org.apache.wicket.spring.injection.annot.SpringComponentInjector;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -73,12 +77,16 @@ public class Application extends WebApplication {
     public void init() {
         super.init();
 
+        getMarkupSettings().setStripWicketTags(true);
+        getResourceSettings().setPackageResourceGuard(new PackageResourceGuard());
+
+        getDebugSettings().setOutputMarkupContainerClassName(true);
 
         // used for selenium testing
         //http://www.wijsmullerbros.nl/content/wicket-selenium
         getDebugSettings().setOutputComponentPath(true);
         getDebugSettings().setOutputMarkupContainerClassName(true);
-        
+
         IComponentInstantiationListener spListener =
                 new SpringComponentInjector(this, applicationContext, true);
         this.getComponentInstantiationListeners().add(spListener);
@@ -132,7 +140,11 @@ public class Application extends WebApplication {
 
     @Override
     public Session newSession(Request request, Response response) {
-        return new SandboxSession(request);
+        SandboxSession session = new SandboxSession(request);
+        WebClientInfo info = new WebClientInfo(RequestCycle.get());
+        info.getProperties().setTimeZone(TimeZone.getDefault());
+        session.setClientInfo(info);
+        return session;
     }
 
     private void mountPages() {
@@ -140,10 +152,10 @@ public class Application extends WebApplication {
         Class pageArray[] = {
             HomePage.class, UserPage.class, ExploreFormPage.class,
             CompoundUserPage.class, LightboxPage.class, MaintainRestaurantsTwo.class,
-            ApplicationsUsers.class, SimpleEventPage.class,OnHoverPage.class,
+            ApplicationsUsers.class, SimpleEventPage.class, OnHoverPage.class,
             SimpleListViewRepeater.class, MaintainApplications.class,
-            AjaxFormPage.class,
-            FormInputWithList.class, ModalInputPage.class,SignIn.class,SignOutPage.class
+            AjaxFormPage.class, BehaviorsPage.class,
+            FormInputWithList.class, ModalInputPage.class, SignIn.class, SignOutPage.class
         };
 
         for (Class page : pageArray) {

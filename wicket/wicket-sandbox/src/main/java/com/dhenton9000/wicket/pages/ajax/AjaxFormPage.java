@@ -4,9 +4,8 @@
  */
 package com.dhenton9000.wicket.pages.ajax;
 
-import com.dhenton9000.wicket.dao.impl.ApplicationsDaoImpl;
 import com.dhenton9000.wicket.pages.TemplatePage;
-import com.dhenton9000.wicket.pages.lightbox.LightboxPage;
+import static com.dhenton9000.wicket.resources.ResourceMarker.JQUERY_JS;
 import java.util.ArrayList;
 import java.util.List;
 import org.apache.wicket.behavior.AbstractAjaxBehavior;
@@ -19,10 +18,8 @@ import org.apache.wicket.request.cycle.RequestCycle;
 import org.apache.wicket.request.handler.TextRequestHandler;
 import org.apache.wicket.util.string.StringValue;
 import com.google.gson.Gson;
-import org.apache.wicket.markup.head.CssReferenceHeaderItem;
 import org.apache.wicket.markup.head.IHeaderResponse;
 import org.apache.wicket.markup.head.JavaScriptReferenceHeaderItem;
-import static  com.dhenton9000.wicket.pages.lightbox.LightboxPage.*;
 import org.apache.wicket.request.resource.JavaScriptResourceReference;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
