@@ -7,6 +7,7 @@ import org.mule.api.MuleContext;
 import org.mule.config.spring.SpringXmlConfigurationBuilder;
 import org.mule.context.DefaultMuleContextFactory;
 import org.apache.log4j.*;
+import org.mule.api.config.ConfigurationBuilder;
 /**
  *
  * @author dhenton

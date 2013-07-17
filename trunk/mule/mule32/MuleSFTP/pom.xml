@@ -168,6 +168,9 @@
 
     <!-- Mule Dependencies -->
     <dependencies>
+        
+     
+        
         <dependency>
             <groupId>org.mule</groupId>
             <artifactId>mule-core</artifactId>
@@ -187,6 +190,18 @@
             
             <scope>provided</scope>
         </dependency>
+     
+
+         <dependency>
+            <groupId>org.mule.modules</groupId>
+            <artifactId>mule-module-spring-config</artifactId>
+            <version>${mule.version}</version>
+            <scope>provided</scope>
+           
+        </dependency>
+
+        
+        
         <dependency>
             <groupId>com.jcraft</groupId>
             <artifactId>jsch</artifactId>
@@ -200,14 +215,7 @@
             <version>1.2.12</version>
             <scope>provided</scope>
         </dependency>
-        <dependency>
-            <groupId>org.mule.modules</groupId>
-            <artifactId>mule-module-spring-config</artifactId>
-            <version>${mule.version}</version>
-            <scope>provided</scope>
-           
-        </dependency>
-
+       
         <!-- Mule Transports  -->
        
         
