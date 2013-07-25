@@ -2,7 +2,7 @@
 <div>
 This demonstrates the Spring MVC error handling. Entering 'bozo'
 into the form will throw a BozoException which is handled via a method
-that is annoted with '@ExceptionHandler' and has the BozoException as
+that is annotated with '@ExceptionHandler' and has the BozoException as
 the single parameter of the method.
 
 </div>

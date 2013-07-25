@@ -32,8 +32,8 @@
         });
 
         request.done(function(coffee) {
-            
-            alert('success: brand: '+coffee.brand+ " quantity: "+coffee.quantity);
+
+            alert('success: brand: ' + coffee.brand + " quantity: " + coffee.quantity);
         }
         );
         request.error(function(jqXHR, textStatus, errorThrown) {
@@ -72,16 +72,26 @@
 
 <h3>Processing Jason on the Server via jQuery and JSON.js</h3>
 
-<table border="0" cellpadding="4" cellspacing="4">
-    <tr><td width="150px" colspan="3">
-            <button class="btn large btn-primary" onclick="getJSON()">Get Json</button></td></tr>
-    <tr><td width="150px"><button class="btn large  btn-primary" onclick="getCoffee()">Get Coffee</button></td><td width="100px">Brand</td><td><input type="text" id="brandGet" name="brand" size="20"/></td></tr>
-</table>  
+<div class="row">
+    <div class="offset2 row-separate">
+        <button class="btn large btn-primary" onclick="getJSON()">Get Json</button>
+    </div>
+</div>
 
- 
-    <table border="0" cellpadding="4" cellspacing="4">
-        <tr><td width="150px"><button class="btn large  btn-primary"  onclick="sendCoffee()">Send Coffee</button></td><td width="100px">
-                Brand</td><td><input type="text" id="brandPost" name="brand" size="20"/></td></tr>
-    </table>
- 
+<div class="row">
+    <div class="offset2 row-separate">
+        
+         Brand: <input type="text" id="brandGet" name="brand" class="input-medium" size="20"/>
+         <button class="btn large  btn-primary" onclick="getCoffee()">Get Coffee</button>
+    </div>
+</div> 
+
+<div class="row">
+    <div class="offset2 row-separate">
+        
+        Brand: <input type="text" id="brandPost" class="input-medium"  name="brand" size="20"/>
+         <button class="btn large  btn-primary"  onclick="sendCoffee()">Send Coffee</button>
+    </div>
+</div> 
+
 

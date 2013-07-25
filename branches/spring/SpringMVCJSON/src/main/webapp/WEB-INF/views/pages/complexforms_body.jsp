@@ -3,7 +3,15 @@
 <%@ taglib uri="http://www.springframework.org/tags/form" prefix="form" %>
 <c:url var="baseURL" value="/app/" />
 
-
+<style>
+    .error
+    {
+        font-weight: bold;
+        color: red;
+        border: thin solid red;
+    }
+    
+</style>
 
 		
 		<script type="text/javascript">
@@ -34,7 +42,7 @@
 
 
 		 
-		<form:form id="form" method="post" modelAttribute="formBean" action="${baseURL}complex/forms/addForm">
+		<form:form id="form" method="post" cssClass="form-horizontal" modelAttribute="formBean" action="${baseURL}complex/forms/addForm">
 			<div>
 				
 		  		<c:if test="${not empty message}">
@@ -140,7 +148,7 @@
 				<label><form:radiobutton path="subscribeNewsletter" value="false" /> No</label>
 			</fieldset>
 	
-			<p><button style="font-size:18px" class="myButton" type="submit">Submit</button></p>
+			<p><button class="btn-large btn-primary" type="submit">Submit</button></p>
 		</form:form>
 		
 	

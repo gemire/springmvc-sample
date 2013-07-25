@@ -7,8 +7,8 @@
 
 <p></p>
 
-<form:form method="post" modelAttribute="errorInfo"  action="${baseURL}errors/demo/submitError">
-<form:input path="errorValue" /> <input class="myButton" type="submit" value="Submit Error" />
+<form:form method="post" cssClass="form-horizontal"  modelAttribute="errorInfo"  action="${baseURL}errors/demo/submitError">
+<form:input path="errorValue" /> <input class="btn-larg btn-primary" type="submit" value="Submit Error" />
 </form:form>
 
 
@@ -18,7 +18,7 @@
 	<c:when test="${not empty resultMessage}">
 
 
-		<div class="resultsClass">
+		<div class="row span12">
 			${resultMessage}
 		</div>
 	</c:when>
