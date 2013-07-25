@@ -18,7 +18,7 @@ been added to illustrate handling server issues.
 
 <div>
 The corresponding java code that handles these actions can be found in
-<code>com.dhenton9000.spring.mvc.controllers.jquery</code><br/><code>MainJQueryController</code>
+<code>com.dhenton9000.spring.mvc.controllers.jquery MainJQueryController</code>
 and 
-<code>com.dhenton9000.spring.mvc.controllers.jquery</code><br/><code>LinkedListsRequestController</code>
+<code>com.dhenton9000.spring.mvc.controllers.jquery LinkedListsRequestController</code>
 </div>

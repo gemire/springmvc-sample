@@ -6,5 +6,5 @@ the username and password to use are 'admin' and 'admin'
 
 <div>
 The corresponding java code that handles these actions can be found in
-<code>com.dhenton9000.spring.mvc.controllers.</code><br/><code>SecurityController</code>
+<code>com.dhenton9000.spring.mvc.controllers.</code> <code>SecurityController</code>
 </div>

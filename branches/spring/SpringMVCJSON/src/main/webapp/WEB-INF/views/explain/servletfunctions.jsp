@@ -9,5 +9,5 @@ extracting request variables, and writing cookies.
 
 <div>
 The corresponding java code that handles these actions can be found in
-<code>com.dhenton9000.spring.mvc.controllers.</code><br/><code>ServletFunctionsController</code>
+<code>com.dhenton9000.spring.mvc.controllers.</code> <code>ServletFunctionsController</code>
 </div>

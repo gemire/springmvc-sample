@@ -11,10 +11,10 @@ to the outputstream.
 
 <div>
 The corresponding java code that handles these actions can be found in
-<code>com.dhenton9000.spring.mvc.controllers.</code><br/><code>StandardArgumentsController</code>
+<code>com.dhenton9000.spring.mvc.controllers.</code> <code>StandardArgumentsController</code>
 </div>
 
 <div>
 Navigation to this page is via
-<code>com.dhenton9000.spring.mvc.controllers.</code><br/><code>ViewsController</code>
+<code>com.dhenton9000.spring.mvc.controllers.</code> <code>ViewsController</code>
 </div>

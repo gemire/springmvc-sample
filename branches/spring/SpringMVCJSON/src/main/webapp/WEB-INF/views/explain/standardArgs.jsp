@@ -10,5 +10,5 @@ the request as a inputstream or as individual request variables.
 
 <div>
 The corresponding java code that handles these actions can be found in
-<code>com.dhenton9000.spring.mvc.controllers.</code><br/><code>StandardArgumentsController</code>
+<code>com.dhenton9000.spring.mvc.controllers.</code> <code>StandardArgumentsController</code>
 </div>

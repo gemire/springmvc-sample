@@ -10,5 +10,5 @@ http://www.eslinstructor.net/smartupdater3/</a>
 a random number when requested.</div>
 <div>
 The corresponding java code that handles these actions can be found in
-<code>com.dhenton9000.spring.mvc.controllers.jquery</code><br/><code>MainJQueryController</code>
+<code>com.dhenton9000.spring.mvc.controllers.jquery MainJQueryController</code>
 </div> 

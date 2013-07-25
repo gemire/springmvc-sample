@@ -13,5 +13,5 @@ file
 
 <div>
 The corresponding java code that handles these actions can be found in
-<code>com.dhenton9000.spring.mvc.controllers.</code><br/><code>MessageConvertersController</code>
+<code>com.dhenton9000.spring.mvc.controllers.</code> <code>MessageConvertersController</code>
 </div>

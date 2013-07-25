@@ -16,5 +16,5 @@ tiles functionality.
 
 <div>
 The corresponding java code that handles these actions can be found in
-<code>com.dhenton9000.spring.mvc.controllers.</code><br/><code>ErrorDemoController</code>
+<code>com.dhenton9000.spring.mvc.controllers.</code> <code>ErrorDemoController</code>
 </div>

@@ -11,5 +11,5 @@ to limit an email function to only POSTS as a security measure.
 
 <div>
 The corresponding java code that handles these actions can be found in
-<code>com.dhenton9000.spring.mvc.controllers.</code><br/><code>GetPostController</code>
+<code>com.dhenton9000.spring.mvc.controllers.</code> <code>GetPostController</code>
 </div>

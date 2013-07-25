@@ -12,7 +12,7 @@ from SpringSource. Try submitting the following errors:
 </ol>
 
 The validation is using JSR303 in the class 
-<code>com.dhenton9000.spring.mvc.model.</code><br/><code>FormBean</code>. The
+<code>com.dhenton9000.spring.mvc.model.</code> <code>FormBean</code>. The
 bozo error is programmatic and is contained in the controller code, via a call to a
 validator object, in the style of older Spring MVC validation. The messages displayed
 come from the message properties file following the conventions for mapping error
@@ -24,5 +24,5 @@ types to messages.
 
 <div>
 The corresponding java code that handles these actions can be found in
-<code>com.dhenton9000.spring.mvc.controllers.</code><br/><code>ComplexFormController</code>
+<code>com.dhenton9000.spring.mvc.controllers.</code> <code>ComplexFormController</code>
 </div>

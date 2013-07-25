@@ -4,43 +4,77 @@
 <%@ taglib uri="/WEB-INF/tld/spring.tld" prefix="spring"%>
 <%@ taglib uri="/WEB-INF/tld/spring-form.tld" prefix="form"%>
 
-			
+
 <c:url var="baseURL" value="/app/" />
 
 
-<h3><a href="#">Home</a></h3>
-	<div class="menuDiv">
-		<a href="<c:out value="${baseURL}home.html"/>">Home</a>
-		<a href="<c:out value="${baseURL}credits"/>">Credits</a>
-	</div>
-<h3><a href="#">Spring MVC 3</a></h3>
-	<div class="menuDiv">
-		<a href="<c:out value="${baseURL}jsondemo.html"/>">JSON Demo</a>
-		<a href="<c:out value="${baseURL}getpostdemo/home.html"/>">Get Post	Demo</a>
-		<a href="<c:out value="${baseURL}data/standard/home.html"/>">Standard
-			Arguments</a>
-		<a href="<c:out value="${baseURL}messageconverters/home.html"/>">Processing Input</a>
-		<a href="<c:out value="${baseURL}views/html.html" />">Simple Html via JSP</a>
-		<a href="<c:out value="${baseURL}tags/demo/home" />">Tag Demo</a>
-		<a href="<c:out value="${baseURL}views/nontile.html" />">Non Tile Demos</a>
-		<a href="<c:out value="${baseURL}complex/forms/home" />">Complex Forms</a>
-		<a href="<c:out value="${baseURL}servlet/functions/home" />">Basic Servlet Functions</a>
-	<!--  not supported by the google app engine as it uses java.awt.*
-	  
-		<a href="<c:out value="${baseURL}image/generator/home" />">Image Generator</a>
-	
-	-->
-		<a href="<c:out value="${baseURL}errors/demo/home" />">Error Handling</a>
-		<a href="<c:out value="${baseURL}security/demo/home" />">Security Demo</a>
+<div class="navbar navbar-fixed-top navbar-inverse">
+
+    <div class="navbar-inner">
+        <div class="container-fluid">
+
+            <a class="brand" href="${baseURL}home.html">Spring MVC3 Demonstration</a>
+
+            <div class="nav-collapse">
+                <!-- credits -->
+                <ul class="nav pull-right">
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">Credits <b class="caret"></b></a>
+                        <ul class="dropdown-menu">
+                            <li><a href="<c:out value="${baseURL}home.html"/>">Home</a></li>
+                            <li><a href="<c:out value="${baseURL}credits"/>">Credits</a></li>
+                        </ul>
+                    </li>
+                </ul> 
+
+
+                <ul class="nav pull-left">
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">Spring MVC 3 <b class="caret"></b></a>
+                        <ul class="dropdown-menu">
+                            <li><a href="<c:out value="${baseURL}jsondemo.html"/>">JSON Demo</a></li>
+                            <li><a href="<c:out value="${baseURL}getpostdemo/home.html"/>">Get Post Demo</a></li>
+                            <li><a href="<c:out value="${baseURL}data/standard/home.html"/>">Standard Arguments</a></li>
+                            <li><a href="<c:out value="${baseURL}messageconverters/home.html"/>">Processing Input</a></li>
+                            <li><a href="<c:out value="${baseURL}views/html.html" />">Simple Html via JSP</a></li>
+                            <li><a href="<c:out value="${baseURL}tags/demo/home" />">Tag Demo</a></li>
+                            <li><a href="<c:out value="${baseURL}views/nontile.html" />">Non Tile Demos</a></li>
+                            <li><a href="<c:out value="${baseURL}complex/forms/home" />">Complex Forms</a></li>
+                            <li><a href="<c:out value="${baseURL}servlet/functions/home" />">Basic Servlet Functions</a></li>
+                            <!--  not supported by the google app engine as it uses java.awt.* 
+                            <li><a href="<c:out value="${baseURL}image/generator/home" />">Image Generator</a></li>
+                            -->
+                            <li><a href="<c:out value="${baseURL}errors/demo/home" />">Error Handling</a></li>
+                            <li><a href="<c:out value="${baseURL}security/demo/home" />">Security Demo</a></li>                 
+                        </ul>
+                    </li>
+                </ul> 
+
+                <ul class="nav pull-left">
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">JQuery Demos <b class="caret"></b></a>
+                        <ul class="dropdown-menu">
+
+
+                            <li><a href="<c:out value="${baseURL}jquery/demos/linkedLists" />">Linked Lists</a></li>
+                            <li><a href="<c:out value="${baseURL}jquery/demos/jsonData" />">JSON Data</a></li>
+                            <li><a href="<c:out value="${baseURL}jquery/demos/findingElements" />">Selections</a></li>
+                            <li><a href="<c:out value="${baseURL}jquery/demos/positioning" />">Positioning</a></li>
+                            <li><a href="<c:out value="${baseURL}jquery/demos/pixDisplay" />">JQuery Lightbox</a></li>
+                            <li><a href="<c:out value="${baseURL}jquery/demos/periodicUpdater" />">Periodic Updater</a></li>
+                            <li><a href="<c:out value="${baseURL}jquery/demos/formSamples" />">Form Samples</a></li>
+                            <li><a href="<c:out value="${baseURL}jquery/formSubmission/home" />">Ajax Form Submission</a></li>
+
+
+
+                        </ul>
+                    </li>
+                </ul> 
+            </div>
+        </div>
+    </div>
 </div>
-<h3><a href="#">JQuery Demos</a></h3>
-<div class="menuDiv">
-		<a href="<c:out value="${baseURL}jquery/demos/linkedLists" />">Linked Lists</a>
-		<a href="<c:out value="${baseURL}jquery/demos/jsonData" />">JSON Data</a>
-		<a href="<c:out value="${baseURL}jquery/demos/findingElements" />">Selections</a>
-		<a href="<c:out value="${baseURL}jquery/demos/positioning" />">Positioning</a>
-		<a href="<c:out value="${baseURL}jquery/demos/pixDisplay" />">JQuery Lightbox</a>
-		<a href="<c:out value="${baseURL}jquery/demos/periodicUpdater" />">Periodic Updater</a>
-		<a href="<c:out value="${baseURL}jquery/demos/formSamples" />">Form Samples</a>
-		<a href="<c:out value="${baseURL}jquery/formSubmission/home" />">Ajax Form Submission</a>
-</div>
+
+
+
+

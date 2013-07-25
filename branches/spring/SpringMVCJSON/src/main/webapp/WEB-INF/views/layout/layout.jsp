@@ -6,10 +6,10 @@
 
 <%
 
- 
 
-String path = request.getContextPath();
-String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.getServerPort()+path+"/";
+
+    String path = request.getContextPath();
+    String basePath = request.getScheme() + "://" + request.getServerName() + ":" + request.getServerPort() + path + "/";
 
 %>
 
@@ -18,92 +18,113 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 
 
 <html>
-	<head>
-		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-		<title><tiles:insertAttribute name="title" ignore="true" />
-		</title>
-		 
-		<base href="<%= basePath %>" />
-		<script type="text/javascript"  src="js/jquery-1.6.2.min.js"></script>
- 		<script type="text/javascript"  src="js/json.min.js"></script>
-		<script type="text/javascript"	src="js/jquery-ui-1.8.15.custom.min.js"></script>
-		<script type="text/javascript"	src="js/jquery.cookie.js"></script>
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <title><tiles:insertAttribute name="title" ignore="true" />
+        </title>
 
-		<script>
-		var $dialog = null;
-		
-		$(document).ready(function() {
-			
-			var cookieOptions = {
-				    domain: '<%= request.getServerName() %>',
-				    path: '/',
-				    expiresAt: new Date( 3011, 1, 1 ),
-				    secure: false
-				  };
-			
-			var cookieName = 'navAccordion';
-	        var activeIndex = $.cookie(cookieName);
-	        activeIndex = parseInt(activeIndex, 10);
-	        if (isNaN(activeIndex)) {
-	            activeIndex = 0; //set to index for desired default open item
-	        }
-			
-			
-			
-			$dialog = $('#explainPanel').dialog({ height: 350,
-                width: 400,
-                modal: false,
-                position: 'center',
-                autoOpen:false,
-                title:'Page Explanation',
-                overlay: { opacity: 0.5, background: 'black'}
-                });
-			
-			$( "#menu" ).accordion({
-					fillspace: true,
-					collapsible: true,
-		            autoHeight: false,
-		            active: activeIndex,
-		            change: function (e, ui) {
-		                $.cookie(cookieName, $(this).find('h3').index(ui.newHeader[0]),cookieOptions);
-		            }				
-					});
-		
-		});
-		
-		function explain()
-		{
-			$dialog.dialog('open');	
-		
-		}
-		</script>
+        <base href="<%= basePath%>" />
 
 
-		<link rel="stylesheet" href="css/newmain.css" type="text/css"></link>
-		<link rel="stylesheet" href="css/jquery-ui-1.8.15.custom.css" type="text/css"></link>
+        <link rel="stylesheet" href="css/bootstrap.min.css" media="screen">
+        <link rel="stylesheet" href="css/bootstrap-responsive.min.css"  media="screen">
 
-	</head>
-	<body>
-		<div id="header">
-			<tiles:insertAttribute name="header" />
-		</div>
 
-		<div id="menu">
-			<tiles:insertAttribute name="menu" />
-		</div>
-		<div id="body">
-			<div class="column header1" id="subTitle">
-				<tiles:getAsString name="subTitle" />
-				<button id="helpButton" class="myButton itemContainer" onclick="explain()">Explain</button>
-			</div>
-			<div id="innerBody">
-			<tiles:insertAttribute name="body" />  
-			</div>
-		</div>
-		<div id="explainPanel"><tiles:insertAttribute name="explainPanel"/></div>
-		<div id="footer">
-			<tiles:insertAttribute name="footer" />
-		</div>
-	</body>
-	
+        <style type='text/css'>
+            body {
+                background-color: #cccccc;
+                padding: 40px;
+                background: url('<%= basePath%>img/background.png')
+            }
+            #mainContainer {
+                background-color: white;
+                padding: 15px;
+
+            }
+        </style>
+
+
+
+    </head>
+    <body>
+
+        <div id="mainContainer" class='container'>
+
+
+
+            <div class="header1" id="header">
+
+
+
+                <div class='row-fluid'>
+                    <div class='pull-left'>
+                        <h1>
+                            <small> 
+                                <tiles:getAsString name="subTitle" />
+                            </small>
+                        </h1>
+                    </div>
+
+                    <div class='pull-right'>
+
+
+                        <a href="#explainModal" role="button" class="btn large btn-info" 
+                           data-toggle="modal">Explain</a>
+
+
+                    </div>
+                </div>               
+
+
+            </div>
+
+            <div id="menu">
+                <tiles:insertAttribute name="menu" />
+            </div>
+
+            <div id='content' class='row-fluid'>
+                <div class='span12 main'>
+                    <tiles:insertAttribute name="body" />
+                </div>
+            </div>
+
+            <div id="explainModal" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="explainModalLabel" aria-hidden="true">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                    <h3 id="explainModalLabel">Explanation:</h3>
+                </div>
+                <div style="max-height: 200px" class="modal-body">
+
+                    <tiles:insertAttribute name="explainPanel"/>
+                </div>
+                <div class="modal-footer">
+                    <button class="btn btn-primary" data-dismiss="modal" aria-hidden="false">Close</button>
+
+                </div>
+            </div>
+
+
+            <tiles:insertAttribute name="footer" />
+
+
+        </div><!-- end mainContainer -->
+        <script src="http://code.jquery.com/jquery.js"></script>
+        <script src="js/jquery.form.js"></script>
+        <script src="js/json.min.js"></script> 
+         <script src="js/bootstrap.min.js"></script>   
+        <script>
+            var $dialog = null;
+
+            $(document).ready(function() {
+
+
+            });
+
+
+
+        </script>
+
+
+    </body>
+
 </html>

@@ -10,5 +10,5 @@ echoed on the page.
 
 <div>
 The corresponding java code that handles these actions can be found in
-<code>com.dhenton9000.spring.mvc.controllers.</code><br/><code>ViewsController</code>
+<code>com.dhenton9000.spring.mvc.controllers.</code> <code>ViewsController</code>
 </div>
