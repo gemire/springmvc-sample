@@ -114,13 +114,13 @@
 			</tr>
 			<tr>
 				<td colspan="2">
-					<input  class="myButton"  type="submit" value="Submit" />
+					<input  class="btn btn-primary"  type="submit" value="Submit" />
 				</td>
 			</tr>
 		</table>
 	</form>
 	<br />
-	<button class="myButton" onclick="clearText()">Clear text area</button>
+	<button class="btn btn-primary" onclick="clearText()">Clear text area</button>
 	<hr />
 
 	<p>
