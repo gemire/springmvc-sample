@@ -1,16 +1,17 @@
 <SCRIPT type=text/javascript src="js/formSamplesCode.js"></SCRIPT>
-<LINK rel=stylesheet type=text/css href="css/formSampleStyles.css"></LINK>
 <SCRIPT>
     $(document).ready(function() {
 
         documentReady();
+//        $('#fred').addClass("text-error");
     });
 </script>
 
-<div class="row offset1 span4">
+<div class="row offset1 span8">
 
     <h3>Sample of Setting select via jQuery</h3>
-
+</div>
+<div class="row offset1 span4">
     <div class="form-stacked">
         <select id="mySelect" multiple="multiple">
             <option value="1">First</option>
@@ -25,9 +26,6 @@
 
 <div class="row offset1 span10">
 
-
-
-
     <h3>Exclusive Radio Selections</h3>
 
     <div class="well">
@@ -36,29 +34,29 @@
 
 
 
-    <div>
+    <div class="form-inline">
         <table class="table table-bordered table-striped">
 
             <tr>
 
 
-                <th width='25%'>The Hawker Hurricanes</th>
+                <th width='35%'>The Hawker Hurricanes</th>
                 <td id="team0">
 
 
-                    <div class="form-horizontal">
+
                     <input name="team0" id="team0_0"  value="0"  type="radio"><label for="team0_0">John</label>
                     <input name="team0" id="team0_1"  value="1"  type="radio"><label for="team0_1">Mary</label>
                     <input name="team0" id="team0_2"  value="2"  type="radio"><label for="team0_2">Sam</label>
                     <input name="team0" id="team0_3"  value="3"  type="radio"><label for="team0_3">Elmo</label>
-                    </div>
+
 
 
                 </td>
             </tr>
 
             <tr>
-                <th width='25%'>The Herman Melvilles</th>
+                <th width='35%'>The Herman Melvilles</th>
                 <td id="team1">
 
                     <input name="team1" id="team1_0"  value="0"  type="radio"><label for="team1_0">John</label>
@@ -70,7 +68,7 @@
             </tr>
 
             <tr>
-                <th width='25%'>The Union Jacks</th>
+                <th width='35%'>The Union Jacks</th>
                 <td id="team2">
 
                     <input name="team2" id="team2_0"  value="0"  type="radio"><label for="team2_0">John</label>
@@ -83,7 +81,7 @@
 
 
             <tr>
-                <th width='25%'>The Mighty Quinns</th>
+                <th width='35%'>The Mighty Quinns</th>
                 <td id="team3">
 
                     <input name="team3" id="team3_0"  value="0"  type="radio"><label for="team3_0">John</label>
