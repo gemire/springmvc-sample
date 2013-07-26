@@ -23,7 +23,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 <c:choose>
     <c:when test="${empty param.message}"></c:when>
     <c:otherwise>
-       <div class="error" id="login-error"><%= request.getParameter("message") %></div>
+       <div class="text-error" id="login-error"><%= request.getParameter("message") %></div>
    </c:otherwise>
 </c:choose>
 <form action="<%= basePath %>/j_spring_security_check" method="post" >

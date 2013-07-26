@@ -5,7 +5,7 @@ Sed vel diam id libero rutrum convallis. Donec aliquet leo vel magna.
 Phasellus rhoncus faucibus ante. Etiam bibendum, enim faucibus aliquet rhoncus, 
 arcu felis ultricies neque, sit amet auctor elit eros a lectus.</div>
 
-<div class="error">
+<div class="text-error">
 Sed vel diam id libero rutrum convallis. Donec aliquet leo vel magna. 
 Phasellus rhoncus faucibus ante. Etiam bibendum, enim faucibus aliquet rhoncus, 
 arcu felis ultricies neque, sit amet auctor elit eros a lectus.</div>

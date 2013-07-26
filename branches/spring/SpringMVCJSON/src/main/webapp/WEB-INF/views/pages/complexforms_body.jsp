@@ -3,15 +3,10 @@
 <%@ taglib uri="http://www.springframework.org/tags/form" prefix="form" %>
 <c:url var="baseURL" value="/app/" />
 
-<style>
-    .error
-    {
-        font-weight: bold;
-        color: red;
-        border: thin solid red;
-    }
+
+
     
-</style>
+
 
 		
 		<script type="text/javascript">
@@ -50,7 +45,7 @@
 		  		</c:if>
 		  		<s:bind path="*">
 		  			<c:if test="${status.error}">
-				  		<div id="message" class="error">Form has errors</div>
+				  		<div id="message" class="text-error">Form has errors</div>
 		  			</c:if>
 		  		</s:bind>
 		  		
@@ -64,7 +59,7 @@
 		  		<tr>
 		  		<td>
 		  		<form:label path="name">Name 
-		  		<form:errors path="name" cssClass="error" />
+		  		<form:errors path="name" cssClass="text-error" />
 		  		</form:label>
 		  		</td>
 		  		<td><form:input path="name" /></td>
@@ -74,7 +69,7 @@
 		  		<tr>
 		  		<td>
 		  		<form:label path="age">
-		  			Age <form:errors path="age" cssClass="error" />
+		  			Age <form:errors path="age" cssClass="text-error" />
 		 		</form:label>
 		  		</td>
 		  		<td><form:input path="age" /></td>
@@ -83,7 +78,7 @@
 		  		<tr>
 		  		<td>
 				<form:label path="birthDate">
-		  			Birth Date (in form yyyy-mm-dd) <form:errors path="birthDate" cssClass="error" />
+		  			Birth Date (in form yyyy-mm-dd) <form:errors path="birthDate" cssClass="text-error" />
 		 		</form:label>		  		
 		 		</td>
 		  		<td><form:input path="birthDate" /></td>
@@ -92,7 +87,7 @@
 		  		<tr>
 		  		<td>
 				<form:label path="currency">
-		  			Currency (in form $#.##) <form:errors path="currency" cssClass="error" />
+		  			Currency (in form $#.##) <form:errors path="currency" cssClass="text-error" />
 		  		</form:label>
 		  		</td>
 		  		<td><form:input path="currency" /></td>
@@ -101,7 +96,7 @@
 		  		<tr>
 		  		<td>
 				<form:label path="percent">
-		  			Percentage (in form ##%) <form:errors path="percent" cssClass="error" />
+		  			Percentage (in form ##%) <form:errors path="percent" cssClass="text-error" />
 		  		</form:label>
 		  		</td>
 		  		<td><form:input path="percent" /></td>
@@ -111,7 +106,7 @@
 			  		
 		  		<%--  
 		  		<form:label path="phone">
-		  			Phone (in form (###) ###-####) <form:errors path="phone" cssClass="error" />
+		  			Phone (in form (###) ###-####) <form:errors path="phone" cssClass="text-error" />
 		  		</form:label>
 		  		<form:input path="phone" />
 				--%>

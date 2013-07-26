@@ -31,11 +31,11 @@
 
 
         <style type='text/css'>
-
+            
             .row-separate
             {
-               padding-top: 5px;
-               padding-bottom: 5px;
+                padding-top: 5px;
+                padding-bottom: 5px;
             }
 
             body {
@@ -66,8 +66,23 @@
                 padding: 20px 20px 10px;
                 margin: -20px -20px 20px;
             }
-       </style>
+        </style>
 
+        <script src="http://code.jquery.com/jquery.js"></script>
+        <script src="js/jquery.form.js"></script>
+        <script src="js/json.min.js"></script> 
+        <script src="js/bootstrap.min.js"></script>   
+        <script>
+            var $dialog = null;
+
+            $(document).ready(function() {
+
+
+            });
+
+
+
+        </script>
 
 
     </head>
@@ -131,22 +146,7 @@
 
             </div><!-- end content -->
         </div> 
-        <script src="http://code.jquery.com/jquery.js"></script>
-        <script src="js/jquery.form.js"></script>
-        <script src="js/json.min.js"></script> 
-        <script src="js/bootstrap.min.js"></script>   
-        <script>
-            var $dialog = null;
-
-            $(document).ready(function() {
-
-
-            });
-
-
-
-        </script>
-
+ 
 
     </body>
 

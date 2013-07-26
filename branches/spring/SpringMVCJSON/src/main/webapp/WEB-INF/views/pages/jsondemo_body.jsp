@@ -74,23 +74,22 @@
 
 <div class="row">
     <div class="offset2 row-separate">
-        <button class="btn large btn-primary" onclick="getJSON()">Get Json</button>
+        <button class="btn btn-primary" onclick="getJSON();">Get Json</button>
     </div>
 </div>
 
 <div class="row">
-    <div class="offset2 row-separate">
-        
-         Brand: <input type="text" id="brandGet" name="brand" class="input-medium" size="20"/>
-         <button class="btn large  btn-primary" onclick="getCoffee()">Get Coffee</button>
+    <div class="offset2 row-separate form-horizontal">        
+         Brand: <input type="text" id="brandGet" name="brand" class="input-prepend" size="20"/>
+         <button class="btn btn-primary" onclick="getCoffee();">Get Coffee</button>
     </div>
 </div> 
 
 <div class="row">
-    <div class="offset2 row-separate">
+    <div class="offset2 row-separate form-horizontal">
         
-        Brand: <input type="text" id="brandPost" class="input-medium"  name="brand" size="20"/>
-         <button class="btn large  btn-primary"  onclick="sendCoffee()">Send Coffee</button>
+        Brand: <input type="text" id="brandPost" class="input-prepend"  name="brand" size="20"/>
+         <button class="btn btn-primary"  onclick="sendCoffee()">Send Coffee</button>
     </div>
 </div> 
 
