@@ -35,10 +35,10 @@
 
 
     <div class="row row-separate span14">
-             <button class="btn large btn-primary" onclick="getJSON()">Get JSON via JQuery</button>
+             <button class="btn large btn-primary" onclick="getJSON();">Get JSON via JQuery</button>
      </div>
     <div class="row row-separate span14">
-             <button  class="btn large btn-primary" onclick="getXML()">Get XML via jQuery</button> 
+             <button  class="btn large btn-primary" onclick="getXML();">Get XML via jQuery</button> 
     </div>
 
 
