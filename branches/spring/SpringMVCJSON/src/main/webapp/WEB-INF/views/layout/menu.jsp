@@ -70,6 +70,25 @@
                         </ul>
                     </li>
                 </ul> 
+                            
+                            
+               <ul class="nav pull-left">
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">Bootstrap Demos <b class="caret"></b></a>
+                        <ul class="dropdown-menu">
+
+
+                            <li><a href="<c:out value="${baseURL}bootstrap/demos/tabledemo" />">Tables</a></li>
+     
+
+
+                        </ul>
+                    </li>
+                </ul> 
+                           
+                            
+                            
+                            
             </div>
         </div>
     </div>
