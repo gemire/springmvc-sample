@@ -185,6 +185,15 @@
         <put-attribute name="subTitle" value="JSON Data Handling" />
         <put-attribute name="explainPanel" value="/WEB-INF/views/explain/jquery/jsonData.jsp" />
     </definition>
+    
+    <definition name="tiles.jquery.arttimer" extends="tiles.base.definition">
+        <put-attribute name="title" value="Art Timer" />
+        <put-attribute name="body"
+                               value="/WEB-INF/views/pages/jquery/arttimer.jsp" />
+        <put-attribute name="subTitle" value="Art Timer" />
+        <put-attribute name="explainPanel" value="/WEB-INF/views/explain/jquery/arttimer.jsp" />
+    </definition>
+    
 	
     <definition name="tiles.jquery.findingElements" extends="tiles.base.definition">
         <put-attribute name="title" value="JQuery Selections" />

@@ -37,6 +37,14 @@ public class MainJQueryController {
 
 	}
 
+	@RequestMapping(value = "arttimer", method = RequestMethod.GET)
+	public String goToArtTimer() {
+
+		return "tiles.jquery.arttimer";
+
+	}
+	
+	
 	@RequestMapping(value = "jsonData", method = RequestMethod.GET)
 	public String goToJSONData() {
 
