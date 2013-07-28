@@ -58,6 +58,7 @@
                 -webkit-box-shadow: 0 1px 2px rgba(0,0,0,.15);
                 -moz-box-shadow: 0 1px 2px rgba(0,0,0,.15);
                 box-shadow: 0 1px 2px rgba(0,0,0,.15);
+                z-index: -150;
             }
 
 
