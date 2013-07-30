@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE configuration
+    PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-config.dtd">
+ <!-- http://java.dzone.com/articles/getting-started-ibatis-mybatis -->
+<configuration>
+ 
+    <typeAliases>
+        <typeAlias alias="Restaurant" type="com.dhenton9000.restaurants.model.Restaurant"/>
+       
+    </typeAliases>
+
+</configuration>
