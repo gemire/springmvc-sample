@@ -9,6 +9,7 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.sql.SQLException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -36,15 +37,9 @@ public class InMemoryDBInitializer {
                 Class.forName("org.apache.derby.jdbc.EmbeddedDriver").newInstance();
                 conn = DriverManager.getConnection(dbURL);
                 ScriptRunner runner = new ScriptRunner(conn,true,false);
-                InputStream  is = this.getClass().getResourceAsStream("/db/restaurants_derby.sql");
-                logger.debug("got script");
-                if (is == null)
-                {
-                    throw new RuntimeException("cannot find script ");
-                }
-                InputStreamReader isReader = new InputStreamReader(is);
                 
-                runner.runScript(isReader);
+                runScript(runner,"/db/restaurants_derby.sql");
+                runScript(runner,"/db/sec_derby.sql");
              } catch (java.sql.SQLException sqle) {
                
                 throw sqle;
@@ -60,6 +55,17 @@ public class InMemoryDBInitializer {
          }
      };
 }
+
+    private void runScript(ScriptRunner runner,String scriptPath) throws Exception {
+        InputStream  is = this.getClass().getResourceAsStream(scriptPath);
+         if (is == null)
+        {
+            throw new RuntimeException("cannot find script at "+scriptPath);
+        }
+        InputStreamReader isReader = new InputStreamReader(is);
+        
+        runner.runScript(isReader);
+    }
 
  
 
