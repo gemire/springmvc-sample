@@ -4,6 +4,7 @@
  */
 package com.dhenton9000.db.utils;
 
+import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.sql.Connection;
@@ -52,5 +53,19 @@ public class InMemoryDBInitializer {
         
         
       
+       public static java.io.OutputStream disableDerbyLogFile(){
+     return new java.io.OutputStream() {
+         public void write(int b) throws IOException {
+             // Ignore all log messages
+         }
+     };
+}
+
+ 
+
+        
+        
+        
+        
      
 }

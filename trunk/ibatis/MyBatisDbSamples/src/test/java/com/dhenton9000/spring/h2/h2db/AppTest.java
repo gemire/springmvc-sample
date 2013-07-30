@@ -27,11 +27,11 @@ public class AppTest {
 
     @BeforeClass
     public static void setUp() {
-
+     
+        System.setProperty("derby.stream.error.method", "InMemoryDBInitializer.disableDerbyLogFile"); 
         context = new ClassPathXmlApplicationContext("inmemory-derby-spring.xml");
         context.getBean(InMemoryDBInitializer.class);
     }
-
     @Test
     public void testRestaurantDao() {
         RestaurantsDao mapper = (RestaurantsDao) context.getBean("restaurantsMapper");
