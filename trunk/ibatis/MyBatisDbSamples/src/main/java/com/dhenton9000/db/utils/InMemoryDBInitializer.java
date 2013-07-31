@@ -9,7 +9,6 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.sql.Connection;
 import java.sql.DriverManager;
-import java.sql.SQLException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -24,12 +23,13 @@ public class InMemoryDBInitializer {
 
     public InMemoryDBInitializer() {
         logger.info("called constructor");
+        
     }
 
     public void doInit() throws Exception {
         if (!didInit) {
             logger.info("called doInit");
-
+           
             String dbURL = "jdbc:derby:memory:demo;create=true";
             Connection conn = null;
             didInit = true;

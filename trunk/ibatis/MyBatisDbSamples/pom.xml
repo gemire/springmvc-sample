@@ -2,11 +2,11 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
     <modelVersion>4.0.0</modelVersion>
 	
-    <groupId>com.dhenton9000.spring.h2</groupId>
+    <groupId>com.dhenton9000.mybatis.db.samples</groupId>
     <artifactId>MyBatisDbSamples</artifactId>
     <version>1.0-SNAPSHOT</version>
     <name>MyBatisDbSamples</name> 
-    <description>My batis project with h2 suitable for GAE</description>
+    <description>My batis project with derby suitable for GAE</description>
     <build>
         <sourceDirectory>${basedir}/src/main/java</sourceDirectory>
         <resources>
