@@ -1,4 +1,4 @@
-<div class="column header1">Ajax/JQuery Form Submission</div>
+<h3>Ajax/JQuery Form Submission</h3>
 
 <p>
 This is a demonstration of submitting a form via Ajax using JQuery. It uses the form

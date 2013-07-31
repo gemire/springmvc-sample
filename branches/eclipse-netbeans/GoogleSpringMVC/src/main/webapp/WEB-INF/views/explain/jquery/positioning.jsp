@@ -1,4 +1,4 @@
-<div class="column header1">JQuery Positioning</div>
+<h3>JQuery Positioning</h3>
 
 <p>
 This form demonstrates position calculations  in JQuery. When the button is activated,

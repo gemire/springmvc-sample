@@ -1,4 +1,4 @@
-<div class="column header1">JQuery Lightbox Demonstration</div>
+<h3>JQuery Lightbox Demonstration</h3>
 
 <p>
 This page demonstrates a lightbox display of an image. Click on one of the images

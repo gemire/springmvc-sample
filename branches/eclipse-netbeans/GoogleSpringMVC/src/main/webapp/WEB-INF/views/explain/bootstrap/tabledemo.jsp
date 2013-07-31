@@ -1,4 +1,4 @@
-<div class="column header1">Bootstrap Table</div>
+<h3>Bootstrap Table</h3>
 
 <p>This is a demonstration of tables using twitter bootstrap</p>
 

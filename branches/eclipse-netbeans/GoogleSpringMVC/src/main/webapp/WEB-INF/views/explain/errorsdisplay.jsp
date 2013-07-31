@@ -1,4 +1,4 @@
-<div class="column header1">Error Handling</div>
+<h3>Error Handling</h3>
 <div>
 This demonstrates the Spring MVC error handling. Entering 'bozo'
 into the form will throw a BozoException which is handled via a method

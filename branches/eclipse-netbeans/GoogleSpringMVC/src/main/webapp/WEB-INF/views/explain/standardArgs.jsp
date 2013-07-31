@@ -1,4 +1,4 @@
-<div class="column header1">Standard Arguments</div>
+<h3>Standard Arguments</h3>
 <div>
 The standard arguments demo is a demonstration of how the Spring MVC controllers
 can use various ways of manipulating or reading the response. For example, reading

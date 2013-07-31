@@ -1,4 +1,4 @@
-<div class="column header1">Non Tile Items</div>
+<h3>Non Tile Items</h3>
 <div>
 Controllers are able to process outside of tiles, acting like servlets. One of
 the themes of Spring MVC 3 is that the code can perform many of the esoteric 

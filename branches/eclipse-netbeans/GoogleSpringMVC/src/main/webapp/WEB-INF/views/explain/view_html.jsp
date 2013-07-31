@@ -1,4 +1,4 @@
-<div class="column header1">Simple View Demo</div>
+<h3>Simple View Demo</h3>
 <div>
 This is a simple demonstration of the controller paridigm for MVC 3.
 The controller places a pair of strings into the model, that are then

@@ -1,4 +1,4 @@
-<div class="column header1">JSON Data Handling</div>
+<h3>JSON Data Handling</h3>
 
 <p>
 This form demonstrates various ways to access the components of a JSON

@@ -522,5 +522,16 @@
         </dependency>
 
 
+        <dependency>
+            <groupId>com.dhenton9000.mybatis.db.samples</groupId>
+            <artifactId>MyBatisDbSamples</artifactId>
+            <version>1.0-SNAPSHOT</version>
+        </dependency>
+
+
+
+
+
+
     </dependencies>
 </project>

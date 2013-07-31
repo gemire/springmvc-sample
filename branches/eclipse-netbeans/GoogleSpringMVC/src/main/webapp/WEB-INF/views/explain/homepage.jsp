@@ -1,4 +1,4 @@
-<div class="column header1">Homepage</div>
+<h3>Homepage</h3>
 
 This application is a demonstration system for various
 web technologies.

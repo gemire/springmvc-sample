@@ -1,4 +1,4 @@
-<div class="column header1">New Tag Method Demonstation</div>
+<h3>New Tag Method Demonstation</h3>
 <div>
 A demonstration of creating a tag without using the older 
 style tld based tag libs. The tag is in the tags folder

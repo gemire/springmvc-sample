@@ -1,4 +1,4 @@
-<div class="column header1">Security</div>
+<h3>Security</h3>
 <div>
 This is a security protected page whose definition is done via the 
 WEB-INF/spring/spring-security.xml file. This xml configuration file

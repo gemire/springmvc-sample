@@ -1,4 +1,4 @@
-<div class="column header1">JQuery Selections</div>
+<h3>JQuery Selections<</h3>
 
 <p>
 This form demonstrates selectors in JQuery

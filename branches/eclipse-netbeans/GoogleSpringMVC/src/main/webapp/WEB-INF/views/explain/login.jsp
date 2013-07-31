@@ -1,4 +1,4 @@
-<div class="column header1">Security</div>
+<h3>Security</h3>
 <div>
 The login and logout pages handle access to secure regions of the application
 the username and password to use are 'admin' and 'admin'

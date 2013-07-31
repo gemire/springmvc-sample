@@ -1,4 +1,4 @@
-<div class="column header1">JSON Demos</div>
+<h3>JSON Demos</h3>
 
 These forms demonstration getting and sending JSON objects
 

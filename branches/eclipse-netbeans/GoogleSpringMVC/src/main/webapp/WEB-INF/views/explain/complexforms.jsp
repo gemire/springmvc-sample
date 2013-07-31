@@ -1,4 +1,4 @@
-<div class="column header1">Processing Input From Forms</div>
+<h3>Processing Input From Forms</h3>
 <div>
 A full fledged form demonstration taken from the Spring Showcase program 
 from SpringSource. Try submitting the following errors:

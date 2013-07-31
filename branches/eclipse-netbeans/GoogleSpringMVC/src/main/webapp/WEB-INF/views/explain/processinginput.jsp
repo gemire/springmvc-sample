@@ -1,4 +1,4 @@
-<div class="column header1">Processing Input via Message Converters</div>
+<h3>Processing Input via Message Converters</h3>
 <div>
 This is a demonstration of processing input via message converters. These actions
 will get various forms of data from the server and use jquery to convert them.

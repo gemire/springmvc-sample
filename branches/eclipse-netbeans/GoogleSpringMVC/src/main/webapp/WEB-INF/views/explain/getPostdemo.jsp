@@ -1,4 +1,4 @@
-<div class="column header1">Get Post Demo</div>
+<h3>Get Post Demo</h3>
 <div>
 This code demonstrates that Controller annotations can be used to control access to the
 controlling code, so that a given control function can only be called via get or post.

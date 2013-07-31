@@ -1,4 +1,4 @@
-<div class="column header1">Security</div>
+<h3>Security</h3>
 <div>
 This is a security protected page whose definition for security is defined 
 using annotations. See the source code for function <b>showSpecialAdmin</b>

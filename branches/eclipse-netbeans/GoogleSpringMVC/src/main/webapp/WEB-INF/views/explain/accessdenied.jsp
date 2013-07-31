@@ -1,4 +1,4 @@
-<div class="column header1">Security</div>
+<h3>Security</h3>
 <div>
 This is the page that is delivered when a security request fails.
 

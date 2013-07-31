@@ -69,7 +69,8 @@
             }
         </style>
 
-        <script src="http://code.jquery.com/jquery.js"></script>
+        <!-- <script src="http://code.jquery.com/jquery.js"></script>-->
+        <script src="js/jquery.js"></script>
         <script src="js/jquery.form.js"></script>
         <script src="js/json.min.js"></script> 
         <script src="js/bootstrap.min.js"></script>   

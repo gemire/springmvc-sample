@@ -1,4 +1,4 @@
-<div class="column header1">JQuery Image Timer</div>
+<h3>JQuery Image Timer</h3>
 
 <p>
 This form displays images and allows for setting various parameters for the 

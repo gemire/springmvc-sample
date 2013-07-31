@@ -1,4 +1,4 @@
-<div class="column header1">JQuery Form Elements</div>
+<h3>JQuery Form Elements</h3>
 
 <p>
 These are two demonstrations of manipulating form input components with JQuery. You can

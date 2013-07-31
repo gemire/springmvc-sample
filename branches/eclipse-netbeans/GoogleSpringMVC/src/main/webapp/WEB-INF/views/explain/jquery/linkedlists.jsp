@@ -1,4 +1,4 @@
-<div class="column header1">JQuery Linked Lists</div>
+<h3>JQuery Linked Lists</h3>
 
 <p>
 This form demonstrates linking select boxes using JQuery. Embedded in
