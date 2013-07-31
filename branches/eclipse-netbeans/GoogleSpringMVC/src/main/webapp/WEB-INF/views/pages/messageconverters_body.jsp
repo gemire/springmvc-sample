@@ -48,7 +48,7 @@
 <c:choose>
     <c:when test="${not empty results}">
         <div class="row offset1">
-            <div class="blue"
+            <div class="blue">
 
                  <div>${results}</div>
             </div>
