@@ -47,6 +47,7 @@
 
 
     <import resource="controllers.xml" />
+    <!-- located in the MyBatisDbSamples jar file -->
     <import resource="classpath:inmemory-derby-spring.xml" />
 
     <bean
