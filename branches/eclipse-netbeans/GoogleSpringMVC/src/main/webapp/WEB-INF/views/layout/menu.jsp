@@ -45,7 +45,11 @@
                             <li><a href="<c:out value="${baseURL}image/generator/home" />">Image Generator</a></li>
                             -->
                             <li><a href="<c:out value="${baseURL}errors/demo/home" />">Error Handling</a></li>
-                            <li><a href="<c:out value="${baseURL}security/demo/home" />">Security Demo</a></li>                 
+                            <li><a href="<c:out value="${baseURL}security/demo/home" />">Security Demo</a></li>      
+                            
+                            <li class="divider"></li><li class="dropdown-header">Spring Context</li>
+                            <li><a href="<c:out value="${baseURL}context/bookMaker.html" />">Bean Loaded in Context</a></li>
+                            
                         </ul>
                     </li>
                 </ul> 

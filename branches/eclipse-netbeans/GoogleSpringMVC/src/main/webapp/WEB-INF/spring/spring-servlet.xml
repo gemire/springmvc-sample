@@ -99,6 +99,8 @@
 		<property name="definitions">
 			<list>
 				<value>/WEB-INF/tiles/tiles-defs.xml</value>
+                                <value>/WEB-INF/tiles/tiles-defs-jquery.xml</value>
+                                <value>/WEB-INF/tiles/tiles-defs-bootstrap.xml</value>
 				<!-- white space sensitive reformatting screws this up!! -->
 			</list>
 		</property>

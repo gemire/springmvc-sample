@@ -16,6 +16,14 @@
 	 <bean id="jHellerBookMaker" class="com.dhenton9000.spring.mvc.model.BestSellerBookMakerImpl" />
 	 
 	  -->
-	 
+          
+          
+          <bean id="beanMessage" class="java.lang.String">
+              <constructor-arg index="0" value="get a job" />
+          </bean>
+	 <bean id="contextDemoController" scope="singleton" class="com.dhenton9000.spring.mvc.controllers.ContextDemoController">
+             <property name="bookMaker" ref="bookMaker" />
+             <property name="message" ref="beanMessage" />
+         </bean>
 
 </beans>

@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8" ?> <!DOCTYPE tiles-definitions PUBLIC        "-//Apache Software Foundation//DTD Tiles Configuration 2.0//EN"        "http://tiles.apache.org/dtds/tiles-config_2_0.dtd">
+<tiles-definitions>
+
+ <!-- bootstrap -->
+	
+    <definition name="tiles.bootstrap.tabledemo" extends="tiles.base.definition">
+        <put-attribute name="title" value="Bootstrap Table" />
+        <put-attribute name="body"
+                               value="/WEB-INF/views/pages/bootstrap/tabledemo.jsp" />
+        <put-attribute name="subTitle" value="Bootstrap Table Demonstration" />
+        <put-attribute name="explainPanel" value="/WEB-INF/views/explain/bootstrap/tabledemo.jsp" />
+    </definition>
+
+	
+</tiles-definitions>
