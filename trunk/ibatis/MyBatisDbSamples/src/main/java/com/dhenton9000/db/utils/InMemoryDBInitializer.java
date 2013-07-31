@@ -50,6 +50,7 @@ public class InMemoryDBInitializer {
 
     public static java.io.OutputStream disableDerbyLogFile() {
         return new java.io.OutputStream() {
+            @Override
             public void write(int b) throws IOException {
                 // Ignore all log messages
             }
