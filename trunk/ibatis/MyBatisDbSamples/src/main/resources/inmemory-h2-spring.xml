@@ -16,9 +16,8 @@
         http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-3.0.xsd">
 
     
-    <bean id="derbyDBInitializer" lazy-init="false" scope="singleton" init-method="doInit" name="derbyDBInitializer" class="com.dhenton9000.db.utils.InMemoryDBInitializer">
-        <property name="dbURL" value="jdbc:h2:mem:demo;mode=MySQL" />
-        <property name="driverClass" value="org.h2.Driver" />
+    <bean id="h2DBInitializer" lazy-init="false" scope="singleton" init-method="doInit" name="h2DBInitializer" class="com.dhenton9000.db.utils.InMemoryDBInitializer">
+        <property name="dataSource" ref="dataSource" />
         <property name="dbscripts">
             <list>
                 <value>/db/restaurants_h2.sql</value>          
@@ -31,7 +30,7 @@
    
     <bean id="dataSource" class="com.mchange.v2.c3p0.ComboPooledDataSource" destroy-method="close">
         <property name="driverClass" value="org.h2.Driver"/>
-        <property name="jdbcUrl" value="jdbc:h2:mem:demo;mode=MySQL"/>
+        <property name="jdbcUrl" value="jdbc:h2:mem:demo;mode=MySQL;DB_CLOSE_DELAY=-1"/>
         <property name="user" value="demo"/>
         <property name="password" value="demo"/>
         <property name="autoCommitOnClose" value="true"/>  
