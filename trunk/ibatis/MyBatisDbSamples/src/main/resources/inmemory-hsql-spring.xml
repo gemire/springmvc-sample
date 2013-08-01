@@ -15,29 +15,12 @@
         http://www.springframework.org/schema/task http://www.springframework.org/schema/task/spring-task-3.0.xsd
         http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-3.0.xsd">
 
- <!--   
-    <jdbc:embedded-database  type="" id="dataSource">
-       
-	<jdbc:script location="classpath:db/restaurants_derby.sql"/>
-	 
-         org.hsqldb.jdbcDriver 
-      jdbc:hsqldb:mem:testdb
-         
-         
-         
-         
-</jdbc:embedded-database>
--->
-
     
-    
-    
-    <bean id="derbyDBInitializer" lazy-init="false" scope="singleton" init-method="doInit" name="derbyDBInitializer" class="com.dhenton9000.db.utils.InMemoryDBInitializer">
-       <property name="dataSource" ref="dataSource" />
-       <property name="dbscripts">
+    <bean id="h2DBInitializer" lazy-init="false" scope="singleton" init-method="doInit" name="h2DBInitializer" class="com.dhenton9000.db.utils.InMemoryDBInitializer">
+        <property name="dataSource" ref="dataSource" />
+        <property name="dbscripts">
             <list>
-                <value>/db/restaurants_derby.sql</value>  
-                <value>/db/sec_derby.sql</value>
+                <value>/db/restaurants_h2.sql</value>          
             </list>
         </property>
     </bean>   
@@ -46,11 +29,11 @@
     
    
     <bean id="dataSource" class="com.mchange.v2.c3p0.ComboPooledDataSource" destroy-method="close">
-        <property name="driverClass" value="org.apache.derby.jdbc.EmbeddedDriver"/>
-        <property name="jdbcUrl" value="jdbc:derby:memory:demo;create=true"/>
+        <property name="driverClass" value="org.hsqldb.jdbcDriver"/>
+        <property name="jdbcUrl" value="jdbc:hsqldb:mem:testdb"/>
         <property name="user" value="demo"/>
         <property name="password" value="demo"/>
-        <property name="autoCommitOnClose" value="false"/>  
+        <property name="autoCommitOnClose" value="true"/>  
     </bean> 
     
     <tx:annotation-driven />
