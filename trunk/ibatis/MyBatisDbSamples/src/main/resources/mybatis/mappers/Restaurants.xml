@@ -16,7 +16,7 @@
     </resultMap>
  
     <select id="getAll" resultMap="result">
-        SELECT * FROM Restaurant
+        SELECT * FROM DEMO.Restaurant
     </select>
  <!--
     <select id="getById" parameterType="int" resultMap="result">
