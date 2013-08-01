@@ -17,12 +17,11 @@
 
     
     <bean id="derbyDBInitializer" lazy-init="false" scope="singleton" init-method="doInit" name="derbyDBInitializer" class="com.dhenton9000.db.utils.InMemoryDBInitializer">
-        <property name="dbURL" value="jdbc:derby:memory:demo;create=true" />
-        <property name="driverClass" value="org.apache.derby.jdbc.EmbeddedDriver" />
+        <property name="dbURL" value="jdbc:h2:mem:demo;mode=MySQL" />
+        <property name="driverClass" value="org.h2.Driver" />
         <property name="dbscripts">
             <list>
-                <value>/db/restaurants_derby.sql</value>  
-                <value>/db/sec_derby.sql</value>
+                <value>/db/restaurants_h2.sql</value>          
             </list>
         </property>
     </bean>   
@@ -31,11 +30,11 @@
     
    
     <bean id="dataSource" class="com.mchange.v2.c3p0.ComboPooledDataSource" destroy-method="close">
-        <property name="driverClass" value="org.apache.derby.jdbc.EmbeddedDriver"/>
-        <property name="jdbcUrl" value="jdbc:derby:memory:demo;create=true"/>
+        <property name="driverClass" value="org.h2.Driver"/>
+        <property name="jdbcUrl" value="jdbc:h2:mem:demo;mode=MySQL"/>
         <property name="user" value="demo"/>
         <property name="password" value="demo"/>
-        <property name="autoCommitOnClose" value="false"/>  
+        <property name="autoCommitOnClose" value="true"/>  
     </bean> 
     
     <tx:annotation-driven />
