@@ -17,9 +17,8 @@
 
     
     <bean id="derbyDBInitializer" lazy-init="false" scope="singleton" init-method="doInit" name="derbyDBInitializer" class="com.dhenton9000.db.utils.InMemoryDBInitializer">
-        <property name="dbURL" value="jdbc:derby:memory:demo;create=true" />
-        <property name="driverClass" value="org.apache.derby.jdbc.EmbeddedDriver" />
-        <property name="dbscripts">
+       <property name="dataSource" ref="dataSource" />
+       <property name="dbscripts">
             <list>
                 <value>/db/restaurants_derby.sql</value>  
                 <value>/db/sec_derby.sql</value>

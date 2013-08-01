@@ -10,6 +10,7 @@ import java.io.InputStreamReader;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.util.List;
+import javax.sql.DataSource;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -21,9 +22,8 @@ public class InMemoryDBInitializer {
 
     private static final Logger logger = LoggerFactory.getLogger(InMemoryDBInitializer.class);
     private static boolean didInit = false;
-    private String dbURL = null;
-    private String driverClass = null;
     private List<String> dbscripts = null;
+    private DataSource dataSource;
 
     public InMemoryDBInitializer() {
         logger.info("called constructor");
@@ -38,8 +38,7 @@ public class InMemoryDBInitializer {
             didInit = true;
             try {
                 logger.info("starting script run");
-                Class.forName(getDriverClass()).newInstance();
-                conn = DriverManager.getConnection(this.getDbURL());
+                conn = getDataSource().getConnection();
                 ScriptRunner runner = new ScriptRunner(conn, true, false);
                 for (String scr : getDbscripts()) {
                     runScript(runner, scr);
@@ -50,7 +49,17 @@ public class InMemoryDBInitializer {
 
                 throw sqle;
             }
-        }
+            finally
+            {
+                if (conn != null)
+                {
+                    
+                    conn.close();
+                }
+                    
+                
+            }
+        }// end did Init
     }
 
     public static java.io.OutputStream disableDerbyLogFile() {
@@ -72,33 +81,8 @@ public class InMemoryDBInitializer {
         runner.runScript(isReader);
     }
 
-    /**
-     * @return the dbURL
-     */
-    public String getDbURL() {
-        return dbURL;
-    }
-
-    /**
-     * @param dbURL the dbURL to set
-     */
-    public void setDbURL(String dbURL) {
-        this.dbURL = dbURL;
-    }
-
-    /**
-     * @return the driverClass
-     */
-    public String getDriverClass() {
-        return driverClass;
-    }
-
-    /**
-     * @param driverClass the driverClass to set
-     */
-    public void setDriverClass(String driverClass) {
-        this.driverClass = driverClass;
-    }
+   
+   
 
     /**
      * @return the dbscripts
@@ -113,4 +97,20 @@ public class InMemoryDBInitializer {
     public void setDbscripts(List<String> dbscripts) {
         this.dbscripts = dbscripts;
     }
+
+    /**
+     * @return the dataSource
+     */
+    public DataSource getDataSource() {
+        return dataSource;
+    }
+
+    /**
+     * @param dataSource the dataSource to set
+     */
+    public void setDataSource(DataSource dataSource) {
+        this.dataSource = dataSource;
+    }
+
+    
 }
