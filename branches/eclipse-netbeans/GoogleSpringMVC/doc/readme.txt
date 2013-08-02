@@ -4,3 +4,5 @@ and cannot use maven. It has been adjusted to eliminate the image generating app
 
 The pom file in this folder is an example for other projects, but cannot be used
 here. Further development will have to be in eclipse
+
+http://javasplitter.blogspot.com/2009/05/how-to-google-app-enginefy-your.html
