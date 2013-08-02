@@ -48,7 +48,7 @@
 
     <import resource="controllers.xml" />
     <!-- located in the MyBatisDbSamples jar file -->
-    <import resource="classpath:inmemory-derby-spring.xml" />
+    <import resource="classpath:inmemory-hsql-spring.xml" />
 
     <bean
         class="org.springframework.web.servlet.view.ContentNegotiatingViewResolver">

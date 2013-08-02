@@ -46,10 +46,10 @@
                             -->
                             <li><a href="<c:out value="${baseURL}errors/demo/home" />">Error Handling</a></li>
                             <li><a href="<c:out value="${baseURL}security/demo/home" />">Security Demo</a></li>      
-                            
+
                             <li class="divider"></li><li class="dropdown-header">Spring Context</li>
                             <li><a href="<c:out value="${baseURL}context/bookMaker.html" />">Bean Loaded in Context</a></li>
-                            
+
                         </ul>
                     </li>
                 </ul> 
@@ -65,38 +65,42 @@
                             <li><a href="<c:out value="${baseURL}jquery/demos/findingElements" />">Selections</a></li>
                             <li><a href="<c:out value="${baseURL}jquery/demos/positioning" />">Positioning</a></li>
                             <li class="divider"></li>
-  							<li class="dropdown-header">Forms</li>
+                            <li class="dropdown-header">Forms</li>
                             <li><a href="<c:out value="${baseURL}jquery/demos/periodicUpdater" />">Periodic Updater</a></li>
                             <li><a href="<c:out value="${baseURL}jquery/demos/formSamples" />">Form Samples</a></li>
                             <li><a href="<c:out value="${baseURL}jquery/formSubmission/home" />">Ajax Form Submission</a></li>
-							<li class="divider"></li>
-  							<li class="dropdown-header">Image Displays</li>
- 							<li><a href="<c:out value="${baseURL}jquery/demos/pixDisplay" />">JQuery Lightbox</a></li>
+                            <li class="divider"></li>
+                            <li class="dropdown-header">Image Displays</li>
+                            <li><a href="<c:out value="${baseURL}jquery/demos/pixDisplay" />">JQuery Lightbox</a></li>
                             <li><a href="<c:out value="${baseURL}jquery/demos/arttimer" />">Art Timer</a></li>
 
 
                         </ul>
                     </li>
                 </ul> 
-                            
-                            
-               <ul class="nav pull-left">
+
+
+                <ul class="nav pull-left">
                     <li class="dropdown">
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown">Bootstrap Demos <b class="caret"></b></a>
                         <ul class="dropdown-menu">
 
 
                             <li><a href="<c:out value="${baseURL}bootstrap/demos/tabledemo" />">Tables</a></li>
-     
+                            <li><a href="${baseURL}bootstrap/demos/buttons.html">Buttons</a></li>
+                            <li><a href="${baseURL}bootstrap/demos/dropdowns.html">Dropdowns</a></li>
+                            <li><a href="${baseURL}bootstrap/demos/tabs.html">Tabs</a></li>
+                            <li><a href="${baseURL}bootstrap/demos/modals.html">Modal Dialogs</a></li>
+
 
 
                         </ul>
                     </li>
                 </ul> 
-                           
-                            
-                            
-                            
+
+
+
+
             </div>
         </div>
     </div>
