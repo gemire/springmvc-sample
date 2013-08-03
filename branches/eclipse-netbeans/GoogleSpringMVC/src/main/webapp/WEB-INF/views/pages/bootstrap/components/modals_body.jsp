@@ -8,7 +8,7 @@
 <c:url var="baseURL" value="/app/components/tabs.html" />
 
  
-<a href="#myModal" role="button" class="btn" data-toggle="modal">Launch demo modal</a>
+<a href="#myModal" role="button" class="btn btn-large btn-primary" data-toggle="modal">Launch demo modal</a>
  
 <!-- Modal -->
 <div id="myModal" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
