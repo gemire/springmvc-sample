@@ -47,8 +47,10 @@
 
 
     <import resource="controllers.xml" />
-    <!-- located in the MyBatisDbSamples jar file -->
+    <!-- located in the MyBatisDbSamples jar file 
+    not usable on the GAE, appears that jdbc is restricted
     <import resource="classpath:inmemory-hsql-spring.xml" />
+    -->
 
     <bean
         class="org.springframework.web.servlet.view.ContentNegotiatingViewResolver">
