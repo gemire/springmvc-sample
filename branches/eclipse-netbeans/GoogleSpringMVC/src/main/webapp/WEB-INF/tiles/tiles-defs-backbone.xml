@@ -3,14 +3,18 @@
 
     <!-- bootstrap -->
 	
-    <definition name="tiles.backbone.demos.localstorage" extends="tiles.base.definition">
+    <definition name="tiles.base.backbone.definition" extends="tiles.base.definition">
+
+        <put-attribute name="jsscripts" value="/WEB-INF/views/layout/backbone_scripts.jsp" />
+    </definition>
+ 
+    <definition name="tiles.backbone.demos.localstorage" extends="tiles.base.backbone.definition">
         <put-attribute name="title" value="Backbone Local Storage" />
         <put-attribute name="body"
                        value="/WEB-INF/views/pages/backbone/localstorage_body.jsp" />
         <put-attribute name="subTitle" value="Backbone Local Storage" />
         <put-attribute name="explainPanel" value="/WEB-INF/views/explain/backbone/localstorage.jsp" />
+        <put-attribute name="jsscripts" value="/WEB-INF/views/layout/backbone_scripts.jsp" />
     </definition>
- 
-    
 	
 </tiles-definitions>
