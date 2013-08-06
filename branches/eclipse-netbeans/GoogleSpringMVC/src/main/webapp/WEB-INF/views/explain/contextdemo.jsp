@@ -1,4 +1,4 @@
-<div class="column header1">Spring Context Demonsrations</div>
+<h3>Spring Context Demonsrations</h3>
 <div>
     This controller demonstrates access to the applicationContext by the
     ApplicationContextAware interface, which will load the context into the 
