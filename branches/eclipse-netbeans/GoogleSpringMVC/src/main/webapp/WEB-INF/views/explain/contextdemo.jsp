@@ -15,5 +15,5 @@
 
 <div>
     The corresponding java code that handles these actions can be found in
-    <code>com.dhenton9000.spring.mvc.controllers.</code> <code>ComplexFormController</code>
+    <code>com.dhenton9000.spring.mvc.controllers.</code> <code>ContextDemoController</code>
 </div>
