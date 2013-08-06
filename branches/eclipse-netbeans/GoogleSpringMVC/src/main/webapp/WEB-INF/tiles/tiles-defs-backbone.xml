@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8" ?> <!DOCTYPE tiles-definitions PUBLIC        "-//Apache Software Foundation//DTD Tiles Configuration 2.0//EN"        "http://tiles.apache.org/dtds/tiles-config_2_0.dtd">
+<tiles-definitions>
+
+    <!-- bootstrap -->
+	
+    <definition name="tiles.backbone.demos.localstorage" extends="tiles.base.definition">
+        <put-attribute name="title" value="Backbone Local Storage" />
+        <put-attribute name="body"
+                       value="/WEB-INF/views/pages/backbone/localstorage_body.jsp" />
+        <put-attribute name="subTitle" value="Backbone Local Storage" />
+        <put-attribute name="explainPanel" value="/WEB-INF/views/explain/backbone/localstorage.jsp" />
+    </definition>
+ 
+    
+	
+</tiles-definitions>
