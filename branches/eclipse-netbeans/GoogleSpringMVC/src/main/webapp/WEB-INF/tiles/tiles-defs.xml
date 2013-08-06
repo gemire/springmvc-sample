@@ -7,6 +7,7 @@
         <put-attribute name="subTitle" value="Generic" />
         <put-attribute name="body" value="" />
         <put-attribute name="jsscripts" value="/WEB-INF/views/layout/general_scripts.jsp" />
+        <put-attribute name="jsscripts_app_specific" value="" />
         <put-attribute name="explainPanel" value="/WEB-INF/views/explain/default.jsp" />
         <put-attribute name="footer" value="/WEB-INF/views/layout/footer.jsp" />
     </definition>

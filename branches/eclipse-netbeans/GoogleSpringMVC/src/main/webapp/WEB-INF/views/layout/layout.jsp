@@ -72,6 +72,7 @@
         <!-- <script src="http://code.jquery.com/jquery.js"></script>-->
         
         <tiles:insertAttribute name="jsscripts" />
+        <tiles:insertAttribute name="jsscripts_app_specific" />
             
         
         

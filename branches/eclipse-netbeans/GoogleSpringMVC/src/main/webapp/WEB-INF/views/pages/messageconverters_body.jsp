@@ -11,38 +11,36 @@
 
 <c:url var="stringPostVar" value="/app/messageconverters/stringPOST.html" />
 <div class="offset1">
-    <div class="row row-separate span14">
- 
- 
-            <form id="readString" class="form-horizontal"
-                  action="<c:out value="${stringPostVar}" />" method="post">
-                <input type="hidden" name="personalValue" value="astounding" />
-                <input type="hidden" name="future" value="rosy" />
-                <input class="input-medium" type="text" size="20" name="input" value="boundless" />
-               <input class="btn large btn-primary" type="submit" value="Read a Post as String" />
-            </form>
- 
-    </div>
-    <div class="row row-separate span14">
-        
-       
-            <form id="readXml" class="form-horizontal" action="<c:url value="/app/messageconverters/xml.xml" />"
-                  method="get">
-                <input class="btn large btn-primary" id="readXmlSubmit" type="submit" value="Read XML" />
-            </form>
-       
-    </div>
 
 
-    <div class="row row-separate span14">
-             <button class="btn large btn-primary" onclick="getJSON();">Get JSON via JQuery</button>
-     </div>
-    <div class="row row-separate span14">
-             <button  class="btn large btn-primary" onclick="getXML();">Get XML via jQuery</button> 
+
+    <form id="readString" class="form-inline"
+          action="<c:out value="${stringPostVar}" />" method="post">
+        <input type="hidden" name="personalValue" value="astounding" />
+        <input type="hidden" name="future" value="rosy" />
+        <input class="btn large btn-primary" type="submit" value="Read a Post as String" />
+        <input class="input-medium" type="text" size="20" name="input" value="boundless" />
+   </form>
+
+
+
+
+
+    <form id="readXml" class="form-inline" action="<c:url value="/app/messageconverters/xml.xml" />"
+          method="get">
+        <input class="btn large btn-primary" id="readXmlSubmit" type="submit" value="Read XML" />
+    </form>
+
+
+    <div class="btn-group btn-group-vertical">         
+        <button class="btn large btn-primary" onclick="getJSON();">Get JSON via JQuery</button>
+        <button  class="btn large btn-primary" onclick="getXML();">Get XML via jQuery</button> 
     </div>
 
+</div>               
 
-</div>   
+
+
 
 
 <c:choose>
@@ -50,7 +48,7 @@
         <div class="row offset1">
             <div class="blue">
 
-                 <div>${results}</div>
+                <div>${results}</div>
             </div>
 
         </div>
@@ -62,44 +60,44 @@
 <script>
 
 
-                function getJSON() {
+    function getJSON() {
 
 
-                    $.getJSON('<c:url value="/app/messageconverters/xml.json" />', function(item) {
-                        alert(item.foo);
-                    });
+    $.getJSON('<c:url value="/app/messageconverters/xml.json" />', function(item) {
+    alert(item.foo);
+    });
 
 
-                }
+    }
 
-                function xmlToString(xmlData) {
-                    var xmlString;
-                    //IE     
-                    if (window.ActiveXObject)
-                    {
-                        xmlString = xmlData.xml;
-                    }
-                    // code for Mozilla, Firefox, Opera, etc.     
-                    else
-                    {
-                        xmlString = (new XMLSerializer()).serializeToString(xmlData);
-                    }
+    function xmlToString(xmlData) {
+    var xmlString;
+    //IE     
+    if (window.ActiveXObject)
+    {
+    xmlString = xmlData.xml;
+    }
+    // code for Mozilla, Firefox, Opera, etc.     
+    else
+    {
+    xmlString = (new XMLSerializer()).serializeToString(xmlData);
+    }
 
-                    return xmlString;
-                }
+    return xmlString;
+    }
 
 
-                function getXML()
-                {
-                    $.ajax({
-                        type: "GET",
-                        url: "<c:url value="/app/messageconverters/xml.xml" />",
-                        dataType: "xml",
-                        success: function(xml) {
-                            alert(xmlToString(xml));
-                        }
-                    });
-                }
+    function getXML()
+    {
+    $.ajax({
+    type: "GET",
+    url: "<c:url value="/app/messageconverters/xml.xml" />",
+    dataType: "xml",
+    success: function(xml) {
+    alert(xmlToString(xml));
+    }
+    });
+    }
 
 
 </script>

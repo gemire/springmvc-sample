@@ -19,7 +19,7 @@
 	var imageNames = new Array("<%= baseURL %>simages/a1.jpg", 
 			"<%= baseURL %>simages/a2.jpg", "<%= baseURL %>simages/a3.jpg", "<%= baseURL %>simages/a4.jpg",
 			"<%= baseURL %>simages/a5.jpg", "<%= baseURL %>simages/a6.jpg","<%= baseURL %>simages/a7.jpg",
-			 "<%= baseURL %>simages/a8.jpg","<%= baseURL %>simages/a9.jpg");
+			"<%= baseURL %>simages/a8.jpg","<%= baseURL %>simages/a9.jpg");
 </script>
 
 <div class="row offset1">
