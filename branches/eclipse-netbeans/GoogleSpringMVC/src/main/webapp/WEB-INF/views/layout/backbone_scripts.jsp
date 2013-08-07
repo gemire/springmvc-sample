@@ -11,5 +11,5 @@
 <script src="js/jquery.form.js"></script>
 <script src="js/json.min.js"></script> 
 <script src="js/bootstrap.min.js"></script>  
-<script src="js/backbone/underscore-min.js"></script>  
-<script src="js/backbone/backbone-min.js"></script>    
+<script src="js/backbone/underscore.js"></script>  
+<script src="js/backbone/backbone.js"></script>    
