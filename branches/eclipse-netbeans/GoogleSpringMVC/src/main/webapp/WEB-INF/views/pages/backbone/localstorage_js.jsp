@@ -11,7 +11,8 @@
 
 
 <script type="text/template" id="listTemplate">
-    <table>
+    <div class="row span6">
+    <table class="fade in table table-condensed table-hover">
     <thead>
     <tr>
     <th>First name</th>
@@ -22,7 +23,8 @@
     <tbody>
     </tbody>		
     </table>
-    <a class="btn btn-small btn-primary" backboneActive="true" href="#add">Add a contact</a>	           
+    <a class="btn btn-small btn-primary" backboneActive="true" href="#add">Add a contact</a>	
+    </div>
 
 </script>
 <!--
@@ -35,14 +37,14 @@
     <label for="lastname">Last name</label>
     <input id="lastname" name='lastname' type="text" /><br />
     <input type="submit" value='Add'/>
-    <input id="cancel" type="button" value="Cancel" />
+    <input id="cancel" class="btn btn-small btn-warning" type="button" value="Cancel" />
     </form>
 </script>
 
 <script type="text/template" id="contactTemplate">
     <td><@= firstname@></td>
     <td><@= lastname@></td>
-    <td><button class="delete">delete</button></td>
+    <td><button class="btn btn-small btn-warning delete">delete</button></td>
 </script>
 
  
