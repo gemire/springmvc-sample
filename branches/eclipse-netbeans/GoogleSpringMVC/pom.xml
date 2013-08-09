@@ -3,9 +3,9 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
     <modelVersion>4.0.0</modelVersion>
     <groupId>com.dhenton9000</groupId>
-    <artifactId>SpringMVCJSON</artifactId>
+    <artifactId>GoogleSpringMVC</artifactId>
     <packaging>war</packaging>
-    <name>SpringMVCJSON</name>
+    <name>GoogleSpringMVC</name>
     <version>0.0.1-SNAPSHOT</version>
     <description />
     <build>
@@ -83,16 +83,16 @@
                 <artifactId>maven-jetty-plugin</artifactId>
                 <version>6.1.10</version>
                 <configuration>
-                    <contextPath>/SpringMVCJSON</contextPath>
+                    <contextPath>/GoogleSpringMVC</contextPath>
                     <scanIntervalSeconds>10</scanIntervalSeconds>
                     <scanTargetPatterns>
                         <scanTargetPattern>
                             <directory>src/main/webapp/WEB-INF</directory>
                             <!--  
-                     							<excludes>
-                            								<exclude>**/*.jsp</exclude>
-                     							</excludes>
-                     							-->
+                     		<excludes>
+                            		<exclude>**/*.jsp</exclude>
+                     		</excludes>
+                     	    -->
                             <includes>
                                 <include>**/*.jsp</include>
                                 <include>**/*.properties</include>
