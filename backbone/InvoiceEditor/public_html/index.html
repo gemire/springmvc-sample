@@ -17,7 +17,7 @@ and open the template in the editor.
 
 
         <script type="text/template" id="FormView-template">
-        <div class="offset2">
+        <div id="viewContent" class="offset2">
             <div class="form-inline span8">
                 <fieldset>
                     <legend>Customer Invoice</legend>
@@ -43,7 +43,7 @@ and open the template in the editor.
                             <div class="row-fluid">  
 
                                 <label class="control-label" for="customer_name">Customer Name:</label>
-                                <input type="text" class="input-xlarge" id="customer_name" name="customer_name" title="Customer Name">
+                                <input type="text" class="input-xlarge" id="customer_name" name="customer_name" value="<%= customer_name %>" title="Customer Name">
 
 
                             </div>
@@ -69,9 +69,7 @@ and open the template in the editor.
     </head>
     <body>
 
-        <div id="mainContent">
-
-        </div>
+        <div id="mainContent"></div>
 
 
         <script src="js/lib/jquery.min.js"></script>
