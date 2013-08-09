@@ -15,7 +15,7 @@ and open the template in the editor.
         </style>
         <link href="css/bootstrap.css" rel="stylesheet">
 
-
+        
         <script type="text/template" id="FormView-template">
         <div id="viewContent" class="offset2">
             <div class="form-inline span8">
@@ -28,10 +28,10 @@ and open the template in the editor.
                             <div class="row-fluid">  
                                 <div>
                                     <label class="control-label">Invoice Id:</label>
-                                    <input type="text" class="input-medium" id="invoice_id" name="invoice_id"  title="Invoice Id">
+                                    <input type="text" class="input-medium" id="invoice_id" name="invoice_id" value="<%= invoice_id %>" title="Invoice Id">
 
                                     <label class="control-label">Invoice Date:</label>
-                                    <input type="text" class="input-medium"   id="invoice_date" name="invoice_date" title="Invoice Date">
+                                    <input type="text" class="input-medium"   id="invoice_date" name="invoice_date" value="<%= invoice_date %>" title="Invoice Date">
                                 </div>
                             </div>
                         </div>
@@ -68,17 +68,18 @@ and open the template in the editor.
 
     </head>
     <body>
-
+        <div id="modelData"></div>
+        
+        <p>&nbsp;</p>
         <div id="mainContent"></div>
 
 
         <script src="js/lib/jquery.min.js"></script>
         <script src="js/lib/underscore.js"></script>
         <script src="js/lib/backbone.js"></script>
-        <script src="js/lib/Backbone.ModelBinder.js"></script>
         <script src="js/lib/bootstrap.js"></script>  
-        <script src="js/models/invoice.js"></script>  
-        <script src="js/views/FormView.js"></script>  
-        <script src="js/app/app.js"></script>
+        <script src="js/one/models/invoice.js"></script>  
+        <script src="js/one/views/FormView.js"></script>  
+        <script src="js/one/app/app.js"></script>
     </body>
 </html>
