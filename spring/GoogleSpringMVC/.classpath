@@ -2,6 +2,8 @@
 <classpath>
 	<classpathentry kind="src" path="src/main/resources"/>
 	<classpathentry kind="src" path="src/main/java"/>
+	<classpathentry kind="src" path="src/test/java"/>
+	<classpathentry kind="src" path="src/test/resources"/>
 	<classpathentry kind="lib" path="C:/Users/Don/Documents/NetBeansProjects/GoogleSpringMVC/src/main/webapp/WEB-INF/lib/activation-1.1.jar"/>
 	<classpathentry kind="lib" path="C:/Users/Don/Documents/NetBeansProjects/GoogleSpringMVC/src/main/webapp/WEB-INF/lib/aopalliance-1.0.jar"/>
 	<classpathentry kind="lib" path="C:/Users/Don/Documents/NetBeansProjects/GoogleSpringMVC/src/main/webapp/WEB-INF/lib/cglib-nodep-2.1_3.jar"/>
@@ -21,7 +23,7 @@
 	<classpathentry kind="lib" path="C:/Users/Don/Documents/NetBeansProjects/GoogleSpringMVC/src/main/webapp/WEB-INF/lib/jaxb-api-2.1.jar"/>
 	<classpathentry kind="lib" path="C:/Users/Don/Documents/NetBeansProjects/GoogleSpringMVC/src/main/webapp/WEB-INF/lib/jaxb-impl-2.0EA3.jar"/>
 	<classpathentry kind="lib" path="C:/Users/Don/Documents/NetBeansProjects/GoogleSpringMVC/src/main/webapp/WEB-INF/lib/jcl-over-slf4j-1.5.8.jar"/>
-	<classpathentry kind="lib" path="C:/Users/Don/Documents/NetBeansProjects/GoogleSpringMVC/src/main/webapp/WEB-INF/lib/jdo2-api-2.3-eb.jar"/>
+	<classpathentry kind="lib" path="C:/Users/Don/Documents/NetBeansProjects/GoogleSpringMVC/src/main/webapp/WEB-INF/lib/jdo2-api-2.3-eb.jar" sourcepath="C:/Users/Don/.m2/repository/javax/jdo/jdo2-api/2.3-eb/jdo2-api-2.3-eb-sources.jar"/>
 	<classpathentry kind="lib" path="C:/Users/Don/Documents/NetBeansProjects/GoogleSpringMVC/src/main/webapp/WEB-INF/lib/jdom-1.0.jar"/>
 	<classpathentry kind="lib" path="C:/Users/Don/Documents/NetBeansProjects/GoogleSpringMVC/src/main/webapp/WEB-INF/lib/joda-time-1.6.2.jar"/>
 	<classpathentry kind="lib" path="C:/Users/Don/Documents/NetBeansProjects/GoogleSpringMVC/src/main/webapp/WEB-INF/lib/joda-time-jsptags-1.0.2.jar"/>
@@ -61,5 +63,7 @@
 	<classpathentry kind="lib" path="C:/Users/Don/Documents/NetBeansProjects/GoogleSpringMVC/src/main/webapp/WEB-INF/lib/validation-api-1.0.0.GA.jar"/>
 	<classpathentry kind="con" path="com.google.appengine.eclipse.core.GAE_CONTAINER"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
+	<classpathentry kind="lib" path="C:/Users/Don/Documents/NetBeansProjects/GoogleSpringMVC/gaejars/appengine-api-stubs-1.8.2.jar"/>
+	<classpathentry kind="lib" path="C:/Users/Don/Documents/NetBeansProjects/GoogleSpringMVC/gaejars/appengine-testing-1.8.2.jar"/>
 	<classpathentry kind="output" path="src/main/webapp/WEB-INF/classes"/>
 </classpath>
