@@ -2,7 +2,7 @@
 <div>
     This controller demonstrates access to the applicationContext by the
     ApplicationContextAware interface, which will load the context into the 
-    application. The context then can be used to look up any bean, this is shown in
+    controller. The context then can be used to look up any bean, this is shown in
     item 1.
     <p>Item 2 item illustrates creating a bean and wiring it into the
         controller by having that done in a spring file. This would be an alterative

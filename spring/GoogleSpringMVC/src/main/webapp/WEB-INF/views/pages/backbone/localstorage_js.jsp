@@ -11,6 +11,7 @@
 
 
 <script type="text/template" id="listTemplate">
+    <div class="warning">Tested only in Chrome</div>
     <div class="row span6">
     <table class="fade in table table-condensed table-hover">
     <thead>
