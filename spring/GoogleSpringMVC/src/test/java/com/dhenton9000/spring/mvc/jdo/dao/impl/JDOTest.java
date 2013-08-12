@@ -20,7 +20,8 @@ import com.google.appengine.api.datastore.Key;
 import com.google.appengine.api.datastore.KeyFactory;
 import com.google.appengine.tools.development.testing.LocalDatastoreServiceTestConfig;
 import com.google.appengine.tools.development.testing.LocalServiceTestHelper;
-
+import org.datanucleus.store.appengine.jdo.DatastoreJDOPersistenceManagerFactory;
+import org.junit.Ignore;
 /**
  * taking jdo for a walk
  * https://developers.google.com/appengine/docs/java/datastore/jdo/queries
@@ -34,6 +35,7 @@ import com.google.appengine.tools.development.testing.LocalServiceTestHelper;
  * 
  * 
  */
+
 public class JDOTest {
 	private static final String SAMPLE_CITY_NAME = "Bodega Bay";
 	private static final int SAMPLE_ID = 666;
