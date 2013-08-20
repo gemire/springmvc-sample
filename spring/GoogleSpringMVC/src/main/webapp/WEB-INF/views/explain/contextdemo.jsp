@@ -1,4 +1,4 @@
-<h3>Spring Context Demonsrations</h3>
+<h3>Spring Context Demonstrations</h3>
 <div>
     This controller demonstrates access to the applicationContext by the
     ApplicationContextAware interface, which will load the context into the 
