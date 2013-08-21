@@ -47,18 +47,15 @@ zzzzzzzzzzzzzzzzzzzzzzz
         <level value="DEBUG"/>
     </logger>
     
-    <logger name="com.dhenton9000.jpa.dao.support">
+    <logger name="com.dhenton9000.jpa">
         <level value="ERROR"/>
     </logger>
 
     
-    <logger name="com.ibatis">
-        <level value="DEBUG"/>
+    <logger name="org.hibernate">
+        <level value="ERROR"/>
     </logger>
-      <logger name="java.sql">
-        <level value="DEBUG"/>
-    </logger>
-     <logger name="java.sql.ResultSet">
+    <logger name="com.mchange">
         <level value="ERROR"/>
     </logger>
 
@@ -78,7 +75,7 @@ zzzzzzzzzzzzzzzzzzzzzzz
     -->
 
     <root>
-        <priority value="ERROR"/>
+        <priority value="DEBUG"/>
         <appender-ref ref="CONSOLE"/>
         <appender-ref ref="FILE"/>
     </root>
