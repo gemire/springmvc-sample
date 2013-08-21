@@ -4,15 +4,11 @@
  */
 package com.dhenton9000.wicket.pages.data;
 
-import com.dhenton9000.jpa.entities.Restaurant;
 import com.dhenton9000.wicket.dao.service.IRestaurantService;
 import com.dhenton9000.wicket.data.providers.RestaurantDataProvider;
 import com.dhenton9000.wicket.data.providers.RestaurantsDataView;
 import com.dhenton9000.wicket.pages.TemplatePage;
-import org.apache.wicket.markup.html.link.Link;
 import org.apache.wicket.markup.html.navigation.paging.PagingNavigator;
-import org.apache.wicket.markup.html.panel.Panel;
-import org.apache.wicket.model.IModel;
 import org.apache.wicket.spring.injection.annot.SpringBean;
 
 /**
@@ -23,7 +19,7 @@ public class DataPaging extends TemplatePage {
 
     @SpringBean
     private IRestaurantService service;
-    private Restaurant selected = null;
+    
 
     public DataPaging() {
         super();
@@ -42,12 +38,6 @@ public class DataPaging extends TemplatePage {
         this.add(pNav);
         
     }
-    
-    
-    
- 
-    
-    
     
 }//
 
