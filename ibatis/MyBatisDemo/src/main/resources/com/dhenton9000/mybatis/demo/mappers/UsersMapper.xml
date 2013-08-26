@@ -5,16 +5,64 @@
  
 <mapper namespace="com.dhenton9000.mybatis.demo.mappers.UsersMapper">
  
+    <!-- this will get users and groups via nested select paired with get User -->
     <resultMap id="usersResult" type="Users">
         <result property="userId" column="USERID"/>
         <result property="userName" column="USERNAME"/>
         <collection property="groups" column="USERID" javaType="ArrayList" ofType="Groups"
                     select="selectGroups" resultMap="groupsResult"/>
     </resultMap>
+    
+    <resultMap id="usersResultNested" type="Users">
+        <result property="userId" column="USERID"/>
+        <result property="userName" column="USERNAME"/>
+        <collection property="groups" ofType="Groups">
+            <id property="id" column="GROUP_ID" />
+             <result property="groupName" column="GROUP_NAME" />
+        </collection>
+    </resultMap>
+    
  
+    <!-- this is in the interface UsersMapper.java -->
     <select id="getUser"  parameterType="java.lang.String" resultMap="usersResult">
         SELECT * FROM USERS WHERE USERID = #{id}
     </select>
+    
+    <select id="getUserByNested" parameterType="java.lang.String" resultMap="usersResultNested">
+            <include refid="usersSQL" />
+            WHERE USERID =   #{id}
+        
+    </select>
+    
+    <sql id="usersSQL">
+        
+        SELECT USERS.USERID, USERS.USERNAME ,
+            GROUPS.ID as GROUP_ID, GROUPS.GROUP_NAME
+            FROM USERS INNER JOIN GROUP_ASSIGNMENTS
+            ON USERS.USERID = GROUP_ASSIGNMENTS.USER_ID
+            INNER JOIN GROUPS
+            ON GROUPS.ID = GROUP_ASSIGNMENTS.GROUP_ID
+        
+    </sql>
+    
+    <select id="getAllUsersWithGroupsWithNonNestedCollection" parameterType="com.dhenton9000.mybatis.demo.model.LimitParms" resultMap="usersResultNested">
+        
+        <include refid="usersSQL" />
+        order by USERNAME
+        OFFSET #{offset} ROWS FETCH NEXT #{limit} ROW ONLY
+        
+    </select>
+    
+       <select id="getAllUsersWithGroupsWithNestedSql" parameterType="com.dhenton9000.mybatis.demo.model.LimitParms" resultMap="usersResult">
+        
+        SELECT * FROM USERS 
+        order by USERNAME
+        OFFSET #{offset} ROWS FETCH NEXT #{limit} ROW ONLY
+        
+    </select>
+ 
+    
+ 
     
     
     <resultMap id="groupsResult" type="Groups">
@@ -48,13 +96,13 @@
       </selectKey>
     </insert>
  
-    <update id="update" parameterType="Contact">
-        UPDATE CONTACT
-        SET
-            CONTACT_EMAIL = #{email},
-            CONTACT_NAME = #{name},
-            CONTACT_PHONE = #{phone}
-        WHERE CONTACT_ID = #{id};
-  </update>
- -->
+       <update id="update" parameterType="Contact">
+           UPDATE CONTACT
+           SET
+               CONTACT_EMAIL = #{email},
+               CONTACT_NAME = #{name},
+               CONTACT_PHONE = #{phone}
+           WHERE CONTACT_ID = #{id};
+     </update>
+    -->
 </mapper>

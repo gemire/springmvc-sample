@@ -4,7 +4,9 @@
  */
 package com.dhenton9000.mybatis.demo.mappers;
 
+import com.dhenton9000.mybatis.demo.model.LimitParms;
 import com.dhenton9000.mybatis.demo.model.Users;
+import java.util.List;
 
 /**
  *
@@ -13,4 +15,10 @@ import com.dhenton9000.mybatis.demo.model.Users;
 public interface UsersMapper {
     
     Users getUser(String username);
+    
+    Users getUserByNested(String username);
+    
+    List<Users> getAllUsersWithGroupsWithNonNestedCollection(LimitParms p);
+    
+    List<Users> getAllUsersWithGroupsWithNestedSql(LimitParms p);
 }
