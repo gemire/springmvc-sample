@@ -22,6 +22,7 @@ import org.springframework.context.support.ClassPathXmlApplicationContext;
  * to get the children or a ResultHandlerExample overrides, for the latter see:
  * 
  * https://code.google.com/p/mybatis/wiki/ResultHandlerExample
+ * http://stackoverflow.com/questions/11798479/mybatis-mapping-multiple-columns-to-an-array
  * 
  * @author dhenton
  */
