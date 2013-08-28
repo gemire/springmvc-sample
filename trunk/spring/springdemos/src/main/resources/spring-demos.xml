@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:p="http://www.springframework.org/schema/p"
+       xmlns:util="http://www.springframework.org/schema/util"
+
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+          http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd
+          http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util.xsd
+">
+    	<!--
+    
+            <context:component-scan base-package="com.stuff" />
+    
+    
+    -->
+    
+    <!-- a class that needs a multi arg function call to set up -->
+    <bean id="multiCallObj" class="com.dhenton9000.springdemos.MultiCall" />
+
+    <!--  use this to change the passed parameters -->
+    <bean
+        class="org.springframework.beans.factory.config.MethodInvokingFactoryBean">
+        <property name="targetObject">
+            <ref local="multiCallObj" />
+        </property>
+        <property name="targetMethod">
+            <value>set</value>
+        </property>
+        <property name="arguments">
+            <list>
+                <value>Hello</value>
+                <value>,Bonzo!</value>
+            </list>
+        </property>
+    </bean>
+    <!-- this is tripped by the autowire in the test for DependencyDemo -->
+    <bean id="scanned.Dependency" class="com.dhenton9000.springdemos.mockito.MockitoFactoryBean">
+        <constructor-arg name="classToBeMocked"
+                         value="com.dhenton9000.springdemos.ScannedDependency" />
+    </bean>
+    <bean id="" class="com.dhenton9000.springdemos.DependencyDemo" />
+        
+
+</beans>
