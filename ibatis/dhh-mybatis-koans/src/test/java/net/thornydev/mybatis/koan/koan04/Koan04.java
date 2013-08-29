@@ -1,4 +1,4 @@
-package net.thornydev.mybatis.koan.koan03;
+package net.thornydev.mybatis.koan.koan04;
 
 import static org.junit.Assert.*;
 
@@ -18,22 +18,27 @@ import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
-// In Koan03, we again create an xml mapper file but this time it returns
-// a domain object (a Country object that maps to the country table
-// in the sakila database).
+// In Koan04, we do the exact same queries as Koan03, except
+// that we do not use an "AS" clause in the SQL to change underscore
+// to camelCase, like this:
+//    SELECT country_id AS id, country, last_update
+// instead of
+//    SELECT country_id AS id, country, last_update AS lastUpdate
+//
+// (Note: we still need the "country_id AS id" part since we changed the
+//        property name, not just modified it from underscore to camelCase.)
 //
 // To complete this koan test you will need to edit:
-// 1. all the TODO entries in this koan
-// 2. the koan03-config.xml file to specify a TypeAlias
-// 3. the mapper xml file to have the right SQL queries and MyBatis XML entries
-public class Koan03 {
+// 1. the koan04-config.xml file to specify the setting to get auto-mapping to
+//    camelCase turned on
+public class Koan04 {
 
   static SqlSessionFactory sessionFactory;
   SqlSession session;
 
   @BeforeClass
   public static void setUpBeforeClass() throws Exception {
-    String resource = "net/thornydev/mybatis/koan/koan03/koan03-config.xml";
+    String resource = "net/thornydev/mybatis/koan/koan04/koan04-config.xml";
     InputStream inputStream = Resources.getResourceAsStream(resource);
     sessionFactory = new SqlSessionFactoryBuilder().build(inputStream);
     inputStream.close();
