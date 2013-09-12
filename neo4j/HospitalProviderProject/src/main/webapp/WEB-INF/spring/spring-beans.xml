@@ -18,7 +18,7 @@
     </bean>
       
     <bean id="graphDatabaseService" class="org.neo4j.kernel.EmbeddedGraphDatabase" destroy-method="shutdown">
-        <constructor-arg index="0" value="/home/dhenton/neo4j/data/graph.db"/>
+        <constructor-arg index="0" value="target/data/graph.db"/>
         <constructor-arg index="1">
             <map>
                 <entry key="allow_store_upgrade" value="true"/>

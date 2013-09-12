@@ -30,7 +30,7 @@ public class HospitalDbMaker {
     public static final String STATE_ROOT_LABEL = "STATES";
     public static final String PROGRAM_NAME = "Blue Cross";
     private GraphDatabaseService graphDb;
-    public static final String DB_LOCATION = "/home/dhenton/neo4j/mydata/hospital.db";
+    public static final String DB_LOCATION = "target/data/graph.db";
     private HospitalServiceImpl jService = new HospitalServiceImpl();
     
     private  HospitalNeo4jDao  hospitalNeo4jDao = new HospitalNeo4jDaoImpl();
@@ -208,7 +208,7 @@ public class HospitalDbMaker {
     public static void main(String[] args) {
         HospitalDbMaker hospitialDbCreator = new HospitalDbMaker();
         DatabaseHelper dbHelper = new DatabaseHelper();
-
+        logger.info("Begin hospital db");
         try {
             EmbeddedGraphDatabase g = dbHelper.createDatabase(DB_LOCATION, true);
             hospitialDbCreator.setNeo4jDb(g);
@@ -217,5 +217,7 @@ public class HospitalDbMaker {
         } catch (Exception ex) {
             logger.error("Problem ", ex);
         }
+        logger.info("complete");
+        
     }
 }
