@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<classpath>
+	<classpathentry kind="src" path="src"/>
+	<classpathentry kind="src" path="test"/>
+	<classpathentry exported="true" kind="con" path="com.google.appengine.eclipse.core.GAE_CONTAINER"/>
+	<classpathentry exported="true" kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
+	<classpathentry exported="true" kind="lib" path="/Users/dhenton/projects/GoogleSpringMVCEclipse/spring jars/activation-1.1.jar"/>
+	<classpathentry exported="true" kind="lib" path="/Users/dhenton/projects/GoogleSpringMVCEclipse/spring jars/aopalliance-1.0.jar"/>
+	<classpathentry exported="true" kind="lib" path="/Users/dhenton/projects/GoogleSpringMVCEclipse/spring jars/cglib-nodep-2.1_3.jar"/>
+	<classpathentry exported="true" kind="lib" path="/Users/dhenton/projects/GoogleSpringMVCEclipse/spring jars/commons-beanutils-1.8.3.jar"/>
+	<classpathentry exported="true" kind="lib" path="/Users/dhenton/projects/GoogleSpringMVCEclipse/spring jars/commons-collections-3.1.jar"/>
+	<classpathentry exported="true" kind="lib" path="/Users/dhenton/projects/GoogleSpringMVCEclipse/spring jars/commons-digester-2.0.jar"/>
+	<classpathentry exported="true" kind="lib" path="/Users/dhenton/projects/GoogleSpringMVCEclipse/spring jars/commons-fileupload-1.2.2.jar"/>
+	<classpathentry exported="true" kind="lib" path="/Users/dhenton/projects/GoogleSpringMVCEclipse/spring jars/commons-io-1.3.2.jar"/>
+	<classpathentry exported="true" kind="lib" path="/Users/dhenton/projects/GoogleSpringMVCEclipse/spring jars/commons-lang-2.1.jar"/>
+	<classpathentry exported="true" kind="lib" path="/Users/dhenton/projects/GoogleSpringMVCEclipse/spring jars/commons-logging-1.0.4.jar"/>
+	<classpathentry exported="true" kind="lib" path="/Users/dhenton/projects/GoogleSpringMVCEclipse/spring jars/displaytag-1.1.jar"/>
+	<classpathentry exported="true" kind="lib" path="/Users/dhenton/projects/GoogleSpringMVCEclipse/spring jars/hibernate-validator-4.1.0.Final.jar"/>
+	<classpathentry exported="true" kind="lib" path="/Users/dhenton/projects/GoogleSpringMVCEclipse/spring jars/itext-1.3.jar"/>
+	<classpathentry exported="true" kind="lib" path="/Users/dhenton/projects/GoogleSpringMVCEclipse/spring jars/jackson-core-asl-1.8.3.jar"/>
+	<classpathentry exported="true" kind="lib" path="/Users/dhenton/projects/GoogleSpringMVCEclipse/spring jars/jackson-mapper-asl-1.8.3.jar"/>
+	<classpathentry exported="true" kind="lib" path="/Users/dhenton/projects/GoogleSpringMVCEclipse/spring jars/jaxb-api-2.0EA3.jar"/>
+	<classpathentry exported="true" kind="lib" path="/Users/dhenton/projects/GoogleSpringMVCEclipse/spring jars/jaxb-api-2.1.jar"/>
+	<classpathentry exported="true" kind="lib" path="/Users/dhenton/projects/GoogleSpringMVCEclipse/spring jars/jaxb-impl-2.0EA3.jar"/>
+	<classpathentry exported="true" kind="lib" path="/Users/dhenton/projects/GoogleSpringMVCEclipse/spring jars/jcl-over-slf4j-1.5.8.jar"/>
+	<classpathentry exported="true" kind="lib" path="/Users/dhenton/projects/GoogleSpringMVCEclipse/spring jars/jdom-1.0.jar"/>
+	<classpathentry exported="true" kind="lib" path="/Users/dhenton/projects/GoogleSpringMVCEclipse/spring jars/joda-time-1.6.2.jar"/>
+	<classpathentry exported="true" kind="lib" path="/Users/dhenton/projects/GoogleSpringMVCEclipse/spring jars/joda-time-jsptags-1.0.2.jar"/>
+	<classpathentry exported="true" kind="lib" path="/Users/dhenton/projects/GoogleSpringMVCEclipse/spring jars/jsr250-api-1.0.jar"/>
+	<classpathentry exported="true" kind="lib" path="/Users/dhenton/projects/GoogleSpringMVCEclipse/spring jars/junit-4.8.2.jar"/>
+	<classpathentry exported="true" kind="lib" path="/Users/dhenton/projects/GoogleSpringMVCEclipse/spring jars/log4j-1.2.14.jar"/>
+	<classpathentry exported="true" kind="lib" path="/Users/dhenton/projects/GoogleSpringMVCEclipse/spring jars/rome-1.0.0.jar"/>
+	<classpathentry exported="true" kind="lib" path="/Users/dhenton/projects/GoogleSpringMVCEclipse/spring jars/servlet-api-2.5.jar"/>
+	<classpathentry exported="true" kind="lib" path="/Users/dhenton/projects/GoogleSpringMVCEclipse/spring jars/slf4j-api-1.5.2.jar"/>
+	<classpathentry exported="true" kind="lib" path="/Users/dhenton/projects/GoogleSpringMVCEclipse/spring jars/slf4j-log4j12-1.5.2.jar"/>
+	<classpathentry exported="true" kind="lib" path="/Users/dhenton/projects/GoogleSpringMVCEclipse/spring jars/spring-aop-3.2.3.RELEASE.jar"/>
+	<classpathentry exported="true" kind="lib" path="/Users/dhenton/projects/GoogleSpringMVCEclipse/spring jars/spring-beans-3.2.3.RELEASE.jar"/>
+	<classpathentry exported="true" kind="lib" path="/Users/dhenton/projects/GoogleSpringMVCEclipse/spring jars/spring-context-3.2.3.RELEASE.jar"/>
+	<classpathentry exported="true" kind="lib" path="/Users/dhenton/projects/GoogleSpringMVCEclipse/spring jars/spring-context-support-3.2.3.RELEASE.jar"/>
+	<classpathentry exported="true" kind="lib" path="/Users/dhenton/projects/GoogleSpringMVCEclipse/spring jars/spring-core-3.2.3.RELEASE.jar"/>
+	<classpathentry exported="true" kind="lib" path="/Users/dhenton/projects/GoogleSpringMVCEclipse/spring jars/spring-expression-3.2.3.RELEASE.jar"/>
+	<classpathentry exported="true" kind="lib" path="/Users/dhenton/projects/GoogleSpringMVCEclipse/spring jars/spring-jdbc-3.2.3.RELEASE.jar"/>
+	<classpathentry exported="true" kind="lib" path="/Users/dhenton/projects/GoogleSpringMVCEclipse/spring jars/spring-orm-3.2.3.RELEASE.jar"/>
+	<classpathentry exported="true" kind="lib" path="/Users/dhenton/projects/GoogleSpringMVCEclipse/spring jars/spring-oxm-3.2.3.RELEASE.jar"/>
+	<classpathentry exported="true" kind="lib" path="/Users/dhenton/projects/GoogleSpringMVCEclipse/spring jars/spring-security-acl-3.1.4.RELEASE.jar"/>
+	<classpathentry exported="true" kind="lib" path="/Users/dhenton/projects/GoogleSpringMVCEclipse/spring jars/spring-security-config-3.1.4.RELEASE.jar"/>
+	<classpathentry exported="true" kind="lib" path="/Users/dhenton/projects/GoogleSpringMVCEclipse/spring jars/spring-security-core-3.1.4.RELEASE.jar"/>
+	<classpathentry exported="true" kind="lib" path="/Users/dhenton/projects/GoogleSpringMVCEclipse/spring jars/spring-security-taglibs-3.1.4.RELEASE.jar"/>
+	<classpathentry exported="true" kind="lib" path="/Users/dhenton/projects/GoogleSpringMVCEclipse/spring jars/spring-security-web-3.1.4.RELEASE.jar"/>
+	<classpathentry exported="true" kind="lib" path="/Users/dhenton/projects/GoogleSpringMVCEclipse/spring jars/spring-tx-3.2.3.RELEASE.jar"/>
+	<classpathentry exported="true" kind="lib" path="/Users/dhenton/projects/GoogleSpringMVCEclipse/spring jars/spring-web-3.2.3.RELEASE.jar"/>
+	<classpathentry exported="true" kind="lib" path="/Users/dhenton/projects/GoogleSpringMVCEclipse/spring jars/spring-webmvc-3.2.3.RELEASE.jar"/>
+	<classpathentry exported="true" kind="lib" path="/Users/dhenton/projects/GoogleSpringMVCEclipse/spring jars/spring-webmvc-portlet-3.2.3.RELEASE.jar"/>
+	<classpathentry exported="true" kind="lib" path="/Users/dhenton/projects/GoogleSpringMVCEclipse/spring jars/standard-1.1.1.jar"/>
+	<classpathentry exported="true" kind="lib" path="/Users/dhenton/projects/GoogleSpringMVCEclipse/spring jars/stax-api-1.0-2.jar"/>
+	<classpathentry exported="true" kind="lib" path="/Users/dhenton/projects/GoogleSpringMVCEclipse/spring jars/tiles-api-2.2.2.jar"/>
+	<classpathentry exported="true" kind="lib" path="/Users/dhenton/projects/GoogleSpringMVCEclipse/spring jars/tiles-core-2.2.2.jar"/>
+	<classpathentry exported="true" kind="lib" path="/Users/dhenton/projects/GoogleSpringMVCEclipse/spring jars/tiles-jsp-2.2.2.jar"/>
+	<classpathentry exported="true" kind="lib" path="/Users/dhenton/projects/GoogleSpringMVCEclipse/spring jars/tiles-servlet-2.2.2.jar"/>
+	<classpathentry exported="true" kind="lib" path="/Users/dhenton/projects/GoogleSpringMVCEclipse/spring jars/tiles-template-2.2.2.jar"/>
+	<classpathentry exported="true" kind="lib" path="/Users/dhenton/projects/GoogleSpringMVCEclipse/spring jars/transaction-api-1.1.jar"/>
+	<classpathentry exported="true" kind="lib" path="/Users/dhenton/projects/GoogleSpringMVCEclipse/spring jars/validation-api-1.0.0.GA.jar"/>
+	<classpathentry exported="true" kind="lib" path="/Users/dhenton/projects/GoogleSpringMVCEclipse/spring jars/appengine-testing-1.8.2.jar"/>
+	<classpathentry kind="output" path="war/WEB-INF/classes"/>
+</classpath>
