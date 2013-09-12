@@ -61,5 +61,6 @@
 	<classpathentry exported="true" kind="lib" path="/Users/dhenton/projects/GoogleSpringMVCEclipse/spring jars/transaction-api-1.1.jar"/>
 	<classpathentry exported="true" kind="lib" path="/Users/dhenton/projects/GoogleSpringMVCEclipse/spring jars/validation-api-1.0.0.GA.jar"/>
 	<classpathentry exported="true" kind="lib" path="/Users/dhenton/projects/GoogleSpringMVCEclipse/spring jars/appengine-testing-1.8.2.jar"/>
+	<classpathentry kind="lib" path="/Users/dhenton/projects/GoogleSpringMVCEclipse/extra jars/appengine-api-stubs-1.8.2.jar"/>
 	<classpathentry kind="output" path="war/WEB-INF/classes"/>
 </classpath>

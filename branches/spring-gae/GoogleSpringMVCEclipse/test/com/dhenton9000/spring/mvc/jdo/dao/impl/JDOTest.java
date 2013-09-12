@@ -21,7 +21,7 @@ import com.google.appengine.api.datastore.KeyFactory;
 import com.google.appengine.tools.development.testing.LocalDatastoreServiceTestConfig;
 import com.google.appengine.tools.development.testing.LocalServiceTestHelper;
 //import org.datanucleus.store.appengine.jdo.DatastoreJDOPersistenceManagerFactory;
-import org.junit.Ignore;
+
 /**
  * taking jdo for a walk
  * https://developers.google.com/appengine/docs/java/datastore/jdo/queries
