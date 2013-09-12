@@ -191,7 +191,7 @@
 </div>
 
 
-<div style="position:absolute;top: 50px; left: 600px; width: 350px; height: 500px;overflow:auto">
+<div style="position:absolute;top: 50px; left: 600px; width: 350px; height: 425px; overflow:auto">
     <h3>Nodes</h3> 
     <div  id="tree1"></div>
 </div>
