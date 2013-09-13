@@ -28,6 +28,7 @@ import com.dhenton9000.wicket.pages.resources.ImageResourceReference;
 import com.dhenton9000.wicket.pages.security.SignOutPage;
 import java.util.TimeZone;
 import org.apache.wicket.RestartResponseAtInterceptPageException;
+import org.apache.wicket.RuntimeConfigurationType;
 import org.apache.wicket.Session;
 import org.apache.wicket.application.IComponentInstantiationListener;
 import org.apache.wicket.authorization.Action;
@@ -81,12 +82,20 @@ public class Application extends WebApplication {
         getMarkupSettings().setStripWicketTags(true);
         getResourceSettings().setPackageResourceGuard(new PackageResourceGuard());
 
-        getDebugSettings().setOutputMarkupContainerClassName(true);
+
 
         // used for selenium testing
         //http://www.wijsmullerbros.nl/content/wicket-selenium
-        getDebugSettings().setOutputComponentPath(true);
-        getDebugSettings().setOutputMarkupContainerClassName(true);
+
+
+        if (RuntimeConfigurationType.DEVELOPMENT.equals(this.getConfigurationType())) {
+            getDebugSettings().setOutputComponentPath(true);
+            getDebugSettings().setOutputMarkupContainerClassName(true);
+        }
+
+
+
+
 
         IComponentInstantiationListener spListener =
                 new SpringComponentInjector(this, applicationContext, true);
@@ -155,7 +164,7 @@ public class Application extends WebApplication {
             CompoundUserPage.class, LightboxPage.class, MaintainRestaurantsTwo.class,
             ApplicationsUsers.class, SimpleEventPage.class, OnHoverPage.class,
             SimpleListViewRepeater.class, MaintainApplications.class,
-            AjaxFormPage.class, BehaviorsPage.class,DataPaging.class,
+            AjaxFormPage.class, BehaviorsPage.class, DataPaging.class,
             FormInputWithList.class, ModalInputPage.class, SignIn.class, SignOutPage.class
         };
 
