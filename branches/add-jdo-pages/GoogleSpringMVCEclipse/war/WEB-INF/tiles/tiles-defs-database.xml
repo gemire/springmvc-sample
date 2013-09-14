@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8" ?> <!DOCTYPE tiles-definitions PUBLIC        "-//Apache Software Foundation//DTD Tiles Configuration 2.0//EN"        "http://tiles.apache.org/dtds/tiles-config_2_0.dtd">
+<tiles-definitions>
+
+	<!--database jdo  -->
+
+	<definition name="tiles.base.database.definition" extends="tiles.base.definition">
+
+		<put-attribute name="jsscripts"
+			value="/WEB-INF/views/layout/database_scripts.jsp" />
+	</definition>
+
+	<definition name="tiles.database.simple.restaurant" extends="tiles.base.database.definition">
+		<put-attribute name="title" value="Simple Database Restaurant Entry" />
+		<put-attribute name="body"
+			value="/WEB-INF/views/pages/database/simple_restaurant_body.jsp" />
+		<put-attribute name="subTitle" value="JDO Persistence" />
+		<put-attribute name="explainPanel"
+			value="/WEB-INF/views/explain/database/simple_restaurant.jsp" />
+		<!-- <put-attribute name="jsscripts_app_specific" value="/WEB-INF/views/pages/backbone/localstorage_js.jsp"			/> 
+			<put-attribute name="jsscripts" value="/WEB-INF/views/layout/backbone_scripts.jsp" 	/> -->
+	</definition>
+
+</tiles-definitions>
