@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8" ?> <!DOCTYPE tiles-definitions PUBLIC        "-//Apache Software Foundation//DTD Tiles Configuration 2.0//EN"        "http://tiles.apache.org/dtds/tiles-config_2_0.dtd">
+<tiles-definitions>
+
+    <!-- bootstrap -->
+	
+    <definition name="tiles.bootstrap.tabledemo" extends="tiles.base.definition">
+        <put-attribute name="title" value="Bootstrap Table" />
+        <put-attribute name="body"
+                       value="/WEB-INF/views/pages/bootstrap/tabledemo.jsp" />
+        <put-attribute name="subTitle" value="Bootstrap Table Demonstration" />
+        <put-attribute name="explainPanel" value="/WEB-INF/views/explain/bootstrap/tabledemo.jsp" />
+    </definition>
+ 
+    <definition name="tiles.bootstrap.base.definition" extends="tiles.base.definition">
+        <put-attribute name="explainPanel" value="/WEB-INF/views/explain/bootstrap/components.jsp" />
+    </definition>
+ 
+    <definition name="tiles.bootstrap.buttons.layout" extends="tiles.bootstrap.base.definition">
+        <put-attribute name="title" value="Button Samples" />
+        <put-attribute name="pageTitle" value="Button Samples" />
+        <put-attribute name="body" value="/WEB-INF/views/pages/bootstrap/components/buttons_body.jsp" />
+    </definition>
+
+    <definition name="tiles.bootstrap.dropdowns.layout" extends="tiles.bootstrap.base.definition">
+        <put-attribute name="title" value="Dropdown Samples" />
+        <put-attribute name="pageTitle" value="Dropdowns Samples" />
+        <put-attribute name="body" value="/WEB-INF/views/pages/bootstrap/components/dropdowns_body.jsp" />
+    </definition>
+    <definition name="tiles.bootstrap.tabs.layout" extends="tiles.bootstrap.base.definition">
+        <put-attribute name="title" value="Tab Samples" />
+        <put-attribute name="pageTitle" value="Tab Samples" />
+        <put-attribute name="body" value="/WEB-INF/views/pages/bootstrap/components/tabs_body.jsp" />
+    </definition>
+    <definition name="tiles.bootstrap.modals.layout" extends="tiles.bootstrap.base.definition">
+        <put-attribute name="title" value="Modal Samples" />
+        <put-attribute name="pageTitle" value="Modal Samples" />
+        <put-attribute name="body" value="/WEB-INF/views/pages/bootstrap/components/modals_body.jsp" />
+    </definition>
+
+	
+</tiles-definitions>
