@@ -1,0 +1,182 @@
+<?xml version="1.0" encoding="UTF-8" ?> <!DOCTYPE tiles-definitions PUBLIC        "-//Apache Software Foundation//DTD Tiles Configuration 2.0//EN"        "http://tiles.apache.org/dtds/tiles-config_2_0.dtd">
+<tiles-definitions>
+    <definition name="tiles.base.definition" template="/WEB-INF/views/layout/layout.jsp">
+        <put-attribute name="title" value="" />
+        <put-attribute name="header" value="/WEB-INF/views/layout/header.jsp" />
+        <put-attribute name="menu" value="/WEB-INF/views/layout/menu.jsp" />
+        <put-attribute name="subTitle" value="Generic" />
+        <put-attribute name="body" value="" />
+        <put-attribute name="jsscripts" value="/WEB-INF/views/layout/general_scripts.jsp" />
+        <put-attribute name="jsscripts_app_specific" value="" />
+        <put-attribute name="explainPanel" value="/WEB-INF/views/explain/default.jsp" />
+        <put-attribute name="footer" value="/WEB-INF/views/layout/footer.jsp" />
+    </definition>
+
+
+    <definition name="tiles.homepage" extends="tiles.base.definition">
+        <put-attribute name="title" value="HomePage" />
+        <put-attribute name="subTitle" value="Homepage" />
+        <put-attribute name="body"
+                               value="/WEB-INF/views/pages/homepage_body.jsp" />
+        <put-attribute name="explainPanel" value="/WEB-INF/views/explain/homepage.jsp" />	
+    </definition>
+
+    <definition name="tiles.creditspage" extends="tiles.base.definition">
+        <put-attribute name="title" value="Credits Page" />
+        <put-attribute name="subTitle" value="Code Sources" />
+        <put-attribute name="body"
+                               value="/WEB-INF/views/pages/creditspage_body.jsp" />
+        <put-attribute name="explainPanel" value="/WEB-INF/views/explain/creditspage.jsp" />	
+    </definition>
+
+
+    <definition name="tiles.tag.demo" extends="tiles.base.definition">
+        <put-attribute name="title" value="Tag Demo" />
+        <put-attribute name="subTitle" value="New Tag Method Demonstation" />
+        <put-attribute name="body"
+                               value="/WEB-INF/views/pages/newtags_body.jsp" />
+        <put-attribute name="explainPanel" value="/WEB-INF/views/explain/newtags.jsp" />	
+    </definition>
+
+    <definition name="tiles.jsondemo.entry" extends="tiles.base.definition">
+        <put-attribute name="title" value="Json Demo" />
+        <put-attribute name="body"
+                               value="/WEB-INF/views/pages/jsondemo_body.jsp" />
+        <put-attribute name="subTitle" value="Json Demo Entry" />
+        <put-attribute name="explainPanel" value="/WEB-INF/views/explain/jsondemo.jsp" />
+    </definition>
+
+
+    <definition name="tiles.getpostdemo" extends="tiles.base.definition">
+        <put-attribute name="title" value="GET PUT Demo" />
+        <put-attribute name="body"
+                               value="/WEB-INF/views/pages/getput_body.jsp" />
+        <put-attribute name="subTitle" value="Get Post Demonstration" />
+        <put-attribute name="explainPanel" value="/WEB-INF/views/explain/getPostdemo.jsp" />
+    </definition>
+
+    <definition name="tiles.standard.args" extends="tiles.base.definition">
+        <put-attribute name="title" value="Standard Argument Demo" />
+        <put-attribute name="body"
+                               value="/WEB-INF/views/pages/standardargs_body.jsp" />
+        <put-attribute name="subTitle" value="Standard Argument Demonstration" />
+        <put-attribute name="explainPanel" value="/WEB-INF/views/explain/standardArgs.jsp" />
+    </definition>
+
+    <definition name="tiles.simple.view" extends="tiles.base.definition">
+        <put-attribute name="title" value="Simple View Demo" />
+        <put-attribute name="body"
+                               value="/WEB-INF/views/pages/view_html_body.jsp" />
+        <put-attribute name="subTitle" value="View Demonstration" />
+        <put-attribute name="explainPanel" value="/WEB-INF/views/explain/view_html.jsp" />
+    </definition>
+
+    <definition name="tiles.nontiles" extends="tiles.base.definition">
+        <put-attribute name="title" value="Non Tile demos" />
+        <put-attribute name="body"
+                               value="/WEB-INF/views/pages/nontiles_body.jsp" />
+        <put-attribute name="subTitle"
+                               value="Items that are outside of tiles definitions" />
+        <put-attribute name="explainPanel" value="/WEB-INF/views/explain/nontiles.jsp" />	
+    </definition>
+    <definition name="tiles.processing.input" extends="tiles.base.definition">
+        <put-attribute name="title" value="Processing input" />
+        <put-attribute name="body"
+                               value="/WEB-INF/views/pages/messageconverters_body.jsp" />
+        <put-attribute name="subTitle" value="Processing Input via Message Converters" />
+        <put-attribute name="explainPanel" value="/WEB-INF/views/explain/processinginput.jsp" />	
+    </definition>
+    <definition name="tiles.forms.demo" extends="tiles.base.definition">
+        <put-attribute name="title" value="Form Submission Demos" />
+        <put-attribute name="body"
+                               value="/WEB-INF/views/pages/contactform_body.jsp" />
+        <put-attribute name="subTitle" value="Processing input from forms" />
+    </definition>
+    <definition name="tiles.servlet.functions" extends="tiles.base.definition">
+        <put-attribute name="title" value="Cookies, REST parameters, etc." />
+        <put-attribute name="body"
+                               value="/WEB-INF/views/pages/servletfunctions_body.jsp" />
+        <put-attribute name="subTitle" value="Cookies, REST parameters, etc." />
+        <put-attribute name="explainPanel" value="/WEB-INF/views/explain/servletfunctions.jsp" />
+    </definition>
+
+    <definition name="tiles.complexforms" extends="tiles.base.definition">
+        <put-attribute name="title" value="Complex Forms" />
+        <put-attribute name="body"
+                               value="/WEB-INF/views/pages/complexforms_body.jsp" />
+        <put-attribute name="subTitle" value="Processing Input From Forms" />
+        <put-attribute name="explainPanel" value="/WEB-INF/views/explain/complexforms.jsp" />
+    </definition>
+
+    <definition name="tiles.imagegenerator" extends="tiles.base.definition">
+        <put-attribute name="title" value="Generating Images" />
+        <put-attribute name="body"
+                               value="/WEB-INF/views/pages/imagegenerator_body.jsp" />
+        <put-attribute name="subTitle"
+                               value="Generating Images with Spring MVC 3" />
+        <put-attribute name="explainPanel" value="/WEB-INF/views/explain/imagegenerator.jsp" />	
+    </definition>
+
+    <definition name="tiles.errorsdemo" extends="tiles.base.definition">
+        <put-attribute name="title" value="Error Handling" />
+        <put-attribute name="body"
+                               value="/WEB-INF/views/pages/errorsdemo_body.jsp" />
+        <put-attribute name="subTitle" value="Error Handling" />
+        <put-attribute name="explainPanel" value="/WEB-INF/views/explain/errorsdisplay.jsp" />
+    </definition>
+    <definition name="tiles.errorsdisplay" extends="tiles.errorsdemo">
+        <put-attribute name="body"
+                               value="/WEB-INF/views/pages/errorsdisplay_body.jsp" />
+        <put-attribute name="explainPanel" value="/WEB-INF/views/explain/errorsdisplay.jsp" />	
+    </definition>
+
+    <definition name="tiles.security.special.admin" extends="tiles.base.definition">
+        <put-attribute name="title"
+                               value="Special Security Page--Admins Only!" />
+        <put-attribute name="body"
+                               value="/WEB-INF/views/pages/security/special_adminpage_body.jsp" />
+        <put-attribute name="subTitle" value="Special Security Page" />
+        <put-attribute name="explainPanel" value="/WEB-INF/views/explain/special_adminpage.jsp" />
+    </definition>
+
+    <definition name="tiles.security.admin" extends="tiles.base.definition">
+        <put-attribute name="title" value="Security Page Admins Only!" />
+        <put-attribute name="body"
+                               value="/WEB-INF/views/pages/security/adminpage_body.jsp" />
+        <put-attribute name="subTitle" value="Security Page Admins Only!" />
+        <put-attribute name="explainPanel" value="/WEB-INF/views/explain/adminpage.jsp" />
+    </definition>
+
+    <definition name="tiles.security.denied" extends="tiles.base.definition">
+        <put-attribute name="title" value="Access Denied" />
+        <put-attribute name="body"
+                               value="/WEB-INF/views/pages/security/deniedpage_body.jsp" />
+        <put-attribute name="subTitle" value="Access Denied" />
+        <put-attribute name="explainPanel" value="/WEB-INF/views/explain/accessdenied.jsp" />
+    </definition>
+
+    <definition name="tiles.security.demo" extends="tiles.base.definition">
+        <put-attribute name="title" value="Login" />
+        <put-attribute name="body"
+                               value="/WEB-INF/views/pages/security/loginpage_body.jsp" />
+        <put-attribute name="subTitle" value="Login" />
+        <put-attribute name="explainPanel" value="/WEB-INF/views/explain/login.jsp" />
+    </definition>
+    <definition name="tiles.security.logout" extends="tiles.base.definition">
+        <put-attribute name="title" value="Logout" />
+        <put-attribute name="body"
+                               value="/WEB-INF/views/pages/security/logout_body.jsp" />
+        <put-attribute name="subTitle" value="Logged Out" />
+        <put-attribute name="explainPanel" value="/WEB-INF/views/explain/login.jsp" />
+    </definition>
+	
+    <definition name="tiles.context.load" extends="tiles.base.definition">
+        <put-attribute name="title" value="Context Demonstration" />
+        <put-attribute name="body"
+                               value="/WEB-INF/views/pages/contextdemo_body.jsp" />
+        <put-attribute name="subTitle" value="Context Demo" />
+        <put-attribute name="explainPanel" value="/WEB-INF/views/explain/contextdemo.jsp" />
+    </definition>
+
+
+</tiles-definitions> 
