@@ -7,7 +7,7 @@
 
 
 <form:form id="form" method="post" cssClass="form-horizontal"
-	modelAttribute="formBean" action="${baseURL}complex/forms/addForm">
+	modelAttribute="restaurantBean" action="${baseURL}/database/simple/restaurant/addRestaurant">
 	<div>
 
 		<c:if test="${not empty message}">
@@ -25,23 +25,23 @@
 
 		<tr>
 			<th>Name</th>
-			<td><input size="20" /></td>
+			<td><form:input path="name" size="20" /> <form:errors path="name" cssClass="text-error" /></td>
 		</tr>
 		<tr>
 			<th>Version</th>
-			<td><input size="20" /></td>
+			<td><form:input path="version" size="20" /> <form:errors path="version" cssClass="text-error" /></td>
 		</tr>
 		<tr>
 			<th>Zip Code</th>
-			<td><input size="20" /></td>
+			<td><form:input path="zipCode" size="20" /> <form:errors path="zipCode" cssClass="text-error" /></td>
 		</tr>
 		<tr>
 			<th>City</th>
-			<td><input size="20" /></td>
+			<td><form:input path="city" size="20" /> <form:errors path="city" cssClass="text-error" /></td>
 		</tr>
 		<tr>
 			<th>State</th>
-			<td><input size="20" /></td>
+			<td><form:input path="state" size="20" /> <form:errors path="state" cssClass="text-error" /></td>
 		</tr>
 
 		<tr>

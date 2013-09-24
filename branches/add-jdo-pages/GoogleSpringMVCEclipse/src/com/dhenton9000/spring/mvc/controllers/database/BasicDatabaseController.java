@@ -1,20 +1,62 @@
 package com.dhenton9000.spring.mvc.controllers.database;
 
+import javax.servlet.http.HttpSession;
+import javax.validation.Valid;
+
 import org.apache.log4j.LogManager;
 import org.apache.log4j.Logger;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.SessionAttributes;
+import org.springframework.web.context.request.WebRequest;
+import org.springframework.web.servlet.ModelAndView;
+
+import com.dhenton9000.spring.mvc.controllers.ComplexFormController;
+import com.dhenton9000.spring.mvc.jdo.entities.Restaurant;
+import com.dhenton9000.spring.mvc.model.FormBean;
 
 @Controller
-@RequestMapping(value = "/database/*")
+@RequestMapping(value = "/database/simple/restaurant/")
+@SessionAttributes("restaurantBean")
 public class BasicDatabaseController {
 
-	private static Logger log = LogManager.getLogger(BasicDatabaseController.class);
+	private static Logger log = LogManager
+			.getLogger(BasicDatabaseController.class);
+	public static final String RESTAURANT_FORM_TILES = "tiles.database.simple.restaurant";
+	public static final String RESTAURANT_BEAN_KEY = "restaurantBean";
 
-	@RequestMapping(value = "simple/restaurant")
-	public String goToSimpleRestaurants() {
+	@RequestMapping(value = "main")
+	public ModelAndView goToSimpleRestaurants() {
+		return new ModelAndView(RESTAURANT_FORM_TILES, RESTAURANT_BEAN_KEY,
+				new Restaurant());
 
-		return "tiles.database.simple.restaurant";
+	}
 
+	@RequestMapping(value = "addRestaurant", method = RequestMethod.POST)
+	public String addEditRestaurant(
+			@Valid @ModelAttribute("restaurantBean") Restaurant restaurant,
+			BindingResult result, WebRequest webRequest, HttpSession session,
+			Model model) {
+
+		
+		if (result.hasErrors())
+		{
+			//this is handy to get the property keys
+			//in message.properties
+			log.debug("ERRORS "+result.getAllErrors());
+		}
+		else
+		{
+			log.debug("success");
+				 
+		}
+		
+		
+		
+		return RESTAURANT_FORM_TILES;
 	}
 }

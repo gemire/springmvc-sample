@@ -22,11 +22,11 @@
         <property name="validationMessageSource" ref="messageSource"/>
     </bean>
 	
-	
+ 
 	
     <bean id="messageSource"
               class="org.springframework.context.support.ResourceBundleMessageSource">
-        <property name="basename" value="message" />
+        <property name="basename" value="ValidationMessages" />
     </bean>
 
     <mvc:interceptors>

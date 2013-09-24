@@ -5,22 +5,25 @@ package com.dhenton9000.spring.mvc.jdo.entities;
  * and open the template in the editor.
  */
  
-import java.util.Date;
+import java.io.Serializable;
 
-import javax.jdo.annotations.Extension;
 import javax.jdo.annotations.IdGeneratorStrategy;
 import javax.jdo.annotations.PersistenceCapable;
 import javax.jdo.annotations.Persistent;
 import javax.jdo.annotations.PrimaryKey;
-import com.google.appengine.api.datastore.Key;
+
+import org.hibernate.validator.constraints.NotEmpty;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.format.annotation.NumberFormat;
+
+import com.google.appengine.api.datastore.Key;
 
 /**
  * @author dhenton
  */
 @PersistenceCapable()
- public class Restaurant   {
+ public class Restaurant implements Serializable  {
 
     private static final long serialVersionUID = 1L;
     @PrimaryKey  
@@ -28,14 +31,19 @@ import org.slf4j.LoggerFactory;
    // @Extension(vendorName = "datanucleus", key = "gae.encoded-pk", value = "true")  
     private Key id;
     @Persistent
+    @NotEmpty(message="Restaurant Name cannot be blank")
     private String name;
     @Persistent
+    @NumberFormat(pattern="####")
     private Integer version;
     @Persistent
+    @NotEmpty(message="Zipcode cannot be blank")
     private String zipCode;
     @Persistent    
+    @NotEmpty(message="City cannot be blank")
     private String city;
     @Persistent
+    @NotEmpty(message="State cannot be blank")
     private String state;
     private final transient Logger logger = LoggerFactory.getLogger(Restaurant.class);
 
