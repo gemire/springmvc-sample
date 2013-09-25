@@ -16,7 +16,9 @@ import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.dhenton9000.spring.mvc.controllers.ComplexFormController;
+import com.dhenton9000.spring.mvc.jdo.dao.RestaurantDao;
 import com.dhenton9000.spring.mvc.jdo.entities.Restaurant;
+import com.dhenton9000.spring.mvc.jdo.service.RestaurantService;
 import com.dhenton9000.spring.mvc.model.FormBean;
 
 @Controller
@@ -24,6 +26,8 @@ import com.dhenton9000.spring.mvc.model.FormBean;
 @SessionAttributes("restaurantBean")
 public class BasicDatabaseController {
 
+	
+	private RestaurantService restaurantService;
 	private static Logger log = LogManager
 			.getLogger(BasicDatabaseController.class);
 	public static final String RESTAURANT_FORM_TILES = "tiles.database.simple.restaurant";
@@ -46,17 +50,28 @@ public class BasicDatabaseController {
 		if (result.hasErrors())
 		{
 			//this is handy to get the property keys
-			//in message.properties
+			//in ValidationMessages.properties
 			log.debug("ERRORS "+result.getAllErrors());
 		}
 		else
 		{
 			log.debug("success");
+			log.debug("restaurant name "+restaurant.getName());
 				 
 		}
 		
-		
+		this.getRestaurantService().writeRestaurant(restaurant);
 		
 		return RESTAURANT_FORM_TILES;
 	}
+
+	public RestaurantService getRestaurantService() {
+		return restaurantService;
+	}
+
+	public void setRestaurantService(RestaurantService restaurantService) {
+		this.restaurantService = restaurantService;
+	}
+
+	 
 }

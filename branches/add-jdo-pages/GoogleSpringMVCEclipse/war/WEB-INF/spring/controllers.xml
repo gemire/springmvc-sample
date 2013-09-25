@@ -15,7 +15,21 @@
         <property name="bookMaker" ref="bookMaker" />
         <property name="message" ref="beanMessage" />
     </bean>
-         
+
+    <!--  the id must match the name of the class with a small letter at the start -->
+   <bean id="basicDatabaseController" scope="singleton" class="com.dhenton9000.spring.mvc.controllers.database.BasicDatabaseController">
+         <property name="restaurantService" ref="restaurantService" />
+    </bean>
+    
+    <bean id="restaurantService" scope="singleton" class="com.dhenton9000.spring.mvc.jdo.service.impl.RestaurantServiceImpl">
+         <property name="restaurantDao" ref="restaurantDao" />
+    </bean>
+   
+   <bean id="restaurantDao" scope="singleton" class="com.dhenton9000.spring.mvc.jdo.dao.impl.RestaurantDaoImpl">
+       
+    </bean>
+    
+    
     <bean id="beanMessage" class="java.lang.String">
         <constructor-arg index="0" value="get a job" />
     </bean>
