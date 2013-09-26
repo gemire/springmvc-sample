@@ -5,20 +5,14 @@
 <%@ taglib uri="/WEB-INF/tld/spring-form.tld" prefix="form"%>
 <c:url var="baseURL" value="/app/" />
 
+<c:if test="${not empty message}">
+    <div class="alert alert-info">${message}</div>
+
+</c:if>
 
 <form:form id="form" method="post" cssClass="form-horizontal"
 	modelAttribute="restaurantBean" action="${baseURL}/database/simple/restaurant/addRestaurant">
 	<div>
-
-		<c:if test="${not empty message}">
-			<div id="message" class="${message.type}">${message.text}</div>
-		</c:if>
-		<s:bind path="*">
-			<c:if test="${status.error}">
-				<div id="message" class="text-error">Form has errors</div>
-			</c:if>
-		</s:bind>
-
 
 	</div>
 	<table cellpadding="4" cellspacing="4">

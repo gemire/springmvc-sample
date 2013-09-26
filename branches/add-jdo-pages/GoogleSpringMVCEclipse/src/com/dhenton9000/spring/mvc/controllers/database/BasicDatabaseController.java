@@ -41,7 +41,7 @@ public class BasicDatabaseController {
 	}
 
 	@RequestMapping(value = "addRestaurant", method = RequestMethod.POST)
-	public String addEditRestaurant(
+	public ModelAndView addEditRestaurant(
 			@Valid @ModelAttribute("restaurantBean") Restaurant restaurant,
 			BindingResult result, WebRequest webRequest, HttpSession session,
 			Model model) {
@@ -57,12 +57,13 @@ public class BasicDatabaseController {
 		{
 			log.debug("success");
 			log.debug("restaurant name "+restaurant.getName());
-				 
+			this.getRestaurantService().writeRestaurant(restaurant);	 
 		}
+		String message = "Successfully added restaurant '"+restaurant.getName()+"'";
+		session.setAttribute(RESTAURANT_BEAN_KEY, new Restaurant());
+		return new ModelAndView(RESTAURANT_FORM_TILES, "message", message);
 		
-		this.getRestaurantService().writeRestaurant(restaurant);
-		
-		return RESTAURANT_FORM_TILES;
+		 
 	}
 
 	public RestaurantService getRestaurantService() {
