@@ -11,7 +11,7 @@
 </c:if>
 
 <form:form id="form" method="post" cssClass="form-horizontal"
-	modelAttribute="restaurantBean" action="${baseURL}/database/simple/restaurant/addRestaurant">
+	modelAttribute="restaurantBean" action="${baseURL}database/simple/restaurant/addRestaurant">
 	<div>
 
 	</div>
