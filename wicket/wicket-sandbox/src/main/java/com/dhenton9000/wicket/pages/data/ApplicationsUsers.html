@@ -4,9 +4,12 @@
         <wicket:extend>
             <h3>Applications</h3>
 
-            <select wicket:id="applicationsSelect"></select>
+            <p><select wicket:id="applicationsSelect"></select></p>
 
 
+            <p><wicket:message key="selected.application"/> <span wicket:id="selectedApplication" /></p>
+            
+            
             <h3>Users</h3>
 
             <table wicket:id="userTable" cellpadding="3" cellspacing="3">

@@ -26,6 +26,7 @@ import com.dhenton9000.wicket.pages.onhover.OnHoverPage;
 import com.dhenton9000.wicket.pages.lightbox.LightboxPage;
 import com.dhenton9000.wicket.pages.resources.ImageResourceReference;
 import com.dhenton9000.wicket.pages.security.SignOutPage;
+import com.dhenton9000.wicket.pages.subclass.PageSwapDemo;
 import java.util.TimeZone;
 import org.apache.wicket.RestartResponseAtInterceptPageException;
 import org.apache.wicket.RuntimeConfigurationType;
@@ -163,7 +164,7 @@ public class Application extends WebApplication {
             HomePage.class, UserPage.class, ExploreFormPage.class,
             CompoundUserPage.class, LightboxPage.class, MaintainRestaurantsTwo.class,
             ApplicationsUsers.class, SimpleEventPage.class, OnHoverPage.class,
-            SimpleListViewRepeater.class, MaintainApplications.class,
+            SimpleListViewRepeater.class, MaintainApplications.class,PageSwapDemo.class,
             AjaxFormPage.class, BehaviorsPage.class, DataPaging.class,
             FormInputWithList.class, ModalInputPage.class, SignIn.class, SignOutPage.class
         };

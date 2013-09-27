@@ -20,6 +20,7 @@ import com.dhenton9000.wicket.pages.onhover.OnHoverPage;
 import com.dhenton9000.wicket.pages.repeater.FormInputWithList;
 import com.dhenton9000.wicket.pages.repeater.SimpleListViewRepeater;
 import com.dhenton9000.wicket.pages.lightbox.LightboxPage;
+import com.dhenton9000.wicket.pages.subclass.PageSwapDemo;
 import org.apache.wicket.markup.html.link.BookmarkablePageLink;
 import org.apache.wicket.model.IModel;
 
@@ -68,6 +69,7 @@ public final class NavPanel extends TemplatePanel {
         add(new BookmarkablePageLink<Void>("ajaxFormPageLink", AjaxFormPage.class));
         add(new BookmarkablePageLink<Void>("behaviorsPageLink", BehaviorsPage.class));
         add(new BookmarkablePageLink<Void>("dataPagingLink", DataPaging.class));
+        add(new BookmarkablePageLink<Void>("pageSwapDemoPageLink", PageSwapDemo.class));
         // this isn't needed see Application.java for a mount 
         // that allows for a more normal url
         // add(new BookmarkablePageLink<Void>("refPageLink", ImageRefPage.class));

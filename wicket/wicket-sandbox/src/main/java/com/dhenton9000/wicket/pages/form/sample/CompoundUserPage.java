@@ -51,6 +51,9 @@ public final class CompoundUserPage extends TemplatePage {
         tName.setRequired(false);
         tName.add(bozoValidator);
 
+        // the ids of the text field are used to locate data in the user
+        // model, there should be corresponding element in the User object
+        // for each id, eg. there is a nickName field on the User Object
         Form<User> form = new Form<User>("compoundUserForm",
                 new CompoundPropertyModel<User>(user)) {
             @Override

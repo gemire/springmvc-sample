@@ -27,6 +27,7 @@ import org.apache.wicket.model.PropertyModel;
 import org.apache.wicket.request.mapper.parameter.PageParameters;
 import org.apache.wicket.spring.injection.annot.SpringBean;
 import org.apache.wicket.ajax.form.AjaxFormSubmitBehavior;
+import org.apache.wicket.markup.html.basic.Label;
 /**
  *
  * @author dhenton
@@ -42,6 +43,7 @@ public final class ApplicationsUsers extends TemplatePage {
     private WebMarkupContainer userTable;
     private UsersForApplications userDataProvider;
     private List<Users> selectedUsers = null;
+    Label selectedApplicationLabel = null;
 
     public ApplicationsUsers() {
         super();
@@ -65,12 +67,17 @@ public final class ApplicationsUsers extends TemplatePage {
             protected void onUpdate(AjaxRequestTarget target) {
 
                 target.add(userTable);
+                target.add(selectedApplicationLabel);
             }
         });
 
         add(dropDownApplicationListItem);
         addUsersModule();
-
+        IModel selectedAppModel =new PropertyModel<Applications>(ApplicationsUsers.this, "selectedApplication.applicationName");
+        selectedApplicationLabel = new Label("selectedApplication",selectedAppModel);
+        selectedApplicationLabel.setOutputMarkupId(true);
+        add(selectedApplicationLabel);
+       
 
     }
 
