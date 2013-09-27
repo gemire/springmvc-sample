@@ -10,6 +10,9 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import org.apache.wicket.Component;
+import org.apache.wicket.ajax.AjaxRequestTarget;
+import org.apache.wicket.ajax.form.AjaxFormComponentUpdatingBehavior;
 import org.apache.wicket.markup.html.WebMarkupContainer;
 import org.apache.wicket.markup.html.form.ChoiceRenderer;
 import org.apache.wicket.markup.html.form.DropDownChoice;
@@ -18,6 +21,7 @@ import org.apache.wicket.markup.html.form.IChoiceRenderer;
 import org.apache.wicket.markup.html.form.SubmitLink;
 import org.apache.wicket.markup.html.form.TextField;
 import org.apache.wicket.markup.html.panel.FeedbackPanel;
+import org.apache.wicket.markup.html.panel.Panel;
 import org.apache.wicket.model.CompoundPropertyModel;
 import org.apache.wicket.model.IModel;
 import org.apache.wicket.model.LoadableDetachableModel;
@@ -34,23 +38,14 @@ public class PageSwapDemo extends TemplatePage {
     private static final String FEEDBACK_PANEL = "feedbackPanel";
     private static final String SUBMIT_FORM_LINK = "submitFormLink";
     private static final String GAMMA_SELECT_BOX = "gammaSelectBox";
+    private static final String GAMMA_PANEL = "gammaPanel";
 
-    /**
-     * @return the selectedGroup
-     */
-    public GAMMA_GROUPS getSelectedGroup() {
-        return selectedGroup;
-    }
+    private enum GAMMA_GROUPS {
 
-    /**
-     * @param selectedGroup the selectedGroup to set
-     */
-    public void setSelectedGroup(GAMMA_GROUPS selectedGroup) {
-        this.selectedGroup = selectedGroup;
-    }
-    private enum GAMMA_GROUPS { G1,G2,G3 };
-    private static final String[] GAMMA_LABELS = {"Gamma 1","Gamma 2","Gamma 3"};
-    private  GAMMA_GROUPS selectedGroup = null;
+        G1, G2, G3
+    };
+    private static final String[] GAMMA_LABELS = {"Gamma 1", "Gamma 2", "Gamma 3"};
+    private GAMMA_GROUPS selectedGroup = GAMMA_GROUPS.G1;
 
     public PageSwapDemo() {
         super();
@@ -76,7 +71,8 @@ public class PageSwapDemo extends TemplatePage {
         final WebMarkupContainer swappableFieldContainer = new WebMarkupContainer(SWAPPABLE_AREA);
         swappableFieldContainer.setOutputMarkupId(true);
         form.add(swappableFieldContainer);
-
+        swappableFieldContainer.addOrReplace(getGammaPanel());
+        
         final FeedbackPanel feedbackPanel = new FeedbackPanel(FEEDBACK_PANEL);
         feedbackPanel.setOutputMarkupId(true);
         feedbackPanel.setOutputMarkupPlaceholderTag(true);
@@ -86,37 +82,65 @@ public class PageSwapDemo extends TemplatePage {
         final TextField<String> textFieldAlpha = new TextField<String>("alpha");
         final TextField<String> textFieldBeta = new TextField<String>("beta");
 
-        final DropDownChoice gammaSelectBox = 
-                new DropDownChoice<GAMMA_GROUPS>(GAMMA_SELECT_BOX, new PropertyModel(PageSwapDemo.this,"selectedGroup"), getGammaChoices(), getRenderer())
-                {
+        final DropDownChoice gammaSelectBox =
+                new DropDownChoice<GAMMA_GROUPS>(GAMMA_SELECT_BOX, new PropertyModel(PageSwapDemo.this, "selectedGroup"), getGammaChoices(), getRenderer()) {
+            @Override
+            protected GAMMA_GROUPS convertChoiceIdToChoice(String id) {
+                return GAMMA_GROUPS.valueOf(id);
+            }
+        };
 
-                    @Override
-                    protected GAMMA_GROUPS convertChoiceIdToChoice(String id) {
-                        return GAMMA_GROUPS.valueOf(id);
-                    }
-                
-                }
-                ;
 
-         
+        gammaSelectBox.add(new AjaxFormComponentUpdatingBehavior("onchange") {
+            private static final long serialVersionUID = 1L;
+
+            @Override
+            protected void onUpdate(AjaxRequestTarget target) {
+                swappableFieldContainer.addOrReplace(getGammaPanel());
+                target.add(swappableFieldContainer);
+
+            }
+        });
+
+
+
         form.add(textFieldAlpha);
         form.add(textFieldBeta);
         form.add(gammaSelectBox);
     }
 
+    private Panel getGammaPanel() {
+       
+        Panel selectedPanel = null;
+        switch (selectedGroup)
+        {
+            case G1:
+                selectedPanel = new GammaOnePanel(GAMMA_PANEL);
+                break;
+                
+            case G2:
+                selectedPanel = new GammaTwoPanel(GAMMA_PANEL);
+                break;
+            
+            case G3:
+                selectedPanel = new GammaThreePanel(GAMMA_PANEL);
+                break;
+                
+        }
+        
+        return selectedPanel;
+    }
     private List<GAMMA_GROUPS> getGammaChoices() {
         ArrayList<GAMMA_GROUPS> g = new ArrayList<GAMMA_GROUPS>();
-        for (GAMMA_GROUPS gg : GAMMA_GROUPS.values())
-        {
+        for (GAMMA_GROUPS gg : GAMMA_GROUPS.values()) {
             g.add(gg);
-            
+
         }
         return g;
     }
 
     private IChoiceRenderer getRenderer() {
         ChoiceRenderer<GAMMA_GROUPS> r = new ChoiceRenderer<GAMMA_GROUPS>() {
-
             @Override
             public Object getDisplayValue(GAMMA_GROUPS object) {
                 int z = object.ordinal();
@@ -127,17 +151,11 @@ public class PageSwapDemo extends TemplatePage {
             public String getIdValue(GAMMA_GROUPS object, int index) {
                 return object.toString();
             }
-           
         };
 
         return r;
     }
 
-    
- 
-    
-    
-    
     protected IModel<PageSwapModel> getSwapModel() {
         return (IModel<PageSwapModel>) getDefaultModel();
     }
@@ -150,10 +168,24 @@ public class PageSwapDemo extends TemplatePage {
 //        LoadableDetachableModel m = new LoadableDetachableModel() {
 //            @Override
 //            protected Object load() {
-                return new CompoundPropertyModel<PageSwapModel>(swapModel);
+        return new CompoundPropertyModel<PageSwapModel>(swapModel);
 //            }
 //        };
 //       return m;
+    }
+
+    /**
+     * @return the selectedGroup
+     */
+    public GAMMA_GROUPS getSelectedGroup() {
+        return selectedGroup;
+    }
+
+    /**
+     * @param selectedGroup the selectedGroup to set
+     */
+    public void setSelectedGroup(GAMMA_GROUPS selectedGroup) {
+        this.selectedGroup = selectedGroup;
     }
 
     public class PageSwapModel implements Serializable {
