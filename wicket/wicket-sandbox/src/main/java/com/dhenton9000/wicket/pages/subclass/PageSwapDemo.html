@@ -22,7 +22,7 @@
                     </tr>
                     
                     <tr>
-                        <td>
+                        <td colspan="2">
                             <div wicket:id="swappableArea">
                                 
                                 <span wicket:id="gammaPanel" />
@@ -40,6 +40,15 @@
 
             </form>
 
+            <hr/>
+            <p>
+                This page demonstrates swapping out parts of a form to other
+                panels via AJAX. The items swapped are part of the form. Because
+                a CompoundProperty model is used, and the swapped area is added
+                to the form, form elements in the swapped panel will refer
+                to the proper model
+                
+            </p>
 
         </wicket:extend>
 
