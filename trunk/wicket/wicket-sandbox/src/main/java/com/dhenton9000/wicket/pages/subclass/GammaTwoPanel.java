@@ -4,6 +4,7 @@
  */
 package com.dhenton9000.wicket.pages.subclass;
 
+import org.apache.wicket.markup.html.form.TextField;
 import org.apache.wicket.markup.html.panel.Panel;
 
 /**
@@ -14,5 +15,6 @@ public class GammaTwoPanel extends Panel{
      public GammaTwoPanel(String id)
     {
         super(id);
+         add(new TextField("gammaTwo"));
     }
 }

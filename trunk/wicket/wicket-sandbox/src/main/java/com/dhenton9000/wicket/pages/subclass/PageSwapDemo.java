@@ -194,9 +194,9 @@ public class PageSwapDemo extends TemplatePage {
         }
         private String alpha = "alpha";
         private String beta = "";
-        private String gammaOne = "";
-        private String gammaTwo = "";
-        private String delta = "";
+        private String gammaOne = "gamma1";
+        private String gammaTwo = "gamma2";
+        private String gammaThree="gamma3";
 
         /**
          * @return the alpha
@@ -255,17 +255,19 @@ public class PageSwapDemo extends TemplatePage {
         }
 
         /**
-         * @return the delta
+         * @return the gammaThree
          */
-        public String getDelta() {
-            return delta;
+        public String getGammaThree() {
+            return gammaThree;
         }
 
         /**
-         * @param delta the delta to set
+         * @param gammaThree the gammaThree to set
          */
-        public void setDelta(String delta) {
-            this.delta = delta;
+        public void setGammaThree(String gammaThree) {
+            this.gammaThree = gammaThree;
         }
+
+        
     }
 }
