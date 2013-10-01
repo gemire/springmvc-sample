@@ -7,8 +7,6 @@ package com.dhenton9000.wicket.pages.resources;
 import com.dhenton9000.wicket.pages.TemplatePage;
 import com.dhenton9000.wicket.shared.images.MountSharedImage;
 import java.util.Arrays;
-import java.util.Locale;
-import org.apache.wicket.Application;
 import org.apache.wicket.markup.html.image.Image;
 import org.apache.wicket.markup.html.link.ExternalLink;
 import org.apache.wicket.markup.html.list.ListItem;
@@ -18,7 +16,6 @@ import org.apache.wicket.request.mapper.parameter.PageParameters;
 import org.apache.wicket.request.resource.ContextRelativeResource;
 import org.apache.wicket.request.resource.PackageResourceReference;
 import org.apache.wicket.request.resource.ResourceReference;
-import org.apache.wicket.request.resource.SharedResourceReference;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
