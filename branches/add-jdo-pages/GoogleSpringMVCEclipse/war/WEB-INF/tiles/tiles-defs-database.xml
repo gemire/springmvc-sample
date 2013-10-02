@@ -10,12 +10,12 @@
 	</definition>
 
 	<definition name="tiles.database.simple.restaurant" extends="tiles.base.database.definition">
-		<put-attribute name="title" value="Simple Database Restaurant Entry" />
+		<put-attribute name="title" value="Restaurant Listing" />
 		<put-attribute name="body"
-			value="/WEB-INF/views/pages/database/simple_restaurant_body.jsp" />
+			value="/WEB-INF/views/pages/database/restaurant_list_body.jsp" />
 		<put-attribute name="subTitle" value="JDO Persistence" />
 		<put-attribute name="explainPanel"
-			value="/WEB-INF/views/explain/database/simple_restaurant.jsp" />
+			value="/WEB-INF/views/explain/database/restaurant_list.jsp" />
 		<!-- <put-attribute name="jsscripts_app_specific" value="/WEB-INF/views/pages/backbone/localstorage_js.jsp"			/> 
 			<put-attribute name="jsscripts" value="/WEB-INF/views/layout/backbone_scripts.jsp" 	/> -->
 	</definition>

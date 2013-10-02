@@ -2,12 +2,13 @@ package com.dhenton9000.spring.mvc.controllers.database;
 
 import java.util.List;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 
 import org.apache.log4j.LogManager;
 import org.apache.log4j.Logger;
-import org.springframework.http.HttpRequest;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -18,11 +19,9 @@ import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.servlet.ModelAndView;
 
-import com.dhenton9000.spring.mvc.controllers.ComplexFormController;
-import com.dhenton9000.spring.mvc.jdo.dao.RestaurantDao;
+import com.dhenton9000.spring.mvc.html.renderers.RestaurantTableRenderer;
 import com.dhenton9000.spring.mvc.jdo.entities.Restaurant;
 import com.dhenton9000.spring.mvc.jdo.service.RestaurantService;
-import com.dhenton9000.spring.mvc.model.FormBean;
 
 @Controller
 @RequestMapping(value = "/database/simple/restaurant/")
@@ -37,32 +36,22 @@ public class BasicDatabaseController {
 	public static final String RESTAURANT_BEAN_KEY = "restaurantBean";
 
 	@RequestMapping(value = "main")
-	public ModelAndView goToSimpleRestaurants() {
+	public ModelAndView goToSimpleRestaurants( HttpServletResponse response, HttpServletRequest request) {
 		
-		
-		ModelAndView mav = loadRestaurantList(null);
+		String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.getServerPort()+"/app/database/simple/restaurant/edit/";
+
+		ModelAndView mav = loadRestaurantList(null,basePath);
 		mav.addObject(RESTAURANT_BEAN_KEY, new Restaurant());
 		return mav ;
-		
-		 
 
 	}
 
-	private ModelAndView loadRestaurantList(String message) {
+	private ModelAndView loadRestaurantList(String message, String basePath) {
 		DatabaseView d = new DatabaseView();
+		d.setBasePath(basePath);
 		d.setMessage(message);
 		List<Restaurant> restaurants = getRestaurantService().getAllRestaurants();
 		d.setRestaurants(restaurants);
-		
-		StringBuilder b = new StringBuilder();
-		log.info("begining call "+restaurants.size());
-		
-		for (Restaurant r: restaurants)
-		{
-			b.append(r.getName()+"\n");
-		}
-		log.info("\n================\n"+b.toString());
-
 		ModelAndView mav = new ModelAndView(RESTAURANT_FORM_TILES, "viewItem", d);
 		return mav;
 	}
@@ -90,7 +79,7 @@ public class BasicDatabaseController {
 	//	session.setAttribute(RESTAURANT_BEAN_KEY, new Restaurant());
 		restaurant.clear();
 		
-		ModelAndView mav = loadRestaurantList(message);
+		ModelAndView mav = loadRestaurantList(message,null);
 		mav.addObject(RESTAURANT_BEAN_KEY, restaurant);
 		return mav;
 		 
@@ -100,7 +89,9 @@ public class BasicDatabaseController {
 	{
 		private String message ;
 		private List<Restaurant> restaurants;
-
+		private RestaurantTableRenderer renderer = new RestaurantTableRenderer();
+		private String basePath = "";
+		
 		public String getMessage() {
 			return message;
 		}
@@ -115,6 +106,20 @@ public class BasicDatabaseController {
 
 		public void setRestaurants(List<Restaurant> restaurants) {
 			this.restaurants = restaurants;
+		}
+		
+		public String getRestaurantHtml()
+		{
+			renderer.setBasePath(getBasePath());
+			return renderer.renderHtmlTable(getRestaurants());
+		}
+
+		public String getBasePath() {
+			return basePath;
+		}
+
+		public void setBasePath(String basePath) {
+			this.basePath = basePath;
 		}
 		
 	}

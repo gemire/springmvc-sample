@@ -48,12 +48,3 @@
 	</table>
 
 </form:form>
-
-<c:if test="${not empty viewItem.restaurants}">
-	<hr />
-	<ol>
-		<c:forEach items="${viewItem.restaurants}" var="res">
-			<li>${res.name}</li>
-		</c:forEach>
-	</ol>
-</c:if>
