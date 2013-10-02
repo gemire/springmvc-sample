@@ -12,7 +12,7 @@ import com.google.appengine.api.datastore.KeyFactory;
 
 public class RestaurantServiceImpl implements RestaurantService {
 
-	
+	 
 	private RestaurantDao restaurantDao;
 	
 	@Override

@@ -161,6 +161,16 @@ import com.google.appengine.api.datastore.Key;
         return getName() + " {" + getId().getAppId() + "}";
     }
 
+	public void clear() {
+		setName(null);
+		setCity(null);
+		setVersion(null);
+		setZipCode(null);
+		setId(null);
+		setState(null);
+		
+	}
+
     
  
 }

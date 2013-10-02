@@ -8,13 +8,17 @@ import javax.jdo.PersistenceManager;
 import javax.jdo.PersistenceManagerFactory;
 import javax.jdo.Query;
 
+import org.apache.log4j.LogManager;
+import org.apache.log4j.Logger;
+
 import com.dhenton9000.spring.mvc.jdo.dao.RestaurantDao;
 import com.dhenton9000.spring.mvc.jdo.entities.Restaurant;
 import com.google.appengine.api.datastore.Key;
 
 public class RestaurantDaoImpl implements RestaurantDao {
 	private static PersistenceManagerFactory pmf;
-
+	private static Logger log = LogManager
+			.getLogger(RestaurantDaoImpl.class);
 	public RestaurantDaoImpl() {
 		pmf = JDOHelper.getPersistenceManagerFactory("transactions-optional");
 	}
@@ -25,10 +29,12 @@ public class RestaurantDaoImpl implements RestaurantDao {
 		Query q = null;
 		List<Restaurant> results = null;
 		PersistenceManager pm = null;
+		log.debug("begin getAllRestaurants()");
 		try {
 			pm = pmf.getPersistenceManager();
 			q = pm.newQuery(Restaurant.class);
 			results = (List<Restaurant>) q.execute();
+			log.debug("found "+results.size()+" restaurants ");
 		} finally {
 			q.closeAll();
 			pm.close();
