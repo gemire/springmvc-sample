@@ -10,6 +10,7 @@ import javax.jdo.Query;
 
 import org.apache.log4j.LogManager;
 import org.apache.log4j.Logger;
+import org.datanucleus.exceptions.NucleusObjectNotFoundException;
 
 import com.dhenton9000.spring.mvc.jdo.dao.RestaurantDao;
 import com.dhenton9000.spring.mvc.jdo.entities.Restaurant;
@@ -50,12 +51,21 @@ public class RestaurantDaoImpl implements RestaurantDao {
 	@Override
 	public Restaurant getRestaurant(Key id) {
 
+		if (id == null)
+			return null;
 		Restaurant results = null;
 		PersistenceManager pm = null;
 		try {
 			pm = pmf.getPersistenceManager();
 
 			results = pm.getObjectById(Restaurant.class, id);
+		}
+ 
+		catch(NucleusObjectNotFoundException err)
+		{
+			log.warn("could not find restaurant with id of "+ id.getId());
+			
+		
 		} finally {
 
 			pm.close();

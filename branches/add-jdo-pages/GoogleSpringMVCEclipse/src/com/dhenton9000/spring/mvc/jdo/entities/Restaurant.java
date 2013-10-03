@@ -11,6 +11,7 @@ import javax.jdo.annotations.IdGeneratorStrategy;
 import javax.jdo.annotations.PersistenceCapable;
 import javax.jdo.annotations.Persistent;
 import javax.jdo.annotations.PrimaryKey;
+import javax.xml.bind.annotation.XmlRootElement;
 
 import org.hibernate.validator.constraints.NotEmpty;
 import org.slf4j.Logger;
@@ -22,6 +23,7 @@ import com.google.appengine.api.datastore.Key;
 /**
  * @author dhenton
  */
+
 @PersistenceCapable()
  public class Restaurant implements Serializable  {
 
