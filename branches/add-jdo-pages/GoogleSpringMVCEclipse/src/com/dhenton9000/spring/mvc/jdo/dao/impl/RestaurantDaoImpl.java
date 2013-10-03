@@ -34,6 +34,7 @@ public class RestaurantDaoImpl implements RestaurantDao {
 		try {
 			pm = pmf.getPersistenceManager();
 			q = pm.newQuery(Restaurant.class);
+			q.setOrdering("name");
 			results = (List<Restaurant>) q.execute();
 			log.debug("found "+results.size()+" restaurants ");
 		} finally {
