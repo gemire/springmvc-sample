@@ -10,9 +10,9 @@
 
 <c:if test="${not empty viewItem.restaurants}">
 
-	<div  style="margin: 5px;padding: 5px" class="span12 main">
+	<div  style="margin: 5px;padding: 5px;overflow-y:scroll;height:300px" class="span12 well">
 
-		<table class="fade in table  table-hover table-bordered">
+		<table class="table  table-bordered">
 
 			<tr>
 				<th>Name</th>

@@ -158,7 +158,13 @@ import com.google.appengine.api.datastore.Key;
 
     @Override
     public String toString() {
-        return getName() + " {" + getId().getAppId() + "}";
+    	String id = "null";
+    	
+    	if (getId() != null)
+    	{
+    		id = getId().getAppId();
+    	}
+        return getName() + "|" + getZipCode()+"| {" + id + "}";
     }
 
 	public void clear() {

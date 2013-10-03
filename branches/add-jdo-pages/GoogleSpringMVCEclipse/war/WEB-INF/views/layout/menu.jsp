@@ -106,6 +106,7 @@
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown">Database/JDO <b class="caret"></b></a>
                         <ul class="dropdown-menu">
                            <li><a href="<c:out value="${baseURL}database/simple/restaurant/main" />">Maintain Restaurants</a></li>
+                          <li><a href="<c:out value="${baseURL}database/restaurant/load/main" />">Load Restaurants</a></li>
                         </ul>
                     </li>
                 </ul> 

@@ -12,7 +12,8 @@ public interface RestaurantService {
 	Restaurant getRestaurant(Long id);
 	Key saveOrAddRestaurant(Restaurant t);
 	void deleteRestaurant(Long key);
-	
+	void loadSampleData();
+	  
 	 
 	
 }

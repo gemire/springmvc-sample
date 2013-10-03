@@ -102,4 +102,10 @@ public class RestaurantDaoImpl implements RestaurantDao {
 		}
 		
 	}
+
+	@Override
+	public void deleteAll() {
+		
+		
+	}
 }

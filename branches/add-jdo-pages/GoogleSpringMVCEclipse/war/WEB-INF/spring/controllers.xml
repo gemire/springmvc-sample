@@ -20,7 +20,10 @@
    <bean id="basicDatabaseController" scope="singleton" class="com.dhenton9000.spring.mvc.controllers.database.BasicDatabaseController">
          <property name="restaurantService" ref="restaurantService" />
     </bean>
-    
+   <bean id="restaurantLoaderController" scope="singleton" class="com.dhenton9000.spring.mvc.controllers.database.RestaurantLoaderController">
+         <property name="restaurantService" ref="restaurantService" />
+    </bean>
+   
     <bean id="restaurantService" scope="singleton" class="com.dhenton9000.spring.mvc.jdo.service.impl.RestaurantServiceImpl">
          <property name="restaurantDao" ref="restaurantDao" />
     </bean>
