@@ -5,6 +5,10 @@
 <%@ taglib uri="/WEB-INF/tld/spring-form.tld" prefix="form"%>
 <c:url var="baseURL" value="/app/" />
 
+<c:if test="${not empty stateMessage}">
+<h4>${stateMessage}</h4>
+</c:if> 
+
 <c:if test="${not empty viewItem.message}">
 	<div class="alert alert-info">${viewItem.message}</div>
 
@@ -12,8 +16,12 @@
 
 <form:form id="form" method="post" cssClass="form-horizontal"
 	modelAttribute="restaurantBean"
-	action="${baseURL}database/simple/restaurant/addRestaurant">
-	<div></div>
+	action="${baseURL}database/simple/restaurant/formProcessRestaurant">
+	
+	<c:if test="${state}=='EDIT'">
+	   <form:hidden  path="id.id" />
+	</c:if>
+	 
 	<table cellpadding="4" cellspacing="4">
 
 		<tr>
@@ -48,3 +56,7 @@
 	</table>
 
 </form:form>
+<div class="span3">
+<a href="${baseURL}database/simple/restaurant/main" class="btn btn-small btn-primary">Restaurant Listing</a>
+</div>
+

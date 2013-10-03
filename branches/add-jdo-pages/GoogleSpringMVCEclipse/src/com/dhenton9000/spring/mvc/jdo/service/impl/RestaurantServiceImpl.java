@@ -22,16 +22,16 @@ public class RestaurantServiceImpl implements RestaurantService {
 	}
 
 	@Override
-	public Restaurant getRestaurant(Integer id) {
+	public Restaurant getRestaurant(Long id) {
 		
 		Key k = KeyFactory.createKey(RestaurantDao.RESTAURANT_ENTITY_NAME, id);
 		return getRestaurantDao().getRestaurant(k);
 	}
 
 	@Override
-	public Key writeRestaurant(Restaurant t) {
+	public Key saveOrAddRestaurant(Restaurant t) {
 		
-		return getRestaurantDao().writeRestaurant(t);
+		return getRestaurantDao().saveOrAddRestaurant(t);
 		
 	}
 
@@ -43,4 +43,11 @@ public class RestaurantServiceImpl implements RestaurantService {
 		this.restaurantDao = restaurantDao;
 	}
 
+	@Override
+	public void deleteRestaurant(Long key) {
+		getRestaurantDao().deleteRestaurant(key);
+		
+	}
+
+	 
 }

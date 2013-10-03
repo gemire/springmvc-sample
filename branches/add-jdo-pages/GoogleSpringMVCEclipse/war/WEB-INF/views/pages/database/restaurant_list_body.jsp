@@ -5,11 +5,38 @@
 <%@ taglib uri="/WEB-INF/tld/spring-form.tld" prefix="form"%>
 <c:url var="baseURL" value="/app/" />
 
-Add restaurant link here
+<a  href="${baseURL}database/simple/restaurant/add"  style="margin: 5px;padding: 5px" class="span3 btn btn-small btn-primary">Add New Restaurant</a>
+
 
 <c:if test="${not empty viewItem.restaurants}">
-	
-	<div class="span12">
-	${viewItem.restaurantHtml}
+
+	<div  style="margin: 5px;padding: 5px" class="span12 main">
+
+		<table class="fade in table  table-hover table-bordered">
+
+			<tr>
+				<th>Name</th>
+				<th>City</th>
+				<th>State</th>
+				<th>Zip Code</th>
+				<th>Version</th>
+				<th>&nbsp;</th>
+				<th>&nbsp;</th>
+			</tr>
+			<c:forEach items="${viewItem.restaurants}" var="r">
+				<tr>
+					<td>${r.name}</td>
+					<td>${r.city}</td>
+					<td>${r.state}</td>
+					<td>${r.zipCode}</td>
+					<td>${r.version}</td>
+					<td><a href="${baseURL}database/simple/restaurant/edit?restaurantId=${r.id.id}">Edit</a></td>
+					<td><a href="${baseURL}database/simple/restaurant/delete?restaurantId=${r.id.id}">Delete</a></td>
+				</tr>
+
+			</c:forEach>
+
+
+		</table>
 	</div>
 </c:if>

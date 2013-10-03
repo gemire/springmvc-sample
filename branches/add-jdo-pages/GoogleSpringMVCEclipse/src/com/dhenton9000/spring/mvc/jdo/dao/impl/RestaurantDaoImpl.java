@@ -14,6 +14,7 @@ import org.apache.log4j.Logger;
 import com.dhenton9000.spring.mvc.jdo.dao.RestaurantDao;
 import com.dhenton9000.spring.mvc.jdo.entities.Restaurant;
 import com.google.appengine.api.datastore.Key;
+import com.google.appengine.api.datastore.KeyFactory;
 
 public class RestaurantDaoImpl implements RestaurantDao {
 	private static PersistenceManagerFactory pmf;
@@ -61,15 +62,44 @@ public class RestaurantDaoImpl implements RestaurantDao {
 		return results;
 	}
 
-	public Key writeRestaurant(Restaurant t) {
+
+	@Override
+	public Key saveOrAddRestaurant(Restaurant t) {
 		PersistenceManager pm = null;
+		Key k = t.getId();
+		String info = "in saveOrAddRestaurant ";
+		if (k != null)
+		{
+			long kvar = k.getId();
+			info += "found key "+kvar;
+		}
+		else
+		{
+			info += " found key null";
+		}
 		Restaurant r  = null;
 		try {
 			pm = pmf.getPersistenceManager();
 			r  = pm.makePersistent(t);
+			log.debug(info);
 		} finally {
 			pm.close();
 		}
 		return r.getId();
+	}
+
+	@Override
+	public void deleteRestaurant(Long key) {
+		PersistenceManager pm = null;
+		try {
+			pm = pmf.getPersistenceManager();
+			Key id = KeyFactory.createKey("Restaurant",key);
+			Restaurant t = pm.getObjectById(Restaurant.class, id);
+			pm.deletePersistent(t);
+			 
+		} finally {
+			pm.close();
+		}
+		
 	}
 }

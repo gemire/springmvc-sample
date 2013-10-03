@@ -9,6 +9,10 @@ public interface RestaurantService {
 
 	
 	List<Restaurant> getAllRestaurants();
-	Restaurant getRestaurant(Integer id);
-	Key writeRestaurant(Restaurant t);
+	Restaurant getRestaurant(Long id);
+	Key saveOrAddRestaurant(Restaurant t);
+	void deleteRestaurant(Long key);
+	
+	 
+	
 }

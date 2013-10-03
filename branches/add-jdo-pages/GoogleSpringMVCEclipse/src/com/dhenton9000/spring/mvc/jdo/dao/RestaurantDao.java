@@ -8,6 +8,9 @@ import com.google.appengine.api.datastore.Key;
 public interface RestaurantDao {
 	List<Restaurant> getAllRestaurants();
 	Restaurant getRestaurant(Key id);
-	Key writeRestaurant(Restaurant t);
 	public static final String RESTAURANT_ENTITY_NAME = "Restaurant";
+	Key saveOrAddRestaurant(Restaurant t);
+	void deleteRestaurant(Long key);
+	
+	
 }
