@@ -47,6 +47,10 @@ import com.google.appengine.api.datastore.Key;
     @Persistent
     @NotEmpty(message="State cannot be blank")
     private String state;
+    
+    
+    private Long idAsLong = null;
+    
     private final transient Logger logger = LoggerFactory.getLogger(Restaurant.class);
 
     public Restaurant(Key k) {
@@ -63,6 +67,7 @@ import com.google.appengine.api.datastore.Key;
 
     public void setId(Key id) {
         this.id = id;
+        setIdAsLong(null);
     }
 
     
@@ -178,6 +183,16 @@ import com.google.appengine.api.datastore.Key;
 		setState(null);
 		
 	}
+
+	public Long getIdAsLong() {
+		return idAsLong;
+	}
+
+	public void setIdAsLong(Long idAsLong) {
+		this.idAsLong = idAsLong;
+	}
+
+ 
 
     
  
