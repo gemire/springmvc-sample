@@ -11,6 +11,7 @@ import javax.jdo.Query;
 import org.apache.log4j.LogManager;
 import org.apache.log4j.Logger;
 import org.datanucleus.exceptions.NucleusObjectNotFoundException;
+import javax.jdo.JDOObjectNotFoundException;
 
 import com.dhenton9000.spring.mvc.jdo.dao.RestaurantDao;
 import com.dhenton9000.spring.mvc.jdo.entities.Restaurant;
@@ -68,7 +69,15 @@ public class RestaurantDaoImpl implements RestaurantDao {
 		catch (NucleusObjectNotFoundException err) {
 			log.warn("could not find restaurant with id of " + id.getId());
 
-		} finally {
+		} 
+		catch (JDOObjectNotFoundException err) {
+			log.warn("could not find restaurant with id of " + id.getId());
+
+		} 
+		
+		
+		
+		finally {
 
 			pm.close();
 		}
