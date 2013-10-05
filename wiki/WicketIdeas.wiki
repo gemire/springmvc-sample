@@ -1,0 +1,5 @@
+#summary One-sentence summary of this page.
+
+= Wicket Ideas =
+
+OnConfigure can be used to run javascript at the end of the rendering of its component. This can be done using the renderjavascript of the render target.
