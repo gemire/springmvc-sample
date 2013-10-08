@@ -100,7 +100,7 @@ public final class FormInputWithList extends TemplatePage {
         protected void populateItem(Item<Restaurant> item) {
 
 
-            IModel<Restaurant> restaurant = item.getModel();
+     
             item.add(new Label("id"));
             item.add(new TextField<String>("name"));
             item.add(new TextField<String>("city"));

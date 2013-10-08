@@ -6,12 +6,39 @@
     
     <input id="inputVar" name="inputVar" size="50" />
     
-    <p>This page illustrates adding javascript items to the page without
+    <p>The code above illustrates adding javascript items to the page without
         including them into a .js file. A value is written for the date, and
-        then a on load snippet fills the input box. An on document ready
+        then a on-load snippet fills the input box. An on-document ready
         snippet is there as well, but its the on load that fills the box 
         contents
     </p>
+    
+    
+    <hr/>
+    <p>
+        This code illustrates populating behaviors for the line items when
+        the dialog finishes
+    </p>
+    
+    <h2>Flyout Behavior</h2>
+    
+                   <table cellspacing="0" class="dataview">
+                    <tr>
+
+                        <th>Name</th>
+                        <th>Age</th>
+                        <th>Occupation</th>
+                        
+                    </tr>
+                    <tr wicket:id="personView">
+
+                        <td><span wicket:id="name" /></td>
+                        <td><span wicket:id="age" /></td>
+                        <td><span wicket:id="occupation" /></td>
+                         
+                    </tr>
+                </table>
+
     
 </wicket:extend>
 
