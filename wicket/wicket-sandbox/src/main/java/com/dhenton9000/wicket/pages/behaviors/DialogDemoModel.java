@@ -18,6 +18,7 @@ public class DialogDemoModel implements Serializable{
     private String name = null;
     private int age = 0;
     private String occupation = null; // drop down box
+    private boolean dirty = false;
     
     
     public DialogDemoModel()
@@ -37,6 +38,7 @@ public class DialogDemoModel implements Serializable{
     }
 
     public void setName(String name) {
+        setDirty(true);
         this.name = name;
     }
 
@@ -45,6 +47,7 @@ public class DialogDemoModel implements Serializable{
     }
 
     public void setAge(int age) {
+        setDirty(true);
         this.age = age;
     }
 
@@ -53,7 +56,19 @@ public class DialogDemoModel implements Serializable{
     }
 
     public void setOccupation(String occupation) {
+        setDirty(true);
         this.occupation = occupation;
+    }
+
+    boolean isDirty() {
+        return dirty;
+    }
+
+    /**
+     * @param dirty the dirty to set
+     */
+    public void setDirty(boolean dirty) {
+        this.dirty = dirty;
     }
     
     
