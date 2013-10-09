@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8" ?> <!DOCTYPE tiles-definitions PUBLIC        "-//Apache Software Foundation//DTD Tiles Configuration 2.0//EN"        "http://tiles.apache.org/dtds/tiles-config_2_0.dtd">
+<tiles-definitions>
+
+
+    <definition name="tiles.jquery.linkedlists" extends="tiles.base.definition">
+        <put-attribute name="title" value="JQuery Linked Lists" />
+        <put-attribute name="body"
+                       value="/WEB-INF/views/pages/jquery/linkedlists.jsp" />
+        <put-attribute name="subTitle" value="JQuery Linked Lists" />
+        <put-attribute name="explainPanel" value="/WEB-INF/views/explain/jquery/linkedlists.jsp" />
+    </definition>
+	
+    <definition name="tiles.jquery.jsonData" extends="tiles.base.definition">
+        <put-attribute name="title" value="JSON Data Parsing" />
+        <put-attribute name="body"
+                       value="/WEB-INF/views/pages/jquery/jsonData.jsp" />
+        <put-attribute name="subTitle" value="JSON Data Handling" />
+        <put-attribute name="explainPanel" value="/WEB-INF/views/explain/jquery/jsonData.jsp" />
+    </definition>
+    
+    <definition name="tiles.jquery.arttimer" extends="tiles.base.definition">
+        <put-attribute name="title" value="Art Timer" />
+        <put-attribute name="body"
+                       value="/WEB-INF/views/pages/jquery/arttimer.jsp" />
+        <put-attribute name="subTitle" value="Art Timer" />
+        <put-attribute name="explainPanel" value="/WEB-INF/views/explain/jquery/arttimer.jsp" />
+    </definition>
+    
+	
+    <definition name="tiles.jquery.findingElements" extends="tiles.base.definition">
+        <put-attribute name="title" value="JQuery Selections" />
+        <put-attribute name="body"
+                       value="/WEB-INF/views/pages/jquery/findingElements.jsp" />
+        <put-attribute name="subTitle" value="JQuery Selections" />
+        <put-attribute name="explainPanel" value="/WEB-INF/views/explain/jquery/findingElements.jsp" />
+    </definition>
+	
+    <definition name="tiles.jquery.positioning" extends="tiles.base.definition">
+        <put-attribute name="title" value="JQuery Positioning" />
+        <put-attribute name="body"
+                       value="/WEB-INF/views/pages/jquery/positioning.jsp" />
+        <put-attribute name="subTitle" value="JQuery Positioning" />
+        <put-attribute name="explainPanel" value="/WEB-INF/views/explain/jquery/positioning.jsp" />
+    </definition>
+
+    <definition name="tiles.jquery.periodicUpdater" extends="tiles.base.definition">
+        <put-attribute name="title" value="JQuery Periodic Updater" />
+        <put-attribute name="body"
+                       value="/WEB-INF/views/pages/jquery/periodicUpdater.jsp" />
+        <put-attribute name="subTitle" value="JQuery Periodic Updater" />
+        <put-attribute name="explainPanel" value="/WEB-INF/views/explain/jquery/periodicUpdater.jsp" />
+    </definition>
+
+
+    <definition name="tiles.jquery.formSamples" extends="tiles.base.definition">
+        <put-attribute name="title" value="JQuery Form Elements" />
+        <put-attribute name="body"
+                       value="/WEB-INF/views/pages/jquery/formSamples.jsp" />
+        <put-attribute name="subTitle" value="JQuery Form Elements" />
+        <put-attribute name="explainPanel" value="/WEB-INF/views/explain/jquery/formSamples.jsp" />
+    </definition>
+
+    <definition name="tiles.jquery.formSubmission" extends="tiles.base.definition">
+        <put-attribute name="title" value="Ajax/JQuery Form Submission" />
+        <put-attribute name="body"
+                       value="/WEB-INF/views/pages/jquery/formSubmission.jsp" />
+        <put-attribute name="subTitle" value="Ajax/JQuery Form Submission" />
+        <put-attribute name="explainPanel" value="/WEB-INF/views/explain/jquery/formSubmission.jsp" />
+    </definition>
+	
+    <definition name="tiles.jquery.pixDisplay" extends="tiles.base.definition">
+        <put-attribute name="title" value="JQuery Lightbox" />
+        <put-attribute name="body"
+                       value="/WEB-INF/views/pages/jquery/pixDisplay.jsp" />
+        <put-attribute name="subTitle" value="JQuery Lightbox Demonstration" />
+        <put-attribute name="explainPanel" value="/WEB-INF/views/explain/jquery/pixDisplay.jsp" />
+    </definition>
+	
+</tiles-definitions>
