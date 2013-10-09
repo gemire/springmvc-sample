@@ -5,22 +5,27 @@ package com.dhenton9000.spring.mvc.jdo.entities;
  * and open the template in the editor.
  */
  
-import java.util.Date;
+import java.io.Serializable;
 
-import javax.jdo.annotations.Extension;
 import javax.jdo.annotations.IdGeneratorStrategy;
 import javax.jdo.annotations.PersistenceCapable;
 import javax.jdo.annotations.Persistent;
 import javax.jdo.annotations.PrimaryKey;
-import com.google.appengine.api.datastore.Key;
+import javax.xml.bind.annotation.XmlRootElement;
+
+import org.hibernate.validator.constraints.NotEmpty;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.format.annotation.NumberFormat;
+
+import com.google.appengine.api.datastore.Key;
 
 /**
  * @author dhenton
  */
+
 @PersistenceCapable()
- public class Restaurant   {
+ public class Restaurant implements Serializable  {
 
     private static final long serialVersionUID = 1L;
     @PrimaryKey  
@@ -28,15 +33,24 @@ import org.slf4j.LoggerFactory;
    // @Extension(vendorName = "datanucleus", key = "gae.encoded-pk", value = "true")  
     private Key id;
     @Persistent
+    @NotEmpty(message="Restaurant Name cannot be blank")
     private String name;
     @Persistent
+    @NumberFormat(pattern="####")
     private Integer version;
     @Persistent
+    @NotEmpty(message="Zipcode cannot be blank")
     private String zipCode;
     @Persistent    
+    @NotEmpty(message="City cannot be blank")
     private String city;
     @Persistent
+    @NotEmpty(message="State cannot be blank")
     private String state;
+    
+    
+    private Long idAsLong = null;
+    
     private final transient Logger logger = LoggerFactory.getLogger(Restaurant.class);
 
     public Restaurant(Key k) {
@@ -53,6 +67,7 @@ import org.slf4j.LoggerFactory;
 
     public void setId(Key id) {
         this.id = id;
+        setIdAsLong(null);
     }
 
     
@@ -150,8 +165,34 @@ import org.slf4j.LoggerFactory;
 
     @Override
     public String toString() {
-        return getName() + " {" + getId().getAppId() + "}";
+    	String id = "null";
+    	
+    	if (getId() != null)
+    	{
+    		id = getId().getAppId();
+    	}
+        return getName() + "|" + getZipCode()+"| {" + id + "}";
     }
+
+	public void clear() {
+		setName(null);
+		setCity(null);
+		setVersion(null);
+		setZipCode(null);
+		setId(null);
+		setState(null);
+		
+	}
+
+	public Long getIdAsLong() {
+		return idAsLong;
+	}
+
+	public void setIdAsLong(Long idAsLong) {
+		this.idAsLong = idAsLong;
+	}
+
+ 
 
     
  
