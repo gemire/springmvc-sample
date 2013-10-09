@@ -1,16 +1,18 @@
 package com.dhenton9000.spring.mvc.jdo.service.impl;
 
-import static org.junit.Assert.*;
+
+// transactions
+// https://groups.google.com/forum/#!topic/google-appengine-java/VMg9xiQv1jM
+//https://code.google.com/p/datanucleus-appengine/source/browse/#svn/trunk/tests/com/google/appengine/datanucleus/test/jdo
+
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
 
 import java.util.List;
 
-import javax.jdo.JDOHelper;
-import javax.jdo.PersistenceManager;
-import javax.jdo.PersistenceManagerFactory;
-
 import org.junit.After;
 import org.junit.Before;
-import org.junit.BeforeClass;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -28,8 +30,8 @@ public class RestaurantServiceImplTest {
 	private RestaurantServiceImpl service = null;
 	private RestaurantDao dao = null;
 
-    private final  Logger logger = LoggerFactory.getLogger(RestaurantServiceImplTest.class);
-	
+	private final Logger logger = LoggerFactory
+			.getLogger(RestaurantServiceImplTest.class);
 
 	@Before
 	public void setUp() {
@@ -45,20 +47,25 @@ public class RestaurantServiceImplTest {
 		helper.tearDown();
 	}
 
-	@Test
+	@Ignore
 	public final void testLoadSampleData() {
 		service.loadSampleData();
 		List<Restaurant> restaurants = service.getAllRestaurants();
-		assertEquals(50,restaurants.size());
-		
-		 
-		for (Restaurant rv: restaurants)
-		{
-			if (rv.getReviews() != null)
-				logger.debug(rv.getReviews().size()+" count");
-			else
+		assertEquals(50, restaurants.size());
+		Restaurant tester = null;
+
+		for (Restaurant rv : restaurants) {
+			if (rv.getReviews() != null) {
+				logger.debug(rv.getReviews().size() + " count");
+				if (rv.getReviews().size() > 0)
+					tester = rv;
+			} else
 				logger.debug("hit null");
 		}
+
+		Review findReview = tester.getReviews().get(0);
+		assertNotNull(findReview.getRestaurant());
+		assertEquals(tester.getName(),findReview.getRestaurant().getName());
 	}
 
 }

@@ -14,5 +14,7 @@ public interface RestaurantDao {
 	Key saveOrAddRestaurant(Restaurant t);
 	void deleteRestaurant(Long key);
 	void deleteAll();
+	void deleteReview(Long key);
+	
 	
 }

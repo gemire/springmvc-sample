@@ -11,10 +11,12 @@ import javax.jdo.Query;
 import org.apache.log4j.LogManager;
 import org.apache.log4j.Logger;
 import org.datanucleus.exceptions.NucleusObjectNotFoundException;
+
 import javax.jdo.JDOObjectNotFoundException;
 
 import com.dhenton9000.spring.mvc.jdo.dao.RestaurantDao;
 import com.dhenton9000.spring.mvc.jdo.entities.Restaurant;
+import com.dhenton9000.spring.mvc.jdo.entities.Review;
 import com.google.appengine.api.datastore.Key;
 import com.google.appengine.api.datastore.KeyFactory;
 
@@ -100,6 +102,13 @@ public class RestaurantDaoImpl implements RestaurantDao {
 		try {
 			pm = pmf.getPersistenceManager();
 			r = pm.makePersistent(t);
+			if (r.getReviews() != null)
+			{
+				for (Review rv: r.getReviews())
+				{
+					pm.makePersistent(rv);
+				}
+			}
 			log.debug(info);
 		} finally {
 			pm.close();
@@ -117,6 +126,23 @@ public class RestaurantDaoImpl implements RestaurantDao {
 			pm.deletePersistent(t);
 		} catch (NucleusObjectNotFoundException err) {
 			log.warn("could not find restaurant with id of " + key
+					+ " for delete");
+
+		} finally {
+			pm.close();
+		}
+
+	}
+	@Override
+	public void deleteReview(Long key) {
+		PersistenceManager pm = null;
+		try {
+			pm = pmf.getPersistenceManager();
+			Key id = KeyFactory.createKey("Review", key);
+			Review t = pm.getObjectById(Review.class, id);
+			pm.deletePersistent(t);
+		} catch (NucleusObjectNotFoundException err) {
+			log.warn("could not find review with id of " + key
 					+ " for delete");
 
 		} finally {

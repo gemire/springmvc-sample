@@ -9,6 +9,7 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.jdo.annotations.Element;
 import javax.jdo.annotations.Embedded;
 import javax.jdo.annotations.EmbeddedOnly;
 import javax.jdo.annotations.Extension;
@@ -35,8 +36,6 @@ public class Restaurant implements Serializable {
 	private static final long serialVersionUID = 1L;
 	@PrimaryKey
 	@Persistent(valueStrategy = IdGeneratorStrategy.IDENTITY)
- 	// @Extension(vendorName = "datanucleus", key = "gae.encoded-pk", value =
-	// "true")
 	private Key id;
 	@Persistent
 	@NotEmpty(message = "Restaurant Name cannot be blank")
@@ -54,6 +53,7 @@ public class Restaurant implements Serializable {
 	@NotEmpty(message = "State cannot be blank")
 	private String state;
 	@Persistent(mappedBy = "restaurant",defaultFetchGroup = "true")
+	@Element(dependent = "true")
 	private ArrayList<Review> reviews = new ArrayList<Review>();
 
 	private Long idAsLong = null;
@@ -210,6 +210,7 @@ public class Restaurant implements Serializable {
 		Review r = new Review();
 		r.setReviewListing(message);
 		r.setStarRating(rating);
+		r.setRestaurant(this);
 		reviews.add(r);
 		
 	}

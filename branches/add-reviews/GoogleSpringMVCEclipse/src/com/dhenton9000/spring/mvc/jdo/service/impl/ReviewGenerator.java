@@ -18,7 +18,7 @@ public class ReviewGenerator {
 	"A real gas", "Mediocre soups and disgusting desserts",
 			"Impeccable service!", "Consider suicide first",
 			"Get a job, instead of eating here!",
-			"Can you say 'gastic bypass?", "A root canal would be better",
+			"Can you say 'gastric bypass'?", "A root canal would be better",
 			"Too noisy and the food tasted funny"
 
 	};

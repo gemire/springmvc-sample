@@ -1,6 +1,7 @@
 package com.dhenton9000.spring.mvc.jdo.entities;
 
 import java.io.Serializable;
+import java.util.Date;
 
 import javax.jdo.annotations.IdGeneratorStrategy;
 import javax.jdo.annotations.PersistenceCapable;
@@ -17,9 +18,7 @@ import com.google.appengine.api.datastore.Key;
 public class Review implements Serializable  {
 
     private static final long serialVersionUID = 1L;
-    
      
-    
     @PrimaryKey  
     @Persistent(valueStrategy = IdGeneratorStrategy.IDENTITY)  
     private Key id;
@@ -28,9 +27,10 @@ public class Review implements Serializable  {
     private int starRating;
     @Persistent
     private String reviewListing;
-    
-    @Persistent
+    @Persistent(mappedBy="reviews")
     private Restaurant restaurant;
+    @Persistent
+	private Date stampDate = new Date();
 
     private final transient Logger logger = LoggerFactory.getLogger(Review.class);
    
@@ -114,8 +114,16 @@ public class Review implements Serializable  {
 	public void setRestaurant(Restaurant restaurant) {
 		this.restaurant = restaurant;
 	}
+
+	public Date getStampDate() {
+		return stampDate;
+	}
+
+	public void setStampDate(Date stampDate) {
+		this.stampDate = stampDate;
+	}
     
-    
+   
     
     
 }
