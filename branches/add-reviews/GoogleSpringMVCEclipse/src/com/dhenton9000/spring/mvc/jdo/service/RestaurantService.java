@@ -13,7 +13,8 @@ public interface RestaurantService {
 	Key saveOrAddRestaurant(Restaurant t);
 	void deleteRestaurant(Long key);
 	void loadSampleData();
-	  
+	List<Restaurant> getRestaurantsWithMaxRating(int ratingLimit);
+	List<Restaurant> getRestaurantsLike(String searchString); 
 	 
 	
 }

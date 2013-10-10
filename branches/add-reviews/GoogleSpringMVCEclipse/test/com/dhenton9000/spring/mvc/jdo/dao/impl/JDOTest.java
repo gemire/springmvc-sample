@@ -207,7 +207,7 @@ public class JDOTest {
 			q = pm.newQuery(Restaurant.class);
 			q.setFilter("city == cityParam");
 			// q.setOrdering("height desc");
-			q.declareParameters("String cityPararm");
+			q.declareParameters("String cityParam");
 			// q.declareParameters("String cityPararm,int itemCountParam");
 
 			List<Restaurant> results = (List<Restaurant>) q

@@ -144,13 +144,17 @@ public class RestaurantServiceImpl implements RestaurantService {
 
 	}
 
-	/**
-	 * 
-	 * @param r
-	 */
-	private void generateReviews(Restaurant r) {
-		// TODO Auto-generated method stub
-		
+
+	@Override
+	public List<Restaurant> getRestaurantsWithMaxRating(int ratingLimit) {
+
+		return  getRestaurantDao().getRestaurantsWithMaxRating(ratingLimit);
+	}
+
+	@Override
+	public List<Restaurant> getRestaurantsLike(String searchString) {
+
+		return  getRestaurantDao().getRestaurantsLike(searchString);
 	}
 
 }

@@ -7,6 +7,7 @@ package com.dhenton9000.spring.mvc.jdo.service.impl;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertTrue;
 
 import java.util.List;
 
@@ -67,5 +68,22 @@ public class RestaurantServiceImplTest {
 		assertNotNull(findReview.getRestaurant());
 		assertEquals(tester.getName(),findReview.getRestaurant().getName());
 	}
+	
+	@Test
+	public void testStringSearch()
+	{
+		service.loadSampleData();
+		List<Restaurant> restaurants = service.getRestaurantsLike("Subway");
+		assertEquals(6,restaurants.size());
+	}
+	
+	@Test
+	public void testRatingSearch()
+	{
+		service.loadSampleData();
+		List<Restaurant> restaurants = service.getRestaurantsWithMaxRating(6);
+		assertTrue(restaurants.size()>0);
+	}
+	
 
 }

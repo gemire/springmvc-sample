@@ -71,14 +71,11 @@ public class RestaurantDaoImpl implements RestaurantDao {
 		catch (NucleusObjectNotFoundException err) {
 			log.warn("could not find restaurant with id of " + id.getId());
 
-		} 
-		catch (JDOObjectNotFoundException err) {
+		} catch (JDOObjectNotFoundException err) {
 			log.warn("could not find restaurant with id of " + id.getId());
 
-		} 
-		
-		
-		
+		}
+
 		finally {
 
 			pm.close();
@@ -102,10 +99,8 @@ public class RestaurantDaoImpl implements RestaurantDao {
 		try {
 			pm = pmf.getPersistenceManager();
 			r = pm.makePersistent(t);
-			if (r.getReviews() != null)
-			{
-				for (Review rv: r.getReviews())
-				{
+			if (r.getReviews() != null) {
+				for (Review rv : r.getReviews()) {
 					pm.makePersistent(rv);
 				}
 			}
@@ -133,6 +128,7 @@ public class RestaurantDaoImpl implements RestaurantDao {
 		}
 
 	}
+
 	@Override
 	public void deleteReview(Long key) {
 		PersistenceManager pm = null;
@@ -142,8 +138,7 @@ public class RestaurantDaoImpl implements RestaurantDao {
 			Review t = pm.getObjectById(Review.class, id);
 			pm.deletePersistent(t);
 		} catch (NucleusObjectNotFoundException err) {
-			log.warn("could not find review with id of " + key
-					+ " for delete");
+			log.warn("could not find review with id of " + key + " for delete");
 
 		} finally {
 			pm.close();
@@ -152,7 +147,39 @@ public class RestaurantDaoImpl implements RestaurantDao {
 	}
 
 	@Override
-	public void deleteAll() {
-
+	public List<Restaurant> getRestaurantsWithMaxRating(int ratingLimit) {
+		List<Restaurant> all = getAllRestaurants();
+		ArrayList<Restaurant> found = new ArrayList<Restaurant>();
+		for (Restaurant r : all) {
+			boolean addToList = true;
+			if (r.getReviews() != null) {
+				for (Review rv : r.getReviews()) {
+					if (rv.getStarRating() > ratingLimit) {
+						addToList = false;
+						break;
+					}
+				}
+				if (addToList) {
+					found.add(r);
+				}
+			}
+		}
+		return found;
 	}
+
+	@SuppressWarnings("unchecked")
+	@Override
+	public List<Restaurant> getRestaurantsLike(String searchString) {
+
+		List<Restaurant> all = getAllRestaurants();
+		ArrayList<Restaurant> found = new ArrayList<Restaurant>();
+		for (Restaurant r : all) {
+			if (r.getName().toUpperCase().indexOf(searchString.toUpperCase()) > -1) {
+				found.add(r);
+			}
+
+		}
+		return found;
+	}
+
 }
