@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:aop="http://www.springframework.org/schema/aop"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:util="http://www.springframework.org/schema/util"
+       xmlns:p="http://www.springframework.org/schema/p"
+
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
+          http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-3.0.xsd
+          http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-3.0.xsd
+          http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util-3.0.xsd
+">
+
+
+
+
+ <!-- This bean is the town crier.  
+ He's responsible for notifying all town residents that are interested in his message -->
+    <bean id="townCrier" class="com.dhenton9000.springobserver.TownCrier"/>
+ 
+ <!-- this bean is a town resident interested in the town criers messages -->
+    <bean id="townResident1" class="com.dhenton9000.springobserver.residents.TownResident">  
+        <property name="name" value="Elmo" />
+    </bean>
+       
+ <!-- this bean is another town resident interested in the town criers messages -->
+    <bean id="townResident2" class="com.dhenton9000.springobserver.residents.TownResident">
+        <property name="name" value="Bozo" />
+    </bean>
+   
+    
+     <!-- this is a method invoking bean that registers the first town resident with
+          with the town crier -->   
+   
+    
+  
+    <bean id="registerTownResident1" 
+      class="org.springframework.beans.factory.config.MethodInvokingFactoryBean">
+        <property name="targetObject">
+            <ref local="townCrier"/>
+        </property>
+        <property name="targetMethod">
+            <value>addListener</value>
+        </property>
+        <property name="arguments">
+            <list>
+                <ref bean="townResident1"/>
+            </list>
+        </property>
+    </bean>
+    
+     <!-- this is a method invoking bean that registers the second town  
+          resident with the town crier  --> 
+    <bean id="registerTownResident2" 
+      class="org.springframework.beans.factory.config.MethodInvokingFactoryBean">
+        <property name="targetObject">
+            <ref local="townCrier"/>
+        </property>
+        <property name="targetMethod">
+            <value>addListener</value>
+        </property>
+        <property name="arguments">
+            <list>
+                <ref bean="townResident2"/>
+            </list>
+        </property>
+    </bean>   
+    
+    
+</beans>

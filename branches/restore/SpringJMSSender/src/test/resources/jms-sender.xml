@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:jms="http://www.springframework.org/schema/jms"
+       xmlns:jee="http://www.springframework.org/schema/jee"
+       xmlns:tx="http://www.springframework.org/schema/tx"
+       xmlns:util="http://www.springframework.org/schema/util"
+       xmlns:p="http://www.springframework.org/schema/p"
+
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
+          http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-3.0.xsd
+          http://www.springframework.org/schema/jms http://www.springframework.org/schema/jms/spring-jms-3.0.xsd
+          http://www.springframework.org/schema/jee http://www.springframework.org/schema/jee/spring-jee-3.0.xsd
+          http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-3.0.xsd
+          http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util-3.0.xsd
+"  default-destroy-method="destroy"   >
+  
+        
+    <!-- <import resource="remote-aq.xml" />  -->
+  
+        
+    <import resource="embedded-aq.xml" />  
+
+      <!-- JMS ActiveMQ Connection Factory -->
+      <!-- AmqConnectionFactory is defined in either remote or embedded-aq.xml -->
+    <bean id="jmsActiveMQFactory" class="org.apache.activemq.pool.PooledConnectionFactory">
+        <property name="connectionFactory" ref="AmqConnectionFactory" />
+    </bean>
+     
+    <bean id="property-placeholder" class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
+        <property name="placeholderPrefix" value="#("/>
+        <property name="placeholderSuffix" value=")"/>
+        <property name="location" value="classpath:test-app.properties"/>
+    </bean>
+ 
+   <!--
+     these two beans look up a connection factory via a remote jndi
+     in this case, a JEE app server
+     
+    	<bean id="jndiTemplate" class="org.springframework.jndi.JndiTemplate">
+		<property name="environment">
+			<props>
+				<prop key="java.naming.factory.initial">com.evermind.server.rmi.RMIInitialContextFactory</prop>
+				<prop key="java.naming.provider.url">ormi://servername:12401</prop>
+				<prop key="java.naming.security.principal">username</prop>
+				<prop key="java.naming.security.credentials">password</prop>
+			</props>
+		</property>
+	</bean>
+	<bean id="targetconnFactory" class="org.springframework.jndi.JndiObjectFactoryBean">
+		<property name="jndiTemplate" ref="jndiTemplate" />
+		<property name="jndiName">
+			<value>jms/demoConnectionFactory</value>
+		</property>
+	</bean>
+-->
+
+
+
+    <bean id="destQueueTemplate" class="org.springframework.jms.core.JmsTemplate">
+        <property name="connectionFactory" ref="jmsActiveMQFactory" />
+        <property name="receiveTimeout" value="10000" />
+        <property name="defaultDestination" ref="destQueue-demo" />
+        <property name="messageConverter" ref="demoMessageConverter" />
+        <property name="sessionTransacted" value="true" /> 
+    </bean>
+<!--
+
+     this is a queue via JNDI say on a JEE Server, the jndiTemplate
+     has everything needed to connect to the JNDI server
+     
+     
+	<bean id="destQueue-demo" class="org.springframework.jndi.JndiObjectFactoryBean">
+		<property name="jndiTemplate" ref="jndiTemplate" />
+		<property name="jndiName">
+			<value>jms/destQueue-demo</value>
+		</property>
+	</bean>
+-->
+<!-- this creates a queue directly in spring -->
+    <bean id="destQueue-demo" class="org.apache.activemq.command.ActiveMQQueue">
+        <constructor-arg value="destQueue-demo"/>
+    </bean>
+
+    <bean id="demoMessageConverter" class="com.dhenton9000.spring.jms.converter.DemoMessageConverter" />
+  
+    <bean id="jmsContainer" class="org.springframework.jms.listener.DefaultMessageListenerContainer">
+        <property name="connectionFactory" ref="jmsActiveMQFactory"/>
+        <property name="destination" ref="destQueue-demo" />
+        <property name="messageListener" ref="messageListener" />
+    </bean>
+  
+  <bean id="messageListener" class="com.dhenton9000.spring.jms.listener.DemoMessageListener" />
+  
+</beans>
