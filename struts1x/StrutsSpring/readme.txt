@@ -1,1 +1,0 @@
-demo of using the spring web application context
