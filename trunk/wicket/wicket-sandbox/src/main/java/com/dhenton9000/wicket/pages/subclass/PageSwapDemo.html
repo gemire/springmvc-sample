@@ -11,26 +11,34 @@
                     <tr>
                         <th>Alpha:</th><td> <input wicket:id="alpha" size="20" /></td>
                         <th>Beta:</th><td> <input wicket:id="beta" size="20" /></td>
-                        
+
                     </tr>
 
                     <tr>
                         <td colspan="2">
                             <select wicket:id="gammaSelectBox"></select>
                         </td>
-                        
-                    </tr>
-                    
-                    <tr>
+
                         <td colspan="2">
-                            <div wicket:id="swappableArea">
-                                
-                                <span wicket:id="gammaPanel" />
-                            </div>
-                            
+                            <table cellpadding="5" cellspacing="5">
+                                <tr>
+                                    <td><button wicket:id="g1Select">Gamma 1</button></td>
+                                    <td><button wicket:id="g2Select">Gamma 2</button></td>
+                                    <td><button wicket:id="g3Select">Gamma 3</button></td>
+                                </tr>
+                            </table>
                         </td>
+
                     </tr>
+
                 </table>
+
+
+                <div wicket:id="swappableArea" style="padding: 10px; margin: 5px; border:#0079d6 2px double">
+
+                    <span wicket:id="gammaPanel" />
+                </div>
+
 
 
 
@@ -47,7 +55,7 @@
                 a CompoundProperty model is used, and the swapped area is added
                 to the form, form elements in the swapped panel will refer
                 to the proper model
-                
+
             </p>
 
         </wicket:extend>

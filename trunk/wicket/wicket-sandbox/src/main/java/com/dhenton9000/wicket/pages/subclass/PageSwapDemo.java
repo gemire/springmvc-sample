@@ -13,6 +13,7 @@ import java.util.List;
 import org.apache.wicket.Component;
 import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.ajax.form.AjaxFormComponentUpdatingBehavior;
+import org.apache.wicket.ajax.markup.html.AjaxLink;
 import org.apache.wicket.markup.html.WebMarkupContainer;
 import org.apache.wicket.markup.html.form.ChoiceRenderer;
 import org.apache.wicket.markup.html.form.DropDownChoice;
@@ -72,7 +73,7 @@ public class PageSwapDemo extends TemplatePage {
         swappableFieldContainer.setOutputMarkupId(true);
         form.add(swappableFieldContainer);
         swappableFieldContainer.addOrReplace(getGammaPanel());
-        
+
         final FeedbackPanel feedbackPanel = new FeedbackPanel(FEEDBACK_PANEL);
         feedbackPanel.setOutputMarkupId(true);
         feedbackPanel.setOutputMarkupPlaceholderTag(true);
@@ -83,7 +84,9 @@ public class PageSwapDemo extends TemplatePage {
         final TextField<String> textFieldBeta = new TextField<String>("beta");
 
         final DropDownChoice gammaSelectBox =
-                new DropDownChoice<GAMMA_GROUPS>(GAMMA_SELECT_BOX, new PropertyModel(PageSwapDemo.this, "selectedGroup"), getGammaChoices(), getRenderer()) {
+                new DropDownChoice<GAMMA_GROUPS>(GAMMA_SELECT_BOX, 
+                new PropertyModel(PageSwapDemo.this, "selectedGroup"), 
+                getGammaChoices(), getRenderer()) {
             @Override
             protected GAMMA_GROUPS convertChoiceIdToChoice(String id) {
                 return GAMMA_GROUPS.valueOf(id);
@@ -102,34 +105,63 @@ public class PageSwapDemo extends TemplatePage {
             }
         });
 
+        AjaxLink g1Select = new AjaxLink("g1Select") {
+            @Override
+            public void onClick(AjaxRequestTarget target) {
+                selectedGroup = GAMMA_GROUPS.G1;
+                swappableFieldContainer.addOrReplace(getGammaPanel());
+                target.add(swappableFieldContainer);
+            }
+        };
+
+        AjaxLink g2Select = new AjaxLink("g2Select") {
+            @Override
+            public void onClick(AjaxRequestTarget target) {
+                selectedGroup = GAMMA_GROUPS.G2;
+                swappableFieldContainer.addOrReplace(getGammaPanel());
+                target.add(swappableFieldContainer);
+            }
+        };
+
+        AjaxLink g3Select = new AjaxLink("g3Select") {
+            @Override
+            public void onClick(AjaxRequestTarget target) {
+                selectedGroup = GAMMA_GROUPS.G3;
+                swappableFieldContainer.addOrReplace(getGammaPanel());
+                target.add(swappableFieldContainer);
+            }
+        };
 
 
         form.add(textFieldAlpha);
         form.add(textFieldBeta);
         form.add(gammaSelectBox);
+        form.add(g1Select);
+        form.add(g2Select);
+        form.add(g3Select);
     }
 
     private Panel getGammaPanel() {
-       
+
         Panel selectedPanel = null;
-        switch (selectedGroup)
-        {
+        switch (selectedGroup) {
             case G1:
                 selectedPanel = new GammaOnePanel(GAMMA_PANEL);
                 break;
-                
+
             case G2:
                 selectedPanel = new GammaTwoPanel(GAMMA_PANEL);
                 break;
-            
+
             case G3:
                 selectedPanel = new GammaThreePanel(GAMMA_PANEL);
                 break;
-                
+
         }
-        
+
         return selectedPanel;
     }
+
     private List<GAMMA_GROUPS> getGammaChoices() {
         ArrayList<GAMMA_GROUPS> g = new ArrayList<GAMMA_GROUPS>();
         for (GAMMA_GROUPS gg : GAMMA_GROUPS.values()) {
@@ -196,7 +228,7 @@ public class PageSwapDemo extends TemplatePage {
         private String beta = "";
         private String gammaOne = "gamma1";
         private String gammaTwo = "gamma2";
-        private String gammaThree="gamma3";
+        private String gammaThree = "gamma3";
 
         /**
          * @return the alpha
@@ -267,7 +299,5 @@ public class PageSwapDemo extends TemplatePage {
         public void setGammaThree(String gammaThree) {
             this.gammaThree = gammaThree;
         }
-
-        
     }
 }
