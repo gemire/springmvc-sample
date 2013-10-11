@@ -8,25 +8,26 @@
 
 
             <p><wicket:message key="selected.application"/> <span wicket:id="selectedApplication" /></p>
-            
-            
+
+
             <h3>Users</h3>
+            <div style="height: 300px;width:350px; overflow-y: scroll; margin:5px; border: thin solid blue;"> 
+                <table wicket:id="userTable" cellpadding="3" cellspacing="3">
+                    <thead>
+                        <tr><th>User id</th><th>User name</th></tr>
 
-            <table wicket:id="userTable" cellpadding="3" cellspacing="3">
-                <thead>
-                    <tr><th>User id</th><th>User name</th></tr>
-                    
-                    
-                </thead>
-                
-                <tr wicket:id="users">
-                    <td wicket:id="cells">
-                        <span wicket:id="cell">cell content goes here</span>
-                    </td>
-                </tr>
 
-            </table>   
+                    </thead>
 
+                    <tr wicket:id="users">
+                        <td wicket:id="cells">
+
+                            <span  wicket:id="cell">cell content goes here</span>
+                        </td>
+                    </tr>
+
+                </table>   
+            </div>
         </wicket:extend>
     </body>
 </html>
