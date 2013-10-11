@@ -18,6 +18,7 @@ import org.apache.wicket.model.PropertyModel;
 import org.apache.wicket.request.resource.CssResourceReference;
 import org.apache.wicket.request.resource.JavaScriptResourceReference;
 import org.apache.wicket.util.string.Strings;
+import static com.dhenton9000.wicket.resources.ResourceMarker.JQUERY_JS;
 
 /**
  *
@@ -25,8 +26,7 @@ import org.apache.wicket.util.string.Strings;
  */
 public final class OnHoverPage extends TemplatePage {
 
-    private static final JavaScriptResourceReference JQUERY_JS =
-            new JavaScriptResourceReference(LightboxPage.class, "js/jquery-1.6.2.min.js");
+  
     private static final CssResourceReference ONHOVER_CSS =
             new CssResourceReference(OnHoverPage.class, "css/onhover.css");
     private static final JavaScriptResourceReference INIT_ONHOVER =
@@ -64,7 +64,7 @@ public final class OnHoverPage extends TemplatePage {
 
     @Override
     public void renderHead(IHeaderResponse response) {
-        // the order is important as jquery must exist before pixDisplay
+         
         response.render(JavaScriptReferenceHeaderItem.forReference(JQUERY_JS));
         response.render(JavaScriptReferenceHeaderItem.forReference(INIT_ONHOVER));
         response.render(CssReferenceHeaderItem.forReference(ONHOVER_CSS));
