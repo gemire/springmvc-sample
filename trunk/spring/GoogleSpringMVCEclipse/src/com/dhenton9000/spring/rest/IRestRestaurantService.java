@@ -22,5 +22,8 @@ public interface IRestRestaurantService {
 	public abstract RestResult deleteRestaurant(String restaurantId);
 
 	public abstract List<Restaurant> getAllRestaurants();
+	public abstract List<Restaurant> getRestaurantsWithMaxRating(int r);
+	public abstract List<Restaurant> getRestaurantsLike(String searchString);
+
 
 }

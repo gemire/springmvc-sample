@@ -2,6 +2,7 @@ package com.dhenton9000.spring.mvc.jdo.dao.impl;
 
 import static org.junit.Assert.*;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.jdo.JDOHelper;
@@ -16,6 +17,7 @@ import org.junit.BeforeClass;
 import org.junit.Test;
 
 import com.dhenton9000.spring.mvc.jdo.entities.Restaurant;
+import com.dhenton9000.spring.mvc.jdo.entities.Review;
 import com.google.appengine.api.datastore.Key;
 import com.google.appengine.api.datastore.KeyFactory;
 import com.google.appengine.tools.development.testing.LocalDatastoreServiceTestConfig;
@@ -101,6 +103,56 @@ public class JDOTest {
 		assertEquals(RESTAURANT_NAME, t.getName());
 	}
 
+	
+	@Test
+	public void simpleJdoWithMyOwnKeyAndReviews() {
+
+		Key k = KeyFactory.createKey("Restaurant", SAMPLE_ID);
+
+		Restaurant t = new Restaurant(k);
+		t.setName(RESTAURANT_NAME);
+		t.setCity(SAMPLE_CITY_NAME);
+		t.addReview(4, "get a job");
+		t.addReview(5, "get a job 3"); 
+
+		assertEquals(2,t.getReviews().size());
+		boolean notFound = false;
+		try {
+			pm = pmf.getPersistenceManager();
+			pm.getObjectById(Restaurant.class, SAMPLE_ID);
+			fail("should have raised not found");
+		} catch (JDOObjectNotFoundException e) {
+			notFound = true;
+		} finally {
+			pm.close();
+		}
+		assertTrue(notFound);
+
+		try {
+			pm = pmf.getPersistenceManager();
+			pm.makePersistent(t);
+		} finally {
+			pm.close();
+		}
+
+		try {
+			pm = pmf.getPersistenceManager();
+			t = pm.getObjectById(Restaurant.class, SAMPLE_ID);
+			assertEquals(SAMPLE_CITY_NAME,t.getCity());
+			assertEquals(2,t.getReviews().size());
+			 
+		} finally {
+			pm.close();
+		}
+
+		assertNotNull(pm);
+		assertEquals(RESTAURANT_NAME, t.getName());
+	}
+	
+	
+	
+	
+	
 	@Test
 	public void simpleJdoWithGeneratedKey() {
 
@@ -155,7 +207,7 @@ public class JDOTest {
 			q = pm.newQuery(Restaurant.class);
 			q.setFilter("city == cityParam");
 			// q.setOrdering("height desc");
-			q.declareParameters("String cityPararm");
+			q.declareParameters("String cityParam");
 			// q.declareParameters("String cityPararm,int itemCountParam");
 
 			List<Restaurant> results = (List<Restaurant>) q
