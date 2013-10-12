@@ -13,6 +13,9 @@ public interface RestaurantDao {
 	Restaurant getRestaurant(Key id);
 	Key saveOrAddRestaurant(Restaurant t);
 	void deleteRestaurant(Long key);
-	void deleteAll();
+	void deleteReview(Long key);
+	List<Restaurant> getRestaurantsWithMaxRating(int maxRating);
+	List<Restaurant> getRestaurantsLike(String searchString);
 	
 }
+

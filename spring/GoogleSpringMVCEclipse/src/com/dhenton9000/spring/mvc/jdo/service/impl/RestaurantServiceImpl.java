@@ -30,6 +30,7 @@ public class RestaurantServiceImpl implements RestaurantService {
 	private RestaurantDao restaurantDao;
 	private static Logger log = LogManager
 			.getLogger(RestaurantServiceImpl.class);
+	private ReviewGenerator reviewer = new ReviewGenerator();
 
 	@Override
 	public List<Restaurant> getAllRestaurants() {
@@ -120,7 +121,8 @@ public class RestaurantServiceImpl implements RestaurantService {
 						log.error("cannot parse " + v);
 					}
 					r.setVersion(ver);
-					log.debug(r);
+					reviewer.generateReviews(r);
+					log.debug("@@@ "+r.getReviews());
 					saveOrAddRestaurant(r);
 				}
 
@@ -140,6 +142,19 @@ public class RestaurantServiceImpl implements RestaurantService {
 			}
 		}
 
+	}
+
+
+	@Override
+	public List<Restaurant> getRestaurantsWithMaxRating(int ratingLimit) {
+
+		return  getRestaurantDao().getRestaurantsWithMaxRating(ratingLimit);
+	}
+
+	@Override
+	public List<Restaurant> getRestaurantsLike(String searchString) {
+
+		return  getRestaurantDao().getRestaurantsLike(searchString);
 	}
 
 }

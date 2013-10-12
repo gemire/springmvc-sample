@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.dhenton9000.spring.mvc.jdo.entities.Restaurant;
@@ -33,7 +34,7 @@ public class RestaurantRestController implements IRestRestaurantService {
 	 * @see com.dhenton9000.spring.rest.controllers.IRestRestaurantService#addRestaurant(com.dhenton9000.spring.mvc.jdo.entities.Restaurant)
 	 */
 	@Override
-	@RequestMapping(value = "/add", method = RequestMethod.POST)
+	@RequestMapping(value = "/add", method = RequestMethod.PUT)
 	public @ResponseBody
 	RestResult addRestaurant(@RequestBody Restaurant restaurant) {
 		RestResult res = new RestResult();
@@ -166,6 +167,29 @@ public class RestaurantRestController implements IRestRestaurantService {
 		return restaurants;
 	}
 
+	@Override
+	@RequestMapping(value = "/get/withMaxRating", method = RequestMethod.GET)
+	public  @ResponseBody List<Restaurant> getRestaurantsWithMaxRating(@RequestParam("ratingLimit") int ratingLimit) {
+		
+		List<Restaurant> restaurants = this.getRestaurantService()
+				.getRestaurantsWithMaxRating(ratingLimit);
+		if (restaurants == null)
+			restaurants = new ArrayList<Restaurant>();
+		return restaurants;
+	}
+
+	@Override
+	@RequestMapping(value = "/get/restaurants/like", method = RequestMethod.GET)
+	public  @ResponseBody List<Restaurant> getRestaurantsLike(@RequestParam("searchString") String searchString) {
+		List<Restaurant> restaurants = this.getRestaurantService()
+				.getRestaurantsLike(searchString);
+		if (restaurants == null)
+			restaurants = new ArrayList<Restaurant>();
+		return restaurants;
+	}
+	
+	
+	
 	public RestaurantService getRestaurantService() {
 		return restaurantService;
 	}
@@ -173,5 +197,6 @@ public class RestaurantRestController implements IRestRestaurantService {
 	public void setRestaurantService(RestaurantService restaurantService) {
 		this.restaurantService = restaurantService;
 	}
+
 
 }

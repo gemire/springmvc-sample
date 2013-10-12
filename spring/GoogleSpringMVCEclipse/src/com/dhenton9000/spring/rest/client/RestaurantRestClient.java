@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.net.URI;
 import java.util.List;
 
+
 //import org.apache.commons.httpclient.HttpClient;
 //import org.apache.commons.httpclient.MultiThreadedHttpConnectionManager;
 import org.apache.commons.io.IOUtils;
@@ -11,7 +12,6 @@ import org.apache.commons.io.IOUtils;
 import com.dhenton9000.spring.mvc.jdo.entities.Restaurant;
 import com.dhenton9000.spring.rest.IRestRestaurantService;
 import com.dhenton9000.spring.rest.controllers.RestResult;
-
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -121,6 +121,21 @@ public class RestaurantRestClient implements IRestRestaurantService {
 					throw new RestClientException("Unknown status code [" + statusCode + "]");
 			}
 		}
+	}
+
+
+	@Override
+	public List<Restaurant> getRestaurantsWithMaxRating(int r) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+
+
+	@Override
+	public List<Restaurant> getRestaurantsLike(String searchString) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 

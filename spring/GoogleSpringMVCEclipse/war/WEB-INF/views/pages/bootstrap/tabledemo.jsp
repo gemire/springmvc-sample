@@ -12,12 +12,12 @@
 </tr>
 
 
-<tr><td><span class=" badge badge-important">Hello</span</td><td>fffff</td><td>ffffff</td></tr>
-<tr><td><span class=" badge badge-important">Hello</span</td><td>fffff</td><td>ffffff</td></tr>
-<tr><td><span class=" badge badge-important">Hello</span</td><td>fffff</td><td>ffffff</td></tr>
-<tr><td><span class=" badge badge-important">Hello</span</td><td>fffff</td><td>ffffff</td></tr>
-<tr><td><span class=" badge badge-important">Hello</span</td><td>fffff</td><td>ffffff</td></tr>
-<tr><td><span class=" badge badge-important">Hello</span</td><td>fffff</td><td>ffffff</td></tr>
+<tr><td><span class=" badge badge-important">Hello</span></td><td>fffff</td><td>ffffff</td></tr>
+<tr><td><span class=" badge badge-important">Hello</span></td><td>fffff</td><td>ffffff</td></tr>
+<tr><td><span class=" badge badge-important">Hello</span></td><td>fffff</td><td>ffffff</td></tr>
+<tr><td><span class=" badge badge-important">Hello</span></td><td>fffff</td><td>ffffff</td></tr>
+<tr><td><span class=" badge badge-important">Hello</span></td><td>fffff</td><td>ffffff</td></tr>
+<tr><td><span class=" badge badge-important">Hello</span></td><td>fffff</td><td>ffffff</td></tr>
 
 
 
