@@ -5,3 +5,6 @@ http://bthurley.wordpress.com/2012/07/18/spring-mvc-with-restful-datatables/
 http://db.apache.org/jdo/jdoql_methods.html
 https://developers.google.com/appengine/docs/java/datastore/jdo/queries
 https://developers.google.com/appengine/docs/java/datastore/queries
+
+not compatible with the appengine but twitter tag lib
+http://dandelion.github.io/datatables/docs/installation/
