@@ -11,22 +11,33 @@
 
 
             <h3>Users</h3>
-            <div style="height: 300px;width:350px; overflow-y: scroll; margin:5px; border: thin solid blue;"> 
-                <table wicket:id="userTable" cellpadding="3" cellspacing="3">
-                    <thead>
-                        <tr><th>User id</th><th>User name</th></tr>
+            <div style="margin: 10px; padding: 10px; width: 700px; height: 400px">
+                <div style="float: right; width: 250px; height:250px; overflow-y:auto; border: thin solid blue"> 
+                    <table wicket:id="userTable" cellpadding="3" cellspacing="3">
+                        <thead>
+                            <tr><th>User id</th><th>User name</th></tr>
 
 
-                    </thead>
+                        </thead>
 
-                    <tr wicket:id="users">
-                        <td wicket:id="cells">
+                        <tr wicket:id="users">
+                            <td wicket:id="cells">
 
-                            <span  wicket:id="cell">cell content goes here</span>
-                        </td>
-                    </tr>
+                                <span  wicket:id="cell">cell content goes here</span>
+                            </td>
+                        </tr>
 
-                </table>   
+                    </table>   
+                </div>
+                
+                <div style="float: left; width: 350px; height:250px; ">
+                    This page also demonstrates the use of loadable detachable models.
+                    The onDetach method can be over ridden to clear out session storage
+                    each display cycle. This effectively converts these variables to 
+                    request scope <em>even though they are stored in the session</em>. 
+                    Following the debug trace on ApplicationsUsers.java will illustrate this.
+                </div>
+                
             </div>
         </wicket:extend>
     </body>

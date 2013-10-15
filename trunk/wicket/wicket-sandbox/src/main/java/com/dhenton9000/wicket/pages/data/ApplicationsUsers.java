@@ -9,6 +9,7 @@ import com.dhenton9000.jpa.entities.Users;
 import com.dhenton9000.wicket.pages.TemplatePage;
 import com.dhenton9000.wicket.dao.service.IApplicationsService;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Iterator;
 import java.util.List;
 import org.apache.wicket.Component;
@@ -26,8 +27,11 @@ import org.apache.wicket.model.LoadableDetachableModel;
 import org.apache.wicket.model.PropertyModel;
 import org.apache.wicket.request.mapper.parameter.PageParameters;
 import org.apache.wicket.spring.injection.annot.SpringBean;
-import org.apache.wicket.ajax.form.AjaxFormSubmitBehavior;
 import org.apache.wicket.markup.html.basic.Label;
+import org.apache.wicket.model.Model;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 /**
  *
  * @author dhenton
@@ -43,6 +47,7 @@ public final class ApplicationsUsers extends TemplatePage {
     private WebMarkupContainer userTable;
     private UsersForApplications userDataProvider;
     private List<Users> selectedUsers = null;
+    private Logger logger = LoggerFactory.getLogger(ApplicationsUsers.class);
     Label selectedApplicationLabel = null;
 
     public ApplicationsUsers() {
@@ -58,9 +63,15 @@ public final class ApplicationsUsers extends TemplatePage {
 
     }
 
+    @Override
+    protected void onDetach() {
+        super.onDetach();
+        logger.debug("In onDetach of ApplicationUsers");
+    }
+
     private void setup(PageParameters params) {
         setPageTitle(titleStart);
-        getApplications();
+
         dropDownApplicationListItem =
                 new ApplicationsDropDownChoice("applicationsSelect").add(new AjaxFormComponentUpdatingBehavior("change") {
             @Override
@@ -73,27 +84,54 @@ public final class ApplicationsUsers extends TemplatePage {
 
         add(dropDownApplicationListItem);
         addUsersModule();
-        IModel selectedAppModel =new PropertyModel<Applications>(ApplicationsUsers.this, "selectedApplication.applicationName");
-        selectedApplicationLabel = new Label("selectedApplication",selectedAppModel);
+        IModel selectedAppModel = new PropertyModel<Applications>(ApplicationsUsers.this, "selectedApplication.applicationName");
+        selectedApplicationLabel = new Label("selectedApplication", selectedAppModel);
         selectedApplicationLabel.setOutputMarkupId(true);
         add(selectedApplicationLabel);
-       
+        initSelectedUser();
 
+
+    }
+
+    private void initSelectedUser() {
+        if (applications == null)
+        {
+             applications = service.getAllApplications();
+        }
+        if (applications.size() > 0) {
+            setSelectedApplication(applications.get(0));
+            selectedUsers = service.findUsersForApplications(selectedApplication);
+        }
     }
 
     /**
      * @return the applications
      */
-    public List<Applications> getApplications() {
-        if (applications == null) {
-            applications = service.getAllApplications();
-            if (applications.size() > 0) {
-                
-                setSelectedApplication(applications.get(0));
-                selectedUsers = service.findUsersForApplications(selectedApplication);
+    public IModel<List<? extends Applications>> getApplications() {
+
+
+        LoadableDetachableModel dM = new LoadableDetachableModel() {
+            @Override
+            protected Object load() {
+                if (applications == null) {
+                    applications = service.getAllApplications();
+                    logger.debug("calling getApplications");
+
+                }
+                return applications;
             }
-        }
-        return applications;
+
+            @Override
+            protected void onDetach() {
+                super.onDetach();
+                applications = null;
+                logger.debug("in onDetach for getApplications");
+            }
+        };
+
+        return (IModel<List<? extends Applications>>) dM;
+
+
     }
 
     /**
@@ -114,8 +152,7 @@ public final class ApplicationsUsers extends TemplatePage {
      * @return the selectedUsers
      */
     public List<Users> getSelectedUsers() {
-        if (selectedUsers == null)
-        {
+        if (selectedUsers == null) {
             selectedUsers = service.findUsersForApplications(selectedApplication);
         }
         return selectedUsers;
@@ -132,14 +169,16 @@ public final class ApplicationsUsers extends TemplatePage {
          * @param id component id
          */
         public ApplicationsDropDownChoice(String id) {
-            super(id, getApplications(), new ApplicationsUsers.ApplicationsChoiceRenderer());
-            setChoices(getApplications());
-            setModel(new PropertyModel<Applications>(ApplicationsUsers.this, "selectedApplication"));
-             
+
+            super(id, new PropertyModel<Applications>(ApplicationsUsers.this, "selectedApplication"), getApplications(), new ApplicationsUsers.ApplicationsChoiceRenderer());
+
+
+            //super(id, getApplications(), new ApplicationsUsers.ApplicationsChoiceRenderer());
+            //setChoices(getApplications());
+            //setModel(new PropertyModel<Applications>(ApplicationsUsers.this, "selectedApplication"));
+
 
         }
-
-        
     }
 
     private final class ApplicationsChoiceRenderer extends ChoiceRenderer<Applications> {
@@ -169,7 +208,7 @@ public final class ApplicationsUsers extends TemplatePage {
     //// user stuff //////////////////////////////////////////////////////
     private void addUsersModule() {
         userTable = new WebMarkupContainer("userTable");
-        
+
         //setMarkup to allow for refresh
         add(userTable.setOutputMarkupId(true));
 
@@ -209,7 +248,10 @@ public final class ApplicationsUsers extends TemplatePage {
 
         @Override
         public void detach() {
+
+            logger.debug("In detach for ApplicationUsers-UsersForApplications");
             selectedUsers = null;
+
         }
     }
 }
