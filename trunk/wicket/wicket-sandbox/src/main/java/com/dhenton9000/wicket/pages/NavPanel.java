@@ -5,6 +5,7 @@
 package com.dhenton9000.wicket.pages;
 
 import com.dhenton9000.wicket.pages.ajax.AjaxFormPage;
+import com.dhenton9000.wicket.pages.ajax.indicators.AjaxIndicatorPage;
 import com.dhenton9000.wicket.pages.behaviors.BehaviorsPage;
 import com.dhenton9000.wicket.pages.data.ApplicationsUsers;
 import com.dhenton9000.wicket.pages.data.DataPaging;
@@ -70,6 +71,8 @@ public final class NavPanel extends TemplatePanel {
         add(new BookmarkablePageLink<Void>("behaviorsPageLink", BehaviorsPage.class));
         add(new BookmarkablePageLink<Void>("dataPagingLink", DataPaging.class));
         add(new BookmarkablePageLink<Void>("pageSwapDemoPageLink", PageSwapDemo.class));
+        add(new BookmarkablePageLink<Void>("ajaxIndicatorPageLink", AjaxIndicatorPage.class));
+        
         // this isn't needed see Application.java for a mount 
         // that allows for a more normal url
         // add(new BookmarkablePageLink<Void>("refPageLink", ImageRefPage.class));
