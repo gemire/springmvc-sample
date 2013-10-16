@@ -6,6 +6,7 @@
 package com.dhenton9000.wicket.pages;
 
 import com.dhenton9000.wicket.pages.ajax.AjaxFormPage;
+import com.dhenton9000.wicket.pages.ajax.indicators.AjaxIndicatorPage;
 import com.dhenton9000.wicket.pages.behaviors.BehaviorsPage;
 import com.dhenton9000.wicket.pages.data.ApplicationsUsers;
 import com.dhenton9000.wicket.pages.data.DataPaging;
@@ -165,7 +166,7 @@ public class Application extends WebApplication {
             CompoundUserPage.class, LightboxPage.class, MaintainRestaurantsTwo.class,
             ApplicationsUsers.class, SimpleEventPage.class, OnHoverPage.class,
             SimpleListViewRepeater.class, MaintainApplications.class,PageSwapDemo.class,
-            AjaxFormPage.class, BehaviorsPage.class, DataPaging.class,
+            AjaxFormPage.class, BehaviorsPage.class, DataPaging.class,AjaxIndicatorPage.class,
             FormInputWithList.class, ModalInputPage.class, SignIn.class, SignOutPage.class
         };
 
