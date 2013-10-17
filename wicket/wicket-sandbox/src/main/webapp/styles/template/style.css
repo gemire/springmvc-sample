@@ -52,3 +52,12 @@
 #changeAddButton {
  margin-right: 10px;
 }
+
+div.basicBlock
+{
+    width:90%;
+    height: 20%;
+    margin: 5px;
+    padding: 5px;
+    border: thin solid  #E9601A;
+}

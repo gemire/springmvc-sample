@@ -8,7 +8,7 @@ package com.dhenton9000.wicket.service;
  * A service used in demonstrating Wicket wait things
  * @author dhenton
  */
-public interface SlowService {
+public interface ISlowService {
 
     String slowServiceCall(String info);
     

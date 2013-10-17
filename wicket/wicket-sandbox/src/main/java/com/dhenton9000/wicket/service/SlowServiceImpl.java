@@ -6,13 +6,15 @@ package com.dhenton9000.wicket.service;
 
 import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.TimeUnit;
+import org.springframework.stereotype.Service;
 
 
 /**
  *
  * @author dhenton
  */
-public class SlowServiceImpl implements SlowService {
+@Service
+public class SlowServiceImpl implements ISlowService {
 
     private static final int DELAY = 2;
 
