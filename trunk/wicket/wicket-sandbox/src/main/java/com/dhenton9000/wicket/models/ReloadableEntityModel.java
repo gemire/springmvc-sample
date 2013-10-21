@@ -24,7 +24,6 @@ package com.dhenton9000.wicket.models;
  * along with this distribution; if not, write to: Free Software Foundation,
  * Inc. 51 Franklin Street, Fifth Floor Boston, MA 02110-1301 USA
  */
-import com.dhenton9000.jpa.dao.support.GenericDao;
 import com.dhenton9000.jpa.domain.Identifiable;
 import com.dhenton9000.jpa.service.support.GenericEntityService;
 import java.io.IOException;
@@ -33,6 +32,8 @@ import java.io.Serializable;
 import org.apache.commons.lang.SerializationUtils;
 import org.apache.wicket.model.IModel;
 import org.apache.wicket.model.LoadableDetachableModel;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 @SuppressWarnings("serial")
 public abstract class ReloadableEntityModel<T extends Identifiable<PK>, PK extends Serializable> 
@@ -43,6 +44,7 @@ extends LoadableDetachableModel {
     private T entity;
     private byte[] serializedEntity;
     private IModel entityModel;
+     private final Logger logger = LoggerFactory.getLogger(ReloadableEntityModel.class);
 
     public ReloadableEntityModel(Class<T> entityClass, PK id) {
         this.entityClass = entityClass;
@@ -92,6 +94,7 @@ extends LoadableDetachableModel {
 
     @Override
     public void detach() {
+        //logger.debug("in restaurant loadable base detach");
         if (entityModel != null) {
             entity = (T) entityModel.getObject();
             entityModel.detach();
