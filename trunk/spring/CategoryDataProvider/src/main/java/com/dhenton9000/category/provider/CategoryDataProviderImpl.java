@@ -6,12 +6,9 @@ package com.dhenton9000.category.provider;
 
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Set;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import org.codehaus.jackson.map.ObjectMapper;
 
 
@@ -19,7 +16,7 @@ import org.codehaus.jackson.map.ObjectMapper;
  *
  * @author dhenton
  */
-public class CategoryDataProviderImpl {
+public class CategoryDataProviderImpl implements CategoryDataProvider {
 
     private HashMap<Integer, BaseCategory> level1Data =
             new HashMap<Integer, BaseCategory>();
@@ -28,21 +25,15 @@ public class CategoryDataProviderImpl {
     {
         setData();
     }
-    public void setData()
+    private void setData()
     {
         level1Data.put(1, getClothingData());
         level1Data.put(2, getElectronicData());
         level1Data.put(3, getGamesData());
         level1Data.put(4, getHomeImprovementData());
     }
-    public BaseCategory getMainData(Integer id) {
-        
-
-        return level1Data.get(id);
-    }
-
-    
-    public String toJson(List<BaseCategory> cats) throws IOException
+       
+    private String toJson(List<BaseCategory> cats) throws IOException
     {
         String t = "";
         ObjectMapper mapper = new ObjectMapper();
@@ -54,6 +45,7 @@ public class CategoryDataProviderImpl {
      *
      * @return the base categories for Level 1
      */
+    @Override
     public List<BaseCategory> getLevel1Data() {
         ArrayList<BaseCategory> a = new ArrayList<BaseCategory>();
         
@@ -71,6 +63,7 @@ public class CategoryDataProviderImpl {
      * @param level1Id
      * @return
      */
+    @Override
     public List<BaseCategory> getLevel2Data(Integer level1Id) {
         BaseCategory foundLevel = level1Data.get(level1Id);
         List<BaseCategory> listItems = null;
@@ -88,6 +81,7 @@ public class CategoryDataProviderImpl {
      * @param level1Id
      * @return
      */
+    @Override
     public List<BaseCategory> getLevel3Data(Integer level2Id) {
         Set<Integer> firstLevelKey = level1Data.keySet();
         BaseCategory foundLevel = null;
