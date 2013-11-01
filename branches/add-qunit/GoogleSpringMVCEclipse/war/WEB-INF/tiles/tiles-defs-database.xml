@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8" ?> <!DOCTYPE tiles-definitions PUBLIC        "-//Apache Software Foundation//DTD Tiles Configuration 2.0//EN"        "http://tiles.apache.org/dtds/tiles-config_2_0.dtd">
+<tiles-definitions>
+
+	<!--database jdo -->
+
+	<definition name="tiles.base.database.definition" extends="tiles.base.definition">
+		<put-attribute name="explainPanel"
+			value="/WEB-INF/views/explain/database/restaurant_list.jsp" />
+		<put-attribute name="jsscripts"
+			value="/WEB-INF/views/layout/database_scripts.jsp" />
+	</definition>
+
+	<definition name="tiles.database.list.restaurant" extends="tiles.base.database.definition">
+		<put-attribute name="title" value="Restaurant Listing" />
+		<put-attribute name="body"
+			value="/WEB-INF/views/pages/database/restaurant_list_body.jsp" />
+		<put-attribute name="subTitle" value="JDO Persistence" />
+	</definition>
+
+	<definition name="tiles.database.edit.restaurant" extends="tiles.base.database.definition">
+		<put-attribute name="title" value="Edit Restaurant" />
+		<put-attribute name="body"
+			value="/WEB-INF/views/pages/database/restaurant_add_edit_body.jsp" />
+		<put-attribute name="subTitle" value="JDO Persistence" />
+	</definition>
+
+	<definition name="tiles.database.add.restaurant" extends="tiles.base.database.definition">
+		<put-attribute name="title" value="Add Restaurant" />
+		<put-attribute name="body"
+			value="/WEB-INF/views/pages/database/restaurant_add_edit_body.jsp" />
+		<put-attribute name="subTitle" value="JDO Persistence" />
+	</definition>
+	
+		<definition name="tiles.database.load.restaurant" extends="tiles.base.database.definition">
+		<put-attribute name="title" value="Load Restaurant Data" />
+		<put-attribute name="body"
+			value="/WEB-INF/views/pages/database/restaurant_load_body.jsp" />
+		<put-attribute name="subTitle" value="Load Restaurants" />
+	</definition>
+</tiles-definitions>
