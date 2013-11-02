@@ -186,6 +186,7 @@ XTree = {
         //console.log(XTree.toHtml());
         XTree.findLevel(level, id).setAttribute("checked", "yes");
         // console.log("\n============\n" + jsxml.toXml(XTree.tree));
+        XTree.refresh();
     },
     /**
      * Get the remote level2 data or simply open the folder
