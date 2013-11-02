@@ -183,9 +183,14 @@ XTree = {
     selectItem: function(level, id)
     {
         console.log("selectItem1 id " + id + " level " + level);
-        //console.log(XTree.toHtml());
-        XTree.findLevel(level, id).setAttribute("checked", "yes");
-        // console.log("\n============\n" + jsxml.toXml(XTree.tree));
+        clickedNode = XTree.findLevel(level, id);
+        clickedStatus = clickedNode.getAttribute("checked");
+        newStatus = "yes";
+        if (typeof clickedStatus == undefined || clickedStatus == "yes")
+        {
+        	newStatus = "no";
+        }
+        XTree.findLevel(level, id).setAttribute("checked", newStatus);
         XTree.refresh();
     },
     /**
