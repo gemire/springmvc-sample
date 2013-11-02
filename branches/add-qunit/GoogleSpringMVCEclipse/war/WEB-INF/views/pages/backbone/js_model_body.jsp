@@ -16,21 +16,58 @@
 			"urlBase" : "<%=basePath%>app/rest/categories"
 		});
 		XTree.getLevel1DataForGroup(3);
-		$('#tree').html(XTree.toHtml());
+		MESSAGE_PUMP.subscribe(XTREE_LISTENERS.xml_block_refresh,XTREE_LISTENERS.ON_REFRESH_EVENT);
+		XTree.refresh();
+		//$('#tree').html(XTree.toHtml());
 
 	});
 </script>
 
 
-<div id="tree" class="float-left span6 tree well"
-	style="overflow-y: auto; height: 250px"></div>
 
-<div id="tree" class="float-right span4">
+
+
+
+<div id="tree-content" style="height:450px" class="float-left span6 well">
+	<ul class="nav nav-tabs pill" id="myTab">
+
+		<li><a href="/app/backbone/demos/js/model.html#tree-home"
+			data-toggle="pill">Tree</a></li>
+		<li><a href="/app/backbone/demos/js/model.html#xml"
+			data-toggle="pill">Xml</a></li>
+
+	</ul>
+
+
+
+	<div class="tab-content">
+		<div class="tab-pane active" id="tree-home">
+
+			<div id="tree" class="tree" style="overflow-y: auto; height: 250px"></div>
+
+
+
+		</div>
+		<div class="tab-pane" id="xml">
+
+		<textarea id="xml_block" rows="15" style="width:330px"></textarea>
+
+
+		</div>
+	</div>
+</div>
+<div class="float-right span4">
 	<p>
-		<a href="<%=basePath%>tree_tests/test.jsp"
-			class="btn large btn-info">QUnit Tests</a>
+		<a href="<%=basePath%>tree_tests/test.jsp" class="btn large btn-info">QUnit
+			Tests</a>
 	</p>
 	Unit tests for the javascript used for developing the tree.
 
 
 </div>
+
+
+
+
+
+

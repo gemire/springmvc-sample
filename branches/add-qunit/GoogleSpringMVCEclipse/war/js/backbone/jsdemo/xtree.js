@@ -28,6 +28,7 @@ XTree = {
                 settings.urlBase : ""; // no ending slash
         XTree.createNewTree();
         XTree.xsl = $.ajax(XTree.params.transformBase+"transform.xslt", {"async": false, "type": "GET"}).responseText;
+        
     },
     getLevel1DataForGroup: function(groupId)
     {
@@ -160,12 +161,12 @@ XTree = {
      */
     toString: function()
     {
-          stuff = jsxml.toXml(XTree.tree);
+          var stuff = jsxml.toXml(XTree.tree);
           return stuff;
     },
     toHtml: function()
     {
-        stuff =  jsxml.transReady(XTree.tree, XTree.xsl);
+        var stuff =  jsxml.transReady(XTree.tree, XTree.xsl);
         return stuff;
         // console.log("\n============\n" + jsxml.toXml(XTree.tree));
 
@@ -174,6 +175,7 @@ XTree = {
     {
 
         $("#"+XTree.params.attachmentPoint).html(jsxml.transReady(XTree.tree, XTree.xsl));
+        MESSAGE_PUMP.raiseEvent(XTree.tree,XTREE_LISTENERS.ON_REFRESH_EVENT);
 
     },
     ///////////// button handling routines ///////////////////
