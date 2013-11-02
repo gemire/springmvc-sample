@@ -24,7 +24,7 @@
         <put-attribute name="body"
                        value="/WEB-INF/views/pages/backbone/js_model_body.jsp" />
         <put-attribute name="subTitle" value="Javascript Model/Message Demonstration" />
-        <put-attribute name="jsscripts_app_specific" value="/WEB-INF/views/pages/backbone/tree_scripts.jsp" />
+        <put-attribute name="jsscripts_app_specific" value="/WEB-INF/views/pages/backbone/js_model_scripts.jsp" />
         <put-attribute name="explainPanel" value="/WEB-INF/views/explain/backbone/js_model_body.jsp" />
        <!--    <put-attribute name="jsscripts" value="/WEB-INF/views/layout/tree_scripts.jsp" /> -->
     </definition>
