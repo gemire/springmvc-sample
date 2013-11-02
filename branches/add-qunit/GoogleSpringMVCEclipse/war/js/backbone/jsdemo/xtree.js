@@ -184,7 +184,11 @@ XTree = {
         clickedNode = XTree.findLevel(level, id);
         clickedStatus = clickedNode.getAttribute("checked");
         newStatus = "yes";
-        if (typeof clickedStatus == undefined || clickedStatus == "yes")
+        if (typeof clickedStatus == undefined || clickedStatus == "no")
+        {
+        	newStatus = "yes";
+        }
+        else
         {
         	newStatus = "no";
         }
