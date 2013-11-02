@@ -61,25 +61,24 @@
 		</div>
 	</div>
 </div>
-<div class="float-right span5">
 
-
-	<div class="well" style="height: 250px; overflow-y: auto">
-		<div id="selected_list_items"></div>
+<div id="right-side" class="float-right span5"> 
+	<div class="panel panel-default"  style="border: thin solid grey; margin:5px; padding:2px">
+		<div class="panel-heading">Selected Items</div>
+		<div class="panel-body" style="height: 250px; overflow-y: auto">
+	
+			<div id="selected_list_items"></div>
+		</div>
 	</div>
 	
+	 
 	
 	<p>
-	Unit tests for the javascript used for developing the tree. 
-		<a href="<%=basePath%>tree_tests/test.jsp" class="btn small btn-info">QUnit
+		Unit tests for the javascript used for developing the tree. <a
+			href="<%=basePath%>tree_tests/test.jsp" class="btn small btn-info">QUnit
 			Tests</a>
 	</p>
-	
-
 </div>
-
-
-
 
 
 

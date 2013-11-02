@@ -165,7 +165,7 @@ public class CategoryDataProviderImpl implements CategoryDataProvider {
         d.setChildren(data3);
         data.add(d);
 
-        d = new BaseCategory(2, "Electronic Data");
+        d = new BaseCategory(2, "Electronics");
         d.setChildren(data);
         return d;
     }
