@@ -60,9 +60,11 @@
 			this.visitSubscribers('raiseEvent', messagePayload, eventType);
 		},
 		visitSubscribers : function(action, arg, type) {
-			var pubtype = type || 'any', 
-			subscribers = this.subscribers[pubtype],
-			i,
+			var pubtype = type || 'any'; 
+			var  subscribers = this.subscribers[pubtype];
+			var i;
+			if (typeof subscribers === "undefined")
+				return; 
 			max = subscribers.length;
 
 			for (i = 0; i < max; i += 1) {

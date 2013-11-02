@@ -14,13 +14,17 @@
 			"attachmentPoint" : "tree",
 			"transformBase" : "transforms/jsdemo/",
 			"urlBase" : "<%=basePath%>app/rest/categories"
-		});
-		XTree.getLevel1DataForGroup(3);
-		MESSAGE_PUMP.subscribe(XTREE_LISTENERS.xml_block_refresh,XTREE_LISTENERS.ON_REFRESH_EVENT);
-		XTree.refresh();
-		//$('#tree').html(XTree.toHtml());
+				});
+				XTree.getLevel1DataForGroup(3);
+				XTREE_LISTENERS.transformBase = "transforms/jsdemo/";
+				XTREE_LISTENERS.init();
+				MESSAGE_PUMP.subscribe(XTREE_LISTENERS.xml_block_refresh,
+						XTREE_LISTENERS.ON_REFRESH_EVENT);
+				MESSAGE_PUMP.subscribe(XTREE_LISTENERS.selected_list_refresh,
+						XTREE_LISTENERS.ON_REFRESH_EVENT);
+				XTree.refresh();
 
-	});
+			});
 </script>
 
 
@@ -28,7 +32,8 @@
 
 
 
-<div id="tree-content" style="height:450px" class="float-left span6 well">
+<div id="tree-content" style="height: 400px"
+	class="float-left span6 well">
 	<ul class="nav nav-tabs pill" id="myTab">
 
 		<li><a href="/app/backbone/demos/js/model.html#tree-home"
@@ -50,19 +55,26 @@
 		</div>
 		<div class="tab-pane" id="xml">
 
-		<textarea id="xml_block" rows="15" style="width:330px"></textarea>
+			<textarea id="xml_block" rows="15" style="width: 330px"></textarea>
 
 
 		</div>
 	</div>
 </div>
-<div class="float-right span4">
+<div class="float-right span5">
+
+
+	<div class="well" style="height: 250px; overflow-y: auto">
+		<div id="selected_list_items"></div>
+	</div>
+	
+	
 	<p>
-		<a href="<%=basePath%>tree_tests/test.jsp" class="btn large btn-info">QUnit
+	Unit tests for the javascript used for developing the tree. 
+		<a href="<%=basePath%>tree_tests/test.jsp" class="btn small btn-info">QUnit
 			Tests</a>
 	</p>
-	Unit tests for the javascript used for developing the tree.
-
+	
 
 </div>
 
