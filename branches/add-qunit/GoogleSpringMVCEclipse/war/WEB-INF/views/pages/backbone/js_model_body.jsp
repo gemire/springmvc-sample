@@ -28,7 +28,7 @@
 <div id="tree" class="float-right span4">
 	<p>
 		<a href="<%=basePath%>tree_tests/test.jsp"
-			class="button button-important">QUnit Tests</a>
+			class="btn large btn-info">QUnit Tests</a>
 	</p>
 	Unit tests for the javascript used for developing the tree.
 
