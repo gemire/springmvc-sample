@@ -172,10 +172,8 @@ XTree = {
     },
     refresh: function()
     {
-        //jsxml.transReady(XTree.tree, XTree.xsl)
-       // $(XTree.params.attachmentPoint).replaceWith("");
+
         $("#"+XTree.params.attachmentPoint).html(jsxml.transReady(XTree.tree, XTree.xsl));
-        //console.log("\n============\n" + jsxml.toXml(XTree.tree));
 
     },
     ///////////// button handling routines ///////////////////
