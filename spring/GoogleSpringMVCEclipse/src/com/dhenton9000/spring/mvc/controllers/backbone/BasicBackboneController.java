@@ -11,24 +11,28 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
 /**
- *
+ * 
  * @author dhenton
  */
 @Controller
 @RequestMapping(value = "/backbone/demos/*")
 public class BasicBackboneController {
 
-    @RequestMapping(value = "/{modelId}", method = RequestMethod.DELETE)
-    public void deleteBasicModel(@PathVariable String modelId) {
-        
-        
-        
-    }
-    
-    @RequestMapping("/localstorage")
+	@RequestMapping(value = "/{modelId}", method = RequestMethod.DELETE)
+	public void deleteBasicModel(@PathVariable String modelId) {
+
+	}
+
+	@RequestMapping("/localstorage")
 	public ModelAndView gotoJasonDemo() {
-		 
+
 		return new ModelAndView("tiles.backbone.demos.localstorage");
 	}
-    
+
+	@RequestMapping("/js/model")
+	public ModelAndView gotoJSModelDemo() {
+
+		return new ModelAndView("tiles.backbone.demos.js.model");
+	}
+
 }
