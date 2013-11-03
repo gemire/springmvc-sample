@@ -6,14 +6,11 @@
 
 
 
-    <li><a href="http://code.google.com/p/springmvc-sample/source/browse/trunk/spring/GoogleSpringMVC">Google Code Source for this project</a></li>
+    <li><a href="http://code.google.com/p/springmvc-sample/source/browse/trunk/spring/GoogleSpringMVCEclipse">Google Code Source for this project</a></li>
 
 
 
     <li><a href="http://www.mkyong.com/tutorials/spring-mvc-tutorials/">MVC Tutorials</a></li>
-
-
-    <li><a href="http://scottrozman.net/blog/11-02-09/Persistent_jQuery_Accordion_with_Initial_Index.aspx">Sticky jQuery UI menu</a></li>
 
 
     <li><a href="http://www.eslinstructor.net/smartupdater3/">Smart Updater Plugin</a></li>

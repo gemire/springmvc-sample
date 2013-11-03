@@ -41,7 +41,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 <i>(username: admin password: admin)</i>
 </p>
 
-<input class="myButton" type="submit" value="Login"/>								
+<input class="btn btn-info" type="submit" value="Login"/>								
 	
 </form>
 <div class="resultsClass">
