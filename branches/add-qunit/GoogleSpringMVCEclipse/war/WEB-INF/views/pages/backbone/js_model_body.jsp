@@ -55,14 +55,14 @@
 		</div>
 		<div class="tab-pane" id="xml">
 
-			<textarea id="xml_block" rows="15" style="width: 330px"></textarea>
+			<textarea id="xml_block" rows="15" style="width: 300px"></textarea>
 
 
 		</div>
 	</div>
 </div>
-
-<div id="right-side" class="float-right span5"> 
+ 
+<div id="right-side" class="float-right span5 well" style="height: 400px"> 
 	<div class="panel panel-default"  style="border: thin solid grey; margin:5px; padding:2px">
 		<div class="panel-heading">Selected Items</div>
 		<div class="panel-body" style="height: 250px; overflow-y: auto">
@@ -73,7 +73,7 @@
 	
 	 
 	
-	<p>
+	<p style="margin-top: 20px">
 		Unit tests for the javascript used for developing the tree. <a
 			href="<%=basePath%>tree_tests/test.jsp" class="btn small btn-info">QUnit
 			Tests</a>
