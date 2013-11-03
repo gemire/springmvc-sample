@@ -64,7 +64,7 @@
  
 <div id="right-side" class="float-right span5 well" style="height: 400px"> 
 	<div class="panel panel-default"  style="border: thin solid grey; margin:5px; padding:2px">
-		<div class="panel-heading">Selected Items</div>
+		<div class="panel-heading"><h4>Selected Items</h4></div>
 		<div class="panel-body" style="height: 250px; overflow-y: auto">
 	
 			<div id="selected_list_items"></div>

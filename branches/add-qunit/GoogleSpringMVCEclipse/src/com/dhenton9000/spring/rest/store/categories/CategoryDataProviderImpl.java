@@ -172,15 +172,71 @@ public class CategoryDataProviderImpl implements CategoryDataProvider {
 
     private BaseCategory getGamesData() {
 
-
-        BaseCategory d = new BaseCategory(3, "Games");
+    	 ArrayList<BaseCategory> data = new ArrayList<BaseCategory>();
+         BaseCategory d = null;
+         ArrayList<BaseCategory> data3 = null;
+         
+         d = new BaseCategory();
+         d.setId(291);
+         d.setName("Childrens");
+         data3 = new ArrayList<BaseCategory>();
+         data3.add(new BaseCategory(391, "Board Games"));
+         data3.add(new BaseCategory(392, "Outdoor Games"));
+         d.setChildren(data3);
+         data.add(d);
+         
+         d = new BaseCategory();
+         d.setId(292);
+         d.setName("Card Games");
+         data3 = new ArrayList<BaseCategory>();
+         data3.add(new BaseCategory(394, "Poker"));
+         data3.add(new BaseCategory(395, "Roulette"));
+         d.setChildren(data3);
+         data.add(d);
+         
+         
+         
+        d = new BaseCategory(3, "Games");
+        d.setChildren(data);
         return d;
     }
 
     private BaseCategory getHomeImprovementData() {
 
+    	 ArrayList<BaseCategory> data = new ArrayList<BaseCategory>();
+         BaseCategory d = null;
+         ArrayList<BaseCategory> data3 = null;
+         d = new BaseCategory();
+         d.setId(271);
+         d.setName("Garden");
+         data3 = new ArrayList<BaseCategory>();
+         data3.add(new BaseCategory(371, "Plants"));
+         data3.add(new BaseCategory(372, "Lawn Fertilizer"));
+         d.setChildren(data3);
+         data.add(d);
 
-        BaseCategory d = new BaseCategory(4, "Home Improvement");
+         d = new BaseCategory();
+         d.setId(272);
+         d.setName("Electrical");
+         data3 = new ArrayList<BaseCategory>();
+         data3.add(new BaseCategory(376, "Lighting"));
+         data3.add(new BaseCategory(377, "Space Heaters"));
+      
+         d.setChildren(data3);
+         data.add(d);
+
+         d = new BaseCategory();
+         d.setId(273);
+         d.setName("Plumbing");
+         data3 = new ArrayList<BaseCategory>();
+         data3.add(new BaseCategory(373, "Bath"));
+         data3.add(new BaseCategory(374, "Saunas"));
+         data3.add(new BaseCategory(375, "Kitchen"));
+         d.setChildren(data3);
+         data.add(d);
+
+        d = new BaseCategory(4, "Home Improvement");
+        d.setChildren(data);
         return d;
     }
     
@@ -189,7 +245,7 @@ public class CategoryDataProviderImpl implements CategoryDataProvider {
         CategoryDataProviderImpl c = new CategoryDataProviderImpl();
         String t = "";
         try {
-            t = c.toJson(c.getLevel2Data(1));
+            t = c.toJson(c.getLevel2Data(4));
         } catch (IOException ex) {
              System.out.println("ex "+ex.getMessage());
         }
