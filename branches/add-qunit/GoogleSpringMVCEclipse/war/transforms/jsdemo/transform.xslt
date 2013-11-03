@@ -116,11 +116,12 @@
                 <xsl:variable name="escapedName">
                     <xsl:apply-templates select="@name" mode="escape" />
                 </xsl:variable>    
-                <i class='icon-leaf' /> 
+               
                 <span class="label label-important">
                     <xsl:attribute name="id">
                         <xsl:value-of select="concat('level_3_name_', @id)" />
                     </xsl:attribute>
+                     <i class="icon-tag icon-white" />
                     <xsl:value-of select="@name"/> 
                 </span>
                 <input class="checkbox large"  type="checkbox">
