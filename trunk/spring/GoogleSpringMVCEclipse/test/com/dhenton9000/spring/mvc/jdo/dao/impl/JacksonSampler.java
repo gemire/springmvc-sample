@@ -12,6 +12,7 @@ import org.codehaus.jackson.map.JsonMappingException;
 import org.codehaus.jackson.map.ObjectMapper;
 
 import com.dhenton9000.spring.mvc.jdo.entities.Restaurant;
+import com.dhenton9000.spring.mvc.jdo.entities.RestaurantDTO;
 import com.google.appengine.api.datastore.Key;
 import com.google.appengine.api.datastore.KeyFactory;
 import com.google.appengine.tools.development.testing.LocalDatastoreServiceTestConfig;
@@ -23,18 +24,19 @@ public class JacksonSampler {
 	private static Logger log = LogManager.getLogger(JacksonSampler.class);
 	public void doRead()
 	{
-		LocalServiceTestHelper helper = new LocalServiceTestHelper(
-				new LocalDatastoreServiceTestConfig());
-		helper.setUp();
+		//LocalServiceTestHelper helper = new LocalServiceTestHelper(
+		//		new LocalDatastoreServiceTestConfig());
+		//helper.setUp();
 		ObjectMapper mapper = new ObjectMapper();
-		Restaurant r = new Restaurant();
-		Key key = KeyFactory.createKey("Restaurant", 100101L);
-		r.setId(key);
+		RestaurantDTO r = new RestaurantDTO();
+	//	Key key = KeyFactory.createKey("Restaurant", 100101L);
+		r.setId(100101L);
 		r.setZipCode("909090");
 		r.setName("Test");
 		r.setVersion(1);
 		r.setState("CA");
 		r.setCity("Freson");
+		r.addReviewDTO(4, "bite me");
 		Writer w = new StringWriter();
 		try {
 			mapper.writeValue(w, r);
@@ -42,7 +44,7 @@ public class JacksonSampler {
 			log.error(e.getClass().getName()+" "+e.getMessage());
 			
 		}  
-		helper.tearDown();
+		//helper.tearDown();
 		log.info("\n\n"+w.toString());
 	}
 	
