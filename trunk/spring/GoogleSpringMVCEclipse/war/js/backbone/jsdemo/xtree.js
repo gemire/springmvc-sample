@@ -61,8 +61,9 @@ XTree = {
 	                 n = XTree.appendChildLevel(node, newLevel, jsonItems[i].id, jsonItems[i].name);
 	                 n.setAttribute("visible", "yes");
 	             }
+	        	 XTree.refresh();
             }
-        	XTree.refresh();
+        	
         	
         });
         
