@@ -3,6 +3,7 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
 <%@ taglib uri="/WEB-INF/tld/spring.tld" prefix="spring"  %> 
 <%@ taglib uri="/WEB-INF/tld/spring-form.tld" prefix="form"  %> 
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 
 <%
 
@@ -13,7 +14,7 @@
 
 %>
 
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<!DOCTYPE html>
 
 
 
@@ -131,7 +132,7 @@
 
                 <div id="explainModal" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="explainModalLabel" aria-hidden="true">
                     <div class="modal-header">
-                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">Ã—</button>
                         <h3 id="explainModalLabel">Explanation:</h3>
                     </div>
                     <div style="max-height: 200px" class="modal-body">
