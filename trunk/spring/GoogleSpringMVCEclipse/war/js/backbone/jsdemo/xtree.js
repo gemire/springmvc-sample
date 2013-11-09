@@ -33,35 +33,40 @@ XTree = {
     getLevel1DataForGroup: function(groupId)
     {
         XTree.groupId = groupId;
-        jsonItems = XTree.getLevelDataForLevelAndGroup(1, groupId);
-        for (i = 0; i < jsonItems.length; i++)
-        {
-            XTree.appendLevel1(jsonItems[i].id, jsonItems[i].name);
-        }
-
-        return  jsonItems;
+         
+        url = XTree.params.urlBase + "/getLevelData?level=1" +  "&groupId=" + groupId;
+        $.getJSON(url,null,function(jsonItems) {
+        
+		        for (i = 0; i < jsonItems.length; i++)
+		        {
+		            XTree.appendLevel1(jsonItems[i].id, jsonItems[i].name);
+		        }
+		
+		        XTree.refresh();
+        });
     },
-    getLevelDataForLevelAndGroup: function(level, group)
-    {
-        url = XTree.params.urlBase + "/getLevelData?level=" + level + "&groupId=" + group;
-        val = $.ajax(url, {"async": false, "type": "GET"});
-        jsonItems = JSON.parse(val.responseText);
-        return jsonItems;
-    },
+     
     getLevelDataForLevelAndGroupAndId: function(level, group, id)
     {
         jsonItems = [];
         url = XTree.params.urlBase + "/getLevelData?level=" + level + "&groupId=" + group + "&id=" + id;
-        val = null;
-        try {
-            val = $.ajax(url, {"async": false, "type": "GET"});
-        }
-        catch (e) {
-        }
-        if (val != null)
-        jsonItems = JSON.parse(val.responseText);
-
-        return jsonItems;
+        
+        
+        $.getJSON(url,null,function(jsonItems){
+        	
+        	if (typeof jsonItems != "undefined")
+        	{ 
+	        	 for (i = 0; i < jsonItems.length; i++)
+	             {
+	                 n = XTree.appendChildLevel(node, newLevel, jsonItems[i].id, jsonItems[i].name);
+	                 n.setAttribute("visible", "yes");
+	             }
+            }
+        	XTree.refresh();
+        	
+        });
+        
+ 
     },
     /**
      * initialize the xml tree to empty
@@ -221,16 +226,14 @@ XTree = {
         {
             if (node.childNodes.length == 0)
             {
-                items = XTree.getLevelDataForLevelAndGroupAndId(newLevel, XTree.groupId, id);
-                for (i = 0; i < items.length; i++)
-                {
-                    n = XTree.appendChildLevel(node, newLevel, items[i].id, items[i].name);
-                    n.setAttribute("visible", "yes");
-                }
+            	XTree.getLevelDataForLevelAndGroupAndId(newLevel, XTree.groupId, id);
             }
-            for (i = 0; i < node.childNodes.length; i++)
+            else
             {
-                node.childNodes[i].setAttribute("visible", "yes");
+	            for (i = 0; i < node.childNodes.length; i++)
+	            {
+	                node.childNodes[i].setAttribute("visible", "yes");
+	            }
             }
             node.setAttribute("folder", "open");
             

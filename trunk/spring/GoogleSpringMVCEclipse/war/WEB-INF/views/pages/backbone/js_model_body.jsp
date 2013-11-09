@@ -22,7 +22,7 @@
 						XTREE_LISTENERS.ON_REFRESH_EVENT);
 				MESSAGE_PUMP.subscribe(XTREE_LISTENERS.selected_list_refresh,
 						XTREE_LISTENERS.ON_REFRESH_EVENT);
-				XTree.refresh();
+				
 
 			});
 </script>
