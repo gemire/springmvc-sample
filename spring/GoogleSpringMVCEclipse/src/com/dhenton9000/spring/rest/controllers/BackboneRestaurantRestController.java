@@ -35,13 +35,11 @@ public class BackboneRestaurantRestController {
 	@RequestMapping(method = RequestMethod.POST, consumes = "application/json", produces = "application/json")
 	@ResponseStatus(HttpStatus.CREATED)
 	public @ResponseBody
-	RestResult create(@RequestBody RestaurantDTO rDTO) {
+	BackBoneIdResponse create(@RequestBody RestaurantDTO rDTO) {
 		Key k = getRestaurantService().saveOrAddRestaurant(
 				rDTO.makeRestaurant());
-		RestResult res = new RestResult();
-		res.getMessages().put("Action", "add");
-		res.getMessages().put("Result", "success");
-		res.getMessages().put("Key", new Long(k.getId()).toString());
+		BackBoneIdResponse res = new BackBoneIdResponse();
+		res.setId(new Long(k.getId()));
 		return res;
 	}
 
