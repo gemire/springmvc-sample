@@ -17,7 +17,7 @@ $(document).ready(function() {
 
     };
     window.Restaurant = Backbone.Model.extend({
-        "url": _main_url,
+        "urlRoot": _main_url,
         validate: function(attrs, options)
         {
             var errors = [];
@@ -62,7 +62,7 @@ $(document).ready(function() {
     });
     window.RestaurantList = Backbone.Collection.extend({
         "model": Restaurant,
-        "url": _main_url
+        "urlRoot": _main_url
 
 
     });
