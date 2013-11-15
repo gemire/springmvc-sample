@@ -34,5 +34,11 @@ public class BasicBackboneController {
 
 		return new ModelAndView("tiles.backbone.demos.js.model");
 	}
+	
+	@RequestMapping("/restaurant")
+	public ModelAndView gotoBackBoneRestaurant() {
+
+		return new ModelAndView("tiles.backbone.restaurant");
+	}
 
 }
