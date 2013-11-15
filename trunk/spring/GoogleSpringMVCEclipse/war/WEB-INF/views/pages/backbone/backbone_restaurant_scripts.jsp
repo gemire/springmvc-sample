@@ -43,21 +43,25 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
     
     
     <script src="tree_tests/jquery.mockjax.js"></script>
-
+   
     <script>
         // generate using jsp tags
-        _main_url = "<%= basePath %>/app/backbone/restaurant"
+       _main_url = "<%= basePath %>/app/backbone/restaurant/";
+       restaurantData = ${jsonRestaurants}
         //_main_url = "http://donhenton.appspot.com/app/backbone/restaurant"
         // generate using jsp tags
+      
      
     </script>
+ <!--      
     <script src="tree_tests/RestaurantMockData.js"></script>
         <script>
         // generate using jsp tags
  
         restaurantData = mockRestaurantData;
     </script>
-  
+ -->     
+ 
     <script src="js/backbone/underscore.js"></script>
     <script src="js/backbone/backbone.js"></script>
   
