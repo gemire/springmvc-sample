@@ -110,6 +110,7 @@ $(document).ready(function() {
             //these options are for the create method, and the wait says
             //wait for the 200 response from the server before continuing
             //the success call back is called when the process is complete
+        	//these aren't used right now
             var options = {
                 wait: true,
                 success: function(model, resp, newopt)
@@ -119,8 +120,8 @@ $(document).ready(function() {
 
 
             };
-            var modelAttributes = model.toJSON();
-            this.collection.create(modelAttributes, options);
+           // var modelAttributes = model.toJSON();
+             this.collection.add(model);
         },
         /**
          * event handler for when the edit button is clicked on the table
@@ -565,7 +566,8 @@ $(document).ready(function() {
                 this.model.set("version", $('#version').val());
                 this.model.save();
                 this.clearFields();
-                this.vent.trigger(eventName, this.model);
+                if (eventName != null)
+                	this.vent.trigger(eventName, this.model);
             }
             else
             {
