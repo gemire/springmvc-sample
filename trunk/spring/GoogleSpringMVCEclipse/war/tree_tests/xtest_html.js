@@ -101,23 +101,58 @@ $(function() {
         }
     });
 
+// these tests assume that the creation of the tree is sync, but it now uses
+// getJSON, so its async
+// http://lostechies.com/chadmyers/2008/12/22/asynchronous-javascript-testing-with-qunit/
+    
+    asyncTest('click works for tree', function() {
+    	
+    	
+    	setTimeout(function(){
+    	        clickBox(1, 22);
+    	        //xml changed
+    	        equal(XTree.findLevel(1, 22).getAttribute("checked"), 'yes');
+    	        //html changed
+    	        equal(isChecked(1, 22), true);
 
-    test('click works for tree', function() {
-        clickBox(1, 22);
-        //xml changed
-        equal(XTree.findLevel(1, 22).getAttribute("checked"), 'yes');
-        //html changed
-        equal(isChecked(1, 22), true);
+    	        openFolder(1,22);
+    	        start();
+     		
+    	},1000);
+           
+        
+        
 
     });
     
-    test('open folder works for tree', function() {
-        openFolder(1,22);
-        equal(XTree.findLevel(1, 22).childNodes[0].getAttribute("visible"), 'yes');
-        equal(XTree.findLevel(1, 22).getAttribute("folder"),"open");
-        $('qunit-fixture').html(XTree.toHtml());
-        ok(1 == 1,'ok')
-    });
 
+    asyncTest('open folder works for tree',function() {
+    	
+    	
+    	 setTimeout(function(){
+    	     	        openFolder(1,22);
+    	     	        var t = XTree.findLevel(1, 22);
+    	     	        equal(t.getAttribute("folder"),"open");
+    	     	        t = XTree.findLevel(1, 33);
+    	     	       equal(t.getAttribute("folder"),"closed");
+    	    	        $('qunit-fixture').html(XTree.toHtml());
+    	     	      equal(1,1);
+    	    	      start();
+    	     		
+    	     },1000);
+    	           
+    	        
+    	        
+
+    	     });
+    	 
+    
+    
+    
+    
+    
+    
+    
+    
 
 });// end jquery start function
