@@ -156,7 +156,7 @@ $(document).ready(function() {
         },
         /**
          * clean up the old views, otherwise during rendering they will
-         * be held by refereences of events to the DOM
+         * be held by references of events to the DOM
          * @returns {undefined}
          */
         cleanViewCollection: function()
