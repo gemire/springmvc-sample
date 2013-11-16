@@ -30,6 +30,12 @@ XTree = {
         XTree.xsl = $.ajax(XTree.params.transformBase + "transform.xslt", {"async": false, "type": "GET"}).responseText;
 
     },
+    /**
+     * Get the level 1 data for a group currently there is only one group
+     * 
+     * @param {type} groupId
+     * @return {undefined}
+     */
     getLevel1DataForGroup: function(groupId)
     {
         XTree.groupId = groupId;
@@ -45,6 +51,16 @@ XTree = {
             XTree.refresh();
         });
     },
+    /**
+     * Get the level data for the given level and the id of the prior  level
+     * so level = 2 and id = 35 means get level1 id 35's level 2 data.
+     * level should never be one here.
+     * 
+     * @param {type} level the level you are requesting
+     * @param {type} group the group id (eg tree 25)
+     * @param {type} id the id of the parent level
+     * @return {undefined}
+     */
     getLevelDataForLevelAndGroupAndId: function(level, group, id)
     {
         var jsonItems = [];
@@ -186,6 +202,10 @@ XTree = {
         // console.log("\n============\n" + jsxml.toXml(XTree.tree));
 
     },
+    /**
+     * repaint and announce an update
+     * @return {undefined}
+     */
     refresh: function()
     {
 
@@ -195,6 +215,14 @@ XTree = {
     },
     ///////////// button handling routines ///////////////////
 
+    /**
+     * called when a checkbox is clicked, the level and the id are provided
+     * by the html
+     * 
+     * @param {type} level which level 1,2,3
+     * @param {type} id the id of the level node
+     * @return {undefined}
+     */
     selectItem: function(level, id)
     {
         console.log("selectItem1 id " + id + " level " + level);
