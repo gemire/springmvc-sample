@@ -179,7 +179,6 @@ public class RestaurantDTO implements Serializable {
 		ReviewDTO r = new ReviewDTO();
 		r.setReviewListing(message);
 		r.setStarRating(rating);
-		r.setRestaurant(this);
 		getReviewDTOs().add(r);
 
 	}

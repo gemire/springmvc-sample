@@ -62,7 +62,7 @@ $(document).ready(function() {
     });
     window.RestaurantList = Backbone.Collection.extend({
         "model": Restaurant,
-        "urlRoot": _main_url
+        "url": _main_url
 
 
     });
@@ -358,6 +358,7 @@ $(document).ready(function() {
         ,
         /**
          * called explicitly by the click on the edit button for a review. 
+         * just sets up drawing the review editing form.
          * @param {type} ratingPos the position in the listing of reviews 
          * @returns {undefined}
          */
@@ -383,7 +384,7 @@ $(document).ready(function() {
          */
         saveReview: function(ratingPos)
         {
-            // the internalReview has one entry at lease when the add screen was created
+            // the internalReview has one entry at least when the add screen was created
 
             var reviewOK = true;
 
@@ -414,7 +415,7 @@ $(document).ready(function() {
                 this.internalReviews[ratingPos].reviewListing = newReviewListing;
                 this.internalReviews[ratingPos].starRating = newStarRating;
                 this.internalReviews[ratingPos].isEditing = false;
-
+                this.model.set("reviewDTOs",reviews);
                 this.model.save();
                 $("#error_" + ratingPos).hide();
                 $('#addReviewButton').show();
