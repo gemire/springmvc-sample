@@ -443,7 +443,7 @@ $(document).ready(function() {
         {
             $('#addReviewButton').show();
             this.internalReviews[ratingPos].isEditing = false;
-            if (ratingPos == (this.internalReviews.length - 1))
+            if (ratingPos == (this.internalReviews.length - 1) && this.internalReviews[ratingPos].id == null)
             {
                 //you are in add mode
                 //TODO remove the item
