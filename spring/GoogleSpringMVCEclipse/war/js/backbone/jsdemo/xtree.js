@@ -20,54 +20,54 @@ XTree = {
     {
         XTree.params.attachmentPoint = settings.attachmentPoint != null ?
                 settings.attachmentPoint : "body";
-        
+
         XTree.params.transformBase = settings.transformBase != null ?
                 settings.transformBase : "";
-        
+
         XTree.params.urlBase = settings.urlBase != null ?
                 settings.urlBase : ""; // no ending slash
         XTree.createNewTree();
-        XTree.xsl = $.ajax(XTree.params.transformBase+"transform.xslt", {"async": false, "type": "GET"}).responseText;
-        
+        XTree.xsl = $.ajax(XTree.params.transformBase + "transform.xslt", {"async": false, "type": "GET"}).responseText;
+
     },
     getLevel1DataForGroup: function(groupId)
     {
         XTree.groupId = groupId;
-         
-        url = XTree.params.urlBase + "/getLevelData?level=1" +  "&groupId=" + groupId;
-        $.getJSON(url,null,function(jsonItems) {
-        
-		        for (i = 0; i < jsonItems.length; i++)
-		        {
-		            XTree.appendLevel1(jsonItems[i].id, jsonItems[i].name);
-		        }
-		
-		        XTree.refresh();
+
+        var url = XTree.params.urlBase + "/getLevelData?level=1" + "&groupId=" + groupId;
+        $.getJSON(url, null, function(jsonItems) {
+
+            for (var i = 0; i < jsonItems.length; i++)
+            {
+                XTree.appendLevel1(jsonItems[i].id, jsonItems[i].name);
+            }
+
+            XTree.refresh();
         });
     },
-     
     getLevelDataForLevelAndGroupAndId: function(level, group, id)
     {
-        jsonItems = [];
-        url = XTree.params.urlBase + "/getLevelData?level=" + level + "&groupId=" + group + "&id=" + id;
+        var jsonItems = [];
+        var url = XTree.params.urlBase + "/getLevelData?level=" + level + "&groupId=" + group + "&id=" + id;
+        var node = XTree.findLevel(level, id);
+        var newLevel  = level + 1;
         
-        
-        $.getJSON(url,null,function(jsonItems){
-        	
-        	if (typeof jsonItems != "undefined")
-        	{ 
-	        	 for (i = 0; i < jsonItems.length; i++)
-	             {
-	                 n = XTree.appendChildLevel(node, newLevel, jsonItems[i].id, jsonItems[i].name);
-	                 n.setAttribute("visible", "yes");
-	             }
-	        	 XTree.refresh();
+        $.getJSON(url, null, function(jsonItems) {
+
+            if (typeof jsonItems != "undefined")
+            {
+                for (var i = 0; i < jsonItems.length; i++)
+                {
+                    var n = XTree.appendChildLevel(node, newLevel, jsonItems[i].id, jsonItems[i].name);
+                    n.setAttribute("visible", "yes");
+                }
+                XTree.refresh();
             }
-        	
-        	
+
+
         });
-        
- 
+
+
     },
     /**
      * initialize the xml tree to empty
@@ -122,8 +122,16 @@ XTree = {
         {
             throw "child levels allowed: 2 and 3 only";
         }
-
-        parentLevel = parentNode.nodeName;
+        var parentLevel = null;
+        if (!parentNode)
+        {
+        	parentLevel = "level1";
+        }
+        else
+        {
+        	parentLevel = parentNode.nodeName;
+        }
+        
         if (parentLevel == "level1" && levelNumber != 2)
         {
             throw "level1  can only have level2 children";
@@ -158,7 +166,7 @@ XTree = {
     {
 
         var path = "//level" + levelNumber + "[@id='" + id + "']";
-        nodes = XTree.tree.evaluate(path, XTree.tree, null, XPathResult.ANY_TYPE, null);
+        var nodes = XTree.tree.evaluate(path, XTree.tree, null, XPathResult.ANY_TYPE, null);
         return   nodes.iterateNext();
     },
     /**
@@ -167,12 +175,12 @@ XTree = {
      */
     toString: function()
     {
-          var stuff = jsxml.toXml(XTree.tree);
-          return stuff;
+        var stuff = jsxml.toXml(XTree.tree);
+        return stuff;
     },
     toHtml: function()
     {
-        var stuff =  jsxml.transReady(XTree.tree, XTree.xsl);
+        var stuff = jsxml.transReady(XTree.tree, XTree.xsl);
         return stuff;
         // console.log("\n============\n" + jsxml.toXml(XTree.tree));
 
@@ -180,8 +188,8 @@ XTree = {
     refresh: function()
     {
 
-        $("#"+XTree.params.attachmentPoint).html(jsxml.transReady(XTree.tree, XTree.xsl));
-        MESSAGE_PUMP.raiseEvent(XTree.tree,XTREE_LISTENERS.ON_REFRESH_EVENT);
+        $("#" + XTree.params.attachmentPoint).html(jsxml.transReady(XTree.tree, XTree.xsl));
+        MESSAGE_PUMP.raiseEvent(XTree.tree, XTREE_LISTENERS.ON_REFRESH_EVENT);
 
     },
     ///////////// button handling routines ///////////////////
@@ -189,16 +197,16 @@ XTree = {
     selectItem: function(level, id)
     {
         console.log("selectItem1 id " + id + " level " + level);
-        clickedNode = XTree.findLevel(level, id);
-        clickedStatus = clickedNode.getAttribute("checked");
-        newStatus = "yes";
+        var clickedNode = XTree.findLevel(level, id);
+        var clickedStatus = clickedNode.getAttribute("checked");
+        var newStatus = "yes";
         if (typeof clickedStatus == undefined || clickedStatus == "no")
         {
-        	newStatus = "yes";
+            newStatus = "yes";
         }
         else
         {
-        	newStatus = "no";
+            newStatus = "no";
         }
         XTree.findLevel(level, id).setAttribute("checked", newStatus);
         XTree.refresh();
@@ -212,13 +220,13 @@ XTree = {
     openFolder: function(level, id)
     {
         console.log("openFolder id " + id + " level " + level);
-        node = XTree.findLevel(level, id);
-        newLevel = level + 1;
-        folderStatus = node.getAttribute("folder");
+        var node = XTree.findLevel(level, id);
+       // var newLevel = level + 1;
+        var folderStatus = node.getAttribute("folder");
         if (folderStatus == "open")
         {
             node.setAttribute("folder", "closed");
-            for (i = 0; i < node.childNodes.length; i++)
+            for (var i = 0; i < node.childNodes.length; i++)
             {
                 node.childNodes[i].setAttribute("visible", "no");
             }
@@ -227,17 +235,17 @@ XTree = {
         {
             if (node.childNodes.length == 0)
             {
-            	XTree.getLevelDataForLevelAndGroupAndId(newLevel, XTree.groupId, id);
+                XTree.getLevelDataForLevelAndGroupAndId(level, XTree.groupId, id);
             }
             else
             {
-	            for (i = 0; i < node.childNodes.length; i++)
-	            {
-	                node.childNodes[i].setAttribute("visible", "yes");
-	            }
+                for (var i = 0; i < node.childNodes.length; i++)
+                {
+                    node.childNodes[i].setAttribute("visible", "yes");
+                }
             }
             node.setAttribute("folder", "open");
-            
+
         }
         XTree.refresh();
 
