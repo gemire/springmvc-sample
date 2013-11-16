@@ -3,7 +3,7 @@
 
 <div>
 	This demonstration illustrates using <a href="http://backbonejs.org">Backbone</a>
-	for an client side editing application. Several features are used here
+	for a client side editing application. Several features are used here
 	that are worth noting:
 
 	<ul>
