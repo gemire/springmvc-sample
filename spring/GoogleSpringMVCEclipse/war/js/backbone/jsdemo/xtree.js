@@ -49,8 +49,9 @@ XTree = {
     {
         var jsonItems = [];
         var url = XTree.params.urlBase + "/getLevelData?level=" + level + "&groupId=" + group + "&id=" + id;
-        var node = XTree.findLevel(level, id);
-        var newLevel  = level + 1;
+        // you are asking for 2 so find parent node ie one level up
+        var node = XTree.findLevel(level-1, id);
+        //eg level = 2 id = 1 means get all the level 2 items for level 1 with id of '3'
         
         $.getJSON(url, null, function(jsonItems) {
 
@@ -58,7 +59,7 @@ XTree = {
             {
                 for (var i = 0; i < jsonItems.length; i++)
                 {
-                    var n = XTree.appendChildLevel(node, newLevel, jsonItems[i].id, jsonItems[i].name);
+                    var n = XTree.appendChildLevel(node, level, jsonItems[i].id, jsonItems[i].name);
                     n.setAttribute("visible", "yes");
                 }
                 XTree.refresh();
@@ -221,7 +222,7 @@ XTree = {
     {
         console.log("openFolder id " + id + " level " + level);
         var node = XTree.findLevel(level, id);
-       // var newLevel = level + 1;
+        var newLevel = level + 1;
         var folderStatus = node.getAttribute("folder");
         if (folderStatus == "open")
         {
@@ -235,7 +236,7 @@ XTree = {
         {
             if (node.childNodes.length == 0)
             {
-                XTree.getLevelDataForLevelAndGroupAndId(level, XTree.groupId, id);
+                XTree.getLevelDataForLevelAndGroupAndId(newLevel, XTree.groupId, id);
             }
             else
             {
