@@ -109,7 +109,7 @@ var level_3_Data_for_3 =
 
 
 $.mockjax({
-    url: 'alpha/getLevelData?level=3&groupId=3&id=6333',
+    url: '*alpha/getLevelData?level=3&groupId=3&id=6333',
     // responseTime: 100,
     responseText: JSON.stringify(level_3_Data_for_3)
 });
@@ -124,7 +124,7 @@ var level_3_Data_for_2 =
 
 
 $.mockjax({
-    url: 'alpha/getLevelData?level=3&groupId=3&id=622',
+    url: '*alpha/getLevelData?level=3&groupId=3&id=622',
     // responseTime: 100,
     responseText: JSON.stringify(level_3_Data_for_2)
 });
@@ -132,17 +132,21 @@ $.mockjax({
 
 
 $.mockjax({
-    url: '*getLevelData?level=1&groupId=3',
+    url: 'alpha/getLevelData?level=1&groupId=3',
     // responseTime: 100,
-    responseText: JSON.stringify(level_1_Data)
+    response: function(settings) {
+         
+       this.responseText = level_1_Data
+  }
+    
 });
-$.mockjax({
-    url: '*getLevelData*',
-    responseTime: 100,
-    responseText: "[]"
-
-
-});
+//$.mockjax({
+//    url: '*getLevelData*',
+//    responseTime: 100,
+//    responseText: "[]"
+//
+//
+//});
 
 /*
  * 

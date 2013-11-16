@@ -188,10 +188,7 @@ $(function() {
     });
 
 
-    test("test find jason from level1", function()
-    {
-        equal(XTree.getLevel1DataForGroup(3)[0].id, level_1_Data[0].id);
-    });
+
 
 });
 
