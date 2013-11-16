@@ -101,8 +101,7 @@ $(document).ready(function() {
          * add model event handler this is in response to a click on the
          * add button on the Form. meaning 'take what's in the form and 
          * add it
-         * @param {type} modelAttributes json for the properties to add,
-         * NOT the model
+         * @param model the actual model to add
          * @returns {undefined}
          */
         addModel: function(model)
