@@ -15,8 +15,6 @@ public class ReviewDTO {
 	private String reviewListing;
 	private Date stampDate = new Date();
 	private Long id = null;
-	
-	private boolean isEditing = false;
 
 	public ReviewDTO(Review rv) {
 		this.setStampDate(rv.getStampDate());
@@ -77,12 +75,6 @@ public class ReviewDTO {
 		this.id = id;
 	}
 
-	public boolean isEditing() {
-		return isEditing;
-	}
-	 
-	public void setEditing(boolean isEditing) {
-		this.isEditing = isEditing;
-	}
+
 
 }
