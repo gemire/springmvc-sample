@@ -2,16 +2,21 @@ package com.dhenton9000.spring.mvc.jdo.entities;
 
 import java.util.Date;
 
+import org.codehaus.jackson.annotate.JsonIgnoreProperties;
+
 import com.google.appengine.api.datastore.Key;
 import com.google.appengine.api.datastore.KeyFactory;
 
+
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class ReviewDTO {
 
 	private int starRating;
 	private String reviewListing;
-	private RestaurantDTO restaurant;
 	private Date stampDate = new Date();
 	private Long id = null;
+	
+	private boolean isEditing = false;
 
 	public ReviewDTO(Review rv) {
 		this.setStampDate(rv.getStampDate());
@@ -54,13 +59,7 @@ public class ReviewDTO {
 		this.reviewListing = reviewListing;
 	}
 
-	public RestaurantDTO getRestaurant() {
-		return restaurant;
-	}
 
-	public void setRestaurant(RestaurantDTO restaurant) {
-		this.restaurant = restaurant;
-	}
 
 	public Date getStampDate() {
 		return stampDate;
@@ -76,6 +75,14 @@ public class ReviewDTO {
 
 	public void setId(Long id) {
 		this.id = id;
+	}
+
+	public boolean isEditing() {
+		return isEditing;
+	}
+	 
+	public void setEditing(boolean isEditing) {
+		this.isEditing = isEditing;
 	}
 
 }
