@@ -65,15 +65,20 @@
                             <li><a href="<c:out value="${baseURL}jquery/demos/findingElements" />">Selections</a></li>
                             <li><a href="<c:out value="${baseURL}jquery/demos/positioning" />">Positioning</a></li>
                             <li class="divider"></li>
-                            <li class="dropdown-header">Forms</li>
-                            <li><a href="<c:out value="${baseURL}jquery/demos/periodicUpdater" />">Periodic Updater</a></li>
-                            <li><a href="<c:out value="${baseURL}jquery/demos/formSamples" />">Form Samples</a></li>
-                            <li><a href="<c:out value="${baseURL}jquery/formSubmission/home" />">Ajax Form Submission</a></li>
+                            <li class="dropdown-submenu"><a tabindex="-1" href="#">Forms</a>
+                            <ul  class="dropdown-menu">
+	                            <li><a href="<c:out value="${baseURL}jquery/demos/periodicUpdater" />">Periodic Updater</a></li>
+	                            <li><a href="<c:out value="${baseURL}jquery/demos/formSamples" />">Form Samples</a></li>
+	                            <li><a href="<c:out value="${baseURL}jquery/formSubmission/home" />">Ajax Form Submission</a></li>
+	                        </ul>
+	                        </li>
                             <li class="divider"></li>
-                            <li class="dropdown-header">Image Displays</li>
-                            <li><a href="<c:out value="${baseURL}jquery/demos/pixDisplay" />">JQuery Lightbox</a></li>
-                            <li><a href="<c:out value="${baseURL}jquery/demos/arttimer" />">Art Timer</a></li>
-
+                            <li class="dropdown-submenu"><a tabindex="-1" href="#">Image Displays</a>
+	                            <ul  class="dropdown-menu">
+		                            <li><a href="<c:out value="${baseURL}jquery/demos/pixDisplay" />">JQuery Lightbox</a></li>
+		                            <li><a href="<c:out value="${baseURL}jquery/demos/arttimer" />">Art Timer</a></li>
+								</ul>
+							</li>
 
                         </ul>
                     </li>
