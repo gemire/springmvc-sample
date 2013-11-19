@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:mvc="http://www.springframework.org/schema/mvc"
+	xsi:schemaLocation="
+		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
+		http://www.springframework.org/schema/context         http://www.springframework.org/schema/context/spring-context-3.0.xsd
+		http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc-3.0.xsd">
+
+	<context:component-scan base-package="com.dhenton9000" />
+
+	<bean id="complexFormValidator"
+		class="com.dhenton9000.spring.mvc.validators.ComplexFormValidator" />
+	<bean id="contextDemoController" scope="singleton"
+		class="com.dhenton9000.spring.mvc.controllers.ContextDemoController">
+		<property name="bookMaker" ref="bookMaker" />
+		<property name="message" ref="beanMessage" />
+	</bean>
+
+	<!-- the id must match the name of the class with a small letter at the 
+		start -->
+	<bean id="basicDatabaseController" scope="singleton"
+		class="com.dhenton9000.spring.mvc.controllers.database.BasicDatabaseController">
+		<property name="restaurantService" ref="restaurantService" />
+	</bean>
+	<bean id="restaurantLoaderController" scope="singleton"
+		class="com.dhenton9000.spring.mvc.controllers.database.RestaurantLoaderController">
+		<property name="restaurantService" ref="restaurantService" />
+	</bean>
+
+	<bean id="restaurantRestController" scope="singleton"
+		class="com.dhenton9000.spring.rest.controllers.RestaurantRestController">
+		<property name="restaurantService" ref="restaurantService" />
+	</bean>
+	<bean id="backboneRestaurantRestController" scope="singleton"
+		class="com.dhenton9000.spring.rest.controllers.BackboneRestaurantRestController">
+		<property name="restaurantService" ref="restaurantService" />
+	</bean>
+	<bean id="basicBackboneController" scope="singleton"
+		class="com.dhenton9000.spring.mvc.controllers.backbone.BasicBackboneController">
+		<property name="restaurantService" ref="restaurantService" />
+	</bean>
+
+
+
+	<bean id="restaurantService" scope="singleton"
+		class="com.dhenton9000.spring.mvc.jdo.service.impl.RestaurantServiceImpl">
+		<property name="restaurantDao" ref="restaurantDao" />
+	</bean>
+
+	<bean id="restaurantDao" scope="singleton"
+		class="com.dhenton9000.spring.mvc.jdo.dao.impl.RestaurantDaoImpl">
+
+	</bean>
+
+
+	<bean id="beanMessage" class="java.lang.String">
+		<constructor-arg index="0" value="get a job" />
+	</bean>
+</beans>
