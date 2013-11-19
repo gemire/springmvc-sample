@@ -43,8 +43,8 @@
                     </div>
                 </div>
                 <div id="ratingsArea" class="span6 pull-right">
-                    <h4 style="display: inline-block">Ratings</h4> <button id="addReviewButton" onclick="window.myRatingsView.createAdd()" style="display:none" class='btn btn-small btn-primary'><i class="icon-pencil icon-white"></i> Add Review</button>
-                    <ul id="reviewListingLocation"></ul>
+                    <h4 style="display: inline-block">Ratings</h4> <button id="addReviewButton" onclick="window.myRatingsListView.addReview()" style="display:none" class='btn btn-small btn-primary'><i class="icon-pencil icon-white"></i> Add Review</button>
+                    <ul id="ratingsLocation"></ul>
                 </div>
             </div>
         </div>
