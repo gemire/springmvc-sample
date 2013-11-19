@@ -1,2 +1,0 @@
-http://sinonjs.org/qunit/#server
-https://www.google.com/search?q=qunit+sinon&rlz=1C5CHFA_enUS549US549&oq=qunit+sin&aqs=chrome.1.69i57j0l5.9431j0j7&sourceid=chrome&espv=210&es_sm=91&ie=UTF-8

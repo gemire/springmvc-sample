@@ -1,8 +1,0 @@
-IF barton.fink < milton.glaser THEN
-   s.j := geta.job
-   MK.ULTRA := a.mess
-ELSE
-  gg.tt := bite.me
-ENDIF
-
-

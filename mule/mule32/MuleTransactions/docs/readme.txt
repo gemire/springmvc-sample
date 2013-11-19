@@ -1,1 +1,0 @@
-http://www.mulesoft.org/mule-activemq-integration-examples
