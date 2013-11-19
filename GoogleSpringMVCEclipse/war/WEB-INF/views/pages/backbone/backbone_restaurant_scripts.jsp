@@ -67,27 +67,27 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
     <script src="js/backbone/backbone.js"></script>
   
     <script id="reviewTemplate" type="text/template">
-        <li id="review_{{pos}}">{{review}}({{star}}<span class='icon-star'></span>s) 
+        {{reviewListing}}({{starRating}}<span class='icon-star'></span>s) 
         <div style="margin:5px">
-        <span onclick='window.myRatingsView.editReview({{pos}})' class='ptrClass badge badge-info'><i class='icon-edit editRatingClass icon-white'></i></span>
-        <span onclick='window.myRatingsView.deleteReview({{pos}})' class='ptrClass badge badge-important'><i class='icon-remove deleteRatingClass icon-white'></i></span></li>
+        <span class='ptrClass badge badge-info'><i class='icon-edit editRatingClass icon-white'></i></span>
+        <span class='ptrClass badge badge-important'><i class='icon-remove deleteRatingClass icon-white'></i></span></li>
         </div>
     </script>
     <script id="reviewEditTemplate" type="text/template">
-        <li id="review_{{pos}}">
+        
         <span class='form-inline'>
-        <input type='text'  id='r_{{pos}}'  name='review_{{pos}}' value='{{review}}' class='input-xlarge'>
+        <input type='text'  id='r_reviewListing'  name='r_reviewListing' value='{{reviewListing}}' class='input-xlarge'>
 
-        <select id='s_{{pos}}' name='star_{{pos}}' class='input-mini'>
+        <select id='s_starRating' name='s_starRating' class='input-mini'>
         $$star_select_content$$
         </select>
         <div style="margin:5px">
-        <input type='button' value='Save' onclick='window.myRatingsView.saveReview({{pos}})' class="btn btn-mini btn-primary" />
-        <input type='button' value='Cancel' onclick='window.myRatingsView.cancelEdit({{pos}})' class="btn btn-mini btn-primary" />
-        <span class="text-error" style="display:none" id="error_{{pos}}"></span>
+        <input type='button' value='Save'  class="saveRatingClass btn btn-mini btn-primary" />
+        <input type='button' value='Cancel'   class="cancelRatingClass btn btn-mini btn-primary" />
+        <span class="text-error" style="display:none" id="error_message"></span>
         </div>
         </span>
-        </li>
+        
     </script>
 
 
