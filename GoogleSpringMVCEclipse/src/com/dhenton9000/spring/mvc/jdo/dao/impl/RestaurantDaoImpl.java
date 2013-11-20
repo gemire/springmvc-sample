@@ -85,9 +85,9 @@ public class RestaurantDaoImpl implements RestaurantDao {
 	}
 
 	@Override
-	public Key saveOrAddRestaurant(Restaurant t) {
+	public Key saveOrAddRestaurant(Restaurant restaurantItem) {
 		PersistenceManager pm = null;
-		Key k = t.getId();
+		Key k = restaurantItem.getId();
 		String info = "in saveOrAddRestaurant ";
 		if (k != null) {
 			long kvar = k.getId();
@@ -98,9 +98,12 @@ public class RestaurantDaoImpl implements RestaurantDao {
 		Restaurant r = null;
 		try {
 			pm = pmf.getPersistenceManager();
-			r = pm.makePersistent(t);
+			r = pm.makePersistent(restaurantItem);
+			Long newRestaurantKey = r.getIdAsLong();
 			if (r.getReviews() != null) {
 				for (Review rv : r.getReviews()) {
+					rv.setParentRestaurantId(newRestaurantKey);
+					//rv.setRestaurant(restaurantItem);
 					pm.makePersistent(rv);
 				}
 			}

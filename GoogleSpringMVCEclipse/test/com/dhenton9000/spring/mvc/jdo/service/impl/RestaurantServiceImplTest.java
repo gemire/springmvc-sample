@@ -65,8 +65,8 @@ public class RestaurantServiceImplTest {
 		}
 
 		Review findReview = tester.getReviews().get(0);
-		assertNotNull(findReview.getRestaurant());
-		assertEquals(tester.getName(),findReview.getRestaurant().getName());
+		assertEquals(findReview.getParentRestaurantId(),tester.getIdAsLong());
+
 	}
 	
 	@Test

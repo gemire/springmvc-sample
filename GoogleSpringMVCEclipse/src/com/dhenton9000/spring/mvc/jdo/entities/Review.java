@@ -31,6 +31,8 @@ public class Review implements Serializable  {
     private Restaurant restaurant;
     @Persistent
 	private Date stampDate = new Date();
+    @Persistent
+    private Long parentRestaurantId = null;
 
     private final transient Logger logger = LoggerFactory.getLogger(Review.class);
    
@@ -107,13 +109,8 @@ public class Review implements Serializable  {
 				+ ", reviewListing=" + reviewListing + "]";
 	}
 
-	public Restaurant getRestaurant() {
-		return restaurant;
-	}
 
-	public void setRestaurant(Restaurant restaurant) {
-		this.restaurant = restaurant;
-	}
+
 
 	public Date getStampDate() {
 		return stampDate;
@@ -122,6 +119,24 @@ public class Review implements Serializable  {
 	public void setStampDate(Date stampDate) {
 		this.stampDate = stampDate;
 	}
+
+	public Long getParentRestaurantId() {
+		return parentRestaurantId;
+	}
+
+	public void setParentRestaurantId(Long parentRestaurantId) {
+		this.parentRestaurantId = parentRestaurantId;
+	}
+
+	public Restaurant getRestaurant() {
+		return restaurant;
+	}
+
+	public void setRestaurant(Restaurant restaurant) {
+		this.restaurant = restaurant;
+	}
+
+
     
    
     
