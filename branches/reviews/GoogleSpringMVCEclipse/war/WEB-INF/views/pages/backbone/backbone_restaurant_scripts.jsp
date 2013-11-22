@@ -41,9 +41,9 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 
     </style>
     
-    <!--
+   
     <script src="tree_tests/jquery.mockjax.js"></script>
-    -->
+   
    
     <script>
         // generate using jsp tags
@@ -54,14 +54,14 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
       
      
     </script>
- <!--      
+     
     <script src="tree_tests/RestaurantMockData.js"></script>
         <script>
         // generate using jsp tags
  
         restaurantData = mockRestaurantData;
     </script>
- -->     
+   
  
     <script src="js/backbone/underscore.js"></script>
     <script src="js/backbone/backbone.js"></script>

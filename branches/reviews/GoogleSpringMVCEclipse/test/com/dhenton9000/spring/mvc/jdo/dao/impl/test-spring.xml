@@ -20,11 +20,11 @@
 		class="com.dhenton9000.spring.mvc.jdo.dao.impl.RestaurantDaoImpl">
 
 	</bean>
-	
+	<!--  
 	<bean id="reviewService" scope="singleton"
 		class="com.dhenton9000.spring.mvc.jdo.service.impl.ReviewServiceImpl">
 		<property name="restaurantDao" ref="restaurantDao" />
 		<property name="reviewDao" ref="reviewDao" />
 	</bean>
-
+-->
 </beans>
