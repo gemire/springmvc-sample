@@ -25,11 +25,12 @@ public class ReviewDaoImpl implements ReviewDao {
 	}
 
 	@Override
-	public void deleteReview(Long reviewId) {
+	public void deleteReview(Long reviewId,Long parentId) {
 		PersistenceManager pm = null;
 		try {
 			pm = pmf.getPersistenceManager();
-			Key id = KeyFactory.createKey(REVIEW_ENTITY_NAME, reviewId);
+			Key pK = KeyFactory.createKey("Restaurant", parentId);
+			Key id = KeyFactory.createKey(pK,REVIEW_ENTITY_NAME, reviewId);
 			Review t = pm.getObjectById(Review.class, id);
 			pm.deletePersistent(t);
 		} catch (NucleusObjectNotFoundException err) {
@@ -43,37 +44,15 @@ public class ReviewDaoImpl implements ReviewDao {
 
 	}
 
-	@Override
-	public void saveReview(Review newReview) {
-		PersistenceManager pm = null;
-		Key k = newReview.getId();
-		String info = "in saveReview ";
-		if (k != null) {
-			long kvar = k.getId();
-			info += "found key in review " + kvar;
-		} else {
-			throw new RuntimeException("save review requires an existing key");
-		}
-		if (newReview.getParentRestaurantId() == null) {
-			throw new RuntimeException("parent restauarant id cannot be null");
-		}
-		Review r = null;
-		try {
-			pm = pmf.getPersistenceManager();
-			r = pm.makePersistent(newReview);
-			log.debug(info);
-		} finally {
-			pm.close();
-		}
-
-	}
+	 
 
 	@Override
-	public Review getReview(Long reviewId) {
+	public Review getReview(Long reviewId,Long parentId) {
 
 		if (reviewId == null)
 			return null;
-		Key id = KeyFactory.createKey(REVIEW_ENTITY_NAME, reviewId);
+		Key parentKey = KeyFactory.createKey("Restaurant", parentId);
+		Key id = KeyFactory.createKey(parentKey,REVIEW_ENTITY_NAME, reviewId);
 		Review results = null;
 		Review detached = null;
 		PersistenceManager pm = null;
@@ -100,5 +79,7 @@ public class ReviewDaoImpl implements ReviewDao {
 		return detached;
 
 	}
+
+	 
 
 }

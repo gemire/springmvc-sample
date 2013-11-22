@@ -389,14 +389,14 @@ $(document).ready(
 				defaults : {
 
 					id : null,
-					reviewListiing : "",
+					reviewListing : "",
 					starRating : 1
 				},
 				validate : function(attrs, options) {
 					var errors = null;
 
-					if (!reviewListing.name
-							|| $.trim(reviewListing.name).length == 0) {
+					if (!attrs.reviewListing
+							|| $.trim(attrs.reviewListing).length == 0) {
 						errors = ("Review cannot be blank!");
 					}
 					if (errors != null)
@@ -511,6 +511,16 @@ $(document).ready(
 				{
 					console.log("hit save rating "+this.model.get("reviewListing")+" "+
 							this.parentRestaurant.get("name"));
+					//override the url to allow for parent and child ids
+					var opts = {"url": _main_url +"review/"+this.parentRestaurant.get("id")+"/"+this.model.get("id")};
+					this.model.set("reviewListing",$(this.el).find('span #r_reviewListing').val());
+					this.model.set("starRating",$(this.el).find('span #s_starRating').val())
+					
+					//all three values required in params
+					this.model.save(this.model.toJSON(),opts,{})
+					
+					
+					
 				},
 				cancelRating: function()
 				{

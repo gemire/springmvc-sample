@@ -61,5 +61,8 @@
 	<classpathentry exported="true" kind="lib" path="war/WEB-INF/lib/validation-api-1.0.0.GA.jar" sourcepath="/Users/dhenton/.m2/repository/javax/validation/validation-api/1.0.0.GA/validation-api-1.0.0.GA-sources.jar"/>
 	<classpathentry kind="lib" path="extra jars/appengine-testing-1.8.2.jar"/>
 	<classpathentry kind="con" path="com.google.appengine.eclipse.core.GAE_CONTAINER"/>
+	<classpathentry kind="lib" path="C:/eclipse/workspace/google/GoogleSpringMVCEclipse/extra jars/appengine-api-labs-1.8.5.jar"/>
+	<classpathentry kind="lib" path="C:/eclipse/workspace/google/GoogleSpringMVCEclipse/extra jars/appengine-api-stubs-1.8.2.jar"/>
+	<classpathentry kind="lib" path="C:/eclipse/workspace/google/GoogleSpringMVCEclipse/extra jars/appengine-endpoints.jar"/>
 	<classpathentry kind="output" path="war/WEB-INF/classes"/>
 </classpath>
