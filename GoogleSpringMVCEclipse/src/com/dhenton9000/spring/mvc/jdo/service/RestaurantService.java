@@ -3,6 +3,7 @@ package com.dhenton9000.spring.mvc.jdo.service;
 import java.util.List;
 
 import com.dhenton9000.spring.mvc.jdo.entities.Restaurant;
+import com.dhenton9000.spring.mvc.jdo.entities.Review;
 import com.google.appengine.api.datastore.Key;
 
 public interface RestaurantService {
@@ -15,6 +16,9 @@ public interface RestaurantService {
 	void loadSampleData();
 	List<Restaurant> getRestaurantsWithMaxRating(int ratingLimit);
 	List<Restaurant> getRestaurantsLike(String searchString); 
+	void deleteReview(Long restaurantId, Long reviewId);
+	Review saveOrAddReview(Long restaurantId, Review newReview);
+	
 	 
 	
 }
