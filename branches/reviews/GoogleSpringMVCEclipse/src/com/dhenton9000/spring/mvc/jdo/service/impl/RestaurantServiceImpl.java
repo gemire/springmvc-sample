@@ -192,20 +192,41 @@ public class RestaurantServiceImpl implements RestaurantService {
 					+ restaurantId);
 			return null;
 		}
+		log.debug("saveOrAddReview found parent " + parent.getIdAsLong());
+
 		List<Review> reviews = parent.getReviews();
 		Key reviewKey = newReview.getId();
-		if (reviewKey != null) {
+		boolean isAdding = false;
+		Long reviewKeyLong = null;
+		if (reviewKey == null) {
+			isAdding = true;
+		} else {
+			try {
+				reviewKeyLong = new Long(newReview.getId().getId());
+			} catch (Exception e) {
+				isAdding = true;
+			}
+
+		}
+
+		log.debug("review Key to match: " + reviewKey);
+		if (isAdding) {
+
+			log.debug("add mode");
+			parent.getReviews().add(newReview);
+
+		} else {
 
 			for (int i = 0; i < reviews.size(); i++) {
-				log.debug("key review " + reviewKey + " " + reviews.get(i));
-				if (reviews.get(i).getId().compareTo(reviewKey) == 0) {
+				log.debug("key review " + reviewKeyLong + " " + reviews.get(i));
+				if (new Long(reviews.get(i).getId().getId())
+						.compareTo(reviewKeyLong) == 0) {
+					log.debug("found match ");
 					Review oR = reviews.get(i);
 					oR.setReviewListing(newReview.getReviewListing());
 					oR.setStarRating(newReview.getStarRating());
 				}
 			}
-		} else {
-			parent.getReviews().add(newReview);
 		}
 		this.saveOrAddRestaurant(parent);
 
