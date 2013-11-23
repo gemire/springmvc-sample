@@ -1,6 +1,8 @@
 package com.dhenton9000.spring.mvc.jdo.service.impl;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertNull;
 
 import javax.jdo.JDOHelper;
 import javax.jdo.JDOObjectNotFoundException;
@@ -16,7 +18,6 @@ import org.slf4j.LoggerFactory;
 
 import com.dhenton9000.spring.mvc.jdo.dao.RestaurantDao;
 import com.dhenton9000.spring.mvc.jdo.dao.impl.RestaurantDaoImpl;
-import com.dhenton9000.spring.mvc.jdo.dao.impl.ReviewDaoImpl;
 import com.dhenton9000.spring.mvc.jdo.entities.Restaurant;
 import com.dhenton9000.spring.mvc.jdo.entities.Review;
 import com.google.appengine.api.datastore.Key;
@@ -30,7 +31,7 @@ public class ReviewServiceImplTest {
 			new LocalDatastoreServiceTestConfig());
 	private RestaurantServiceImpl restaurantService = null;
 	private RestaurantDao restaurantDao = null;
-	private ReviewDaoImpl reviewDao = null;
+
 	private static final String RESTAURANT_NAME = "alpha";
 	 
 
@@ -51,7 +52,6 @@ public class ReviewServiceImplTest {
 		restaurantService = new RestaurantServiceImpl();
 		restaurantDao = new RestaurantDaoImpl();
 		restaurantService.setRestaurantDao(restaurantDao);
-		reviewDao = new ReviewDaoImpl();
 		
 		Restaurant nR = new Restaurant();
 		nR.setName(RESTAURANT_NAME);
@@ -87,13 +87,68 @@ public class ReviewServiceImplTest {
 		helper.tearDown();
 	}
 	
+
 	@Test
-	public void testDeleteForReview()
+	public void testDeleteReview2()
 	{
 		Review review2 = sampleRestaurant.getReviews().get(1);
-		Review reviewTest = reviewDao.getReview(review2.getId().getId(),sampleRestaurant.getId().getId());	
-		assertEquals(review2.getReviewListing(), reviewTest.getReviewListing());
+		Key resKey = sampleRestaurant.getId();
+		sampleRestaurant.getReviews().clear();
+		sampleRestaurant.setName("qqq");
+		restaurantService.saveOrAddRestaurant(sampleRestaurant);
+		sampleRestaurant = restaurantService.getRestaurant(sampleKey.getId());
+		assertEquals("qqq",sampleRestaurant.getName());
+		assertEquals(0,sampleRestaurant.getReviews().size());
 		
 		
 	}
+	
+	
+	@Test
+	public void testDeleteReview()
+	{
+
+		Long reviewId = sampleRestaurant.getReviews().get(1).getId().getId();
+		Long restaurantId = sampleKey.getId();
+		restaurantService.deleteReview(restaurantId, reviewId);
+		sampleRestaurant = restaurantService.getRestaurant(sampleKey.getId());
+		assertEquals(2,sampleRestaurant.getReviews().size());
+		
+		
+	}
+	
+	@Test
+	public void testAddReview()
+	{
+
+		Review rev = new Review(2,"xxx");
+		assertNull(rev.getId());
+		Long restaurantId = sampleKey.getId();
+		Review n = restaurantService.saveOrAddReview(restaurantId, rev);
+		sampleRestaurant = restaurantService.getRestaurant(sampleKey.getId());
+		assertEquals(4,sampleRestaurant.getReviews().size());
+		assertEquals("xxx",sampleRestaurant.getReviews().get(3).getReviewListing());
+		assertNotNull(n.getId());
+		
+		
+	}
+	
+	@Test
+	public void testModifyReview()
+	{
+
+		Review rev = sampleRestaurant.getReviews().get(1);
+		rev.setStarRating(99);
+		
+		Long restaurantId = sampleKey.getId();
+		Review n = restaurantService.saveOrAddReview(restaurantId, rev);
+		sampleRestaurant = restaurantService.getRestaurant(sampleKey.getId());
+		assertEquals(3,sampleRestaurant.getReviews().size());
+		Review rev2 = sampleRestaurant.getReviews().get(1);
+		assertEquals(99,rev2.getStarRating());
+		
+		
+	}
+	
+	
 }
