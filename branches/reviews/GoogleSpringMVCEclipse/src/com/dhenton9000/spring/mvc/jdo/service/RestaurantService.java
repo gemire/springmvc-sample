@@ -17,7 +17,8 @@ public interface RestaurantService {
 	List<Restaurant> getRestaurantsWithMaxRating(int ratingLimit);
 	List<Restaurant> getRestaurantsLike(String searchString); 
 	void deleteReview(Long restaurantId, Long reviewId);
-	Review saveOrAddReview(Long restaurantId, Review newReview);
+	Review addReview(Long restaurantId, Review newReview);
+	Review saveReview(Long restaurantId, Review newReview);
 	
 	 
 	

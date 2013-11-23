@@ -124,7 +124,7 @@ public class ReviewServiceImplTest {
 		Review rev = new Review(2,"xxx");
 		assertNull(rev.getId());
 		Long restaurantId = sampleKey.getId();
-		Review n = restaurantService.saveOrAddReview(restaurantId, rev);
+		Review n = restaurantService.addReview(restaurantId, rev);
 		sampleRestaurant = restaurantService.getRestaurant(sampleKey.getId());
 		assertEquals(4,sampleRestaurant.getReviews().size());
 		assertEquals("xxx",sampleRestaurant.getReviews().get(3).getReviewListing());
@@ -141,7 +141,7 @@ public class ReviewServiceImplTest {
 		rev.setStarRating(99);
 		
 		Long restaurantId = sampleKey.getId();
-		Review n = restaurantService.saveOrAddReview(restaurantId, rev);
+		Review n = restaurantService.saveReview(restaurantId, rev);
 		sampleRestaurant = restaurantService.getRestaurant(sampleKey.getId());
 		assertEquals(3,sampleRestaurant.getReviews().size());
 		Review rev2 = sampleRestaurant.getReviews().get(1);
