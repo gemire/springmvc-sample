@@ -185,52 +185,52 @@ public class RestaurantServiceImpl implements RestaurantService {
 	}
 
 	@Override
-	public Review saveOrAddReview(Long restaurantId, Review newReview) {
+	public Review saveReview(Long restaurantId, Review newReview) {
 		Restaurant parent = getRestaurant(restaurantId);
 		if (parent == null) {
-			log.warn("could not find restaurant in saveOrAddreview "
-					+ restaurantId);
+			log.warn("could not find restaurant in saveReview " + restaurantId);
 			return null;
 		}
-		log.debug("saveOrAddReview found parent " + parent.getIdAsLong());
+		log.debug("saveReview found parent " + parent.getIdAsLong());
 
 		List<Review> reviews = parent.getReviews();
 		Key reviewKey = newReview.getId();
 		boolean isAdding = false;
 		Long reviewKeyLong = null;
 		if (reviewKey == null) {
-			isAdding = true;
+			log.warn("review key null in  saveReview " + restaurantId);
+			return null;
 		} else {
-			try {
-				reviewKeyLong = new Long(newReview.getId().getId());
-			} catch (Exception e) {
-				isAdding = true;
-			}
-
+			reviewKeyLong = new Long(reviewKey.getId());
 		}
-
 		log.debug("review Key to match: " + reviewKey);
-		if (isAdding) {
 
-			log.debug("add mode");
-			parent.getReviews().add(newReview);
-
-		} else {
-
-			for (int i = 0; i < reviews.size(); i++) {
-				log.debug("key review " + reviewKeyLong + " " + reviews.get(i));
-				if (new Long(reviews.get(i).getId().getId())
-						.compareTo(reviewKeyLong) == 0) {
-					log.debug("found match ");
-					Review oR = reviews.get(i);
-					oR.setReviewListing(newReview.getReviewListing());
-					oR.setStarRating(newReview.getStarRating());
-				}
+		for (int i = 0; i < reviews.size(); i++) {
+			log.debug("key review " + reviewKeyLong + " " + reviews.get(i));
+			if (new Long(reviews.get(i).getId().getId())
+					.compareTo(reviewKeyLong) == 0) {
+				log.debug("found match ");
+				Review oR = reviews.get(i);
+				oR.setReviewListing(newReview.getReviewListing());
+				oR.setStarRating(newReview.getStarRating());
 			}
 		}
 		this.saveOrAddRestaurant(parent);
-
 		return newReview;
+	}
+
+	@Override
+	public Review addReview(Long restaurantId, Review newReview) {
+		Restaurant parent = getRestaurant(restaurantId);
+		if (parent == null) {
+			log.warn("could not find restaurant in addReview " + restaurantId);
+			return null;
+		}
+
+		parent.getReviews().add(newReview);
+		this.saveOrAddRestaurant(parent);
+		return newReview;
+
 	}
 
 }

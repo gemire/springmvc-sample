@@ -140,7 +140,7 @@ public class BackboneRestaurantRestController {
 	@RequestMapping(value = "/review/{restaurantId}", method = RequestMethod.POST, consumes = "application/json", produces = "application/json")
 	@ResponseStatus(HttpStatus.CREATED)
 	public @ResponseBody
-	BackBoneIdResponse createReview(@RequestBody ReviewDTO rDTO,
+	BackBoneIdResponse addReview(@RequestBody ReviewDTO rDTO,
 			@PathVariable("restaurantId") String restaurantId) {
 
 		Long restaurantIdLong = null;
@@ -151,7 +151,7 @@ public class BackboneRestaurantRestController {
 			throw new RuntimeException("Could not parse " + restaurantId
 					+ " in createReview");
 		}
-		Review ret = getRestaurantService().saveOrAddReview(restaurantIdLong,
+		Review ret = getRestaurantService().addReview(restaurantIdLong,
 				rDTO.makeReview());
 		BackBoneIdResponse res = new BackBoneIdResponse();
 		res.setId(ret.getId().getId());
@@ -160,7 +160,7 @@ public class BackboneRestaurantRestController {
 
 	@RequestMapping(value = "/review/{restaurantId}/{reviewId}", method = RequestMethod.PUT)
 	@ResponseStatus(HttpStatus.OK)
-	public void updateReview(@RequestBody ReviewDTO rDTO,
+	public void saveReview(@RequestBody ReviewDTO rDTO,
 			@PathVariable("restaurantId") String restaurantId,
 			@PathVariable("reviewId") String reviewId) {
 		Long restaurantIdLong = null;
@@ -173,7 +173,7 @@ public class BackboneRestaurantRestController {
 					+ " in updateReview");
 		}
 
-		getRestaurantService().saveOrAddReview(restaurantIdLong,
+		getRestaurantService().saveReview(restaurantIdLong,
 				rDTO.makeReview());
 	}
 
