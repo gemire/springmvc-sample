@@ -246,5 +246,26 @@ $.mockjax({
     type: "DELETE" 
 });
 
+$.mockjax({
+    url: _main_url+"review/*",
+    // responseTime: 100,
+    type: "PUT" 
+});
 
+$.mockjax({
+    url: _main_url+"review/*",
+    // responseTime: 100,
+    type: "DELETE" 
+});
+
+$.mockjax({
+    url: _main_url+"review/*",
+    // responseTime: 100,
+    type: "POST",
+    status: 200,
+    response: function(settings) {
+         keySeed = keySeed + 1;
+        this.responseText =  {"id": keySeed};
+   }
+});
  

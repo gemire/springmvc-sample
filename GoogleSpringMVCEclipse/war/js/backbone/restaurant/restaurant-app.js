@@ -420,22 +420,47 @@ $(document).ready(
 				restaurant: null,
 				collection : [],
 				initialize : function(options) {
-					_.bindAll(this, "loadRatings","renderSingleRating","addReview");
+					_.bindAll(this, "loadRatings","renderSingleRating","deleteModel","addReview","refreshRatings");
 					this.vent = options.vent;
 					this.vent.bind("editModel", this.loadRatings);
+					this.vent.bind("deleteModel", this.deleteModel);
+					this.vent.bind("refreshRatings",this.refreshRatings),
 					this.addButtonRef.hide();
 					
 				},
-				events:
-					{
-					   "click #addReviewButton" : "addReview",
-					},
+				
+				/**
+				 * respond to the delete event when the delete button for a row in the
+				 * restaurant display is clicked.
+				 */
+				deleteModel: function()
+				{
+					this.collection = new RatingsList([]);
+					this.addButtonRef.hide();
+					this.restaurant = null;
+					this.render();
+				},
+
 				/**
 				 * add a review
 				 */
 				addReview: function()
 				{
 					console.log("hit add review");
+					 // add an element to the collection 
+					 // render the collection
+					 // click on the button that is the last item via jquery
+					  
+					
+				},
+				
+				/**
+				 * called by the review models when add or delete as this 
+				 * effects the entire list for the given restaurant
+				 */
+				refreshRatings: function()
+				{
+					this.render();
 				},
 
 				/**
@@ -454,6 +479,7 @@ $(document).ready(
 
 					var ratingsView = new RatingsView({
 						"model" : ratingsModel,
+						"vent": this.vent,
 						"parentRestaurant": this.restaurant
 					});
 
@@ -480,6 +506,7 @@ $(document).ready(
 				initialize : function(options) {
 					_.bindAll(this, "render","deleteRating","editRating","saveRating","cancelRating");
 					this.parentRestaurant = options.parentRestaurant;
+					this.vent = options.vent;
 				},
 				
 				events : {
@@ -490,15 +517,35 @@ $(document).ready(
 
 				},
 				
+				removeModelFromParent: function()
+				{
+					var idx = -1;
+					var reviews = this.parentRestaurant.get("reviewDTOs");
+					for(var i= 0;i< reviews.length;i++)
+					{
+						if (this.model.get("id") == reviews[i].id)
+						{
+							idx = i;
+							break;
+						}
+					}
+					if (idx > -1)
+					{
+						reviews.splice(idx,1);
+						this.parentRestaurant.set("reviewDTOs",reviews);
+						 
+					}
+				},
+				
 				deleteRating: function()
 				{
 					 var r = confirm("Do you wish to remove this review?")
 			            if (r == true)
 			            {
-			            	
-			            	this.model.destroy();
-			                this.parentRestaurant.save();
-			                this.render();
+							var opts = {"url": _main_url +"review/"+this.parentRestaurant.get("id")+"/"+this.model.get("id")};
+			            	this.removeModelFromParent();
+							this.model.destroy(opts);
+							this.vent.trigger("refreshRatings");
 			            }
 				},
 				editRating: function()
@@ -509,8 +556,6 @@ $(document).ready(
 				},
 				saveRating: function()
 				{
-					console.log("hit save rating "+this.model.get("reviewListing")+" "+
-							this.parentRestaurant.get("name"));
 					//override the url to allow for parent and child ids
 					var opts = {"url": _main_url +"review/"+this.parentRestaurant.get("id")+"/"+this.model.get("id")};
 					this.model.set("reviewListing",$(this.el).find('span #r_reviewListing').val());
@@ -518,8 +563,11 @@ $(document).ready(
 					
 					//all three values required in params
 					this.model.save(this.model.toJSON(),opts,{})
-					
-					
+					this.editState= "readOnly";
+					console.log("hit save rating "+this.model.get("reviewListing")+" "+
+							this.parentRestaurant.get("name"));
+
+					this.render();
 					
 				},
 				cancelRating: function()
