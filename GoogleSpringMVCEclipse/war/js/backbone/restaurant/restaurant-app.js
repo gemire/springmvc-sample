@@ -502,7 +502,7 @@ $(document).ready(
 				},
 				
 				/**
-				 * called by add,edit or delete as this 
+				 * called by add,edit or delete of the individual review as this 
 				 * the collection works on a COPY of the array
 				 * this is the refreshRatings event handler
 				 * effects the entire list for the given restaurant
