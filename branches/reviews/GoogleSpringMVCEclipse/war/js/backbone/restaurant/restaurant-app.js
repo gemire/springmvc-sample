@@ -519,7 +519,8 @@ $(document).ready(
 						newReviews.push(item);
 						
 					}
-					this.restaurant.set("reviewDTOs",newReviews);
+					// silent to prevent changing the row display which loses row highlighting
+					this.restaurant.set("reviewDTOs",newReviews,{"silent": true});
 					this.render();
 				},
 
@@ -626,7 +627,7 @@ $(document).ready(
 //							this.parentRestaurant.get("name")+" parent review "+JSON.stringify(this.parentRestaurant.get("reviewDTOs")));
 //					
 					this.vent.trigger("refreshRatings");
-					this.render();
+				//	this.render();
 					
 				},
 				cancelRating: function()
