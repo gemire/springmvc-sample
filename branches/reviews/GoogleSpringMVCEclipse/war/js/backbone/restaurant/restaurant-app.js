@@ -416,11 +416,14 @@ $(document).ready(
 			window.RatingsListView = Backbone.View.extend({
 				el: "#ratingsArea ul",
 				addButtonRef: $("#addReviewButton"),
+				addDialogRef: $('#addReviewModal') ,
 				tagName: "ul",
 				restaurant: null,
 				collection : [],
 				initialize : function(options) {
-					_.bindAll(this, "loadRatings","renderSingleRating","deleteModel","addReview","refreshRatings");
+					_.bindAll(this, "loadRatings","renderSingleRating",
+							"showAddReviewDialog", "reviewAddCallBack",
+							"deleteModel","addReview","refreshRatings");
 					this.vent = options.vent;
 					this.vent.bind("editModel", this.loadRatings);
 					this.vent.bind("deleteModel", this.deleteModel);
@@ -442,15 +445,59 @@ $(document).ready(
 				},
 
 				/**
-				 * add a review
+				 * called by the add review button, preps the dialog
+				 */
+				showAddReviewDialog: function()
+				{
+					var errorAreaRef = $("#error_message_for_addReview");
+					errorAreaRef.html("");
+					this.addDialogRef.find("#a_reviewListing").val("");
+					this.addDialogRef.find("#a_starRating").val("1");					
+					this.addDialogRef.modal('show');
+					
+				},
+				/**
+				 * add a review called by the save button on the modal
 				 */
 				addReview: function()
 				{
 					console.log("hit add review");
-					 // add an element to the collection 
-					 // render the collection
-					 // click on the button that is the last item via jquery
-					  
+					var reviewListingVal = this.addDialogRef.find("#a_reviewListing").val();
+					var errorAreaRef = $("#error_message_for_addReview");
+					if (!reviewListingVal
+							|| $.trim(reviewListingVal).length == 0) {
+							 errorAreaRef.html("Review cannot be blank!")
+							 errorAreaRef.show();
+						return;
+					}
+					this.addDialogRef.modal('hide');
+					errorAreaRef.html("");
+					errorAreaRef.hide();
+					
+					var starRatingVal = this.addDialogRef.find("#a_starRating").val();
+					var starRating = parseInt(starRatingVal);
+					console.log("hit add review "+reviewListingVal+" "+starRatingVal);
+					var newReview = new window.Ratings();
+					newReview.set("starRating",starRating )
+					newReview.set("reviewListing",reviewListingVal)
+					//TODO add validation
+						
+					var opts = {"url": _main_url +"review/"+this.restaurant.get("id"),parse:"true","wait":true,"success": this.reviewAddCallBack};
+					newReview.save(newReview.toJSON(),opts);
+					
+					
+				},
+				/**
+				 * callback used to load the model after an add see immediately above
+				 */
+				reviewAddCallBack: function(resp){
+					
+					console.log("XXXX "+resp.get("id")+" "+resp.get("reviewListing"));
+					var reviews = this.restaurant.get("reviewDTOs");
+					reviews.push(resp);
+					this.restaurant.set("reviewDTOs",reviews);
+					this.collection.add(resp);
+					this.render();
 					
 				},
 				
@@ -498,6 +545,7 @@ $(document).ready(
 			window.RatingsView = Backbone.View.extend({
 				tagName : "li",
 				editState: "readOnly",
+				 
 		        optRender: {
 		            interpolate: /\$\$(.+?)\$\$/gim,
 		            evaluate: /\$\$(.+?)\$\$/gim
@@ -507,6 +555,7 @@ $(document).ready(
 					_.bindAll(this, "render","deleteRating","editRating","saveRating","cancelRating");
 					this.parentRestaurant = options.parentRestaurant;
 					this.vent = options.vent;
+					
 				},
 				
 				events : {
@@ -537,6 +586,29 @@ $(document).ready(
 					}
 				},
 				
+				updateParent: function()
+				{
+					var idx = -1;
+					var reviews = this.parentRestaurant.get("reviewDTOs");
+					for(var i= 0;i< reviews.length;i++)
+					{
+						if (this.model.get("id") == reviews[i].id)
+						{
+							idx = i;
+							break;
+						}
+					}
+					if (idx > -1)
+					{
+						parentModel = reviews[idx];
+						parentModel.starRating = this.model.get("starRating");
+						parentModel.reviewListing = this.model.get("reviewListing");
+						this.parentRestaurant.set("reviewDTOs",reviews);
+						 
+					}
+				},
+
+				
 				deleteRating: function()
 				{
 					 var r = confirm("Do you wish to remove this review?")
@@ -548,24 +620,43 @@ $(document).ready(
 							this.vent.trigger("refreshRatings");
 			            }
 				},
+				/**
+				 * prep the item for saving, just marks it to display the edit boxes
+				 */
 				editRating: function()
 				{
 					console.log("hit edit rating "+this.model.get("reviewListing"));
 					this.editState = "edit";
 					this.render();
 				},
+				/**
+				 * when it edit mode this is the code for the save button
+				 */
 				saveRating: function()
 				{
 					//override the url to allow for parent and child ids
-					var opts = {"url": _main_url +"review/"+this.parentRestaurant.get("id")+"/"+this.model.get("id")};
-					this.model.set("reviewListing",$(this.el).find('span #r_reviewListing').val());
-					this.model.set("starRating",$(this.el).find('span #s_starRating').val())
 					
+					var opts = {"url": _main_url +"review/"+this.parentRestaurant.get("id")+"/"+this.model.get("id")};
+					var tempListing = $(this.el).find('span #r_reviewListing').val();
+					var errorAreaRef = $(this.el).find("#error_message");
+					if (!tempListing || $.trim(tempListing).length == 0) {
+						 errorAreaRef.html("Review cannot be blank!")
+						 errorAreaRef.show();
+						 return;
+					}
+					errorAreaRef.html("");
+					errorAreaRef.hide();
+					this.model.set("reviewListing",tempListing);
+					this.model.set("starRating",$(this.el).find('span #s_starRating').val())
+					 
 					//all three values required in params
-					this.model.save(this.model.toJSON(),opts,{})
+					this.model.save(this.model.toJSON(),opts)
 					this.editState= "readOnly";
-					console.log("hit save rating "+this.model.get("reviewListing")+" "+
-							this.parentRestaurant.get("name"));
+//					console.log("hit save rating "+this.model.get("reviewListing")+" "+
+//							this.parentRestaurant.get("name")+" parent review "+JSON.stringify(this.parentRestaurant.get("reviewDTOs")));
+//					
+					this.updateParent();
+					
 
 					this.render();
 					
