@@ -476,7 +476,7 @@ $(document).ready(
 					
 					var starRatingVal = this.addDialogRef.find("#a_starRating").val();
 					var starRating = parseInt(starRatingVal);
-					console.log("hit add review "+reviewListingVal+" "+starRatingVal);
+					//console.log("hit add review "+reviewListingVal+" "+starRatingVal);
 					var newReview = new window.Ratings();
 					newReview.set("starRating",starRating )
 					newReview.set("reviewListing",reviewListingVal)
@@ -489,10 +489,12 @@ $(document).ready(
 				},
 				/**
 				 * callback used to load the model after an add see immediately above
+				 * this is done to retrieve the review id that is provided as the return
+				 * value of the POST
 				 */
 				reviewAddCallBack: function(resp){
 					
-					console.log("XXXX "+resp.get("id")+" "+resp.get("reviewListing"));
+					//console.log("XXXX "+resp.get("id")+" "+resp.get("reviewListing"));
 					var reviews = this.restaurant.get("reviewDTOs");
 					reviews.push(resp);
 					this.restaurant.set("reviewDTOs",reviews);
@@ -523,7 +525,8 @@ $(document).ready(
 
 				/**
 				 * load the ratings, this is the editModel event when a user clicks a 
-				 * row
+				 * row, this initializes this collection each time a user clicks on a row
+				 * and selects a new restaurant.
 				 */
 				loadRatings: function(mv){
 					
