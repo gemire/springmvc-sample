@@ -410,6 +410,16 @@ $(document).ready(
 			window.RatingsList = Backbone.Collection.extend({
 				"model" : Ratings,
 				"url" : _main_url+"review",
+				initialize: function(reviewDTOs)
+				{
+					//this is a copy so add some extra stuff
+					for (var i=0;i<reviewDTOs.length;i++)
+					{
+						reviewDTOs[i].isEditing = false;
+						reviewDTOs[i].idx = i;
+					}
+					
+				}
 
 			});
 
@@ -422,12 +432,13 @@ $(document).ready(
 				collection : [],
 				initialize : function(options) {
 					_.bindAll(this, "loadRatings","renderSingleRating",
-							"showAddReviewDialog", "reviewAddCallBack",
+							"showAddReviewDialog", "reviewAddCallBack","reshowEditList",
 							"deleteModel","addReview","refreshRatings");
 					this.vent = options.vent;
 					this.vent.bind("editModel", this.loadRatings);
 					this.vent.bind("deleteModel", this.deleteModel);
 					this.vent.bind("refreshRatings",this.refreshRatings),
+					this.vent.bind("reshowEditList",this.reshowEditList),
 					this.addButtonRef.hide();
 					
 				},
@@ -480,6 +491,10 @@ $(document).ready(
 					var newReview = new window.Ratings();
 					newReview.set("starRating",starRating )
 					newReview.set("reviewListing",reviewListingVal)
+					newReview.set("isEditing",false);
+					
+					newReview.set("idx",this.collection.length);
+					 
 					//TODO add validation
 						
 					var opts = {"url": _main_url +"review/"+this.restaurant.get("id"),parse:"true","wait":true,"success": this.reviewAddCallBack};
@@ -496,11 +511,36 @@ $(document).ready(
 					
 					//console.log("XXXX "+resp.get("id")+" "+resp.get("reviewListing"));
 					var reviews = this.restaurant.get("reviewDTOs");
-					reviews.push(resp);
+					reviews.push(resp.toJSON());
 					this.restaurant.set("reviewDTOs",reviews);
 					this.collection.add(resp);
 					this.render();
 					
+				},
+				
+				/**
+				 * handler for the reshowEditList event that is thrown when 
+				 * the edit button is pressed for an individual item. It will turn off the
+				 * edit display for all items, then use the indexValue to turn it on
+				 * if indexValue is -1, then a delete occurred or reindexing is needed
+				 * and you will have to walk the
+				 * model list and reset the index
+				 */
+				reshowEditList: function(indexValue)
+				{
+					for (var i=0;i<this.collection.length;i++)
+					{
+						//console.log("isEditing "+this.collection.at(i).idx+" "+this.collection.at(i).isEditing)
+						 
+						this.collection.at(i).set("isEditing",false);
+						this.collection.at(i).set("idx",i);
+					}
+					
+					if (indexValue > 0 || indexValue == 0)
+					{
+						this.collection.at(indexValue).set("isEditing",true);
+					}
+					this.render();
 				},
 				
 				/**
@@ -521,7 +561,7 @@ $(document).ready(
 					}
 					// silent to prevent changing the row display which loses row highlighting
 					this.restaurant.set("reviewDTOs",newReviews,{"silent": true});
-					this.render();
+					this.reshowEditList();
 				},
 
 				/**
@@ -538,7 +578,8 @@ $(document).ready(
 					
 				},
 				renderSingleRating : function(ratingsModel) {
-
+					
+					
 					var ratingsView = new RatingsView({
 						"model" : ratingsModel,
 						"vent": this.vent,
@@ -559,8 +600,6 @@ $(document).ready(
 
 			window.RatingsView = Backbone.View.extend({
 				tagName : "li",
-				editState: "readOnly",
-				 
 		        optRender: {
 		            interpolate: /\$\$(.+?)\$\$/gim,
 		            evaluate: /\$\$(.+?)\$\$/gim
@@ -595,10 +634,9 @@ $(document).ready(
 				 * prep the item for saving, just marks it to display the edit boxes
 				 */
 				editRating: function()
-				{
+				{ 
 					//console.log("hit edit rating "+this.model.get("reviewListing"));
-					this.editState = "edit";
-					this.render();
+					this.vent.trigger("reshowEditList",this.model.get("idx"));
 				},
 				/**
 				 * when it edit mode this is the code for the save button
@@ -619,21 +657,20 @@ $(document).ready(
 					errorAreaRef.hide();
 					this.model.set("reviewListing",tempListing);
 					this.model.set("starRating",$(this.el).find('span #s_starRating').val())
+					
 					 
 					//all three values required in params
 					this.model.save(this.model.toJSON(),opts)
-					this.editState= "readOnly";
-//					console.log("hit save rating "+this.model.get("reviewListing")+" "+
-//							this.parentRestaurant.get("name")+" parent review "+JSON.stringify(this.parentRestaurant.get("reviewDTOs")));
-//					
+					this.model.set("isEditing",false);
 					this.vent.trigger("refreshRatings");
+					this.render();
 				//	this.render();
 					
 				},
 				cancelRating: function()
 				{
 					console.log("hit cancel rating "+this.model.get("reviewListing"));
-					this.editState = "readOnly";
+					this.model.set("isEditing",false) ;
 					this.render();
 				},
 				
@@ -670,7 +707,8 @@ $(document).ready(
 	                 dd.star_select_content = this.calculateDropDown(this.model.get("starRating"));
 	                 edit_html = _.template(edit_html, dd, this.optRender);
 	            	 this.$el.empty();
-	                 if (this.editState == "readOnly")
+	            	 var editState = this.model.get("isEditing")
+	                 if (editState == false)
 	                	 this.$el.html(ro_html);
 	                 else
 	                	 this.$el.html(edit_html);
