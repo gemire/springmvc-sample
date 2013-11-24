@@ -47,10 +47,10 @@
 			</div>
 		</div>
 		<div id="ratingsArea" class="span6 pull-right">
-			<h4 style="display: inline-block">Ratings</h4>
+			<h4 style="display: inline-block">Reviews</h4>
 			<button id="addReviewButton"
-				onclick="window.myRatingsListView.addReview()" style="display: none"
-				class='btn btn-small btn-primary'>
+				onclick="window.myRatingsListView.showAddReviewDialog();"
+				style="display: none" class='btn btn-small btn-primary'>
 				<i class="icon-pencil icon-white"></i> Add Review
 			</button>
 			<ul id="ratingsLocation"></ul>
@@ -59,16 +59,51 @@
 </div>
 
 
-<div class="modal hide fade">
+<div id="addReviewModal" class="modal hide fade">
 	<div class="modal-header">
-		<button type="button" class="close" data-dismiss="modal"
-			aria-hidden="true">&times;</button>
-		<h3>Modal header</h3>
+		<button type="button" class="close"
+			onclick="$('#addReviewModal').modal('hide');" aria-hidden="true">&times;</button>
+		<h3>Add Review</h3>
 	</div>
-	<div class="modal-body"></div>
+	<div class="modal-body">
+
+		<div class="controls">
+			<div class="input-prepend">
+				<span class="add-on">Review</span> <input id="a_reviewListing"
+					name="reviewListing" class="input-xlarge" placeholder="Review"
+					value="" type="text">
+			</div>
+			<div class="input-prepend">
+				<span class="add-on">Rating</span> <select class="input-small"
+					id="a_starRating" name="starRating">
+					<option>1</option>
+					<option>2</option>
+					<option>3</option>
+					<option>4</option>
+					<option>5</option>
+					<option>6</option>
+					<option>7</option>
+					<option>8</option>
+					<option>9</option>
+					<option>10</option>
+					<option>11</option>
+					<option>12</option>
+					<option>13</option>
+					<option>14</option>
+					<option>15</option>
+				</select>
+			</div>
+
+		</div>
+
+<div class="text-error" style="display:none" id="error_message_for_addReview"></div>
+
+
+	</div>
 	<div class="modal-footer">
-		<a href="#" class="btn">Cancel</a> <a href="#" class="btn btn-primary">Save
-			changes</a>
+		<button onclick="$('#addReviewModal').modal('hide');" class="btn">Cancel</button>
+		<button class="btn btn-primary"
+			onclick="window.myRatingsListView.addReview();">Save changes</button>
 	</div>
 </div>
 
