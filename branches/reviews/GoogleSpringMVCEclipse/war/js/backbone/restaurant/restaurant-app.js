@@ -502,11 +502,22 @@ $(document).ready(
 				},
 				
 				/**
-				 * called by the review models when add or delete as this 
+				 * called by add,edit or delete as this 
+				 * the collection works on a COPY of the array
+				 * this is the refreshRatings event handler
 				 * effects the entire list for the given restaurant
 				 */
 				refreshRatings: function()
 				{
+					var newReviews = [];
+					for (var i = 0; i < this.collection.length; i++)
+					{
+						item = this.collection.at(i).toJSON();
+						//console.log("refeshing with "+JSON.stringify(item));
+						newReviews.push(item);
+						
+					}
+					this.restaurant.set("reviewDTOs",newReviews);
 					this.render();
 				},
 
@@ -565,57 +576,13 @@ $(document).ready(
 					"click .cancelRatingClass" : "cancelRating" ,
 
 				},
-				
-				removeModelFromParent: function()
-				{
-					var idx = -1;
-					var reviews = this.parentRestaurant.get("reviewDTOs");
-					for(var i= 0;i< reviews.length;i++)
-					{
-						if (this.model.get("id") == reviews[i].id)
-						{
-							idx = i;
-							break;
-						}
-					}
-					if (idx > -1)
-					{
-						reviews.splice(idx,1);
-						this.parentRestaurant.set("reviewDTOs",reviews);
-						 
-					}
-				},
-				
-				updateParent: function()
-				{
-					var idx = -1;
-					var reviews = this.parentRestaurant.get("reviewDTOs");
-					for(var i= 0;i< reviews.length;i++)
-					{
-						if (this.model.get("id") == reviews[i].id)
-						{
-							idx = i;
-							break;
-						}
-					}
-					if (idx > -1)
-					{
-						parentModel = reviews[idx];
-						parentModel.starRating = this.model.get("starRating");
-						parentModel.reviewListing = this.model.get("reviewListing");
-						this.parentRestaurant.set("reviewDTOs",reviews);
-						 
-					}
-				},
-
-				
+		
 				deleteRating: function()
 				{
 					 var r = confirm("Do you wish to remove this review?")
 			            if (r == true)
 			            {
 							var opts = {"url": _main_url +"review/"+this.parentRestaurant.get("id")+"/"+this.model.get("id")};
-			            	this.removeModelFromParent();
 							this.model.destroy(opts);
 							this.vent.trigger("refreshRatings");
 			            }
@@ -625,7 +592,7 @@ $(document).ready(
 				 */
 				editRating: function()
 				{
-					console.log("hit edit rating "+this.model.get("reviewListing"));
+					//console.log("hit edit rating "+this.model.get("reviewListing"));
 					this.editState = "edit";
 					this.render();
 				},
@@ -655,9 +622,7 @@ $(document).ready(
 //					console.log("hit save rating "+this.model.get("reviewListing")+" "+
 //							this.parentRestaurant.get("name")+" parent review "+JSON.stringify(this.parentRestaurant.get("reviewDTOs")));
 //					
-					this.updateParent();
-					
-
+					this.vent.trigger("refreshRatings");
 					this.render();
 					
 				},
