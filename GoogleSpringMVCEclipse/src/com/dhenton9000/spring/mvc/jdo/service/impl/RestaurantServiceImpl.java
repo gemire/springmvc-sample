@@ -54,6 +54,13 @@ public class RestaurantServiceImpl implements RestaurantService {
 		Validator validator = factory.getValidator();
 		Set<ConstraintViolation<Restaurant>> violations = validator.validate(t);
 		if (violations.size() == 0) {
+			if (t.getReviews() != null)
+			{
+				for (Review rv: t.getReviews())
+				{
+					rv.setRestaurant(t);
+				}
+			}
 			return getRestaurantDao().saveOrAddRestaurant(t);
 		} else {
 			HashMap<String, String> errors = new HashMap<String, String>();
