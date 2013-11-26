@@ -49,6 +49,7 @@ public class RestaurantServiceImpl implements RestaurantService {
 	@Override
 	public Key saveOrAddRestaurant(Restaurant t) {
 
+		log.debug("save or add restaurant "+t.getIdAsLong());
 		ValidatorFactory factory = Validation.buildDefaultValidatorFactory();
 		Validator validator = factory.getValidator();
 		Set<ConstraintViolation<Restaurant>> violations = validator.validate(t);
@@ -78,6 +79,7 @@ public class RestaurantServiceImpl implements RestaurantService {
 
 	@Override
 	public void deleteRestaurant(Long key) {
+		log.debug("hit deleteRestaurant "+key);
 		getRestaurantDao().deleteRestaurant(key);
 
 	}
@@ -160,26 +162,31 @@ public class RestaurantServiceImpl implements RestaurantService {
 	@Override
 	public void deleteReview(Long restaurantId, Long reviewId) {
 		Restaurant parent = getRestaurant(restaurantId);
+		log.debug("hit deleteReview "+restaurantId+" "+reviewId);
+		
 		if (parent == null) {
 			log.warn("could not find restaurant in delete review "
 					+ restaurantId);
 			return;
 		}
 		List<Review> reviews = parent.getReviews();
-
+		log.debug("before delete "+reviews.size());
 		Key restaurantKey = KeyFactory.createKey("Restaurant", restaurantId);
 		Key reviewKey = KeyFactory.createKey(restaurantKey, "Review", reviewId);
 		int idx = -1;
 		for (int i = 0; i < reviews.size(); i++) {
-			log.debug("key review " + reviewKey + " " + reviews.get(i));
+			log.debug("key review " + reviewKey + " -- " + reviews.get(i).getId());
 			if (reviews.get(i).getId().compareTo(reviewKey) == 0) {
 				idx = i;
 				break;
 			}
 		}
+		log.debug("idx is "+idx);
 		if (idx > -1) {
+			log.debug("did remove ");
 			parent.getReviews().remove(idx);
 		}
+		log.debug("after delete "+reviews.size());
 		this.saveOrAddRestaurant(parent);
 
 	}
@@ -187,6 +194,10 @@ public class RestaurantServiceImpl implements RestaurantService {
 	@Override
 	public Review saveReview(Long restaurantId, Review newReview) {
 		Restaurant parent = getRestaurant(restaurantId);
+		log.debug("hit saveReview "+restaurantId+" "+newReview.getId().getId());
+		 
+		
+		
 		if (parent == null) {
 			log.warn("could not find restaurant in saveReview " + restaurantId);
 			return null;
@@ -221,6 +232,7 @@ public class RestaurantServiceImpl implements RestaurantService {
 
 	@Override
 	public Review addReview(Long restaurantId, Review newReview) {
+		log.debug("hit addReview "+restaurantId);
 		Restaurant parent = getRestaurant(restaurantId);
 		if (parent == null) {
 			log.warn("could not find restaurant in addReview " + restaurantId);
