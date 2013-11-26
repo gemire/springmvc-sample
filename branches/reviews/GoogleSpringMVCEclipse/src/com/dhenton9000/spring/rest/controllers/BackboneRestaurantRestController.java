@@ -38,8 +38,10 @@ public class BackboneRestaurantRestController {
 	@ResponseStatus(HttpStatus.CREATED)
 	public @ResponseBody
 	BackBoneIdResponse create(@RequestBody RestaurantDTO rDTO) {
+
 		Key k = getRestaurantService().saveOrAddRestaurant(
 				rDTO.makeRestaurant());
+		log.debug("hit created id "+k.getId());
 		BackBoneIdResponse res = new BackBoneIdResponse();
 		res.setId(new Long(k.getId()));
 		return res;
@@ -49,6 +51,7 @@ public class BackboneRestaurantRestController {
 	@ResponseStatus(HttpStatus.OK)
 	public void update(@RequestBody RestaurantDTO rDTO,
 			@PathVariable("id") String id) {
+		log.debug("hit update id "+rDTO.getId());
 		getRestaurantService().saveOrAddRestaurant(rDTO.makeRestaurant());
 	}
 
@@ -76,7 +79,7 @@ public class BackboneRestaurantRestController {
 	@ResponseStatus(HttpStatus.OK)
 	public void remove(@PathVariable("restaurantId") String restaurantId) {
 		Long key = null;
-
+		log.debug("hit delete id "+restaurantId);
 		try {
 			key = Long.parseLong(restaurantId);
 		} catch (NumberFormatException e) {
@@ -114,7 +117,7 @@ public class BackboneRestaurantRestController {
 			@PathVariable("reviewId") String reviewId) {
 		Long restaurantIdLong = null;
 		Long reviewIdLong = null;
-
+		log.debug("hit removeReview "+restaurantId+" "+reviewId);
 		try {
 			restaurantIdLong = Long.parseLong(restaurantId);
 		} catch (NumberFormatException e) {
@@ -123,7 +126,7 @@ public class BackboneRestaurantRestController {
 		}
 
 		try {
-			reviewIdLong = Long.parseLong(restaurantId);
+			reviewIdLong = Long.parseLong(reviewId);
 		} catch (NumberFormatException e) {
 			throw new RuntimeException("Could not parse " + reviewId
 					+ " in delete");
@@ -144,7 +147,7 @@ public class BackboneRestaurantRestController {
 			@PathVariable("restaurantId") String restaurantId) {
 
 		Long restaurantIdLong = null;
-
+		log.debug("hit addReview "+restaurantId+" "+rDTO.getId());
 		try {
 			restaurantIdLong = Long.parseLong(restaurantId);
 		} catch (NumberFormatException e) {
@@ -164,7 +167,7 @@ public class BackboneRestaurantRestController {
 			@PathVariable("restaurantId") String restaurantId,
 			@PathVariable("reviewId") String reviewId) {
 		Long restaurantIdLong = null;
-		log.debug("hit the updateReview ");
+		log.debug("hit updateReview "+restaurantId+" "+rDTO.getId());
 		
 		try {
 			restaurantIdLong = Long.parseLong(restaurantId);
