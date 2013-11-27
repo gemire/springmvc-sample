@@ -28,10 +28,7 @@
 		<property name="restaurantService" ref="restaurantService" />
 	</bean>
 
-	<bean id="restaurantRestController" scope="singleton"
-		class="com.dhenton9000.spring.rest.controllers.RestaurantRestController">
-		<property name="restaurantService" ref="restaurantService" />
-	</bean>
+ 
 	<bean id="backboneRestaurantRestController" scope="singleton"
 		class="com.dhenton9000.spring.rest.controllers.BackboneRestaurantRestController">
 		<property name="restaurantService" ref="restaurantService" />

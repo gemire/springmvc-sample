@@ -104,29 +104,15 @@
                 </ul> 
 
 
-
-
                 <ul class="nav pull-left">
                     <li class="dropdown">
-                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">Database/JDO <b class="caret"></b></a>
-                        <ul class="dropdown-menu">
-                           <li><a href="<c:out value="${baseURL}database/simple/restaurant/main" />">Maintain Restaurants</a></li>
-                          <li><a href="<c:out value="${baseURL}database/restaurant/load/main" />">Load Restaurants</a></li>
-                        </ul>
-                    </li>
-                </ul> 
-
-
-
-
-
-                <ul class="nav pull-left">
-                    <li class="dropdown">
-                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">JS Model/View Demos <b class="caret"></b></a>
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">Backbone Demos <b class="caret"></b></a>
                         <ul class="dropdown-menu">
                            <li><a href="<c:out value="${baseURL}backbone/demos/localstorage" />">Backbone Local Storage</a></li>
                            <li><a href="<c:out value="${baseURL}backbone/demos/js/model" />">Javascript Model/View</a></li>
          				   <li><a href="<c:out value="${baseURL}backbone/demos/restaurant" />">Backbone Restaurant App</a></li>
+         				   <li class="divider"></li>
+         				   <li><a href="<c:out value="${baseURL}database/restaurant/load/main" />">Load Restaurants</a></li>
                         </ul>
                     </li>
                 </ul> 

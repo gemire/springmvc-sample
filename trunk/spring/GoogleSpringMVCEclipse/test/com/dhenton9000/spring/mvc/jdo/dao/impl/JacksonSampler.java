@@ -13,6 +13,7 @@ import org.codehaus.jackson.map.ObjectMapper;
 
 import com.dhenton9000.spring.mvc.jdo.entities.Restaurant;
 import com.dhenton9000.spring.mvc.jdo.entities.RestaurantDTO;
+import com.dhenton9000.spring.mvc.jdo.entities.ReviewDTO;
 import com.google.appengine.api.datastore.Key;
 import com.google.appengine.api.datastore.KeyFactory;
 import com.google.appengine.tools.development.testing.LocalDatastoreServiceTestConfig;
@@ -28,15 +29,16 @@ public class JacksonSampler {
 		//		new LocalDatastoreServiceTestConfig());
 		//helper.setUp();
 		ObjectMapper mapper = new ObjectMapper();
-		RestaurantDTO r = new RestaurantDTO();
-	//	Key key = KeyFactory.createKey("Restaurant", 100101L);
-		r.setId(100101L);
-		r.setZipCode("909090");
-		r.setName("Test");
-		r.setVersion(1);
-		r.setState("CA");
-		r.setCity("Freson");
-		r.addReviewDTO(4, "bite me");
+//		RestaurantDTO r = new RestaurantDTO();
+//	//	Key key = KeyFactory.createKey("Restaurant", 100101L);
+//		r.setId(100101L);
+//		r.setZipCode("909090");
+//		r.setName("Test");
+//		r.setVersion(1);
+//		r.setState("CA");
+//		r.setCity("Freson");
+//		r.addReviewDTO(4, "bite me");
+		ReviewDTO r = new ReviewDTO();
 		Writer w = new StringWriter();
 		try {
 			mapper.writeValue(w, r);

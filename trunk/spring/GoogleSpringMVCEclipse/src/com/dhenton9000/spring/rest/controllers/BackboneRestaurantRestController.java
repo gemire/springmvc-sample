@@ -19,6 +19,8 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import com.dhenton9000.spring.mvc.controllers.ResourceNotFoundException;
 import com.dhenton9000.spring.mvc.jdo.entities.Restaurant;
 import com.dhenton9000.spring.mvc.jdo.entities.RestaurantDTO;
+import com.dhenton9000.spring.mvc.jdo.entities.Review;
+import com.dhenton9000.spring.mvc.jdo.entities.ReviewDTO;
 import com.dhenton9000.spring.mvc.jdo.service.RestaurantService;
 import com.google.appengine.api.datastore.Key;
 
@@ -36,8 +38,10 @@ public class BackboneRestaurantRestController {
 	@ResponseStatus(HttpStatus.CREATED)
 	public @ResponseBody
 	BackBoneIdResponse create(@RequestBody RestaurantDTO rDTO) {
+
 		Key k = getRestaurantService().saveOrAddRestaurant(
 				rDTO.makeRestaurant());
+		log.debug("hit created id "+k.getId());
 		BackBoneIdResponse res = new BackBoneIdResponse();
 		res.setId(new Long(k.getId()));
 		return res;
@@ -47,6 +51,7 @@ public class BackboneRestaurantRestController {
 	@ResponseStatus(HttpStatus.OK)
 	public void update(@RequestBody RestaurantDTO rDTO,
 			@PathVariable("id") String id) {
+		log.debug("hit update id "+rDTO.getId());
 		getRestaurantService().saveOrAddRestaurant(rDTO.makeRestaurant());
 	}
 
@@ -64,7 +69,8 @@ public class BackboneRestaurantRestController {
 		}
 		Restaurant restaurant = this.getRestaurantService().getRestaurant(key);
 		if (restaurant == null)
-			throw new ResourceNotFoundException("could not find key '"+key+"'"); 
+			throw new ResourceNotFoundException("could not find key '" + key
+					+ "'");
 		else
 			return new RestaurantDTO(restaurant);
 	}
@@ -73,7 +79,7 @@ public class BackboneRestaurantRestController {
 	@ResponseStatus(HttpStatus.OK)
 	public void remove(@PathVariable("restaurantId") String restaurantId) {
 		Long key = null;
-
+		log.debug("hit delete id "+restaurantId);
 		try {
 			key = Long.parseLong(restaurantId);
 		} catch (NumberFormatException e) {
@@ -84,9 +90,9 @@ public class BackboneRestaurantRestController {
 		try {
 			getRestaurantService().deleteRestaurant(key);
 		} catch (JDOObjectNotFoundException e) {
-			 throw new ResourceNotFoundException();
+			throw new ResourceNotFoundException();
 		}
-		
+
 	}
 
 	@RequestMapping(method = RequestMethod.GET, produces = "application/json")
@@ -102,6 +108,79 @@ public class BackboneRestaurantRestController {
 		}
 		return restaurants;
 	}
+
+	// /////// REVIEWS/////////////////////////////////
+
+	@RequestMapping(value = "/review/{restaurantId}/{reviewId}", method = RequestMethod.DELETE)
+	@ResponseStatus(HttpStatus.OK)
+	public void removeReview(@PathVariable("restaurantId") String restaurantId,
+			@PathVariable("reviewId") String reviewId) {
+		Long restaurantIdLong = null;
+		Long reviewIdLong = null;
+		log.debug("hit removeReview "+restaurantId+" "+reviewId);
+		try {
+			restaurantIdLong = Long.parseLong(restaurantId);
+		} catch (NumberFormatException e) {
+			throw new RuntimeException("Could not parse " + restaurantId
+					+ " in delete");
+		}
+
+		try {
+			reviewIdLong = Long.parseLong(reviewId);
+		} catch (NumberFormatException e) {
+			throw new RuntimeException("Could not parse " + reviewId
+					+ " in delete");
+		}
+
+		try {
+			getRestaurantService().deleteReview(restaurantIdLong, reviewIdLong);
+		} catch (JDOObjectNotFoundException e) {
+			throw new ResourceNotFoundException();
+		}
+
+	}
+
+	@RequestMapping(value = "/review/{restaurantId}", method = RequestMethod.POST, consumes = "application/json", produces = "application/json")
+	@ResponseStatus(HttpStatus.CREATED)
+	public @ResponseBody
+	BackBoneIdResponse addReview(@RequestBody ReviewDTO rDTO,
+			@PathVariable("restaurantId") String restaurantId) {
+
+		Long restaurantIdLong = null;
+		log.debug("hit addReview "+restaurantId+" "+rDTO.getId());
+		try {
+			restaurantIdLong = Long.parseLong(restaurantId);
+		} catch (NumberFormatException e) {
+			throw new RuntimeException("Could not parse " + restaurantId
+					+ " in createReview");
+		}
+		Review ret = getRestaurantService().addReview(restaurantIdLong,
+				rDTO.makeReview());
+		BackBoneIdResponse res = new BackBoneIdResponse();
+		res.setId(ret.getId().getId());
+		return res;
+	}
+
+	@RequestMapping(value = "/review/{restaurantId}/{reviewId}", method = RequestMethod.PUT)
+	@ResponseStatus(HttpStatus.OK)
+	public void saveReview(@RequestBody ReviewDTO rDTO,
+			@PathVariable("restaurantId") String restaurantId,
+			@PathVariable("reviewId") String reviewId) {
+		Long restaurantIdLong = null;
+		log.debug("hit updateReview "+restaurantId+" "+rDTO.getId());
+		
+		try {
+			restaurantIdLong = Long.parseLong(restaurantId);
+		} catch (NumberFormatException e) {
+			throw new RuntimeException("Could not parse " + restaurantId
+					+ " in updateReview");
+		}
+
+		getRestaurantService().saveReview(restaurantIdLong,
+				rDTO.makeReview());
+	}
+
+	// ////////////////////////////////////////////////////////////////////////////////////
 
 	public RestaurantService getRestaurantService() {
 		return restaurantService;
