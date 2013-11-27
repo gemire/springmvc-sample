@@ -56,7 +56,7 @@ public class Restaurant implements Serializable {
 	@Element(dependent = "true")
 	private ArrayList<Review> reviews = new ArrayList<Review>();
 
-	private Long idAsLong = null;
+	
 
 	private final transient Logger logger = LoggerFactory
 			.getLogger(Restaurant.class);
@@ -75,7 +75,7 @@ public class Restaurant implements Serializable {
 
 	public void setId(Key id) {
 		this.id = id;
-		setIdAsLong(null);
+	
 	}
 
 	public String getName() {
@@ -194,12 +194,13 @@ public class Restaurant implements Serializable {
 	}
 
 	public Long getIdAsLong() {
-		return idAsLong;
+		if (getId() != null)
+			return getId().getId();
+		else
+			return null;
 	}
 
-	public void setIdAsLong(Long idAsLong) {
-		this.idAsLong = idAsLong;
-	}
+
 
 	public List<Review> getReviews() {
 		return reviews;
@@ -210,7 +211,7 @@ public class Restaurant implements Serializable {
 		Review r = new Review();
 		r.setReviewListing(message);
 		r.setStarRating(rating);
-		r.setRestaurant(this);
+		r.setParentRestaurantId(this.getIdAsLong());
 		reviews.add(r);
 		
 	}

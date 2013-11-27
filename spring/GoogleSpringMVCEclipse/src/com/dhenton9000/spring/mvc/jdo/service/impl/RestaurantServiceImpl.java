@@ -21,6 +21,7 @@ import javax.validation.ValidatorFactory;
 
 import com.dhenton9000.spring.mvc.jdo.dao.RestaurantDao;
 import com.dhenton9000.spring.mvc.jdo.entities.Restaurant;
+import com.dhenton9000.spring.mvc.jdo.entities.Review;
 import com.dhenton9000.spring.mvc.jdo.service.RestaurantService;
 import com.google.appengine.api.datastore.Key;
 import com.google.appengine.api.datastore.KeyFactory;
@@ -48,10 +49,18 @@ public class RestaurantServiceImpl implements RestaurantService {
 	@Override
 	public Key saveOrAddRestaurant(Restaurant t) {
 
+		log.debug("save or add restaurant "+t.getIdAsLong());
 		ValidatorFactory factory = Validation.buildDefaultValidatorFactory();
 		Validator validator = factory.getValidator();
 		Set<ConstraintViolation<Restaurant>> violations = validator.validate(t);
 		if (violations.size() == 0) {
+			if (t.getReviews() != null)
+			{
+				for (Review rv: t.getReviews())
+				{
+					rv.setRestaurant(t);
+				}
+			}
 			return getRestaurantDao().saveOrAddRestaurant(t);
 		} else {
 			HashMap<String, String> errors = new HashMap<String, String>();
@@ -77,6 +86,7 @@ public class RestaurantServiceImpl implements RestaurantService {
 
 	@Override
 	public void deleteRestaurant(Long key) {
+		log.debug("hit deleteRestaurant "+key);
 		getRestaurantDao().deleteRestaurant(key);
 
 	}
@@ -122,7 +132,7 @@ public class RestaurantServiceImpl implements RestaurantService {
 					}
 					r.setVersion(ver);
 					reviewer.generateReviews(r);
-					log.debug("@@@ "+r.getReviews());
+					log.debug("@@@ " + r.getReviews());
 					saveOrAddRestaurant(r);
 				}
 
@@ -144,17 +154,102 @@ public class RestaurantServiceImpl implements RestaurantService {
 
 	}
 
-
 	@Override
 	public List<Restaurant> getRestaurantsWithMaxRating(int ratingLimit) {
 
-		return  getRestaurantDao().getRestaurantsWithMaxRating(ratingLimit);
+		return getRestaurantDao().getRestaurantsWithMaxRating(ratingLimit);
 	}
 
 	@Override
 	public List<Restaurant> getRestaurantsLike(String searchString) {
 
-		return  getRestaurantDao().getRestaurantsLike(searchString);
+		return getRestaurantDao().getRestaurantsLike(searchString);
+	}
+
+	@Override
+	public void deleteReview(Long restaurantId, Long reviewId) {
+		Restaurant parent = getRestaurant(restaurantId);
+		log.debug("hit deleteReview "+restaurantId+" "+reviewId);
+		
+		if (parent == null) {
+			log.warn("could not find restaurant in delete review "
+					+ restaurantId);
+			return;
+		}
+		List<Review> reviews = parent.getReviews();
+		log.debug("before delete "+reviews.size());
+		Key restaurantKey = KeyFactory.createKey("Restaurant", restaurantId);
+		Key reviewKey = KeyFactory.createKey(restaurantKey, "Review", reviewId);
+		int idx = -1;
+		for (int i = 0; i < reviews.size(); i++) {
+			log.debug("key review " + reviewKey + " -- " + reviews.get(i).getId());
+			if (reviews.get(i).getId().compareTo(reviewKey) == 0) {
+				idx = i;
+				break;
+			}
+		}
+		log.debug("idx is "+idx);
+		if (idx > -1) {
+			log.debug("did remove ");
+			parent.getReviews().remove(idx);
+		}
+		log.debug("after delete "+reviews.size());
+		this.saveOrAddRestaurant(parent);
+
+	}
+
+	@Override
+	public Review saveReview(Long restaurantId, Review newReview) {
+		Restaurant parent = getRestaurant(restaurantId);
+		log.debug("hit saveReview "+restaurantId+" "+newReview.getId().getId());
+		 
+		
+		
+		if (parent == null) {
+			log.warn("could not find restaurant in saveReview " + restaurantId);
+			return null;
+		}
+		log.debug("saveReview found parent " + parent.getIdAsLong());
+
+		List<Review> reviews = parent.getReviews();
+		Key reviewKey = newReview.getId();
+		boolean isAdding = false;
+		Long reviewKeyLong = null;
+		if (reviewKey == null) {
+			log.warn("review key null in  saveReview " + restaurantId);
+			return null;
+		} else {
+			reviewKeyLong = new Long(reviewKey.getId());
+		}
+		log.debug("review Key to match: " + reviewKey);
+
+		for (int i = 0; i < reviews.size(); i++) {
+			log.debug("key review " + reviewKeyLong + " " + reviews.get(i));
+			if (new Long(reviews.get(i).getId().getId())
+					.compareTo(reviewKeyLong) == 0) {
+				log.debug("found match ");
+				Review oR = reviews.get(i);
+				oR.setReviewListing(newReview.getReviewListing());
+				oR.setStarRating(newReview.getStarRating());
+			}
+		}
+		this.saveOrAddRestaurant(parent);
+		return newReview;
+	}
+
+	@Override
+	public Review addReview(Long restaurantId, Review newReview) {
+		log.debug("hit addReview "+restaurantId);
+		Restaurant parent = getRestaurant(restaurantId);
+		if (parent == null) {
+			log.warn("could not find restaurant in addReview " + restaurantId);
+			return null;
+		}
+
+		parent.getReviews().add(newReview);
+		this.saveOrAddRestaurant(parent);
+		return newReview;
+
 	}
 
 }
