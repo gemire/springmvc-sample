@@ -59,7 +59,7 @@ when new objects are created.
 
 <h4>Backbone's REST Contract</h4>
 <div>
-This demo also illustrates the nature of the Backbone's REST contact. Specifically POSTs for 
+This demo also illustrates the nature of the Backbone's REST contract. Specifically POSTs for 
 new object creation need to return the changed items (id) that you wish synced with your
 objects. In this case to get server side ids. The urlRoot property needs to be on models if they
 are used 'outside of a collection' eg. model.save() is called. Url property can be set on the
