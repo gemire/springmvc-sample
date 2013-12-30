@@ -9,6 +9,7 @@ import com.dhenton9000.wicket.pages.ajax.indicators.AjaxIndicatorPage;
 import com.dhenton9000.wicket.pages.behaviors.BehaviorsPage;
 import com.dhenton9000.wicket.pages.data.ApplicationsUsers;
 import com.dhenton9000.wicket.pages.data.DataPaging;
+import com.dhenton9000.wicket.pages.data.sort.DataFilteringPage;
 import com.dhenton9000.wicket.pages.events.SimpleEventPage;
 import com.dhenton9000.wicket.pages.form.explore.ExploreFormPage;
 import com.dhenton9000.wicket.pages.form.sample.CompoundUserPage;
@@ -70,6 +71,7 @@ public final class NavPanel extends TemplatePanel {
         add(new BookmarkablePageLink<Void>("ajaxFormPageLink", AjaxFormPage.class));
         add(new BookmarkablePageLink<Void>("behaviorsPageLink", BehaviorsPage.class));
         add(new BookmarkablePageLink<Void>("dataPagingLink", DataPaging.class));
+        add(new BookmarkablePageLink<Void>("dataFilteringLink", DataFilteringPage.class));
         add(new BookmarkablePageLink<Void>("pageSwapDemoPageLink", PageSwapDemo.class));
         add(new BookmarkablePageLink<Void>("ajaxIndicatorPageLink", AjaxIndicatorPage.class));
         
