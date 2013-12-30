@@ -12,20 +12,28 @@ import com.dhenton9000.wicket.pages.TemplatePage;
 import java.util.ArrayList;
 import java.util.List;
 import org.apache.wicket.ajax.AjaxRequestTarget;
+import org.apache.wicket.event.IEvent;
 import org.apache.wicket.markup.html.WebMarkupContainer;
 import org.apache.wicket.markup.html.navigation.paging.IPagingLabelProvider;
 import org.apache.wicket.markup.html.navigation.paging.PagingNavigator;
 import org.apache.wicket.markup.repeater.data.DataView;
 import org.apache.wicket.spring.injection.annot.SpringBean;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  *
  * @author dhenton
  */
-public class DataPaging extends TemplatePage {
+public class DataPaging extends TemplatePage implements PageSizeSelectorRepeatingView.IProvider {
 
     @SpringBean
     private IRestaurantService service;
+    private RestaurantsDataView rDview;
+    private PagingNavigator pNav;
+    private WebMarkupContainer wContainer;
+    private PageSizeSelectorRepeatingView pageSelectorView;
+    private static final Logger LOG = LoggerFactory.getLogger(DataPaging.class);
 
     public DataPaging() {
         super();
@@ -35,11 +43,11 @@ public class DataPaging extends TemplatePage {
 
     private void setup() {
         RestaurantDataProvider dataView = new RestaurantDataProvider(service);
-   
-        final RestaurantsDataView rDview = new RestaurantsDataView("repeating", dataView);
-        final PagingNavigator pNav = new PagingNavigator("nav", rDview);
+
+        rDview = new RestaurantsDataView("repeating", dataView);
+        pNav = new PagingNavigator("nav", rDview);
         rDview.setItemsPerPage(10);
-        final WebMarkupContainer wContainer = new WebMarkupContainer("tableContainer");
+        wContainer = new WebMarkupContainer("tableContainer");
         wContainer.add(rDview);
         wContainer.setOutputMarkupId(true);
         this.add(wContainer);
@@ -49,26 +57,34 @@ public class DataPaging extends TemplatePage {
         sizeItems.add(20);
         rDview.setOutputMarkupId(true);
         pNav.setOutputMarkupId(true);
-        PageSizeSelectorRepeatingView pageSelectorView =
-                new PageSizeSelectorRepeatingView("pageSizeSelector", sizeItems) {
-            @Override
-            protected DataView getPagedComponent() {
-                return rDview;
-              }
-
-            @Override
-            protected void addComponents(AjaxRequestTarget target) {
-                 target.add(wContainer);
-                 target.add(pNav);
-            }
-        };
-        {
-        };
+        pageSelectorView
+                = new PageSizeSelectorRepeatingView("pageSizeSelector", sizeItems, this);
 
         this.add(pNav);
         this.add(pageSelectorView);
-        
 
     }
+
+    @Override
+    public void onEvent(IEvent<?> event) {
+
+        Object payload = event.getPayload();
+        if (payload instanceof PageSizeSelectorRepeatingView.SizeSelectionEvent) {
+            PageSizeSelectorRepeatingView.SizeSelectionEvent o = (PageSizeSelectorRepeatingView.SizeSelectionEvent) event.getPayload();
+            //  int count = (Integer) pageSelectorView.getDefaultModelObject();
+            LOG.info("\n@@@@@@@@@\n" + o.ajaxTarget.getClass().getName() + " " + o.sizeValue);
+        } else {
+            LOG.info("got an event of " + payload.getClass().getName());
+        }
+
+    }
+
+    @Override
+    public void processSizeChange(AjaxRequestTarget target, int size) {
+        rDview.setItemsPerPage(size);
+        target.add(wContainer);
+        target.add(pNav);
+    }
+
 }//
 

@@ -14,5 +14,6 @@ import java.util.List;
  */
 public interface IRestaurantService extends GenericEntityService<Restaurant,Integer> {
     List<Restaurant> getAllRestaurants();
+    List<Restaurant> getAllRestaurants(String filter);
 }
  
