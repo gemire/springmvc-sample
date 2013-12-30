@@ -8,6 +8,7 @@ package com.dhenton9000.wicket.dao.service;
 import com.dhenton9000.jpa.entities.Restaurant;
 import com.dhenton9000.jpa.service.support.GenericEntityServiceImpl;
 import com.dhenton9000.wicket.dao.IRestaurantDao;
+import java.util.ArrayList;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -49,5 +50,20 @@ implements IRestaurantService {
     @Override
     public List<Restaurant> getAllRestaurants() {
        return getDao().getAllRestaurants();
+    }
+
+    @Override
+    public List<Restaurant> getAllRestaurants(String filter) {
+        ArrayList filtered = new ArrayList<Restaurant>();
+        List<Restaurant> rList = getDao().getAllRestaurants();
+        for (Restaurant r: rList)
+        {
+            if (r.getName().indexOf(filter) > -1)
+            {
+                filtered.add(r);
+            }
+        }
+        
+        return filtered;
     }
 }

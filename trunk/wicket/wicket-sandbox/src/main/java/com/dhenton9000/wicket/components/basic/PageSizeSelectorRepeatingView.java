@@ -10,6 +10,7 @@ import org.apache.wicket.AttributeModifier;
 import org.apache.wicket.Component;
 import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.ajax.markup.html.AjaxLink;
+import org.apache.wicket.event.Broadcast;
 import org.apache.wicket.markup.ComponentTag;
 import org.apache.wicket.markup.MarkupStream;
 import org.apache.wicket.markup.html.list.ListItem;
@@ -27,13 +28,15 @@ import org.slf4j.LoggerFactory;
  *
  * @author dhenton
  */
-public abstract class PageSizeSelectorRepeatingView extends ListView<Integer> {
+public class PageSizeSelectorRepeatingView extends ListView<Integer> {
 
-    private  final Logger logger = LoggerFactory.getLogger(PageSizeSelectorRepeatingView.class);
+    private final Logger logger = LoggerFactory.getLogger(PageSizeSelectorRepeatingView.class);
     public static final String SIZE_SELECT_LINK = "sizeLink";
+    private IProvider provider;
 
-    public PageSizeSelectorRepeatingView(final String id, final List<Integer> availablePageSizes) {
+    public PageSizeSelectorRepeatingView(final String id, final List<Integer> availablePageSizes, IProvider p) {
         super(id, new Model<LinkedList<Integer>>(new LinkedList<Integer>(availablePageSizes)));
+        provider = p;
     }
 
     @Override
@@ -41,24 +44,6 @@ public abstract class PageSizeSelectorRepeatingView extends ListView<Integer> {
         item.add(new PageSizeLink(SIZE_SELECT_LINK, item.getModelObject()));
     }
 
-    /**
-     * must identify the component , right now its a DataView could be a
-     * DataTable or PageableListView
-     *
-     * @return
-     */
-    protected abstract DataView getPagedComponent();
-
-    /**
-     * describe what/how this puppy will update things
-     *
-     * @param target
-     */
-    protected abstract void addComponents(AjaxRequestTarget target);
-
-    protected Long getSize() {
-        return getPagedComponent().getItemsPerPage();
-    }
 
     public class PageSizeLink extends AjaxLink<Integer> {
 
@@ -77,23 +62,25 @@ public abstract class PageSizeSelectorRepeatingView extends ListView<Integer> {
         @Override
         public void onClick(AjaxRequestTarget target) {
 
-            PageSizeSelectorRepeatingView.this.getPagedComponent().setItemsPerPage(getModelObject());
             updateGroupHighlighting();
-            PageSizeSelectorRepeatingView.this.addComponents(target);
-
-
+            provider.processSizeChange(target,getModelObject().intValue());
+            SizeSelectionEvent sE = new SizeSelectionEvent();
+            sE.ajaxTarget = target;
+            sE.sizeValue = getModelObject().intValue();
+            send(getPage(), Broadcast.DEPTH, sE);
+           
         }
 
         private void updateGroupHighlighting() {
             getParent().visitChildren(
                     PageSizeLink.class,
                     new IVisitor<PageSizeLink, Void>() {
-                @Override
-                public void component(final PageSizeLink link, final IVisit<Void> visit) {
-                    link.setHighlighting(link.equals(PageSizeLink.this));
-                    visit.stop();
-                }
-            });
+                        @Override
+                        public void component(final PageSizeLink link, final IVisit<Void> visit) {
+                            link.setHighlighting(link.equals(PageSizeLink.this));
+                            visit.stop();
+                        }
+                    });
         }
 
         private void setHighlighting(final Boolean highlighted) {
@@ -101,5 +88,23 @@ public abstract class PageSizeSelectorRepeatingView extends ListView<Integer> {
 
             add(new AttributeModifier("class", new Model<String>(className)));
         }
+    }
+
+    public class SizeSelectionEvent
+    {
+        public int sizeValue = 0;
+        public AjaxRequestTarget ajaxTarget = null;
+    }
+    public interface IProvider {
+
+    
+        /**
+         * describe what/how this puppy will update things
+         *
+         * @param target
+         * @param size
+         */
+
+        void processSizeChange(AjaxRequestTarget target,int size);
     }
 }
