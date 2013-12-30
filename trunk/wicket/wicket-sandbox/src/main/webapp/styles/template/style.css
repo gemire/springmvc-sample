@@ -67,3 +67,14 @@ div.basicBlock
     margin-top: 5px;
      
 }
+
+.selected
+{
+    font-weight:bold;
+    border: thin solid blue;
+}
+
+.notSelected
+{
+    font-weight: normal;
+}

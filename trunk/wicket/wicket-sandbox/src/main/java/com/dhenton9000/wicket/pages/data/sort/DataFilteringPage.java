@@ -38,9 +38,11 @@ public class DataFilteringPage extends TemplatePage {
     private WebMarkupContainer wContainer;
     private PageSizeSelector pageSelectorView;
     private static final Logger LOG = LoggerFactory.getLogger(DataFilteringPage.class);
+    private static final int INITITAL_PAGE_SIZE = 10;
     private FilterObj filterText = new FilterObj();
     private PropertyModel filterPropModel;
     private Form<FilterObj> filterForm;
+    
 
     public DataFilteringPage() {
         super();
@@ -56,23 +58,27 @@ public class DataFilteringPage extends TemplatePage {
         RestaurantDataProvider dataView = new RestaurantDataProvider(service, filterPropModel);
 
         rDview = new RestaurantsDataView("repeating", dataView);
+        rDview.setItemsPerPage(INITITAL_PAGE_SIZE);
+        rDview.setOutputMarkupId(true);
         pNav = new PagingNavigator("nav", rDview);
-        rDview.setItemsPerPage(10);
-        wContainer = new WebMarkupContainer("tableContainer");
-        wContainer.add(rDview);
-        wContainer.add(pNav);
-        wContainer.setOutputMarkupId(true);
-        this.add(wContainer);
+        pNav.setOutputMarkupId(true);
+   
         List<Integer> sizeItems = new ArrayList<Integer>();
         sizeItems.add(5);
         sizeItems.add(10);
         sizeItems.add(20);
-        rDview.setOutputMarkupId(true);
-        pNav.setOutputMarkupId(true);
         pageSelectorView = new PageSizeSelector("pageSizeSelector", sizeItems);
+        pageSelectorView.setSelectedPageSize(INITITAL_PAGE_SIZE);
 
-
+        
+        wContainer = new WebMarkupContainer("tableContainer");
+        wContainer.add(rDview);
+        wContainer.add(pNav);
+        wContainer.setOutputMarkupId(true);
         wContainer.add(pageSelectorView);
+        this.add(wContainer);
+       
+ 
         TextField<String> filterTextField = new TextField<String>("filterTextField");
         filterForm = new Form<FilterObj>("filterForm", cmpdFilterModel);
         filterForm.add(filterTextField);
