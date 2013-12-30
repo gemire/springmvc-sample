@@ -12,11 +12,8 @@ import com.dhenton9000.wicket.pages.TemplatePage;
 import java.util.ArrayList;
 import java.util.List;
 import org.apache.wicket.ajax.AjaxRequestTarget;
-import org.apache.wicket.event.IEvent;
 import org.apache.wicket.markup.html.WebMarkupContainer;
-import org.apache.wicket.markup.html.navigation.paging.IPagingLabelProvider;
 import org.apache.wicket.markup.html.navigation.paging.PagingNavigator;
-import org.apache.wicket.markup.repeater.data.DataView;
 import org.apache.wicket.spring.injection.annot.SpringBean;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -65,19 +62,7 @@ public class DataPaging extends TemplatePage implements PageSizeSelectorRepeatin
 
     }
 
-    @Override
-    public void onEvent(IEvent<?> event) {
 
-        Object payload = event.getPayload();
-        if (payload instanceof PageSizeSelectorRepeatingView.SizeSelectionEvent) {
-            PageSizeSelectorRepeatingView.SizeSelectionEvent o = (PageSizeSelectorRepeatingView.SizeSelectionEvent) event.getPayload();
-            //  int count = (Integer) pageSelectorView.getDefaultModelObject();
-            LOG.info("\n@@@@@@@@@\n" + o.ajaxTarget.getClass().getName() + " " + o.sizeValue);
-        } else {
-            LOG.info("got an event of " + payload.getClass().getName());
-        }
-
-    }
 
     @Override
     public void processSizeChange(AjaxRequestTarget target, int size) {

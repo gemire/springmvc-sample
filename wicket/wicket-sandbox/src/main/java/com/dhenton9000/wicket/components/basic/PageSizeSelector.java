@@ -28,15 +28,15 @@ import org.slf4j.LoggerFactory;
  *
  * @author dhenton
  */
-public class PageSizeSelectorRepeatingView extends ListView<Integer> {
+public class PageSizeSelector extends ListView<Integer> {
 
-    private final Logger logger = LoggerFactory.getLogger(PageSizeSelectorRepeatingView.class);
+    private final Logger logger = LoggerFactory.getLogger(PageSizeSelector.class);
     public static final String SIZE_SELECT_LINK = "sizeLink";
-    private IProvider provider;
+     
 
-    public PageSizeSelectorRepeatingView(final String id, final List<Integer> availablePageSizes, IProvider p) {
+    public PageSizeSelector(final String id, final List<Integer> availablePageSizes ) {
         super(id, new Model<LinkedList<Integer>>(new LinkedList<Integer>(availablePageSizes)));
-        provider = p;
+         
     }
 
     @Override
@@ -63,8 +63,11 @@ public class PageSizeSelectorRepeatingView extends ListView<Integer> {
         public void onClick(AjaxRequestTarget target) {
 
             updateGroupHighlighting();
-            provider.processSizeChange(target,getModelObject().intValue());
-              
+            SizeSelectionEvent sE = new SizeSelectionEvent();
+            sE.ajaxTarget = target;
+            sE.sizeValue = getModelObject().intValue();
+            send(getPage(), Broadcast.DEPTH, sE);
+           
         }
 
         private void updateGroupHighlighting() {
@@ -86,17 +89,10 @@ public class PageSizeSelectorRepeatingView extends ListView<Integer> {
         }
     }
 
- 
-    public interface IProvider {
-
-    
-        /**
-         * describe what/how this puppy will update things
-         *
-         * @param target
-         * @param size
-         */
-
-        void processSizeChange(AjaxRequestTarget target,int size);
+    public class SizeSelectionEvent
+    {
+        public int sizeValue = 0;
+        public AjaxRequestTarget ajaxTarget = null;
     }
+     
 }

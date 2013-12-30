@@ -25,7 +25,8 @@ public class RestaurantDataProvider implements IDataProvider {
     private final IModel<String> filter;
     private IRestaurantService service;
 
-    public RestaurantDataProvider(IModel<String> filter) {
+    public RestaurantDataProvider(IRestaurantService service,IModel<String> filter) {
+        this.service = service;
         this.filter = filter;
     }
 
@@ -40,7 +41,11 @@ public class RestaurantDataProvider implements IDataProvider {
         if (filter == null) {
             r = getService().getAllRestaurants();
         } else {
-            r = getService().getAllRestaurants(filter.getObject());
+            if (filter.getObject() != null)
+                r = getService().getAllRestaurants(filter.getObject());
+            else
+                r = getService().getAllRestaurants();
+                
         }
 
         return r.subList((int) first, (int) (first + count)).iterator();
@@ -54,7 +59,10 @@ public class RestaurantDataProvider implements IDataProvider {
         if (filter == null) {
             r = getService().getAllRestaurants();
         } else {
-            r = getService().getAllRestaurants(filter.getObject());
+            if (filter.getObject() != null)
+                r = getService().getAllRestaurants(filter.getObject());
+            else
+                r = getService().getAllRestaurants();
         }
 
         // logger.debug("size "+r.size());
