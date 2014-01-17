@@ -54,8 +54,10 @@ public class NestedFormPage extends TemplatePage {
         };
  
         TextField nameField = new TextField("name");
+        nameField.setRequired(true);
         managerForm.add(nameField);
         TextField phoneField = new TextField("phone");
+        phoneField.setRequired(true);
         managerForm.add(phoneField);
 
         FeedbackPanel feedbackPanel = new FeedbackPanel("feedbackPanel");
