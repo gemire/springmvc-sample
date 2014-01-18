@@ -1,0 +1,40 @@
+
+        <wicket:extend>
+            <h2>Nested Form Sample</h2>
+
+
+            <h3>Enter Manager and Restaurants</h3>
+
+            <form wicket:id="managerForm">
+                <div wicket:id="feedbackPanel"></div><br/>
+                <table cellpadding="5" cellspacing="5">
+                    <tr>
+                        <th>Manager Name</th>
+                        <td><input wicket:id="name" size="35" /></td>
+                    </tr>
+
+                    <tr>
+                        <th>Manager Phone</th>
+                        <td><input wicket:id="phone" size="20" /></td>
+                    </tr>
+                </table>
+
+
+
+                <wicket:container wicket:id="selectorPanel"></wicket:container>
+
+
+
+
+
+                <p><input type="submit" wicket:id="submitButton"/></p> 
+
+
+
+
+            </form>
+
+
+
+        </wicket:extend>
+\

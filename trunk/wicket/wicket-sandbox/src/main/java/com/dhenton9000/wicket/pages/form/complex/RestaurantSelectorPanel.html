@@ -1,0 +1,55 @@
+<wicket:panel>
+    
+    <style>
+        td.block 
+        {
+            border: thin solid #C3C3C3;
+        }
+    </style>
+    <table class="palette" cellpadding="2" border="1">
+        <tr>
+            <th>Available</th >
+            <th>Action</th>
+            <th>Selected</th>
+        </tr>
+        <tr>
+            <td  valign="top"><select size="10" wicket:id="selectedRestaurants" /></td>
+            
+            <td>
+                <button wicket:id="addRestaurant">Add</button><br/>
+                <button wicket:id="removeRestaurant">Remove</button>
+            
+            </td>
+            
+            <td valign="top"width="65%">
+                <table width="100%">
+                    <tr>
+                        <th width="15%">Remove?</th>
+                        <th width="15%">Roles</th>
+                        <th>Name</th>
+                    </tr>
+                    <wicket:container wicket:id="candidateRestaurants">
+                        <tr>
+                            
+                            <td width="15%" class="block"><input type="checkbox" wicket:id="deleteCandidate"></input></td> 
+                            <td width="15%"  class="block"><span wicket:id="roleType">
+                                    <input type="radio" wicket:id="basicRoleType">Basic</input> 
+                                    <input type="radio" wicket:id="advancedRoleType">Adv</input> 
+                                    
+                                </span>
+                            </td>
+                            <td class="block"><span wicket:id="candidateName">test</span></td>
+                        </tr>                     
+                    </wicket:container>
+                    
+                    
+                </table>
+             </td>
+        </tr>
+     </table>
+    
+    
+    
+    
+    
+</wicket:panel>
