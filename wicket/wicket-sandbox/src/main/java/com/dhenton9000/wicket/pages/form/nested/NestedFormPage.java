@@ -4,6 +4,7 @@
  */
 package com.dhenton9000.wicket.pages.form.nested;
 
+import com.dhenton9000.jpa.entities.Manager;
 import com.dhenton9000.wicket.dao.service.IRestaurantService;
 import com.dhenton9000.wicket.pages.TemplatePage;
 import com.dhenton9000.wicket.pages.form.explore.ExplorePanel;
@@ -64,7 +65,7 @@ public class NestedFormPage extends TemplatePage {
         managerForm.add(feedbackPanel);
         Button submitButton = new Button("submitButton", new Model("Save Manager"));
         managerForm.add(submitButton);
-        RestaurantSelectForm selectForm = new RestaurantSelectForm(this.service);
+        FormWithPaletteGenerator selectForm = new FormWithPaletteGenerator(this.service);
         managerForm.add(selectForm.getRoleForm());
        add(managerForm);
 

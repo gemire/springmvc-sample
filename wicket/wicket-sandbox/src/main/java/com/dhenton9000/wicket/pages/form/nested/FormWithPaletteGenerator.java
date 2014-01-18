@@ -27,16 +27,16 @@ import org.slf4j.LoggerFactory;
  *
  * @author dhenton
  */
-public class RestaurantSelectForm implements Serializable {
+public class FormWithPaletteGenerator implements Serializable {
 
     private List<Restaurant> selectedRestaurants;
     private List<Restaurant> allRestaurants;
     private IChoiceRenderer<Restaurant> renderer;
     private IRestaurantService service;
     private Form<Void> roleForm;
-    private final Logger logger = LoggerFactory.getLogger(RestaurantSelectForm.class);
+    private final Logger logger = LoggerFactory.getLogger(FormWithPaletteGenerator.class);
 
-    public RestaurantSelectForm(final IRestaurantService service) {
+    public FormWithPaletteGenerator(final IRestaurantService service) {
         this.service = service;
 
         renderer = new ChoiceRenderer<Restaurant>("name", "id");
