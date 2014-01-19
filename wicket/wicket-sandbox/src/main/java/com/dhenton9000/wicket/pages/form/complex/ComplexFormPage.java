@@ -4,14 +4,9 @@
  */
 package com.dhenton9000.wicket.pages.form.complex;
 
-import com.dhenton9000.jpa.entities.Manager;
-import com.dhenton9000.jpa.entities.Restaurant;
 import com.dhenton9000.wicket.dao.service.IRestaurantService;
 import com.dhenton9000.wicket.pages.TemplatePage;
-import com.dhenton9000.wicket.pages.maintenance.restaurant.two.EditorPanel;
-import java.util.ArrayList;
 import org.apache.wicket.markup.html.form.Button;
-import org.apache.wicket.markup.html.form.ChoiceRenderer;
 import org.apache.wicket.markup.html.form.Form;
 import org.apache.wicket.markup.html.form.IFormSubmitter;
 import org.apache.wicket.markup.html.form.TextField;
@@ -52,7 +47,7 @@ public class ComplexFormPage extends TemplatePage {
 
     public enum BUTTON_ACTION {
 
-        SUBMIT, ADD, REMOVE
+        SUBMIT, ADD 
     };
     private BUTTON_ACTION buttonAction = BUTTON_ACTION.SUBMIT;
     private final Logger logger = LoggerFactory.getLogger(ComplexFormPage.class);
@@ -78,11 +73,8 @@ public class ComplexFormPage extends TemplatePage {
                         info(this.getModelObject().getCandidateRestaurants());
                         break;
                     case ADD:
-                        ComplexFormPage.this.moveSelected();
-                        break;
 
-                    case REMOVE:
-                        ComplexFormPage.this.removeCandidates();
+                        selectorPanel.refresh(buttonAction);
                         break;
                 }
 
@@ -93,7 +85,7 @@ public class ComplexFormPage extends TemplatePage {
                 if (submittingComponent == submitButton) {
                     buttonAction = BUTTON_ACTION.SUBMIT;
                 } else {
-                    buttonAction = selectorPanel.determineAction(submittingComponent);
+                    buttonAction = BUTTON_ACTION.ADD;
                 }
                 super.process(submittingComponent);
             }
@@ -118,33 +110,7 @@ public class ComplexFormPage extends TemplatePage {
 
     }//end create components
 
-    private void removeCandidates() {
-        ArrayList<CandidateRestaurant> delItems = new ArrayList<CandidateRestaurant>();
-        for (CandidateRestaurant c : this.managerDTO.getCandidateRestaurants().getObject()) {
-            if (c.isDeleteCandidate()) {
-                delItems.add(c);
-            }
-        }
-        for (CandidateRestaurant c : delItems) {
-            this.managerDTO.getCandidateRestaurants().getObject().remove(c);
-        }
-        this.managerDTO.getAvailableRestaurants().detach();
-        this.selectorPanel.refresh();
-
-    }
-
-    private void moveSelected() {
-
-        for (Restaurant r : this.managerDTO.getSelectedRestaurants().getObject()) {
-            CandidateRestaurant c = new CandidateRestaurant(r);
-            this.managerDTO.getCandidateRestaurants().getObject().add(c);
-        }
-        this.managerDTO.getSelectedRestaurants().getObject().clear();
-        this.managerDTO.getAvailableRestaurants().detach();
-        this.selectorPanel.refresh();
-
-    }
-
+  
     private RestaurantSelectorPanel selectorPanel;
 
     /**

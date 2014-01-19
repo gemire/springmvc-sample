@@ -14,24 +14,12 @@ import java.io.Serializable;
  */
 public class CandidateRestaurant implements Serializable{
 
-    /**
-     * @return the deleteCandidate
-     */
-    public boolean isDeleteCandidate() {
-        return deleteCandidate;
-    }
 
-    /**
-     * @param deleteCandidate the deleteCandidate to set
-     */
-    public void setDeleteCandidate(boolean deleteCandidate) {
-        this.deleteCandidate = deleteCandidate;
-    }
    public enum ROLE_TYPE   {Basic, Advanced};
     
     private Restaurant restaurant;
     private ROLE_TYPE  roleType = ROLE_TYPE.Basic;
-    private boolean deleteCandidate = false;
+    
 
     CandidateRestaurant(Restaurant r) {
          this.restaurant = r;
@@ -102,7 +90,7 @@ public class CandidateRestaurant implements Serializable{
 
     @Override
     public String toString() {
-        return "CandidateRestaurant{" + "restaurant=" + restaurant + ", roleType=" + roleType + ", deleteCandidate=" + deleteCandidate + '}';
+        return "CandidateRestaurant{" + "restaurant=" + restaurant + ", roleType=" + roleType   + '}';
     }
     
     
