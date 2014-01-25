@@ -6,6 +6,7 @@ package com.dhenton9000.wicket.pages.form.complex;
 
 import com.dhenton9000.wicket.dao.service.IRestaurantService;
 import com.dhenton9000.wicket.pages.TemplatePage;
+import org.apache.commons.lang.StringUtils;
 import org.apache.wicket.markup.html.form.Button;
 import org.apache.wicket.markup.html.form.Form;
 import org.apache.wicket.markup.html.form.IFormSubmitter;
@@ -47,7 +48,7 @@ public class ComplexFormPage extends TemplatePage {
 
     public enum BUTTON_ACTION {
 
-        SUBMIT, ADD 
+        SUBMIT, ADD
     };
     private BUTTON_ACTION buttonAction = BUTTON_ACTION.SUBMIT;
     private final Logger logger = LoggerFactory.getLogger(ComplexFormPage.class);
@@ -93,10 +94,11 @@ public class ComplexFormPage extends TemplatePage {
         };
 
         TextField nameField = new TextField("name");
+        SimpleTextValidator generalValidator = new SimpleTextValidator("Name required");
         nameField.add(generalValidator);
         getManagerForm().add(nameField);
         TextField phoneField = new TextField("phone");
-        phoneField.setRequired(true);
+        generalValidator = new SimpleTextValidator("Phone required");
         phoneField.add(generalValidator);
         getManagerForm().add(phoneField);
 
@@ -110,7 +112,6 @@ public class ComplexFormPage extends TemplatePage {
 
     }//end create components
 
-  
     private RestaurantSelectorPanel selectorPanel;
 
     /**
@@ -127,24 +128,30 @@ public class ComplexFormPage extends TemplatePage {
         return managerForm;
     }
 
-    INullAcceptingValidator generalValidator
-            = new INullAcceptingValidator() {
-                @Override
-                public void validate(IValidatable validatable) {
-                    logger.debug("in validate");
-                    if (validatable != null && buttonAction.equals(BUTTON_ACTION.SUBMIT)
-                    && (validatable.getValue() == null || validatable.getValue().toString().equals(""))) {
+    class SimpleTextValidator implements INullAcceptingValidator {
 
-                        logger.debug("hit error " + buttonAction);
+        private final String message;
 
-                        validatable.error(new IValidationError() {
-                            @Override
-                            public String getErrorMessage(IErrorMessageSource messageSource) {
-                                return " required, moron!";
-                            }
-                        });
+        public SimpleTextValidator(String message) {
+            this.message = message;
+        }
+
+        @Override
+        public void validate(IValidatable validatable) {
+            //logger.debug("in validate");
+            if (validatable != null && buttonAction.equals(BUTTON_ACTION.SUBMIT)
+                    && StringUtils.isEmpty((String) validatable.getValue())) {
+
+               // logger.debug("hit error " + buttonAction);
+
+                validatable.error(new IValidationError() {
+                    @Override
+                    public String getErrorMessage(IErrorMessageSource messageSource) {
+                        return message;
                     }
-                }
-            };
+                });
+            }
+        }
+    }
 
 }
