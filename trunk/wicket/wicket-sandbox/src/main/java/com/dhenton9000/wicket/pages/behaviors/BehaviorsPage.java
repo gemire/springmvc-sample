@@ -53,7 +53,9 @@ public final class BehaviorsPage extends TemplatePage {
         String script = "var myDataString = '" + (new Date()).toString() + "';";
         String id = "dateElementScript";
         String myReadyScript = "$('#inputVar').val('on dom')";
+        // this is rendered in the head
         OnDomReadyHeaderItem oHeaderItem = OnDomReadyHeaderItem.forScript(myReadyScript);
+        // this is in the on load
         response.render(OnLoadHeaderItem.forScript("$('#inputVar').val('on load '+myDataString)"));
         response.render(JavaScriptReferenceHeaderItem.forScript(script, id));
         response.render(oHeaderItem);
@@ -78,8 +80,8 @@ public final class BehaviorsPage extends TemplatePage {
 
         final ModalWindow demoModalWindow = new ModalWindow("demoModalWindow");
         demoModalWindow.setOutputMarkupId(true);
-        demoModalWindow.setInitialWidth(200);
-        demoModalWindow.setInitialHeight(150);
+        demoModalWindow.setInitialWidth(400);
+        demoModalWindow.setInitialHeight(250);
         add(demoModalWindow);
 
         dialogDemoPanel = new DialogDemoPanel(demoModalWindow.getContentId(),
