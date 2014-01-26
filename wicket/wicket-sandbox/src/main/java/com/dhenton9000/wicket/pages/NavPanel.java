@@ -13,6 +13,7 @@ import com.dhenton9000.wicket.pages.data.sort.DataFilteringPage;
 import com.dhenton9000.wicket.pages.events.SimpleEventPage;
 import com.dhenton9000.wicket.pages.form.complex.ComplexFormPage;
 import com.dhenton9000.wicket.pages.form.explore.ExploreFormPage;
+import com.dhenton9000.wicket.pages.form.listview.FormListView;
 import com.dhenton9000.wicket.pages.form.nested.NestedFormPage;
 import com.dhenton9000.wicket.pages.form.sample.CompoundUserPage;
 import com.dhenton9000.wicket.pages.form.sample.UserPage;
@@ -78,6 +79,7 @@ public final class NavPanel extends TemplatePanel {
         add(new BookmarkablePageLink<Void>("ajaxIndicatorPageLink", AjaxIndicatorPage.class));
         add(new BookmarkablePageLink<Void>("nestedFormPageLink", NestedFormPage.class));
         add(new BookmarkablePageLink<Void>("complexFormPageLink", ComplexFormPage.class));
+        add(new BookmarkablePageLink<Void>("formListViewLink", FormListView.class));
        
         // this isn't needed see Application.java for a mount 
         // that allows for a more normal url

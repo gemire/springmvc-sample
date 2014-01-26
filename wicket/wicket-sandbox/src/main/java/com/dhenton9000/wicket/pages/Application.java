@@ -14,6 +14,7 @@ import com.dhenton9000.wicket.pages.data.sort.DataFilteringPage;
 import com.dhenton9000.wicket.pages.events.SimpleEventPage;
 import com.dhenton9000.wicket.pages.form.complex.ComplexFormPage;
 import com.dhenton9000.wicket.pages.form.explore.ExploreFormPage;
+import com.dhenton9000.wicket.pages.form.listview.FormListView;
 import com.dhenton9000.wicket.pages.form.nested.NestedFormPage;
 import com.dhenton9000.wicket.pages.form.sample.CompoundUserPage;
 import com.dhenton9000.wicket.pages.form.sample.UserPage;
@@ -171,7 +172,8 @@ public class Application extends WebApplication {
             SimpleListViewRepeater.class, MaintainApplications.class,PageSwapDemo.class,
             AjaxFormPage.class, BehaviorsPage.class, DataPaging.class,AjaxIndicatorPage.class,
             FormInputWithList.class, ModalInputPage.class, SignIn.class, SignOutPage.class,
-            ComplexFormPage.class,
+            ComplexFormPage.class,    FormListView.class
+
         };
 
         for (Class page : pageArray) {
