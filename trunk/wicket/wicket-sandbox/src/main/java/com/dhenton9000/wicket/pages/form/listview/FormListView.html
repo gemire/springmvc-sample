@@ -1,0 +1,21 @@
+
+<wicket:extend>
+    <h2>Form With Embedded List View</h2>
+
+
+    <form wicket:id="listForm">
+
+
+        <div style="width:400px;overflow-y:auto;height:350px;border: thin solid #c0c0c0">
+            <div wicket:id="candidateRestaurants">
+                <input type="checkbox" wicket:id="candidateSelectBox" />
+                <span wicket:id="candidateName" />
+            </div>
+        </div>
+
+
+
+        <p><input type="submit" wicket:id="submit" value="submit" /></p>
+    </form>
+
+</wicket:extend>
