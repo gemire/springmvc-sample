@@ -39,6 +39,7 @@
         <plugins>
             <plugin>
                 <artifactId>maven-war-plugin</artifactId>
+                <version>2.4</version>
                 <configuration>
                     <webappDirectory>${basedir}/src/main/webapp</webappDirectory>
                     <warSourceDirectory>${basedir}/src/main/webapp</warSourceDirectory>
