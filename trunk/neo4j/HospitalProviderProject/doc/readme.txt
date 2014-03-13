@@ -1,3 +1,9 @@
+The HospitalDbMaker will create the embedded database for the sample
+hospital file
+JSONDumpUtil will dump the file as JSON
+
+
+
 tiles3 and springmvc 3
 http://dhruvgairola.blogspot.com/2013/03/spring-mvc-with-apache-tiles-3.html
 https://github.com/michaelisvy/mvc-layout-samples
