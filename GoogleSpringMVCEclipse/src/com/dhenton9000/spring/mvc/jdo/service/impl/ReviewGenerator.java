@@ -42,12 +42,16 @@ public class ReviewGenerator {
 		if (revNum < sampleReviews.length - 1) {
 			return sampleReviews[revNum];
 		} else {
-			return null;
+			return "You don't know what you are missing";
 		}
 	}
 
 	private int getNumberOfReviews() {
-		return random.nextInt(5 - 0) + 0;
+		int revCount = random.nextInt(5 - 0) + 0;
+		if (revCount == 0)
+			revCount = 1;
+		
+		return revCount;
 	}
 
 	private int getStarRating() {
