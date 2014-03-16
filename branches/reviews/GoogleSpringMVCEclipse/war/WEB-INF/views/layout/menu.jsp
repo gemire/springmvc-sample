@@ -106,13 +106,21 @@
 
                 <ul class="nav pull-left">
                     <li class="dropdown">
-                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">Backbone Demos <b class="caret"></b></a>
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">Backbone and D3 Demos <b class="caret"></b></a>
                         <ul class="dropdown-menu">
                            <li><a href="<c:out value="${baseURL}backbone/demos/localstorage" />">Backbone Local Storage</a></li>
                            <li><a href="<c:out value="${baseURL}backbone/demos/js/model" />">Javascript Model/View</a></li>
          				   <li><a href="<c:out value="${baseURL}backbone/demos/restaurant" />">Backbone Restaurant App</a></li>
          				   <li class="divider"></li>
          				   <li><a href="<c:out value="${baseURL}database/restaurant/load/main" />">Load Restaurants</a></li>
+                         	<li class="divider"></li>
+                         	 <li class="dropdown-submenu"><a tabindex="-1" href="#">D3 Demos</a>
+                            <ul  class="dropdown-menu">
+	                            <li><a href="<c:out value="${baseURL}d3/treeDemo" />">Tree Demo</a></li>
+	                             
+	                        </ul>
+	                        </li>
+                            
                         </ul>
                     </li>
                 </ul> 
