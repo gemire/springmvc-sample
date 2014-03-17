@@ -18,7 +18,8 @@ div.contentDiv {
 }
 
 span.menuLink {
-	font-size: 12px; spacing 2px;
+	font-size: 12px; 
+        margin: 2px;
 	font-weight: bold;
 	font-variant:small-caps;
 	padding: 5px  5px 5px 5px;
