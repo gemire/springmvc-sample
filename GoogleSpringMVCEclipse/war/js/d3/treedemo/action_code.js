@@ -31,7 +31,7 @@ ActionCode = {
     zoomIn: function()
     {
         MESSAGE_PUMP.raiseEvent(null, ActionCode.actions.zoomIn);
-        MESSAGE_PUMP.raiseEvent(null, ActionCode.actions.closeContext);
+        MESSAGE_PUMP.raiseEvent(null, ActionCode.actions.mouseDownSVG);
     },
     /**
      * button code for zoom out
@@ -40,7 +40,7 @@ ActionCode = {
     zoomOut: function()
     {
         MESSAGE_PUMP.raiseEvent(null, ActionCode.actions.zoomOut);
-        MESSAGE_PUMP.raiseEvent(null, ActionCode.actions.closeContext);
+        MESSAGE_PUMP.raiseEvent(null, ActionCode.actions.mouseDownSVG);
     },
     /**
      * the actual event handler
