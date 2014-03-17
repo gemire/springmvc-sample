@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8" ?> <!DOCTYPE tiles-definitions PUBLIC        "-//Apache Software Foundation//DTD Tiles Configuration 2.0//EN"        "http://tiles.apache.org/dtds/tiles-config_2_0.dtd">
+<tiles-definitions>
+
+    <!-- bootstrap -->
+	
+    <definition name="tiles.base.d3.definition" extends="tiles.base.definition">
+
+        <put-attribute name="jsscripts" value="/WEB-INF/views/layout/d3_scripts.jsp" />
+    </definition>
+ 
+    <definition name="tiles.d3.demos.treedemo" extends="tiles.base.d3.definition">
+        <put-attribute name="title" value="D3 Tree Demo" />
+        <put-attribute name="body"
+                       value="/WEB-INF/views/pages/d3/treedemo_body.jsp" />
+        <put-attribute name="subTitle" value="Tree Demo" />
+        <put-attribute name="explainPanel" value="/WEB-INF/views/explain/d3/treedemo.jsp" />
+        <put-attribute name="jsscripts_app_specific" value="/WEB-INF/views/pages/d3/treedemo_scripts.jsp" />
+    </definition>
+    
+	
+</tiles-definitions>
