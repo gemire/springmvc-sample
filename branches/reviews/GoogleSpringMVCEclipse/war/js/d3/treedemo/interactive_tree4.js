@@ -6,6 +6,8 @@
  *  Notes:
  *  The height of the node is spread across the container an
  *  is determined by the tree layout
+ *  absPath is determined by the jsp page as a js variable in the page
+ *  prior to this code
  *  
  */
 
@@ -20,7 +22,7 @@ TreeCode = {
     duration: 250,
     //i: 0,
     svgGroup: null,
-    margin: {"top": 10, "right": 50, "bottom": 20, "left": 100},
+    margin: {"top": 0, "right": 5, "bottom": 0, "left": 75},
     yDisp: 0,
     xDisp: 0,
     zoomFactor: 1.0,
@@ -43,18 +45,15 @@ TreeCode = {
      */
     createGraph: function()
     {
-        var docWidth = $(document).width();
-        var width = docWidth / (1.45);
-        var docHeight = $(document).height();
-        var halfHeight = docHeight / 2;
-        var quarterHeight = docHeight / 4;
-        var height = halfHeight + quarterHeight;
+         
+        var width = 550;
+        var height = 450;
         this.xDisp = this.margin.left;
         this.yDisp = this.margin.top;
 
         this.tree = d3.layout.tree()
                 .separation(function(a, b) {
-                    return (a.type == 'Provider') ? 2 : 1;
+                    return (a.type == 'Provider') ? 1 : 1;
                 })
                 .size([height, width]);
 
@@ -62,11 +61,10 @@ TreeCode = {
                 .projection(function(d) {
                     return [d.y, d.x];
                 });
-        $("#tree-container").width(width + this.margin.right + this.margin.left + 10);
-
+     
         d3.select("#tree-container").append("svg")
-                .attr("width", width + this.margin.right + this.margin.left)
-                .attr("height", height + this.margin.top + this.margin.bottom)
+                .attr("width", width)
+                .attr("height", height)
                 .append("g")
                 .attr("transform", "translate(" + this.margin.left + "," + this.margin.top + ")");
 
@@ -94,8 +92,10 @@ TreeCode = {
                 });
 
         this.svg.call(drag);
+        
+        
 //////////////////////////// zoom and pan //////////////////////////
-        d3.json("/d3_sandbox/interactive_tree/hospital_orig.json", function(error, hospital_data) {
+        d3.json(absPath+"/js/d3/treedemo/hospital_orig.json", function(error, hospital_data) {
             TreeCode.root = hospital_data;
             TreeCode.root.x0 = height / 2;
             TreeCode.root.y0 = 0;
@@ -123,7 +123,7 @@ TreeCode = {
         if (d.type == 'Provider')
         {
             var elem = d3.select(t);
-            var image = "/d3_sandbox/images/User.png";
+            var image = absPath + "/images/User.png";
             var title = "Provider";
 
             elem.append("svg:image")
@@ -152,11 +152,11 @@ TreeCode = {
 
         // Normalize for fixed-depth.
         nodes.forEach(function(d) {
-            d.y = d.depth * 150;
+            d.y = d.depth * 80;
              
         });
 
-        // Update the nodesâ€¦
+        // Update the nodes…
         var nodeCollection = this.svgGroup.selectAll("g.node")
                 .data(nodes, function(d) {
                     return d.id || (d.id = ++i);
@@ -229,7 +229,7 @@ TreeCode = {
         nodeExit.select("text")
                 .style("fill-opacity", 1e-6);
 
-        // Update the linksâ€¦
+        // Update the links…
         var link = TreeCode.svgGroup.selectAll("path.link")
                 .data(links, function(d) {
                     return d.target.id;

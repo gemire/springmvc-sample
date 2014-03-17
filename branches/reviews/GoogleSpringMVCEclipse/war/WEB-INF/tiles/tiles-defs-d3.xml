@@ -13,7 +13,6 @@
         <put-attribute name="body"
                        value="/WEB-INF/views/pages/d3/treedemo_body.jsp" />
         <put-attribute name="subTitle" value="Tree Demo" />
-        <put-attribute name="jsscripts_app_specific" value="/WEB-INF/views/pages/backbone/localstorage_js.jsp" />
         <put-attribute name="explainPanel" value="/WEB-INF/views/explain/d3/treedemo.jsp" />
         <put-attribute name="jsscripts_app_specific" value="/WEB-INF/views/pages/d3/treedemo_scripts.jsp" />
     </definition>
