@@ -9,14 +9,18 @@ import org.apache.log4j.LogManager;
 import org.apache.log4j.Logger;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
+import org.springframework.web.servlet.ModelAndView;
 
 import com.dhenton9000.spring.mvc.controllers.ResourceNotFoundException;
+import com.dhenton9000.spring.mvc.exceptions.BozoException;
 import com.dhenton9000.spring.mvc.jdo.entities.Restaurant;
 import com.dhenton9000.spring.mvc.jdo.entities.RestaurantDTO;
 import com.dhenton9000.spring.mvc.jdo.entities.Review;
@@ -74,6 +78,16 @@ public class BackboneRestaurantRestController {
 		else
 			return new RestaurantDTO(restaurant);
 	}
+	
+	@ExceptionHandler
+	@ResponseBody
+	public ErrorResponseClass handleResourceNotFoundException(ResourceNotFoundException b) {
+		ErrorResponseClass response = new ErrorResponseClass(b);
+		return response;
+
+	}
+	
+	
 
 	@RequestMapping(value = "{restaurantId}", method = RequestMethod.DELETE)
 	@ResponseStatus(HttpStatus.OK)
@@ -108,6 +122,22 @@ public class BackboneRestaurantRestController {
 		}
 		return restaurants;
 	}
+	
+	@RequestMapping(value="search", method = RequestMethod.GET, produces = "application/json")
+	public @ResponseBody
+	List<RestaurantDTO> getRestaurantsLike(@RequestParam("searchString") String searchString) {
+		log.debug("hit allRestaurant!!!!");
+		List<RestaurantDTO> restaurants = new ArrayList<RestaurantDTO>();
+
+		List<Restaurant> rItems = this.getRestaurantService()
+				.getRestaurantsLike(searchString);
+		for (Restaurant r : rItems) {
+			restaurants.add(new RestaurantDTO(r));
+		}
+		return restaurants;
+	}
+	
+	//List<Restaurant> getRestaurantsLike(String searchString); 
 
 	// /////// REVIEWS/////////////////////////////////
 
@@ -181,6 +211,10 @@ public class BackboneRestaurantRestController {
 	}
 
 	// ////////////////////////////////////////////////////////////////////////////////////
+	
+	
+	
+	
 
 	public RestaurantService getRestaurantService() {
 		return restaurantService;
