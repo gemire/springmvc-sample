@@ -27,9 +27,19 @@ public class ControllerAdvisor {
 	
 	@ExceptionHandler
 	@ResponseBody
-	public ValidatorFailureException handleResourceNotFoundException(ValidatorFailureException v) {
-		 
-		return v;
+	public ErrorResponseClass handleResourceNotFoundException(ValidatorFailureException v) {
+		ErrorResponseClass response = new ErrorResponseClass(v); 
+		String errorList = "";
+		for (String key: v.getErrors().keySet())
+		{
+			errorList += "key: "+key+" "+v.getErrors().get(key)+",";
+		}
+		if (errorList.length()> 1)
+		{
+			errorList = errorList.substring(0,errorList.length()-1);
+		}
+		response.setMessage(errorList);
+		return response;
 
 	}
 	

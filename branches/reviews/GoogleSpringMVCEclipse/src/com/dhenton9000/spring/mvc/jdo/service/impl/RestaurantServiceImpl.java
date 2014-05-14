@@ -70,6 +70,7 @@ public class RestaurantServiceImpl implements RestaurantService {
 				ConstraintViolation<Restaurant> violation = iter.next();
 				errors.put(violation.getPropertyPath().toString(),
 						violation.getMessage());
+				log.debug("saveOrAddRestaurant problem: "+violation.getPropertyPath().toString()+" "+violation.getMessage());
 			}
 			throw new ValidatorFailureException("errors found", errors);
 		}
