@@ -10,7 +10,6 @@ import org.apache.commons.httpclient.HttpClient;
 import org.apache.commons.httpclient.MultiThreadedHttpConnectionManager;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.http.HttpMethod;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.client.ClientHttpResponse;
 import org.springframework.http.client.CommonsClientHttpRequestFactory;
@@ -19,6 +18,7 @@ import org.springframework.web.client.DefaultResponseErrorHandler;
 import org.springframework.web.client.HttpClientErrorException;
 import org.springframework.web.client.RestClientException;
 import org.springframework.web.client.RestTemplate;
+import org.springframework.http.converter.json.MappingJacksonHttpMessageConverter;
 
 @SuppressWarnings("deprecation")
 public class RestaurantRestClient implements IRestRestaurantService {
@@ -34,7 +34,10 @@ public class RestaurantRestClient implements IRestRestaurantService {
         httpClient.getHttpConnectionManager().getParams().setMaxConnectionsPerHost(httpClient.getHostConfiguration(), 10);
         restClient.setErrorHandler(new MyErrorHandler());
         this.urlStub = urlStub;
+        MappingJacksonHttpMessageConverter converter = new 
+                MappingJacksonHttpMessageConverter();
         List<HttpMessageConverter<?>> converters = new ArrayList<>() ;
+        converters.add(converter);
         restClient.setMessageConverters(converters);
         //http://localhost:8888/app/backbone/restaurant/
     }
@@ -121,8 +124,8 @@ public class RestaurantRestClient implements IRestRestaurantService {
     {
         logger.debug("get a job");
         RestaurantRestClient r = new RestaurantRestClient("http://localhost:8888/app/backbone/restaurant");
-        r.getRestaurant("5919770603945984");
-    
+        //r.getRestaurant("5919770603945984");
+        r.getRestaurant("3");
     }
     
 }
