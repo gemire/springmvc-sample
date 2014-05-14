@@ -41,7 +41,7 @@ public class BackboneRestaurantRestController {
 	@ResponseStatus(HttpStatus.CREATED)
 	public @ResponseBody
 	BackBoneIdResponse create(@RequestBody RestaurantDTO rDTO) {
-
+		log.debug("starting create "+rDTO);
 		Key k = getRestaurantService().saveOrAddRestaurant(
 				rDTO.makeRestaurant());
 		log.debug("hit created id "+k.getId());
