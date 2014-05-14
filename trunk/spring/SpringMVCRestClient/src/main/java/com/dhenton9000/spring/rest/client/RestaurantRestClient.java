@@ -1,21 +1,20 @@
 package com.dhenton9000.spring.rest.client;
 
 import com.dhenton9000.spring.mvc.jdo.entities.Restaurant;
-import java.io.IOException;
-import org.apache.commons.httpclient.HttpClient;
-import org.apache.commons.httpclient.MultiThreadedHttpConnectionManager;
-
-//import com.dhenton9000.spring.mvc.jdo.entities.Restaurant;
 import com.dhenton9000.spring.rest.IRestRestaurantService;
 import com.dhenton9000.spring.rest.controllers.RestResult;
+import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
-//import com.dhenton9000.spring.rest.controllers.RestResult;
-
+import org.apache.commons.httpclient.HttpClient;
+import org.apache.commons.httpclient.MultiThreadedHttpConnectionManager;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.http.HttpMethod;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.client.ClientHttpResponse;
 import org.springframework.http.client.CommonsClientHttpRequestFactory;
+import org.springframework.http.converter.HttpMessageConverter;
 import org.springframework.web.client.DefaultResponseErrorHandler;
 import org.springframework.web.client.HttpClientErrorException;
 import org.springframework.web.client.RestClientException;
@@ -28,12 +27,16 @@ public class RestaurantRestClient implements IRestRestaurantService {
     //protected RestTemplate restClient = new RestTemplate(new HeaderAdderRequestFactory(httpClient));
     private final RestTemplate restClient = new RestTemplate(new CommonsClientHttpRequestFactory(httpClient));
     private final static Logger logger = LoggerFactory.getLogger(RestaurantRestClient.class);
+    private final String urlStub;
 
-    public RestaurantRestClient() {
+    public RestaurantRestClient(String urlStub) {
         httpClient.getHttpConnectionManager().getParams().setMaxTotalConnections(10);
         httpClient.getHttpConnectionManager().getParams().setMaxConnectionsPerHost(httpClient.getHostConfiguration(), 10);
         restClient.setErrorHandler(new MyErrorHandler());
-
+        this.urlStub = urlStub;
+        List<HttpMessageConverter<?>> converters = new ArrayList<>() ;
+        restClient.setMessageConverters(converters);
+        //http://localhost:8888/app/backbone/restaurant/
     }
 
     @Override
@@ -48,7 +51,10 @@ public class RestaurantRestClient implements IRestRestaurantService {
 
     @Override
     public Restaurant getRestaurant(String restaurantId) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        
+        String url = this.urlStub+"/"+restaurantId;
+        Restaurant  restaurant = restClient.getForObject(url,Restaurant.class);
+        return restaurant;
     }
 
     @Override
@@ -109,4 +115,14 @@ public class RestaurantRestClient implements IRestRestaurantService {
         }
     }
 
+    
+    
+    public static void main(String[] args)
+    {
+        logger.debug("get a job");
+        RestaurantRestClient r = new RestaurantRestClient("http://localhost:8888/app/backbone/restaurant");
+        r.getRestaurant("5919770603945984");
+    
+    }
+    
 }
