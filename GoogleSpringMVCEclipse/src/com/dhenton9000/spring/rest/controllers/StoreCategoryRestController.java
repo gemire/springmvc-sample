@@ -54,7 +54,7 @@ public class StoreCategoryRestController {
 			break;
 		case 3:
 			results = provider.getLevel3Data(id);
-			 ;
+			  
 			break;
 		default:
 			 
