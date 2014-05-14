@@ -12,7 +12,7 @@ import org.slf4j.LoggerFactory;
 public class Review implements Serializable  {
 
     private static final long serialVersionUID = 1L;
- 
+    private String id;
     private int starRating;
   
     private String reviewListing;
@@ -76,6 +76,20 @@ public class Review implements Serializable  {
 	public void setRestaurant(Restaurant restaurant) {
 		this.restaurant = restaurant;
 	}
+
+    /**
+     * @return the id
+     */
+    public String getId() {
+        return id;
+    }
+
+    /**
+     * @param id the id to set
+     */
+    public void setId(String id) {
+        this.id = id;
+    }
 
 
     

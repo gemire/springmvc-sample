@@ -20,13 +20,12 @@ public class Restaurant implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 	private String name;
-	
-
+	private List<Review> reviewDTOs;
+        private String id ;
 	private Integer version;
 	private String zipCode;
 	private String city;	
 	private String state;	
-	private ArrayList<Review> reviews = new ArrayList<Review>();
 	
 	private final transient Logger logger = LoggerFactory
 			.getLogger(Restaurant.class);
@@ -126,22 +125,35 @@ public class Restaurant implements Serializable {
 
 	}
 
-	
+ 
 
+    /**
+     * @return the id
+     */
+    public String getId() {
+        return id;
+    }
 
+    /**
+     * @param id the id to set
+     */
+    public void setId(String id) {
+        this.id = id;
+    }
 
-	public List<Review> getReviews() {
-		return reviews;
-	}
+    /**
+     * @return the reviewDTOs
+     */
+    public List<Review> getReviewDTOs() {
+        return reviewDTOs;
+    }
 
-	public void addReview(int rating, String message)
-	{
-		Review r = new Review();
-		r.setReviewListing(message);
-		r.setStarRating(rating);
-		reviews.add(r);
-		
-	}
+    /**
+     * @param reviewDTOs the reviewDTOs to set
+     */
+    public void setReviewDTOs(List<Review> reviewDTOs) {
+        this.reviewDTOs = reviewDTOs;
+    }
 	
 
  
