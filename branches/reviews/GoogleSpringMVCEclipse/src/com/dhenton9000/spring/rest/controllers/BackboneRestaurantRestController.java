@@ -17,15 +17,14 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
-import org.springframework.web.servlet.ModelAndView;
 
 import com.dhenton9000.spring.mvc.controllers.ResourceNotFoundException;
-import com.dhenton9000.spring.mvc.exceptions.BozoException;
 import com.dhenton9000.spring.mvc.jdo.entities.Restaurant;
 import com.dhenton9000.spring.mvc.jdo.entities.RestaurantDTO;
 import com.dhenton9000.spring.mvc.jdo.entities.Review;
 import com.dhenton9000.spring.mvc.jdo.entities.ReviewDTO;
 import com.dhenton9000.spring.mvc.jdo.service.RestaurantService;
+import com.dhenton9000.spring.rest.NumberParsingException;
 import com.google.appengine.api.datastore.Key;
 
 @Controller
@@ -51,6 +50,12 @@ public class BackboneRestaurantRestController {
 		return res;
 	}
 
+	/**
+	 * this will throw a ValidatorFailureException if there are problems
+	 * this will be handled by com.dhenton9000.spring.rest.controllers.ControllerAdvisor
+	 * @param rDTO
+	 * @param id
+	 */
 	@RequestMapping(value = "{id}", method = RequestMethod.PUT)
 	@ResponseStatus(HttpStatus.OK)
 	public void update(@RequestBody RestaurantDTO rDTO,
@@ -69,7 +74,7 @@ public class BackboneRestaurantRestController {
 		try {
 			key = Long.parseLong(restaurantId);
 		} catch (NumberFormatException e) {
-			throw new RuntimeException("Could not parse " + restaurantId);
+			throw new NumberParsingException("Could not parse " + restaurantId);
 		}
 		Restaurant restaurant = this.getRestaurantService().getRestaurant(key);
 		if (restaurant == null)
@@ -97,14 +102,14 @@ public class BackboneRestaurantRestController {
 		try {
 			key = Long.parseLong(restaurantId);
 		} catch (NumberFormatException e) {
-			throw new RuntimeException("Could not parse " + restaurantId
+			throw new NumberParsingException("Could not parse " + restaurantId
 					+ " in delete");
 		}
 
 		try {
 			getRestaurantService().deleteRestaurant(key);
 		} catch (JDOObjectNotFoundException e) {
-			throw new ResourceNotFoundException();
+			throw new ResourceNotFoundException("cannot find restaurant with key "+key);
 		}
 
 	}
@@ -151,21 +156,22 @@ public class BackboneRestaurantRestController {
 		try {
 			restaurantIdLong = Long.parseLong(restaurantId);
 		} catch (NumberFormatException e) {
-			throw new RuntimeException("Could not parse " + restaurantId
+			throw new NumberParsingException("Could not parse " + restaurantId
 					+ " in delete");
 		}
 
 		try {
 			reviewIdLong = Long.parseLong(reviewId);
 		} catch (NumberFormatException e) {
-			throw new RuntimeException("Could not parse " + reviewId
+			throw new NumberParsingException("Could not parse " + reviewId
 					+ " in delete");
 		}
 
 		try {
 			getRestaurantService().deleteReview(restaurantIdLong, reviewIdLong);
 		} catch (JDOObjectNotFoundException e) {
-			throw new ResourceNotFoundException();
+			String info = String.format("Cannot find review %d for restaurant %d",reviewIdLong,restaurantIdLong);
+			throw new ResourceNotFoundException(info);
 		}
 
 	}
@@ -181,7 +187,7 @@ public class BackboneRestaurantRestController {
 		try {
 			restaurantIdLong = Long.parseLong(restaurantId);
 		} catch (NumberFormatException e) {
-			throw new RuntimeException("Could not parse " + restaurantId
+			throw new NumberParsingException("Could not parse " + restaurantId
 					+ " in createReview");
 		}
 		Review ret = getRestaurantService().addReview(restaurantIdLong,
@@ -202,7 +208,7 @@ public class BackboneRestaurantRestController {
 		try {
 			restaurantIdLong = Long.parseLong(restaurantId);
 		} catch (NumberFormatException e) {
-			throw new RuntimeException("Could not parse " + restaurantId
+			throw new NumberParsingException("Could not parse " + restaurantId
 					+ " in updateReview");
 		}
 
