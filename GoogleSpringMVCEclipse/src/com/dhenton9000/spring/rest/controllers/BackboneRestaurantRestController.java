@@ -85,6 +85,7 @@ public class BackboneRestaurantRestController {
 	}
 	
 	@ExceptionHandler
+	@ResponseStatus(HttpStatus.NOT_FOUND)
 	@ResponseBody
 	public ErrorResponseClass handleResourceNotFoundException(ResourceNotFoundException b) {
 		ErrorResponseClass response = new ErrorResponseClass(b);
