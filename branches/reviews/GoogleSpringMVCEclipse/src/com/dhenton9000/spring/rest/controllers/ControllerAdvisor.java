@@ -1,7 +1,10 @@
 package com.dhenton9000.spring.rest.controllers;
+import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.ResponseStatus;
+
 import com.dhenton9000.spring.mvc.jdo.service.impl.ValidatorFailureException;
 import com.dhenton9000.spring.rest.NumberParsingException;
 
@@ -26,8 +29,9 @@ public class ControllerAdvisor {
 	 */
 	
 	@ExceptionHandler
+	@ResponseStatus(HttpStatus.BAD_REQUEST)
 	@ResponseBody
-	public ErrorResponseClass handleResourceNotFoundException(ValidatorFailureException v) {
+	public ErrorResponseClass handleResourceValidatorException(ValidatorFailureException v) {
 		ErrorResponseClass response = new ErrorResponseClass(v); 
 		String errorList = "";
 		for (String key: v.getErrors().keySet())
@@ -51,8 +55,9 @@ public class ControllerAdvisor {
 	 * @return
 	 */
 	@ExceptionHandler
+	@ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
 	@ResponseBody
-	public ErrorResponseClass handleResourceNotFoundException(NumberParsingException b) {
+	public ErrorResponseClass handleNumberParsingException(NumberParsingException b) {
 		ErrorResponseClass response = new ErrorResponseClass(b);
 		return response;
 
