@@ -108,6 +108,13 @@ public class CategoryDataProviderImpl implements CategoryDataProvider {
         d = new BaseCategory();
         d.setId(201);
         d.setName("Mens");
+        ArrayList<BaseCategory> data4 = new ArrayList<BaseCategory>();
+        data4.add(new BaseCategory(400, "Excercise Clothes"));
+        data4.add(new BaseCategory(401, "Men's Shoes"));
+        data4.add(new BaseCategory(402, "Gloves"));
+        data4.add(new BaseCategory(403, "Men's Sports Wear"));
+        d.setChildren(data4);
+        
         data.add(d);
 
         d = new BaseCategory();
@@ -115,8 +122,8 @@ public class CategoryDataProviderImpl implements CategoryDataProvider {
         d.setName("Womens");
         ArrayList<BaseCategory> data3 = new ArrayList<BaseCategory>();
         data3.add(new BaseCategory(303, "Evening Wear"));
-        data3.add(new BaseCategory(304, "Shoes"));
-        data3.add(new BaseCategory(306, "Coats"));
+        data3.add(new BaseCategory(304, "Womens Shoes"));
+        data3.add(new BaseCategory(306, "Luxury Coats"));
         data3.add(new BaseCategory(305, "Jewelry"));
         d.setChildren(data3);
         data.add(d);
