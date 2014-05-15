@@ -13,9 +13,9 @@ import com.dhenton9000.spring.rest.client.results.RestaurantResultObject;
  *
  * @author dhenton
  */
-public class GenericRestaurantExtractor extends GenericExtractor<Restaurant,RestaurantResultObject>{
+public class RestaurantExtractor extends GenericExtractor<Restaurant,RestaurantResultObject>{
 
-    public GenericRestaurantExtractor(Class<Restaurant> deserializedModelClass, 
+    public RestaurantExtractor(Class<Restaurant> deserializedModelClass, 
             Class<RestaurantResultObject> deserializedResultClass) {
         super(deserializedModelClass, deserializedResultClass);
     }

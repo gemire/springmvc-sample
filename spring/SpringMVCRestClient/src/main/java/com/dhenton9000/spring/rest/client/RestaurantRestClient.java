@@ -1,6 +1,6 @@
 package com.dhenton9000.spring.rest.client;
 
-import com.dhenton9000.spring.rest.client.extractors.GenericRestaurantExtractor;
+import com.dhenton9000.spring.rest.client.extractors.RestaurantExtractor;
 import com.dhenton9000.spring.rest.client.results.RestaurantResultObject;
 import com.dhenton9000.spring.mvc.jdo.entities.Restaurant;
 import com.dhenton9000.spring.rest.IRestRestaurantService;
@@ -9,8 +9,6 @@ import java.io.IOException;
 import java.util.List;
 import org.apache.commons.httpclient.HttpClient;
 import org.apache.commons.httpclient.MultiThreadedHttpConnectionManager;
-import org.apache.commons.io.IOUtils;
-import org.codehaus.jackson.map.ObjectMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpMethod;
@@ -18,10 +16,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.client.ClientHttpResponse;
 import org.springframework.http.client.CommonsClientHttpRequestFactory;
 import org.springframework.web.client.DefaultResponseErrorHandler;
-import org.springframework.web.client.ResponseExtractor;
 import org.springframework.web.client.RestClientException;
 import org.springframework.web.client.RestTemplate;
-import org.codehaus.jackson.map.exc.UnrecognizedPropertyException;
 
 @SuppressWarnings("deprecation")
 public class RestaurantRestClient implements IRestRestaurantService {
@@ -58,7 +54,7 @@ public class RestaurantRestClient implements IRestRestaurantService {
 
         String url = this.urlStub + "/" + restaurantId;
 
-        GenericRestaurantExtractor extractor = new GenericRestaurantExtractor(Restaurant.class, RestaurantResultObject.class);
+        RestaurantExtractor extractor = new RestaurantExtractor(Restaurant.class, RestaurantResultObject.class);
         RestaurantResultObject restaurantResult = restClient.execute(url, HttpMethod.GET, null, extractor);
         if (restaurantResult.getError() != null) {
             throw new RuntimeException("Error: " + restaurantResult.getError().getMessage());
