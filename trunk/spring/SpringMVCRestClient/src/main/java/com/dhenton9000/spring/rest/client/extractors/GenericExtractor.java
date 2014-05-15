@@ -19,10 +19,12 @@ import org.springframework.http.client.ClientHttpResponse;
 import org.springframework.web.client.ResponseExtractor;
 
 /**
- *
+ * A generic extractor that handles the processing of JSON and fills in 
+ * an object that contains a response object or an error object
+ * 
  * @author dhenton
  * @param <E> the wrapper class
- * @param <T> the underlying return value of Interest
+ * @param <T> the underlying return value of Interest (the response)
  */
 public class GenericExtractor<T,E extends GenericResultObject<T>> implements ResponseExtractor<E>{
 
