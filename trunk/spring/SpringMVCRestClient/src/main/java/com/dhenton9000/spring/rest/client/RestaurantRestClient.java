@@ -1,26 +1,23 @@
 package com.dhenton9000.spring.rest.client;
 
+import com.dhenton9000.spring.rest.client.extractors.GenericRestaurantExtractor;
+import com.dhenton9000.spring.rest.client.results.RestaurantResultObject;
 import com.dhenton9000.spring.mvc.jdo.entities.Restaurant;
 import com.dhenton9000.spring.rest.IRestRestaurantService;
 import com.dhenton9000.spring.rest.controllers.RestResult;
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.List;
 import org.apache.commons.httpclient.HttpClient;
 import org.apache.commons.httpclient.MultiThreadedHttpConnectionManager;
 import org.apache.commons.io.IOUtils;
 import org.codehaus.jackson.map.ObjectMapper;
-import org.codehaus.jackson.map.SerializerFactory;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.client.ClientHttpResponse;
 import org.springframework.http.client.CommonsClientHttpRequestFactory;
-import org.springframework.http.converter.HttpMessageConverter;
-import org.springframework.http.converter.json.MappingJacksonHttpMessageConverter;
 import org.springframework.web.client.DefaultResponseErrorHandler;
-import org.springframework.web.client.HttpClientErrorException;
 import org.springframework.web.client.ResponseExtractor;
 import org.springframework.web.client.RestClientException;
 import org.springframework.web.client.RestTemplate;
@@ -60,15 +57,14 @@ public class RestaurantRestClient implements IRestRestaurantService {
     public Restaurant getRestaurant(String restaurantId) {
 
         String url = this.urlStub + "/" + restaurantId;
-        // Restaurant restaurant = restClient.getForObject(url, Restaurant.class);
-          RestaurantExtractor extractor = new RestaurantExtractor( RestaurantResultObject.class);
-          RestaurantResultObject restaurantResult = restClient.execute(url, HttpMethod.GET, null, extractor);
-          if (restaurantResult.getError() != null)
-          {
-              throw new RuntimeException("Error: "+restaurantResult.getError().getMessage());
-          }
-         return restaurantResult.getPayload();
-        
+
+        GenericRestaurantExtractor extractor = new GenericRestaurantExtractor(Restaurant.class, RestaurantResultObject.class);
+        RestaurantResultObject restaurantResult = restClient.execute(url, HttpMethod.GET, null, extractor);
+        if (restaurantResult.getError() != null) {
+            throw new RuntimeException("Error: " + restaurantResult.getError().getMessage());
+        }
+        return restaurantResult.getPayload();
+
     }
 
     @Override
@@ -88,48 +84,7 @@ public class RestaurantRestClient implements IRestRestaurantService {
 
     @Override
     public List<Restaurant> getRestaurantsLike(String searchString) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-
-     
-    private class RestaurantExtractor implements ResponseExtractor<RestaurantResultObject> {
-
-        private final Class<RestaurantResultObject> deserializedModelClass;
-
-        private final ObjectMapper mapper = new ObjectMapper();
-
-        public RestaurantExtractor(
-                Class<RestaurantResultObject> deserializedModelClass) {
-
-            this.deserializedModelClass = deserializedModelClass;
-
-        }
-
-        @Override
-        public RestaurantResultObject extractData(ClientHttpResponse response) throws IOException {
-            RestaurantResultObject data = new RestaurantResultObject();
-            String body = null;
-            try {
-                //try to get the real thing
-                body = IOUtils.toString(response.getBody());
-                Restaurant r = mapper.readValue(body, Restaurant.class);
-                data.setPayload(r);
-                
-            } catch (UnrecognizedPropertyException uE) {
-                logger.info("### " + body);
-                ErrorClass r = mapper.readValue(body, ErrorClass.class);
-                data.setError(r);
-
-            } catch (Exception err) {
-                String info = "extract Data general problem: "
-                        + err.getClass().getName() + " " + err.getMessage();
-               // logger.error(info);
-                ErrorClass r = mapper.readValue(body, ErrorClass.class);
-                data.setError(r);
-                 
-            }
-            return data;
-        }
+        throw new UnsupportedOperationException("Not supported yet.");
     }
 
 //	protected class HeaderAdderRequestFactory extends CommonsClientHttpRequestFactory {
@@ -182,7 +137,7 @@ public class RestaurantRestClient implements IRestRestaurantService {
         } else {
             logger.debug("got restaurant " + rr.getName());
         }
-        //r.getRestaurant("3");
+
     }
 
 }

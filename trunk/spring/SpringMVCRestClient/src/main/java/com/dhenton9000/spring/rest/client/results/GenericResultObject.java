@@ -4,16 +4,19 @@
  * and open the template in the editor.
  */
 
-package com.dhenton9000.spring.rest.client;
+package com.dhenton9000.spring.rest.client.results;
+
+import com.dhenton9000.spring.rest.client.ErrorClass;
+import com.dhenton9000.spring.rest.client.IRestResult;
 
 /**
- *
+ * A generic return object that wraps the result of interest
  * @author dhenton
  * @param <T> the underlying payload class e.g. Restaurant
  */
-public class GenericExtractor<T> implements IRestResult<T>  {
+public class GenericResultObject<T> implements IRestResult<T>  {
 
-    private ErrorClass errorClass = new ErrorClass();
+    private ErrorClass errorClass;
 
     private T payload;
     @Override
