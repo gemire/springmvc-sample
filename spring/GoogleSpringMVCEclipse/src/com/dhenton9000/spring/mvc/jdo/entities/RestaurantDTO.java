@@ -3,9 +3,12 @@ package com.dhenton9000.spring.mvc.jdo.entities;
 import java.io.Serializable;
 import java.util.ArrayList;
 
+import org.codehaus.jackson.annotate.JsonIgnoreProperties;
+
 import com.google.appengine.api.datastore.Key;
 import com.google.appengine.api.datastore.KeyFactory;
 
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class RestaurantDTO implements Serializable {
 
 	/**
