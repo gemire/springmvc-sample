@@ -15,6 +15,11 @@
 			value="/WEB-INF/views/pages/homepage_body.jsp" />
 	</definition>
 
-
+        <definition name="tiles.login" extends="tiles.base.definition">
+		<put-attribute name="title" value="Login" />
+		<put-attribute name="subTitle" value="Login" />
+		<put-attribute name="body"
+			value="/WEB-INF/views/pages/loginPage_body.jsp" />
+	</definition>
 
 </tiles-definitions> 
