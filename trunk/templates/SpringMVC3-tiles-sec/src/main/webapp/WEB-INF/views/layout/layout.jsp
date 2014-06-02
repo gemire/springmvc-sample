@@ -5,14 +5,14 @@
 <%@ taglib uri="/WEB-INF/tld/spring-form.tld" prefix="form"%>
 
 
-<c:url var="baseURL" value="/app/" />
+<c:url var="baseURL" value="/" />
 <%
 
     String path = request.getContextPath();
     String basePath = request.getScheme() + "://" + request.getServerName() + ":" + request.getServerPort() + path + "/";
 
 %>
-
+<!DOCTYPE html>
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
