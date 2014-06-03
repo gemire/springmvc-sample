@@ -3,7 +3,7 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
 <%@ taglib uri="/WEB-INF/tld/spring.tld" prefix="spring"%>
 <%@ taglib uri="/WEB-INF/tld/spring-form.tld" prefix="form"%>
-
+<%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
 
 <c:url var="baseURL" value="/" />
 <%
@@ -40,9 +40,20 @@
             <div class="row clearfix">
                 <div class="col-md-12 column">
                     <ul class="nav nav-tabs">
-                        <li class="active">
-                            <a href="<c:out value="${baseURL}home.html"/>">Home</a>
+                        <li>
+                            <a href="<c:out value="${baseURL}"/>">Home</a>
                         </li>
+                        
+                        
+                        <sec:authorize access="isFullyAuthenticated()">
+                            <li class="pull-right">
+                                <a href="<c:out value="${baseURL}logoutPage.html"/>">Logout</a>
+                            </li>
+                        </sec:authorize>
+                        
+                        
+                        
+                        <!--
                         <li>
                             <a href="#">Profile</a>
                         </li>
@@ -69,22 +80,23 @@
                             </ul>
                         </li>
                     </ul>
-                    <div class="page-header">
-                        <h1>
-                            <tiles:getAsString name="title" />
-                        </h1>
-                    </div>
-                    <div class="panel panel-default">
-                        <div class="panel-heading">
-                            <h3 class="panel-title">
-                                <tiles:getAsString name="subTitle" />
-                            </h3>
+                        -->
+                        <div class="page-header">
+                            <h1>
+                                <tiles:getAsString name="title" />
+                            </h1>
                         </div>
-                        <div class="panel-body">
-                            <tiles:insertAttribute name="body" />  
-                        </div>
+                        <div class="panel panel-default">
+                            <div class="panel-heading">
+                                <h3 class="panel-title">
+                                    <tiles:getAsString name="subTitle" />
+                                </h3>
+                            </div>
+                            <div class="panel-body">
+                                <tiles:insertAttribute name="body" />  
+                            </div>
 
-                    </div>
+                        </div>
                 </div>
             </div>
         </div>
