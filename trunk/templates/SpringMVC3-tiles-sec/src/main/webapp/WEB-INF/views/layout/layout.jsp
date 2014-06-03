@@ -51,7 +51,7 @@
                             </li>
                         </sec:authorize>
                         
-                        
+                    </ul>
                         
                         <!--
                         <li>
