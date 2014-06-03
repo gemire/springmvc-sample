@@ -21,12 +21,7 @@ public class HomePageController {
 	
 	private static Logger log = LogManager.getLogger(HomePageController.class);
 	
-	
-	@RequestMapping("/home")
-	public ModelAndView homePage() {
-		String message = "Hello World, Spring 3.0!";
-		return new ModelAndView("tiles.homepage", "message", message);
-	}
+	 
 	
 	    /**
      * To handle the regular request to the application context. e.g.
@@ -49,9 +44,9 @@ public class HomePageController {
      * @return
      */
     @RequestMapping(value = "/logoutPage", method = RequestMethod.GET)
-    public String logoutPage() {
+    public ModelAndView logoutPage() {
         log.info("Request for /logoutPage url processed");
-        return "logoutPage";
+        return new ModelAndView("tiles.logout");
     }
 
     /**
@@ -64,7 +59,14 @@ public class HomePageController {
     @RequestMapping(value = "/loginPage", method = RequestMethod.GET)
     public String loginPage() {
         log.info("Request for /loginPage url processed");
-        return "loginPage";
+        return "tiles.login";
     }
 	
+     @RequestMapping(value = "/secured/securedSample", method = RequestMethod.GET)
+     public String securedHomePage() {
+        log.info("Request for secure page home url processed");
+        return "tiles.securedSample";
+    }
+    
+    
 }
