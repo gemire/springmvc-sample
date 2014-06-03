@@ -39,64 +39,76 @@
         <div class="container">
             <div class="row clearfix">
                 <div class="col-md-12 column">
-                    <ul class="nav nav-tabs">
+                    <ul class="nav nav-pills">
                         <li>
                             <a href="<c:out value="${baseURL}"/>">Home</a>
                         </li>
-                        
-                        
+
+
                         <sec:authorize access="isFullyAuthenticated()">
+
+                            <li>
+                                <a href="<c:out value="${baseURL}/secured/securedSample"/>">Simple</a>
+                                 
+                            </li>
+                            <li>
+                                <a href="#"/>Demo 3</a>
+                            </li>
+                            <li>
+                                <a href="#"/>Demo 4</a>
+                            </li>
+
                             <li class="pull-right">
-                                <a href="<c:out value="${baseURL}logoutPage.html"/>">Logout</a>
+                                <a href="<c:out value="${baseURL}logout"/>">Logout</a>
                             </li>
                         </sec:authorize>
-                        
-                        
-                        
-                        <!--
-                        <li>
-                            <a href="#">Profile</a>
-                        </li>
-                        <li class="disabled">
-                            <a href="#">Messages</a>
-                        </li>
-                        <li class="dropdown pull-right">
-                            <a href="#" data-toggle="dropdown" class="dropdown-toggle">Dropdown<strong class="caret"></strong></a>
-                            <ul class="dropdown-menu">
-                                <li>
-                                    <a href="#">Action</a>
-                                </li>
-                                <li>
-                                    <a href="#">Another action</a>
-                                </li>
-                                <li>
-                                    <a href="#">Something else here</a>
-                                </li>
-                                <li class="divider">
-                                </li>
-                                <li>
-                                    <a href="#">Separated link</a>
-                                </li>
-                            </ul>
-                        </li>
-                    </ul>
-                        -->
-                        <div class="page-header">
-                            <h1>
-                                <tiles:getAsString name="title" />
-                            </h1>
-                        </div>
-                        <div class="panel panel-default">
-                            <div class="panel-heading">
-                                <h3 class="panel-title">
-                                    <tiles:getAsString name="subTitle" />
-                                </h3>
-                            </div>
-                            <div class="panel-body">
-                                <tiles:insertAttribute name="body" />  
-                            </div>
 
+                    </ul>   
+
+                    <!--
+                    <li>
+                        <a href="#">Profile</a>
+                    </li>
+                    <li class="disabled">
+                        <a href="#">Messages</a>
+                    </li>
+                    <li class="dropdown pull-right">
+                        <a href="#" data-toggle="dropdown" class="dropdown-toggle">Dropdown<strong class="caret"></strong></a>
+                        <ul class="dropdown-menu">
+                            <li>
+                                <a href="#">Action</a>
+                            </li>
+                            <li>
+                                <a href="#">Another action</a>
+                            </li>
+                            <li>
+                                <a href="#">Something else here</a>
+                            </li>
+                            <li class="divider">
+                            </li>
+                            <li>
+                                <a href="#">Separated link</a>
+                            </li>
+                        </ul>
+                    </li>
+                </ul>
+                    -->
+                    <div class="page-header">
+                        <h1>
+                            <tiles:getAsString name="title" />
+                        </h1>
+                    </div>
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            <h3 class="panel-title">
+                                <tiles:getAsString name="subTitle" />
+                            </h3>
                         </div>
+                        <div class="panel-body">
+                            <tiles:insertAttribute name="body" />  
+                        </div>
+
+                    </div>
                 </div>
             </div>
         </div>
