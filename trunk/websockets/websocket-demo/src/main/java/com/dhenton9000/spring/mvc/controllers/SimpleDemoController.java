@@ -18,7 +18,7 @@ import com.blogspot.sunitkatkar.model.SimpleMessage;
 import com.blogspot.sunitkatkar.util.Util;
 
 /**
- * {@link WebSocketBroadcastController} is a regular Spring Controller as seen
+ * {@link SimpleDemoController} is a regular Spring Controller as seen
  * in most Spring MVC applications. Its job is to receive {@link SimpleMessage}
  * message objects from the client, extract the <code>payload</code> (or
  * contents) of the message, prepend it with some simple text and finally
@@ -32,10 +32,10 @@ import com.blogspot.sunitkatkar.util.Util;
  */
 
 @Controller
-public class WebSocketBroadcastController {
+public class SimpleDemoController {
 
     private static final Logger LOG = LoggerFactory
-            .getLogger(WebSocketBroadcastController.class);
+            .getLogger(SimpleDemoController.class);
 
     /**
      * Method to handle the requests sent to this controller at
