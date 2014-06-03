@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <beans xmlns="http://www.springframework.org/schema/beans"
-    xmlns:context="http://www.springframework.org/schema/context"
-    xmlns:mvc="http://www.springframework.org/schema/mvc"
-    xmlns:websocket="http://www.springframework.org/schema/websocket"
-    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="         
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:mvc="http://www.springframework.org/schema/mvc"
+       xmlns:websocket="http://www.springframework.org/schema/websocket"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="         
     http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-4.0.xsd        http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.0.xsd      http://www.springframework.org/schema/websocket http://www.springframework.org/schema/websocket/spring-websocket-4.0.xsd      http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc-4.0.xsd">
    
-       <!--
+    <!--
     <websocket:message-broker>
         <websocket:stomp-endpoint path="/foo">
             <websocket:handshake-handler ref="myHandler"/>
@@ -20,6 +20,26 @@
             system-login="syslogin" system-passcode="syspass" virtual-host="example.org"/>
     </websocket:message-broker>
     -->
+    
+    
+    <websocket:handlers>
+        <websocket:mapping path="/echoHandler" handler="perConnectionHandler"/>
+        <websocket:handshake-interceptors>
+            <bean class="org.springframework.web.socket.server.support.HttpSessionHandshakeInterceptor"/>
+        </websocket:handshake-interceptors>
+    </websocket:handlers>
+    <!-- use this in the handler property above for non-private channel -->
+    <bean id="echoHandler" class="com.dhenton9000.spring.mvc.websocket.handlers.EchoHandler"/>
+ 
+    <!-- this wrapper to create a single private channel -->
+    <bean id="perConnectionHandler" class="org.springframework.web.socket.handler.PerConnectionWebSocketHandler">
+        <constructor-arg>
+            <value type="java.lang.Class">com.dhenton9000.spring.mvc.websocket.handlers.EchoHandler</value>
+        </constructor-arg>
+    </bean>
+    
+    
+    
     <websocket:message-broker application-destination-prefix="/app">
         <websocket:stomp-endpoint path="/simplemessages">
             <websocket:sockjs/>

@@ -5,3 +5,5 @@ http://www.layoutit.com/build
 
 security tags
 http://doanduyhai.wordpress.com/2012/02/26/spring-security-part-v-security-tags/
+
+http://www.slideshare.net/sergialmar/websockets-with-spring-4
