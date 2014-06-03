@@ -47,7 +47,7 @@
                         
                         <sec:authorize access="isFullyAuthenticated()">
                             <li class="pull-right">
-                                <a href="<c:out value="${baseURL}logoutPage.html"/>">Logout</a>
+                                <a href="<c:out value="${baseURL}logout"/>">Logout</a>
                             </li>
                         </sec:authorize>
                         
