@@ -23,8 +23,8 @@
     
     
     <websocket:handlers>
-        <!--<websocket:mapping path="/echoHandler" handler="perConnectionHandler"/>-->
-        <websocket:mapping path="/echoHandler" handler="echoHandler"/>
+        <websocket:mapping path="/echoHandler" handler="perConnectionHandler"/> 
+        <!--<websocket:mapping path="/echoHandler" handler="echoHandler"/>-->
         <websocket:handshake-interceptors>
             <bean class="com.dhenton9000.spring.mvc.websocket.handlers.HandshakeInterceptor"/>
         </websocket:handshake-interceptors>
@@ -32,7 +32,7 @@
     <!-- use this in the handler property above for non-private channel -->
     <bean id="echoHandler" class="com.dhenton9000.spring.mvc.websocket.handlers.EchoHandler"/>
  
-    <!-- this wrapper to create a single private channel -->
+    <!-- this wrapper to create a new handler for each channel  -->
     <bean id="perConnectionHandler" class="org.springframework.web.socket.handler.PerConnectionWebSocketHandler">
         <constructor-arg>
             <value type="java.lang.Class">com.dhenton9000.spring.mvc.websocket.handlers.EchoHandler</value>

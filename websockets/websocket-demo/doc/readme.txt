@@ -7,3 +7,5 @@ security tags
 http://doanduyhai.wordpress.com/2012/02/26/spring-security-part-v-security-tags/
 
 http://www.slideshare.net/sergialmar/websockets-with-spring-4
+
+http://docs.spring.io/spring/docs/current/spring-framework-reference/html/websocket.html#websocket-stomp-authentication
