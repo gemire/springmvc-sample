@@ -23,9 +23,10 @@
     
     
     <websocket:handlers>
-        <websocket:mapping path="/echoHandler" handler="perConnectionHandler"/>
+        <!--<websocket:mapping path="/echoHandler" handler="perConnectionHandler"/>-->
+        <websocket:mapping path="/echoHandler" handler="echoHandler"/>
         <websocket:handshake-interceptors>
-            <bean class="org.springframework.web.socket.server.support.HttpSessionHandshakeInterceptor"/>
+            <bean class="com.dhenton9000.spring.mvc.websocket.handlers.HandshakeInterceptor"/>
         </websocket:handshake-interceptors>
     </websocket:handlers>
     <!-- use this in the handler property above for non-private channel -->

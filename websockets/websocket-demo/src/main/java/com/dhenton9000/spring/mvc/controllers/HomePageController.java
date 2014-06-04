@@ -1,12 +1,13 @@
 package com.dhenton9000.spring.mvc.controllers;
 
 import java.util.Locale;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.servlet.ModelAndView;
-import org.apache.log4j.*;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.servlet.ModelAndView;
 
 
 /**
@@ -19,7 +20,7 @@ public class HomePageController {
 	
 	
 	
-	private static Logger log = LogManager.getLogger(HomePageController.class);
+	private static Logger log = LoggerFactory.getLogger(HomePageController.class);
 	
 	 
 	
@@ -68,5 +69,9 @@ public class HomePageController {
         return "tiles.securedSample";
     }
     
-    
+     @RequestMapping(value = "/secured/handlerDemo", method = RequestMethod.GET)
+     public String secureHandlerDemo() {
+        log.info("Request for secure page home url processed");
+        return "tiles.handlerDemo";
+    }
 }

@@ -52,7 +52,7 @@
                                  
                             </li>
                             <li>
-                                <a href="#"/>Demo 3</a>
+                                <a href="<c:out value="${baseURL}/secured/handlerDemo"/>">Direct Handler</a>
                             </li>
                             <li>
                                 <a href="#"/>Demo 4</a>
