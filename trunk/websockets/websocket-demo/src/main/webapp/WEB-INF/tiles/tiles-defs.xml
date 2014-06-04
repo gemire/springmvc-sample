@@ -26,5 +26,10 @@
 		<put-attribute name="body"
 			value="/WEB-INF/views/pages/secured/securedSample_body.jsp" />
 	</definition>
-
+        <definition name="tiles.handlerDemo" extends="tiles.base.definition">
+		<put-attribute name="title" value="Basic Low Level Handlers" />
+		<put-attribute name="subTitle" value="Basic Low Level Handlers" />
+		<put-attribute name="body"
+			value="/WEB-INF/views/pages/secured/handlerDemo_body.jsp" />
+	</definition>
 </tiles-definitions> 
