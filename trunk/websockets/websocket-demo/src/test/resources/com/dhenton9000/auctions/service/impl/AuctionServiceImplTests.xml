@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<dataset xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:noNamespaceSchemaLocation="target/xsd/dataset.xsd" xsi:public="target/xsd/public.xsd">
+    <auction_items auction_description="Fred" id="1" starting_bid="1.00"/>
+    <auction_items auction_description="Ted" id="2" starting_bid="1.00"/>
+    <auction_items auction_description="Ned" id="3" starting_bid="1.00"/>
+</dataset>

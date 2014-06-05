@@ -24,7 +24,7 @@
 
    
  
-    <bean id="restaurantsMapper" class="org.mybatis.spring.mapper.MapperFactoryBean">
+    <bean id="restaurantsDao" class="org.mybatis.spring.mapper.MapperFactoryBean">
         <property name="mapperInterface" value="com.dhenton9000.restaurants.dao.RestaurantsDao" />
         <property name="sqlSessionFactory" ref="sqlMapperSessionFactory" />
     </bean>
