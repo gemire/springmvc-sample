@@ -89,6 +89,7 @@
         <java.version>1.7</java.version>
         <org.springframework.version>4.0.5.RELEASE</org.springframework.version>
         <tiles.version>3.0.1</tiles.version>
+        <derby.version>10.9.1.0</derby.version>
         <org.springframework.security-version>3.2.0.RELEASE</org.springframework.security-version>
     </properties>
     <repositories>
@@ -511,7 +512,15 @@
         <dependency>
             <groupId>org.apache.derby</groupId>
             <artifactId>derby</artifactId>
-            <version>10.9.1.0</version>
+            <version>${derby.version}</version>
+            <scope>compile</scope>
+            <type>jar</type>
+        </dependency>
+       
+         <dependency>
+            <groupId>org.apache.derby</groupId>
+            <artifactId>derbyclient</artifactId>
+            <version>${derby.version}</version>
             <scope>compile</scope>
             <type>jar</type>
         </dependency>
