@@ -19,9 +19,9 @@
    
     <bean id="dataSource" class="com.mchange.v2.c3p0.ComboPooledDataSource" destroy-method="close">
         <property name="driverClass" value="org.apache.derby.jdbc.ClientDriver"/>
-        <property name="jdbcUrl" value="jdbc:derby://localhost:1527/sec"/>
-        <property name="user" value="sec"/>
-        <property name="password" value="sec"/>
+        <property name="jdbcUrl" value="jdbc:derby://localhost:1527/auctions"/>
+        <property name="user" value="auctions"/>
+        <property name="password" value="auctions"/>
         <property name="autoCommitOnClose" value="false"/>  
     </bean> 
     
