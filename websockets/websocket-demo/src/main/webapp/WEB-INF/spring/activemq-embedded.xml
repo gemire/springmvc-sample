@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+    xmlns:amq="http://activemq.apache.org/schema/core"
+    xmlns:context="http://www.springframework.org/schema/context"
+    xmlns:p="http://www.springframework.org/schema/p"
+    xmlns:util="http://www.springframework.org/schema/util"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="
+http://www.springframework.org/schema/beans 
+http://www.springframework.org/schema/beans/spring-beans-4.0.xsd           
+http://activemq.apache.org/schema/core http://activemq.apache.org/schema/core/activemq-core.xsd            
+http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.0.xsd           
+http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util-4.0.xsd">
+    <!--
+    
+    
+    -->
+    <bean
+        class="org.apache.activemq.broker.region.policy.IndividualDeadLetterStrategy"
+        id="AmqDeadLetterStrategy" p:queuePrefix="DLQ."/>
+    <bean class="org.apache.activemq.broker.region.policy.PolicyEntry"
+          id="AmqDefaultPolicyEntry"
+          p:deadLetterStrategy-ref="AmqDeadLetterStrategy" p:queue="jobs.*"/>
+    <bean class="org.apache.activemq.broker.region.policy.PolicyMap"
+          id="AmqPolicyMap" p:defaultEntry-ref="AmqDefaultPolicyEntry"/>
+    
+    
+    
+    
+    <bean class="org.apache.activemq.broker.BrokerService"
+          destroy-method="stop" init-method="start" name="AmqBroker"
+          p:brokerName="esb-amq-broker"
+        
+          p:dataDirectory="target/activemq-data"
+          p:destinationPolicy-ref="AmqPolicyMap" p:persistent="true"
+          p:useJmx="true" p:useShutdownHook="false">
+        
+        <property name="transportConnectors">
+            <list>
+                <amq:transportConnector name="vm" 
+                        uri="vm://esb-amq-broker" /> 
+                <amq:transportConnector name="tcp" 
+                        uri="tcp://0.0.0.0:47474" /> 
+                <amq:transportConnector name="stomp" 
+                        uri="stomp://0.0.0.0:61613" /> 
+                
+                
+            </list>
+            
+        </property>
+        
+    </bean>
+    
+    
+    <!-- something like this is required for automatic punt to DLQ -->
+    <bean class="org.apache.activemq.RedeliveryPolicy"
+          name="AmqRedeliveryPolicy" p:maximumRedeliveries="2"
+          p:redeliveryDelay="1000" p:useExponentialBackOff="false"/>
+    <bean class="org.apache.activemq.spring.ActiveMQConnectionFactory"
+          depends-on="AmqBroker" name="embeddedAmqConnectionFactory"
+          p:brokerURL="vm://esb-amq-broker" p:redeliveryPolicy-ref="AmqRedeliveryPolicy"/>
+</beans>
