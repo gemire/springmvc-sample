@@ -18,5 +18,8 @@ public interface AuctionService {
     public Bidders getBidderById(Integer bidderId);
     public Bidders getBidderByUserName(String username);
     public Bidders getBiddersWithItems(Integer bidderId);
-    
+    public Integer insertBidder(Bidders b);
+    public Integer insertAuctionItem(AuctionItem b);
+    public Integer insertBidForItem(Integer auctionItemId, Integer bidderId);
+
 }
