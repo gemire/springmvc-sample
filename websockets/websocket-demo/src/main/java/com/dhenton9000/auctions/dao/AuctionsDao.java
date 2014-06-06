@@ -23,5 +23,8 @@ public interface AuctionsDao {
     public Integer insertBidder(Bidders b);
     public Integer insertBidForItem(@Param("auctionItemId") Integer auctionItemId, @Param("bidderId") Integer bidderId);
     public Integer insertAuctionItem(AuctionItem b);
-    
+    public void updateAuctionItem(AuctionItem b);
+    public void updateBidders(Bidders b);
+    public void deleteAuctionItem(@Param("id") Integer id);
+    public void deleteBidders(@Param("id") Integer id);
 }

@@ -47,56 +47,102 @@ public class AuctionServiceImplTests {
         Bidders b = auctionService.getBidderByUserName("user 100");
         assertNotNull(b);
         assertEquals(100, b.getId().intValue());
-        
+
         b = auctionService.getBidderById(100);
         assertEquals(100, b.getId().intValue());
     }
-    
+
     @Test
     public void testGetBiddersWithItems() {
 
         Bidders b = auctionService.getBidderByUserName("user 100");
         assertNotNull(b);
         assertEquals(100, b.getId().intValue());
-        
+
         b = auctionService.getBiddersWithItems(200);
         assertEquals(3, b.getAuctionItems().size());
         boolean gotIt = false;
-        for (AuctionItem item:b.getAuctionItems())
-        {
-            
-            if (item.getAuctionDescription().equals("Item 2"))
-            {
+        for (AuctionItem item : b.getAuctionItems()) {
+
+            if (item.getAuctionDescription().equals("Item 2")) {
                 gotIt = true;
                 break;
             }
-            
+
         }
         assertTrue(gotIt);
     }
-    
+
     @DataSet("AuctionServiceImplTests-clear.xml")
     @ExpectedDataSet("AuctionServiceImplTests-inserts.xml")
     @Test
-    public void testInserts()
-    {
+    public void testInserts() {
         Bidders b = new Bidders();
         b.setUserName("user 100");
         Integer res = auctionService.insertBidder(b);
         assertNotNull(res);
-        
+
         AuctionItem ac = new AuctionItem();
         ac.setAuctionDescription("alpha");
         ac.setStartingBid(new Float(1));
         Integer res2 = auctionService.insertAuctionItem(ac);
         assertNotNull(res2);
-        
-       res2 = auctionService.insertBidForItem(1, 1);
-       assertNotNull(res2);
-        
+
+        res2 = auctionService.insertBidForItem(1, 1);
+        assertNotNull(res2);
+
     }
 
     
+    @Test
+    public void testUpdatesForBidders() {
 
+        Bidders b = auctionService.getBidderByUserName("user 100");
+        assertNotNull(b);
+        assertEquals(100, b.getId().intValue());
+
+        b.setUserName("bonzo");
+        auctionService.updateBidders(b);
+        b = auctionService.getBidderById(100);
+        assertEquals("bonzo",b.getUserName());
+    }
+    
+    @Test
+    public void testUpdatesForAuctionItems() {
+        AuctionItem item = auctionService.getAuctionItem(1);
+        assertEquals("Item 1",item.getAuctionDescription());
+        item.setAuctionDescription("FRED");
+        item.setStartingBid(new Float(3));
+        auctionService.updateAuctionItem(item);
+        item = auctionService.getAuctionItem(1);
+        assertEquals("FRED",item.getAuctionDescription());
+        assertEquals(new Float(3),item.getStartingBid());
+        
+    }
+    
+    
+    @Test
+    public void testDeleteForBidders() {
+
+        auctionService.deleteBidders(1);
+        Bidders b = auctionService.getBidderById(1);
+        assertNull(b);
+        
+    }
+    
+    @Test
+    public void testDeleteForAuctionItems() {
+        
+        
+        auctionService.deleteAuctionItem(1);
+        AuctionItem item = auctionService.getAuctionItem(1);
+        assertNull(item);
+        
+        
+    }
+    
+    
+    
+    
     
 }
