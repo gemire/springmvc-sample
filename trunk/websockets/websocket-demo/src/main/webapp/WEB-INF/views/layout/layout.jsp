@@ -57,6 +57,32 @@
                             <li>
                                 <a href="#"/>Demo 4</a>
                             </li>
+                            
+                            
+                            
+                            <li class="dropdown">
+					 <a href="#" data-toggle="dropdown" class="dropdown-toggle">JS Experimental<strong class="caret"></strong></a>
+					<ul class="dropdown-menu">
+						<li>
+							<a href="<c:out value="${baseURL}/secured/jsexp/ICanHaz"/>">ICanHaz Templates</a>
+						</li>
+						<li>
+							<a href="#">Another action</a>
+						</li>
+						<li>
+							<a href="#">Something else here</a>
+						</li>
+						<li class="divider">
+						</li>
+						<li>
+							<a href="#">Separated link</a>
+						</li>
+					</ul>
+</li>
+                            
+                            
+                            
+                            
 
                             <li class="pull-right">
                                 <a href="<c:out value="${baseURL}logout"/>">Logout</a>

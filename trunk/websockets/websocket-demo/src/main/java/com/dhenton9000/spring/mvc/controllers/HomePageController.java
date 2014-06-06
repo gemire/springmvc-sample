@@ -68,6 +68,12 @@ public class HomePageController {
         log.info("Request for secure page home url processed");
         return "tiles.securedSample";
     }
+     
+     @RequestMapping(value = "/secured/jsexp/ICanHaz", method = RequestMethod.GET)
+     public String securedICanHaz() {
+        
+        return "tiles.iCanHaz";
+    }
     
      @RequestMapping(value = "/secured/handlerDemo", method = RequestMethod.GET)
      public String secureHandlerDemo() {

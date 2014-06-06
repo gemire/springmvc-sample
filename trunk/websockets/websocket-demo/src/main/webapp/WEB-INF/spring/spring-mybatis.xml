@@ -16,17 +16,18 @@
         http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-4.0.xsd">
 
  
-    <bean id="sqlMapperSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
-        <property name="dataSource" ref="dataSource" />
-        <property name="configLocation" value="classpath:mybatis/restaurants-config.xml" />
-        <property name="mapperLocations" value="classpath:mybatis/mappers/**/*.xml" />
+      <bean class="org.mybatis.spring.SqlSessionFactoryBean" id="sqlMapperSessionFactory">
+        <property name="dataSource" ref="dataSource"/>
+        <property name="configLocation" value="classpath:mybatis/auctions-config.xml"/>
+        <property name="mapperLocations" value="classpath:mybatis/mappers/auctions/**/*.xml"/>
     </bean>
-
-   
- 
-    <bean id="restaurantsDao" class="org.mybatis.spring.mapper.MapperFactoryBean">
-        <property name="mapperInterface" value="com.dhenton9000.restaurants.dao.RestaurantsDao" />
-        <property name="sqlSessionFactory" ref="sqlMapperSessionFactory" />
+    <bean class="org.mybatis.spring.mapper.MapperFactoryBean" id="auctionsDao">
+        <property name="mapperInterface" value="com.dhenton9000.auctions.dao.AuctionsDao"/>
+        <property name="sqlSessionFactory" ref="sqlMapperSessionFactory"/>
+    </bean>
+    <bean
+        class="com.dhenton9000.auctions.service.impl.AuctionServiceImpl" id="auctionsService">
+        <property name="auctionsDao" ref="auctionsDao" />
     </bean>
 
     
