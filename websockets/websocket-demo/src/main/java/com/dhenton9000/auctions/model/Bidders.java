@@ -6,6 +6,8 @@
 
 package com.dhenton9000.auctions.model;
 
+import java.util.ArrayList;
+
 /**
  *
  * @author dhenton
@@ -14,6 +16,7 @@ public class Bidders {
     
     private Integer id;
     private String userName;
+    private ArrayList<AuctionItem> auctionItems;
 
     /**
      * @return the id
@@ -41,6 +44,20 @@ public class Bidders {
      */
     public void setUserName(String userName) {
         this.userName = userName;
+    }
+
+    /**
+     * @return the auctionItems
+     */
+    public ArrayList<AuctionItem> getAuctionItems() {
+        return auctionItems;
+    }
+
+    /**
+     * @param auctionItems the auctionItems to set
+     */
+    public void setAuctionItems(ArrayList<AuctionItem> auctionItems) {
+        this.auctionItems = auctionItems;
     }
     
 }

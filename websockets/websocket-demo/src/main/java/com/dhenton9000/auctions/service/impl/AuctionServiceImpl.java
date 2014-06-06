@@ -7,6 +7,7 @@ package com.dhenton9000.auctions.service.impl;
 
 import com.dhenton9000.auctions.dao.AuctionsDao;
 import com.dhenton9000.auctions.model.AuctionItem;
+import com.dhenton9000.auctions.model.Bidders;
 import com.dhenton9000.auctions.service.AuctionService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -40,4 +41,18 @@ public class AuctionServiceImpl implements AuctionService {
        return getAuctionsDao().getAuctionItem(auctionItemId);
     }
 
+    @Override
+    public Bidders getBidderByUserName(String userName) {
+         return getAuctionsDao().getBidderByUserName(userName);
+    }
+
+     @Override
+    public Bidders getBidderById(Integer id) {
+         return getAuctionsDao().getBidderById(id);
+    }
+    
+    @Override
+    public Bidders getBiddersWithItems(Integer id){
+         return getAuctionsDao().getBiddersWithItems(id);
+    }
 }

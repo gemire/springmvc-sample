@@ -7,6 +7,7 @@
 package com.dhenton9000.auctions.service;
 
 import com.dhenton9000.auctions.model.AuctionItem;
+import com.dhenton9000.auctions.model.Bidders;
 
 /**
  *
@@ -14,4 +15,8 @@ import com.dhenton9000.auctions.model.AuctionItem;
  */
 public interface AuctionService {
     AuctionItem getAuctionItem(Integer auctionItemId);
+    public Bidders getBidderById(Integer bidderId);
+    public Bidders getBidderByUserName(String username);
+    public Bidders getBiddersWithItems(Integer bidderId);
+    
 }

@@ -1,7 +1,25 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <dataset xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
     xsi:noNamespaceSchemaLocation="target/xsd/dataset.xsd" xsi:public="target/xsd/public.xsd">
-    <auction_items auction_description="Fred" id="1" starting_bid="1.00"/>
-    <auction_items auction_description="Ted" id="2" starting_bid="1.00"/>
-    <auction_items auction_description="Ned" id="3" starting_bid="1.00"/>
+    
+
+    <auction_bids auction_item_id="1" bidder_id="100" />
+    <auction_bids auction_item_id="1" bidder_id="200" />
+    <auction_bids auction_item_id="2" bidder_id="200" />
+    <auction_bids auction_item_id="3" bidder_id="200" />
+
+    
+   
+    <auction_items auction_description="Item 1" id="1" starting_bid="1.00"/>
+    <auction_items auction_description="Item 2" id="2" starting_bid="1.00"/>
+    <auction_items auction_description="Item 3" id="3" starting_bid="1.00"/>
+   
+    
+    <bidders id="100" user_name="user 100" />
+    <bidders id="200" user_name="user 200" />
+ 
+   
+    
+    
+    
 </dataset>

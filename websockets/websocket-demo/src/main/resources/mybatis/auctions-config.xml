@@ -5,6 +5,8 @@
 <configuration>
     <typeAliases>
         <typeAlias alias="AuctionItem" type="com.dhenton9000.auctions.model.AuctionItem"/>
+         <typeAlias alias="Bidders" type="com.dhenton9000.auctions.model.Bidders"/>
+        
     </typeAliases>
  
 </configuration>
