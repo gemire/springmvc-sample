@@ -36,9 +36,9 @@ http://www.springframework.org/schema/aop/spring-aop-4.0.xsd">
         <property name="jdbcUrl" value="jdbc:derby://localhost:1527/auctions"/>
         <property name="user" value="auctions"/>
         <property name="password" value="auctions"/>
-        <property name="autoCommitOnClose" value="false"/>
+        <property name="autoCommitOnClose" value="true"/>
     </bean>
-    <tx:annotation-driven/>
+    
     <bean
         class="org.springframework.jdbc.datasource.DataSourceTransactionManager" id="transactionManager">
         <property name="dataSource" ref="dataSource"/>

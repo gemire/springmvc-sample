@@ -7,6 +7,7 @@
 package com.dhenton9000.auctions.dao;
 
 import com.dhenton9000.auctions.model.AuctionItem;
+import com.dhenton9000.auctions.model.Bidders;
 
 /**
  *
@@ -15,5 +16,9 @@ import com.dhenton9000.auctions.model.AuctionItem;
 public interface AuctionsDao {
 
     public AuctionItem getAuctionItem(Integer auctionItemId);
+    public Bidders getBidderByUserName(String name);
+    public Bidders getBidderById(Integer bidderId);
+    public Bidders getBiddersWithItems(Integer bidderId);
+    
     
 }

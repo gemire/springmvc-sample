@@ -5,16 +5,54 @@
  
 <mapper namespace="com.dhenton9000.auctions.dao.AuctionsDao">
   
-    <resultMap id="auctionItem" type="com.dhenton9000.auctions.model.AuctionItem">
+    <resultMap id="auctionItem" type="AuctionItem">
         <result property="id" column="id"/>
         <result property="auctionDescription" column="auction_description"/>
         <result property="startingBid" column="starting_bid"/>
    
     </resultMap>
+    
+    <resultMap id="biddersWithItems" type="Bidders">
+        <result property="id" column="id"/>
+        <result property="userName" column="user_name"/>
+        <collection property="auctionItems" ofType="AuctionItem">
+            <id property="id" column="auctionItemsId" />
+             <result property="auctionDescription" column="auction_description" />
+             <result property="startingBid" column="starting_bid" />
+        </collection>
+    </resultMap>
+    
+    <resultMap id="bidder" type="Bidders">
+        <result property="id" column="id"/>
+        <result property="userName" column="user_name"/>
+    </resultMap>
+
+    
+    <select id="getBiddersWithItems" parameterType="int" resultMap="biddersWithItems">
+        SELECT BIDDERS.id, BIDDERS.user_name,
+        AUCTION_ITEMS.ID as auctionItemsId,
+        AUCTION_ITEMS.auction_description,
+        AUCTION_ITEMS.starting_bid
+        FROM BIDDERS
+        INNER JOIN AUCTION_BIDS on BIDDERS.id = AUCTION_BIDS.BIDDER_ID 
+        INNER JOIN AUCTION_ITEMS on AUCTION_BIDS.AUCTION_ITEM_ID 
+          = AUCTION_ITEMS.id
+        WHERE BIDDERS.ID = #{id}
+    </select>
+
 
     <select id="getAuctionItem" parameterType="int" resultMap="auctionItem">
         SELECT id,auction_description, starting_bid FROM AUCTION_ITEMS where id = #{id}
     </select>
+    
+    <select id="getBidderByUserName" parameterType="string" resultMap="bidder">
+        SELECT *  FROM bidders where user_name = #{user_name}
+    </select>
+    
+     <select id="getBidderById" parameterType="int" resultMap="bidder">
+        SELECT *  FROM bidders where id = #{id}
+    </select>
+    
  <!--
     <select id="getById" parameterType="int" resultMap="result">
         SELECT * FROM CONTACT WHERE CONTACT_ID = #{id}
