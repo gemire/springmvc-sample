@@ -41,7 +41,7 @@
       access="hasAnyRole('ROLE_ADMIN','ROLE_USER')" />
     <!-- Define the security form login and logout pages/urls -->
                 
-    <form-login  login-processing-url="/login" login-page="/loginPage"
+    <form-login  login-processing-url="/login" login-page="/login"
       username-parameter="username" password-parameter="password"
       default-target-url="/secured/securedSample"
       authentication-failure-url="/loginPage?auth=fail" />
