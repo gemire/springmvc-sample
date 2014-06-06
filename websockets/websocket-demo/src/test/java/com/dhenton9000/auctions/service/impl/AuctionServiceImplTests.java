@@ -15,6 +15,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.unitils.UnitilsJUnit4TestClassRunner;
 import org.unitils.dbunit.annotation.DataSet;
+import org.unitils.dbunit.annotation.ExpectedDataSet;
 import org.unitils.spring.annotation.SpringApplicationContext;
 import org.unitils.spring.annotation.SpringBeanByType;
 
@@ -60,8 +61,42 @@ public class AuctionServiceImplTests {
         
         b = auctionService.getBiddersWithItems(200);
         assertEquals(3, b.getAuctionItems().size());
+        boolean gotIt = false;
+        for (AuctionItem item:b.getAuctionItems())
+        {
+            
+            if (item.getAuctionDescription().equals("Item 2"))
+            {
+                gotIt = true;
+                break;
+            }
+            
+        }
+        assertTrue(gotIt);
     }
     
+    @DataSet("AuctionServiceImplTests-clear.xml")
+    @ExpectedDataSet("AuctionServiceImplTests-inserts.xml")
+    @Test
+    public void testInserts()
+    {
+        Bidders b = new Bidders();
+        b.setUserName("user 100");
+        Integer res = auctionService.insertBidder(b);
+        assertNotNull(res);
+        
+        AuctionItem ac = new AuctionItem();
+        ac.setAuctionDescription("alpha");
+        ac.setStartingBid(new Float(1));
+        Integer res2 = auctionService.insertAuctionItem(ac);
+        assertNotNull(res2);
+        
+       res2 = auctionService.insertBidForItem(1, 1);
+       assertNotNull(res2);
+        
+    }
+
     
 
+    
 }

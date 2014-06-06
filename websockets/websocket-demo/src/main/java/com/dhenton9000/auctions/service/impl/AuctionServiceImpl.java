@@ -55,4 +55,24 @@ public class AuctionServiceImpl implements AuctionService {
     public Bidders getBiddersWithItems(Integer id){
          return getAuctionsDao().getBiddersWithItems(id);
     }
+
+    /**
+     * 
+     * @param b
+     * @return the key
+     */
+    @Override
+    public Integer insertBidder(Bidders b) {
+         return getAuctionsDao().insertBidder(b);
+    }
+    
+    @Override
+    public Integer insertAuctionItem(AuctionItem b) {
+         return getAuctionsDao().insertAuctionItem(b);
+    }
+
+    @Override
+    public Integer insertBidForItem(Integer auctionItemId, Integer bidderId) {
+         return  getAuctionsDao().insertBidForItem(auctionItemId, bidderId);
+    }
 }

@@ -2,32 +2,25 @@
 <!DOCTYPE mapper
   PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
- 
 <mapper namespace="com.dhenton9000.auctions.dao.AuctionsDao">
-  
     <resultMap id="auctionItem" type="AuctionItem">
-        <result property="id" column="id"/>
-        <result property="auctionDescription" column="auction_description"/>
-        <result property="startingBid" column="starting_bid"/>
-   
+        <result column="id" property="id"/>
+        <result column="auction_description" property="auctionDescription"/>
+        <result column="starting_bid" property="startingBid"/>
     </resultMap>
-    
     <resultMap id="biddersWithItems" type="Bidders">
-        <result property="id" column="id"/>
-        <result property="userName" column="user_name"/>
-        <collection property="auctionItems" ofType="AuctionItem">
-            <id property="id" column="auctionItemsId" />
-             <result property="auctionDescription" column="auction_description" />
-             <result property="startingBid" column="starting_bid" />
+        <result column="id" property="id"/>
+        <result column="user_name" property="userName"/>
+        <collection ofType="AuctionItem" property="auctionItems">
+            <id column="auctionItemsId" property="id"/>
+            <result column="auction_description" property="auctionDescription"/>
+            <result column="starting_bid" property="startingBid"/>
         </collection>
     </resultMap>
-    
     <resultMap id="bidder" type="Bidders">
-        <result property="id" column="id"/>
-        <result property="userName" column="user_name"/>
+        <result column="id" property="id"/>
+        <result column="user_name" property="userName"/>
     </resultMap>
-
-    
     <select id="getBiddersWithItems" parameterType="int" resultMap="biddersWithItems">
         SELECT BIDDERS.id, BIDDERS.user_name,
         AUCTION_ITEMS.ID as auctionItemsId,
@@ -39,21 +32,31 @@
           = AUCTION_ITEMS.id
         WHERE BIDDERS.ID = #{id}
     </select>
-
-
     <select id="getAuctionItem" parameterType="int" resultMap="auctionItem">
         SELECT id,auction_description, starting_bid FROM AUCTION_ITEMS where id = #{id}
     </select>
-    
     <select id="getBidderByUserName" parameterType="string" resultMap="bidder">
         SELECT *  FROM bidders where user_name = #{user_name}
     </select>
-    
-     <select id="getBidderById" parameterType="int" resultMap="bidder">
+    <select id="getBidderById" parameterType="int" resultMap="bidder">
         SELECT *  FROM bidders where id = #{id}
     </select>
+    <insert id="insertBidder" keyColumn="id" keyProperty="id"
+        parameterType="Bidders" useGeneratedKeys="true">
+    INSERT INTO BIDDERS (USER_NAME)   VALUES (#{userName})
+    </insert>
+    <insert id="insertAuctionItem" keyColumn="id" keyProperty="id"
+        parameterType="AuctionItem" useGeneratedKeys="true">
+    INSERT INTO AUCTION_ITEMS (AUCTION_DESCRIPTION,STARTING_BID)   VALUES (#{auctionDescription},#{startingBid})
+    </insert>
+   <insert id="insertBidForItem" 
+        parameterType="map" useGeneratedKeys="true">
+    INSERT INTO AUCTION_BIDS (AUCTION_ITEM_ID,BIDDER_ID)   VALUES (#{auctionItemId},#{bidderId})
+    </insert>
     
- <!--
+    
+    
+    <!--
     <select id="getById" parameterType="int" resultMap="result">
         SELECT * FROM CONTACT WHERE CONTACT_ID = #{id}
     </select>
