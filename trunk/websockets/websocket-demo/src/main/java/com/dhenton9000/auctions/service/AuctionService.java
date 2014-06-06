@@ -21,5 +21,9 @@ public interface AuctionService {
     public Integer insertBidder(Bidders b);
     public Integer insertAuctionItem(AuctionItem b);
     public Integer insertBidForItem(Integer auctionItemId, Integer bidderId);
+    public void updateAuctionItem(AuctionItem b);
+    public void updateBidders(Bidders b);
+    public void deleteAuctionItem(Integer id);
+    public void deleteBidders(Integer id);
 
 }

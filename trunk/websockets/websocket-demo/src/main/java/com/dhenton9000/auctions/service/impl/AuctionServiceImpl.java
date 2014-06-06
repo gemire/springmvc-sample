@@ -38,41 +38,61 @@ public class AuctionServiceImpl implements AuctionService {
 
     @Override
     public AuctionItem getAuctionItem(Integer auctionItemId) {
-       return getAuctionsDao().getAuctionItem(auctionItemId);
+        return getAuctionsDao().getAuctionItem(auctionItemId);
     }
 
     @Override
     public Bidders getBidderByUserName(String userName) {
-         return getAuctionsDao().getBidderByUserName(userName);
+        return getAuctionsDao().getBidderByUserName(userName);
     }
 
-     @Override
-    public Bidders getBidderById(Integer id) {
-         return getAuctionsDao().getBidderById(id);
-    }
-    
     @Override
-    public Bidders getBiddersWithItems(Integer id){
-         return getAuctionsDao().getBiddersWithItems(id);
+    public Bidders getBidderById(Integer id) {
+        return getAuctionsDao().getBidderById(id);
+    }
+
+    @Override
+    public Bidders getBiddersWithItems(Integer id) {
+        return getAuctionsDao().getBiddersWithItems(id);
     }
 
     /**
-     * 
+     *
      * @param b
      * @return the key
      */
     @Override
     public Integer insertBidder(Bidders b) {
-         return getAuctionsDao().insertBidder(b);
+        return getAuctionsDao().insertBidder(b);
     }
-    
+
     @Override
     public Integer insertAuctionItem(AuctionItem b) {
-         return getAuctionsDao().insertAuctionItem(b);
+        return getAuctionsDao().insertAuctionItem(b);
     }
 
     @Override
     public Integer insertBidForItem(Integer auctionItemId, Integer bidderId) {
-         return  getAuctionsDao().insertBidForItem(auctionItemId, bidderId);
+        return getAuctionsDao().insertBidForItem(auctionItemId, bidderId);
+    }
+
+    @Override
+    public void updateAuctionItem(AuctionItem b) {
+        getAuctionsDao().updateAuctionItem(b);
+    }
+
+    @Override
+    public void updateBidders(Bidders b) {
+        getAuctionsDao().updateBidders(b);
+    }
+
+    @Override
+    public void deleteAuctionItem(Integer id) {
+        getAuctionsDao().deleteAuctionItem(id);
+    }
+
+    @Override
+    public void deleteBidders(Integer id) {
+        getAuctionsDao().deleteBidders(id);
     }
 }
