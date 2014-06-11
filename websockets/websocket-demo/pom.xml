@@ -7,7 +7,7 @@
     <version>1.0-SNAPSHOT</version>
     <packaging>war</packaging>
     <name>websocket-demo</name>
-    <description>SpringMVC3-Tiles-Starter is a simple Tiles 2 Spring MVC3 skeleton app</description>
+    <description>Websocket demo application</description>
     <build>
         <sourceDirectory>${basedir}/src/main/java</sourceDirectory>
         <outputDirectory>${basedir}/src/main/webapp/WEB-INF/classes</outputDirectory>
