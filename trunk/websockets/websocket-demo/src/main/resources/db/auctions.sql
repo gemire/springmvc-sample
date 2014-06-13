@@ -32,7 +32,7 @@ CREATE  TABLE bidders (
          primary key (id)
     );
  
- /*
+
 alter table auction_bids 
         add constraint FK_ITEMS 
         foreign key (auction_item_id) 
@@ -41,4 +41,5 @@ alter table auction_bids
  add constraint FK_BIDDERS
         foreign key (bidder_id) 
         references bidders;
- */
+ 
+insert into bidders (user_name,password) values ('admin', md5('admin'));
