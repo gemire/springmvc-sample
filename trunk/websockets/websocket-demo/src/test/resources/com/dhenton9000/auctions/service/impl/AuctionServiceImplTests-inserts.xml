@@ -4,7 +4,7 @@
     
 
      
-    <bidders  user_name="user 100" />
+    <bidders  user_name="user 100" password="frump" />
     <auction_items  auction_description="alpha" starting_bid="1.00" />
     <auction_bids auction_item_id="1" bidder_id="1" />
     

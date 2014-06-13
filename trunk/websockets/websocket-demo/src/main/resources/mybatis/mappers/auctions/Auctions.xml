@@ -20,6 +20,7 @@
     <resultMap id="bidder" type="Bidders">
         <result column="id" property="id"/>
         <result column="user_name" property="userName"/>
+        <result column="password" property="password"/>
     </resultMap>
     <select id="getBiddersWithItems" parameterType="int" resultMap="biddersWithItems">
         SELECT BIDDERS.id, BIDDERS.user_name,
@@ -43,7 +44,7 @@
     </select>
     <insert id="insertBidder" keyColumn="id" keyProperty="id"
         parameterType="Bidders" useGeneratedKeys="true">
-    INSERT INTO BIDDERS (USER_NAME)   VALUES (#{userName})
+    INSERT INTO BIDDERS (USER_NAME,PASSWORD)   VALUES (#{userName},#{password})
     </insert>
     <insert id="insertAuctionItem" keyColumn="id" keyProperty="id"
         parameterType="AuctionItem" useGeneratedKeys="true">

@@ -15,8 +15,8 @@
     <auction_items auction_description="Item 3" id="3" starting_bid="1.00"/>
    
     
-    <bidders id="100" user_name="user 100" />
-    <bidders id="200" user_name="user 200" />
+    <bidders id="100" user_name="user 100" password="frump" />
+    <bidders id="200" user_name="user 200" password="toad" />
  
    
     

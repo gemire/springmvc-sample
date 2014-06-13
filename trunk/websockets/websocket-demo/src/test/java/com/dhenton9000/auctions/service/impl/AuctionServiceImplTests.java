@@ -50,6 +50,7 @@ public class AuctionServiceImplTests {
 
         b = auctionService.getBidderById(100);
         assertEquals(100, b.getId().intValue());
+        assertEquals("frump",b.getPassword());
     }
 
     @Test
@@ -79,6 +80,7 @@ public class AuctionServiceImplTests {
     public void testInserts() {
         Bidders b = new Bidders();
         b.setUserName("user 100");
+        b.setPassword("frump");
         Integer res = auctionService.insertBidder(b);
         assertNotNull(res);
 
