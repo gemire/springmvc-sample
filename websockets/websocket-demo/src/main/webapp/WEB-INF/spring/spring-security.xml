@@ -71,11 +71,11 @@
   
   <authentication-manager>
                 <authentication-provider user-service-ref="customUserBiddersService">
-                                <password-encoder ref="passwordEncoder"/>
+                             <!--   <password-encoder ref="passwordEncoder"/> -->
                 </authentication-provider>
         </authentication-manager>
 
-        <!-- Use a Md5 encoder since the user's passwords are stored as Md5 in the database -->
+        <!-- not used=== Use a Md5 encoder since the user's passwords are stored as Md5 in the database -->
         <beans:bean class="org.springframework.security.authentication.encoding.Md5PasswordEncoder" id="passwordEncoder"/>
 
         <!-- A custom service where Spring will retrieve users and their corresponding access levels  -->

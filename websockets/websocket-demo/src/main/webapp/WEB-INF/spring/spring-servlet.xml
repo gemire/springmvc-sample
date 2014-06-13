@@ -46,7 +46,14 @@
     </websocket:message-broker>
     -->
 
-    
+    <bean id="messageSource"   
+    class="org.springframework.context.support.ResourceBundleMessageSource">  
+    <property name="basenames">  
+        <list>
+            <value>appMessages</value>
+        </list>
+    </property>
+    </bean>
     
     <websocket:handlers>
         <websocket:mapping path="/echoHandler" handler="perConnectionHandler"/> 

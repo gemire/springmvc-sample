@@ -14,7 +14,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.authority.GrantedAuthorityImpl;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -25,11 +24,23 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
  *
  * @author dhenton
  */
-public class BiddersAuthService implements UserDetailsService {
+public class BiddersAuthService
+
+ 
+
+implements UserDetailsService {
 
     @Autowired
     private AuctionService auctionsService;
 
+    
+    public BiddersAuthService()
+    {
+        
+    }
+            
+    
+    
     protected static Logger logger = LoggerFactory.getLogger(BiddersAuthService.class);
 
     @Override
@@ -45,7 +56,7 @@ public class BiddersAuthService implements UserDetailsService {
                 true,
                 true,
                 true,
-                getAuthorities(0));
+                getAuthorities(1));
         return userDetails;
 
     }
@@ -77,10 +88,10 @@ public class BiddersAuthService implements UserDetailsService {
         }
 
                         // Return list of granted authorities
-        //return authList;
+         return authList;
         // for now don't return anything
         //TODO add roles management
-        return null;
+         
     }
 
 }
