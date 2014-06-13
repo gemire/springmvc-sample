@@ -53,7 +53,9 @@
     the application. In a real world scenario this would be linked with a user 
     credentials database or a custom authentication provider. Some examples: 
     1) http://krams915.blogspot.in/2012/01/spring-security-31-implement_1244.html 
-    2) http://krams915.blogspot.in/2010/12/spring-security-mvc-integration-using_26.html -->
+    2) http://krams915.blogspot.in/2010/12/spring-security-mvc-integration-using_26.html  
+    
+    in memory
   <authentication-manager>
     <authentication-provider>
       <user-service>
@@ -63,4 +65,27 @@
       </user-service>
     </authentication-provider>
   </authentication-manager>
+  -->
+  
+  
+  
+  <authentication-manager>
+                <authentication-provider user-service-ref="customUserBiddersService">
+                                <password-encoder ref="passwordEncoder"/>
+                </authentication-provider>
+        </authentication-manager>
+
+        <!-- Use a Md5 encoder since the user's passwords are stored as Md5 in the database -->
+        <beans:bean class="org.springframework.security.authentication.encoding.Md5PasswordEncoder" id="passwordEncoder"/>
+
+        <!-- A custom service where Spring will retrieve users and their corresponding access levels  -->
+        <beans:bean id="customUserBiddersService" class="com.dhenton9000.auctions.auth.BiddersAuthService"/>
+  
+  
+  
+  
+  
+  
+  
+  
 </beans:beans>
