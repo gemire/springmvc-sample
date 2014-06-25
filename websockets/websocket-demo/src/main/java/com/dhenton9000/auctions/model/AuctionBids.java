@@ -17,20 +17,20 @@ import javax.xml.bind.annotation.XmlRootElement;
 @XmlRootElement
 @XmlAccessorType(XmlAccessType.FIELD)
 public class AuctionBids {
-    private AuctionItemData auctionItem;
+    private AuctionItem auctionItem;
     private ArrayList<Bidders> bidders ;
 
     /**
      * @return the auctionItem
      */
-    public AuctionItemData getAuctionItem() {
+    public AuctionItem getAuctionItem() {
         return auctionItem;
     }
 
     /**
      * @param auctionItem the auctionItem to set
      */
-    public void setAuctionItem(AuctionItemData auctionItem) {
+    public void setAuctionItem(AuctionItem auctionItem) {
         this.auctionItem = auctionItem;
     }
 

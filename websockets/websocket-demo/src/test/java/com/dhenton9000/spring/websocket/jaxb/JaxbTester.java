@@ -9,7 +9,7 @@ package com.dhenton9000.spring.websocket.jaxb;
  
 
  
-import com.dhenton9000.auctions.model.AuctionItemData;
+import com.dhenton9000.auctions.model.AuctionItem;
 import com.dhenton9000.auctions.model.Bidders;
 import java.io.ByteArrayOutputStream;
 import java.io.StringReader;
@@ -64,11 +64,11 @@ public class JaxbTester {
 			o.setId(3);
                         o.setPassword("getajob");
                         
-                        ArrayList<AuctionItemData> auctionItems = new ArrayList<>();
+                        ArrayList<AuctionItem> auctionItems = new ArrayList<>();
                         o.setAuctionItems(auctionItems);
-                        auctionItems.add(new AuctionItemData("get a job 1", 5.00f));
-                        auctionItems.add(new AuctionItemData("get a job 2", 6.00f)); 
-                        auctionItems.add(new AuctionItemData("get a job 3", 12.00f));
+                        auctionItems.add(new AuctionItem("get a job 1", 5.00f));
+                        auctionItems.add(new AuctionItem("get a job 2", 6.00f)); 
+                        auctionItems.add(new AuctionItem("get a job 3", 12.00f));
                         
 			StringBuilder ws = new StringBuilder();
 			ByteArrayOutputStream baos = new ByteArrayOutputStream();
