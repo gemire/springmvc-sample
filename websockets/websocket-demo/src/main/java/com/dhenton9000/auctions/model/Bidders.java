@@ -7,16 +7,25 @@
 package com.dhenton9000.auctions.model;
 
 import java.util.ArrayList;
+import javax.xml.bind.annotation.XmlAccessType;
+import javax.xml.bind.annotation.XmlAccessorType;
+import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlElementWrapper;
+import javax.xml.bind.annotation.XmlRootElement;
 
 /**
  *
  * @author dhenton
  */
+@XmlRootElement
+@XmlAccessorType(XmlAccessType.FIELD)
 public class Bidders {
     
     private Integer id;
     private String userName;
-    private ArrayList<AuctionItem> auctionItems;
+    @XmlElementWrapper(name="auctionItems")
+    @XmlElement(name="auctionItemData")
+    private ArrayList<AuctionItemData> auctionItems  = new ArrayList<>();
     private String password;
 
     /**
@@ -47,19 +56,7 @@ public class Bidders {
         this.userName = userName;
     }
 
-    /**
-     * @return the auctionItems
-     */
-    public ArrayList<AuctionItem> getAuctionItems() {
-        return auctionItems;
-    }
-
-    /**
-     * @param auctionItems the auctionItems to set
-     */
-    public void setAuctionItems(ArrayList<AuctionItem> auctionItems) {
-        this.auctionItems = auctionItems;
-    }
+     
 
     /**
      * @return the password
@@ -73,6 +70,20 @@ public class Bidders {
      */
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    /**
+     * @return the auctionItems
+     */
+    public ArrayList<AuctionItemData> getAuctionItems() {
+        return auctionItems;
+    }
+
+    /**
+     * @param auctionItemCollection the auctionItems to set
+     */
+    public void setAuctionItems(ArrayList<AuctionItemData> auctionItemCollection) {
+        this.auctionItems = auctionItemCollection;
     }
     
 }

@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?><bidders>
+    <auctionItems>
+        <auctionItem>
+            <auctionDescription>get a job 1</auctionDescription>
+            <startingBid>5.0</startingBid>
+        </auctionItem>
+        <auctionItem>
+            <auctionDescription>get a job 2</auctionDescription>
+            <startingBid>6.0</startingBid>
+        </auctionItem>
+        <auctionItem>
+            <auctionDescription>get a job 3</auctionDescription>
+            <startingBid>12.0</startingBid>
+        </auctionItem>
+    </auctionItems>
+    <id>3</id>
+    <password>getajob</password>
+    <userName>fred@friendly</userName>
+</bidders>

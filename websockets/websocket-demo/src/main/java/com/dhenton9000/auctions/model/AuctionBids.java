@@ -7,26 +7,30 @@
 package com.dhenton9000.auctions.model;
 
 import java.util.ArrayList;
-
+import javax.xml.bind.annotation.XmlAccessType;
+import javax.xml.bind.annotation.XmlAccessorType;
+import javax.xml.bind.annotation.XmlRootElement;
 /**
  *
  * @author dhenton
  */
+@XmlRootElement
+@XmlAccessorType(XmlAccessType.FIELD)
 public class AuctionBids {
-    private AuctionItem auctionItem;
+    private AuctionItemData auctionItem;
     private ArrayList<Bidders> bidders ;
 
     /**
      * @return the auctionItem
      */
-    public AuctionItem getAuctionItem() {
+    public AuctionItemData getAuctionItem() {
         return auctionItem;
     }
 
     /**
      * @param auctionItem the auctionItem to set
      */
-    public void setAuctionItem(AuctionItem auctionItem) {
+    public void setAuctionItem(AuctionItemData auctionItem) {
         this.auctionItem = auctionItem;
     }
 
