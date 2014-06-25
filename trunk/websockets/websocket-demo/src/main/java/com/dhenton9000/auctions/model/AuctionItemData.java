@@ -7,17 +7,39 @@
 package com.dhenton9000.auctions.model;
 
 import java.util.Objects;
+import javax.xml.bind.annotation.XmlAccessType;
+import javax.xml.bind.annotation.XmlAccessorType;
+import javax.xml.bind.annotation.XmlRootElement;
+
 
 /**
  *
  * @author dhenton
  */
-public class AuctionItem {
+@XmlRootElement(name="auctionItemData")
+@XmlAccessorType(XmlAccessType.FIELD)
+public class AuctionItemData {
     
     private Integer id;
     private String auctionDescription;
     private Float startingBid;
 
+    public AuctionItemData()
+    {
+        
+    }
+
+    public AuctionItemData(Integer id, String auctionDescription, Float startingBid) {
+        this.id = id;
+        this.auctionDescription = auctionDescription;
+        this.startingBid = startingBid;
+    }
+    
+    public AuctionItemData( String auctionDescription, Float startingBid) {
+         
+        this.auctionDescription = auctionDescription;
+        this.startingBid = startingBid;
+    }
     /**
      * @return the id
      */
@@ -75,7 +97,7 @@ public class AuctionItem {
         if (getClass() != obj.getClass()) {
             return false;
         }
-        final AuctionItem other = (AuctionItem) obj;
+        final AuctionItemData other = (AuctionItemData) obj;
         if (!Objects.equals(this.id, other.id)) {
             return false;
         }

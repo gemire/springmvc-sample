@@ -6,7 +6,7 @@
 package com.dhenton9000.auctions.service.impl;
 
 import com.dhenton9000.auctions.dao.AuctionsDao;
-import com.dhenton9000.auctions.model.AuctionItem;
+import com.dhenton9000.auctions.model.AuctionItemData;
 import com.dhenton9000.auctions.model.Bidders;
 import com.dhenton9000.auctions.service.AuctionService;
 import org.slf4j.Logger;
@@ -37,7 +37,7 @@ public class AuctionServiceImpl implements AuctionService {
     }
 
     @Override
-    public AuctionItem getAuctionItem(Integer auctionItemId) {
+    public AuctionItemData getAuctionItem(Integer auctionItemId) {
         return getAuctionsDao().getAuctionItem(auctionItemId);
     }
 
@@ -67,7 +67,7 @@ public class AuctionServiceImpl implements AuctionService {
     }
 
     @Override
-    public Integer insertAuctionItem(AuctionItem b) {
+    public Integer insertAuctionItem(AuctionItemData b) {
         return getAuctionsDao().insertAuctionItem(b);
     }
 
@@ -77,7 +77,7 @@ public class AuctionServiceImpl implements AuctionService {
     }
 
     @Override
-    public void updateAuctionItem(AuctionItem b) {
+    public void updateAuctionItem(AuctionItemData b) {
         getAuctionsDao().updateAuctionItem(b);
     }
 

@@ -5,7 +5,7 @@
  */
 package com.dhenton9000.auctions.service.impl;
 
-import com.dhenton9000.auctions.model.AuctionItem;
+import com.dhenton9000.auctions.model.AuctionItemData;
 import com.dhenton9000.auctions.model.Bidders;
 import com.dhenton9000.auctions.service.AuctionService;
 import static org.junit.Assert.*;
@@ -36,7 +36,7 @@ public class AuctionServiceImplTests {
     @Test
     public void testAssemble() {
         assertNotNull(auctionService);
-        AuctionItem item = auctionService.getAuctionItem(1);
+        AuctionItemData item = auctionService.getAuctionItem(1);
         assertNotNull(item);
         assertEquals("Item 1", item.getAuctionDescription());
     }
@@ -63,7 +63,7 @@ public class AuctionServiceImplTests {
         b = auctionService.getBiddersWithItems(200);
         assertEquals(3, b.getAuctionItems().size());
         boolean gotIt = false;
-        for (AuctionItem item : b.getAuctionItems()) {
+        for (AuctionItemData item : b.getAuctionItems()) {
 
             if (item.getAuctionDescription().equals("Item 2")) {
                 gotIt = true;
@@ -84,7 +84,7 @@ public class AuctionServiceImplTests {
         Integer res = auctionService.insertBidder(b);
         assertNotNull(res);
 
-        AuctionItem ac = new AuctionItem();
+        AuctionItemData ac = new AuctionItemData();
         ac.setAuctionDescription("alpha");
         ac.setStartingBid(new Float(1));
         Integer res2 = auctionService.insertAuctionItem(ac);
@@ -111,7 +111,7 @@ public class AuctionServiceImplTests {
     
     @Test
     public void testUpdatesForAuctionItems() {
-        AuctionItem item = auctionService.getAuctionItem(1);
+        AuctionItemData item = auctionService.getAuctionItem(1);
         assertEquals("Item 1",item.getAuctionDescription());
         item.setAuctionDescription("FRED");
         item.setStartingBid(new Float(3));
@@ -137,7 +137,7 @@ public class AuctionServiceImplTests {
         
         
         auctionService.deleteAuctionItem(1);
-        AuctionItem item = auctionService.getAuctionItem(1);
+        AuctionItemData item = auctionService.getAuctionItem(1);
         assertNull(item);
         
         
