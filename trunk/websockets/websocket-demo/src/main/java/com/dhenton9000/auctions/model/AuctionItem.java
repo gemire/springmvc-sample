@@ -16,26 +16,26 @@ import javax.xml.bind.annotation.XmlRootElement;
  *
  * @author dhenton
  */
-@XmlRootElement(name="auctionItemData")
+@XmlRootElement(name="auctionItem")
 @XmlAccessorType(XmlAccessType.FIELD)
-public class AuctionItemData {
+public class AuctionItem {
     
     private Integer id;
     private String auctionDescription;
     private Float startingBid;
 
-    public AuctionItemData()
+    public AuctionItem()
     {
         
     }
 
-    public AuctionItemData(Integer id, String auctionDescription, Float startingBid) {
+    public AuctionItem(Integer id, String auctionDescription, Float startingBid) {
         this.id = id;
         this.auctionDescription = auctionDescription;
         this.startingBid = startingBid;
     }
     
-    public AuctionItemData( String auctionDescription, Float startingBid) {
+    public AuctionItem( String auctionDescription, Float startingBid) {
          
         this.auctionDescription = auctionDescription;
         this.startingBid = startingBid;
@@ -97,7 +97,7 @@ public class AuctionItemData {
         if (getClass() != obj.getClass()) {
             return false;
         }
-        final AuctionItemData other = (AuctionItemData) obj;
+        final AuctionItem other = (AuctionItem) obj;
         if (!Objects.equals(this.id, other.id)) {
             return false;
         }

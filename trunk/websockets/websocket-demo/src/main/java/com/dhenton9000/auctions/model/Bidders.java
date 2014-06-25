@@ -24,8 +24,8 @@ public class Bidders {
     private Integer id;
     private String userName;
     @XmlElementWrapper(name="auctionItems")
-    @XmlElement(name="auctionItemData")
-    private ArrayList<AuctionItemData> auctionItems  = new ArrayList<>();
+    @XmlElement(name="auctionItem")
+    private ArrayList<AuctionItem> auctionItems;
     private String password;
 
     /**
@@ -75,14 +75,14 @@ public class Bidders {
     /**
      * @return the auctionItems
      */
-    public ArrayList<AuctionItemData> getAuctionItems() {
+    public ArrayList<AuctionItem> getAuctionItems() {
         return auctionItems;
     }
 
     /**
      * @param auctionItemCollection the auctionItems to set
      */
-    public void setAuctionItems(ArrayList<AuctionItemData> auctionItemCollection) {
+    public void setAuctionItems(ArrayList<AuctionItem> auctionItemCollection) {
         this.auctionItems = auctionItemCollection;
     }
     
