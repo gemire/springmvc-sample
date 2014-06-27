@@ -17,21 +17,21 @@
         <put-attribute name="body"
                                value="/WEB-INF/views/pages/logoutPage_body.jsp" />
     </definition>
-    <definition name="tiles.securedSample" extends="tiles.base.definition">
-        <put-attribute name="title" value="Demo Using Stomp" />
+    <definition name="tiles.simpleDemo" extends="tiles.base.definition">
+        <put-attribute name="title" value="Demo Using Stomp SimpleDemoController" />
         <put-attribute name="body"
-                               value="/WEB-INF/views/pages/secured/securedSample_body.jsp" />
+                               value="/WEB-INF/views/pages/secured/simpleDemo_body.jsp" />
     </definition>
-    <definition name="tiles.handlerDemo" extends="tiles.base.definition">
-        <put-attribute name="title" value="Basic Low Level Handlers" />
+    <definition name="tiles.echoHandlerDemo" extends="tiles.base.definition">
+        <put-attribute name="title" value="Echo Handler Demo" />
         <put-attribute name="body"
-                               value="/WEB-INF/views/pages/secured/handlerDemo_body.jsp" />
+                               value="/WEB-INF/views/pages/secured/echoHandlerDemo_body.jsp" />
     </definition>
     
-       <definition name="tiles.iCanHaz" extends="tiles.base.definition">
-            <put-attribute name="title" value="ICanHaz Demos" />
+       <definition name="tiles.xmlTest" extends="tiles.base.definition">
+            <put-attribute name="title" value="XML Test" />
             <put-attribute name="body"
-                               value="/WEB-INF/views/pages/secured/jsexp/ICanHaz_body.jsp" />
+                               value="/WEB-INF/views/pages/secured/jsexp/xml_test_body.jsp" />
         </definition>
     
     

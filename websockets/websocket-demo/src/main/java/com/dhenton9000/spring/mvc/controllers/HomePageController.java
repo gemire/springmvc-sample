@@ -63,21 +63,21 @@ public class HomePageController {
         return "tiles.login";
     }
 	
-     @RequestMapping(value = "/secured/securedSample", method = RequestMethod.GET)
-     public String securedHomePage() {
+     @RequestMapping(value = "/secured/simpleDemo", method = RequestMethod.GET)
+     public String simpleDemo() {
         log.info("Request for secure page home url processed");
-        return "tiles.securedSample";
+        return "tiles.simpleDemo";
     }
      
-     @RequestMapping(value = "/secured/jsexp/ICanHaz", method = RequestMethod.GET)
-     public String securedICanHaz() {
+     @RequestMapping(value = "/secured/jsexp/xmlTest", method = RequestMethod.GET)
+     public String securedXmlTest() {
         
-        return "tiles.iCanHaz";
+        return "tiles.xmlTest";
     }
     
-     @RequestMapping(value = "/secured/handlerDemo", method = RequestMethod.GET)
-     public String secureHandlerDemo() {
+     @RequestMapping(value = "/secured/echoHandlerDemo", method = RequestMethod.GET)
+     public String secureEchoHandlerDemo() {
         log.info("Request for secure page home url processed");
-        return "tiles.handlerDemo";
+        return "tiles.echoHandlerDemo";
     }
 }

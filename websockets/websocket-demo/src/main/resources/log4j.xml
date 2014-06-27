@@ -40,12 +40,35 @@ zzzzzzzzzzzzzzzzzzzzzzz
         <level value="DEBUG"/>
     </logger>
     <logger name="org.springframework">
-        <level value="DEBUG"/>
+        <level value="ERROR"/>
     </logger>
 
- <logger name="org.apache">
+    <logger name="org.apache">
         <level value="WARN"/>
     </logger>
+    
+    <logger name="com.mchange">
+        <level value="ERROR"/>
+    </logger>
+    
+    <logger name="org.mybatis">
+        <level value="ERROR"/>
+    </logger>
+  
+    <logger name="io.netty">
+        <level value="ERROR"/>
+    </logger>
+     
+   <logger name="org.hibernate">
+        <level value="ERROR"/>
+    </logger>
+
+        
+                        
+    <logger name="httpClient">
+        <level value="ALL" />
+    </logger>
+       
 
     <root>
         <priority value="DEBUG"/>

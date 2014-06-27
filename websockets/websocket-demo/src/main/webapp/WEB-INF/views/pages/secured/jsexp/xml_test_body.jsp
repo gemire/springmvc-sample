@@ -14,7 +14,7 @@
      
 %>
 
-<h3>I Can Haz</h3>
+<h3>Xml test</h3>
 
  
 
