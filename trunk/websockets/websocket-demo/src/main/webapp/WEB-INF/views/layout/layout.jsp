@@ -48,11 +48,11 @@
                         <sec:authorize access="isFullyAuthenticated()">
 
                             <li>
-                                <a href="<c:out value="${baseURL}/secured/securedSample"/>">Simple</a>
+                                <a href="<c:out value="${baseURL}secured/simpleDemo"/>">Simple</a>
                                  
                             </li>
                             <li>
-                                <a href="<c:out value="${baseURL}/secured/handlerDemo"/>">Direct Handler</a>
+                                <a href="<c:out value="${baseURL}secured/echoHandlerDemo"/>">Echo Handler Handler</a>
                             </li>
                             <li>
                                 <a href="#"/>Demo 4</a>
@@ -64,7 +64,7 @@
 					 <a href="#" data-toggle="dropdown" class="dropdown-toggle">JS Experimental<strong class="caret"></strong></a>
 					<ul class="dropdown-menu">
 						<li>
-							<a href="<c:out value="${baseURL}/secured/jsexp/ICanHaz"/>">ICanHaz Templates</a>
+							<a href="<c:out value="${baseURL}/secured/jsexp/xmlTest"/>">Xml Test</a>
 						</li>
 						<li>
 							<a href="#">Another action</a>

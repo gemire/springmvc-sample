@@ -22,6 +22,7 @@
     <div class="row">
       <div class="col-sm-6">
         <p>Your username is <sec:authentication property="principal.username"/></p>
+        <p><code>Handler Demo
         <!-- Connect and Disconnect buttons to establish/terminate a connection to the websocket service -->
         <div class="panel">
           <button id="connect" onclick="connect()" class="btn btn-success btn-sm">Connect</button>
