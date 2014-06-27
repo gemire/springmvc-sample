@@ -17,9 +17,10 @@ function setConnected(connected) {
 function connect() {
     if ('WebSocket' in window) {
         console.log('Websocket supported');
+        console.log("socket dest "+socketDest);
         socket = new WebSocket(socketDest);
 
-        console.log('Connection attempted');
+        console.log('Connection attempted xxx');
 
         socket.onopen = function() {
             console.log('Connection open!');
@@ -31,7 +32,7 @@ function connect() {
         }
         socket.onerror=function (evt) 
         {
-            
+            console.log('on error '+evt);
             socket.onclose = function(e) {
                 console.log('closing error ',e);
             }
