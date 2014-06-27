@@ -16,6 +16,17 @@
 
 <h3>Xml test</h3>
 
- 
+ <div class="panel-success" id="messageArea" />
+ <p><button onclick="xmlTest.connect()" class="btn btn-primary">Connect</button></p> 
+ <p><button onclick="xmlTest.getInfo()" class="btn btn-primary">Get Info</button></p>  
 
-  
+
+<script src="resources/js/stomp.js"></script>
+<script src="resources/js/messagepump.js"></script>
+<script src="resources/js/xmlTest/xmlTest.js"></script>	
+<script>
+   var socketDest= "<%= socketDest %>";
+   xmlTest.init(socketDest);
+    
+</script>
+<script src="resources/js/xmlTest/wsHandlers.js"></script>	

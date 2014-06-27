@@ -14,9 +14,6 @@
      
 %>
 
-<h3>Secure Page</h3>
-
- 
 
  
     <div class="row">
@@ -55,4 +52,4 @@
         </script>
 
 <script src="resources/js/sockjs-0.3.4.min.js"></script>
-<script src="resources/js/handlerDemo/handlerDemo.js"></script>	
+<script src="resources/js/echoHandlerDemo/echoHandlerDemo.js"></script>	
