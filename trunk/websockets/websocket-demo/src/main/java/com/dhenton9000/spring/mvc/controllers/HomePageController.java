@@ -23,10 +23,10 @@ public class HomePageController {
 	private static Logger log = LoggerFactory.getLogger(HomePageController.class);
 	
 	 
-	
-	    /**
+/**
      * To handle the regular request to the application context. e.g.
-     * http://localhost:8080/learn-websockets-1
+     * http://localhost:8080/learn-websockets-1 normally the web xml maps spring
+     * servlet to /xxx/* , but in this case we are doing root
      * 
      * @param model
      * @param locale

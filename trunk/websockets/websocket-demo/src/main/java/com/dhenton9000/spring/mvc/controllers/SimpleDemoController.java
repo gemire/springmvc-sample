@@ -25,6 +25,10 @@ import com.blogspot.sunitkatkar.util.Util;
  * broadcast (or publish) the message to all clients who have subscribed to the
  * <code>/topic/simplemessages</code> message queue.
  * 
+ * In the WEB-INF/spring/spring-servlet.xml file this endpoint is backed
+ * by an embedded instance of activemq
+ * 
+ * 
  * 
  * @author <a href="mailto:sunitkatkar@gmail.com">Sunit Katkar</a>
  * @since 1.0
