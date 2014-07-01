@@ -10,17 +10,17 @@
 
     String path = request.getContextPath();
     String basePath = request.getScheme() + "://" + request.getServerName() + ":" + request.getServerPort() + path + "/";
-
+   
 %>
 
 <h3<Secure Page</h3>
 
+ <sec:authentication property="principal.username" var="userName"/>
  
-
  
     <div class="row">
       <div class="col-sm-6">
-        <p>Your username is <sec:authentication property="principal.username"/></p>
+          <p>Your username is '${userName}'</p>
         <!-- Connect and Disconnect buttons to establish/terminate a connection to the websocket service -->
         <div class="panel">
           <button id="connect" class="btn btn-success btn-sm">Connect</button>
@@ -60,7 +60,8 @@
     </div>
         <script>
             var contextPath= "<%= path %>";
-            
+            var userName= "${userName}";
+           
             
         </script>
 <script src="resources/js/knockout-3.0.0.js"></script>	

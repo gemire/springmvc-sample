@@ -1,5 +1,6 @@
 /**
- * Copyright &copy; Sunit Katkar (sunitkatkar@gmail.com) http://sunitkatkar.blogspot.com
+ * Copyright &copy; Sunit Katkar (sunitkatkar@gmail.com)
+ * http://sunitkatkar.blogspot.com
  */
 package com.dhenton9000.spring.mvc.controllers;
 
@@ -10,31 +11,34 @@ import org.slf4j.LoggerFactory;
 import org.springframework.messaging.handler.annotation.MessageExceptionHandler;
 import org.springframework.messaging.handler.annotation.MessageMapping;
 import org.springframework.messaging.handler.annotation.SendTo;
+import org.springframework.messaging.handler.annotation.Headers;
 import org.springframework.messaging.simp.annotation.SendToUser;
 import org.springframework.stereotype.Controller;
+
+import org.springframework.messaging.simp.SimpMessageHeaderAccessor;
+import org.springframework.messaging.simp.SimpMessagingTemplate;
 
 import com.blogspot.sunitkatkar.model.MessageBroadcast;
 import com.blogspot.sunitkatkar.model.SimpleMessage;
 import com.blogspot.sunitkatkar.util.Util;
 
 /**
- * {@link SimpleDemoController} is a regular Spring Controller as seen
- * in most Spring MVC applications. Its job is to receive {@link SimpleMessage}
- * message objects from the client, extract the <code>payload</code> (or
- * contents) of the message, prepend it with some simple text and finally
- * broadcast (or publish) the message to all clients who have subscribed to the
+ * {@link SimpleDemoController} is a regular Spring Controller as seen in most
+ * Spring MVC applications. Its job is to receive {@link SimpleMessage} message
+ * objects from the client, extract the <code>payload</code> (or contents) of
+ * the message, prepend it with some simple text and finally broadcast (or
+ * publish) the message to all clients who have subscribed to the
  * <code>/topic/simplemessages</code> message queue.
- * 
- * In the WEB-INF/spring/spring-servlet.xml file this endpoint is backed
- * by an embedded instance of activemq
- * 
- * 
- * 
+ *
+ * In the WEB-INF/spring/spring-servlet.xml file this endpoint is backed by an
+ * embedded instance of activemq
+ *
+ *
+ *
  * @author <a href="mailto:sunitkatkar@gmail.com">Sunit Katkar</a>
  * @since 1.0
  * @version 1.0.0.1
  */
-
 @Controller
 public class SimpleDemoController {
 
@@ -62,7 +66,7 @@ public class SimpleDemoController {
      * receives a message from the client, the client is free to continue any
      * other processing while the server takes its own time to act on the
      * received message.
-     * 
+     *
      * @param message
      * @param principal
      * @param locale
@@ -70,6 +74,7 @@ public class SimpleDemoController {
      * @throws Exception
      */
     @MessageMapping("/simplemessages")
+    //This will broadcast to all
     @SendTo("/topic/simplemessagesresponse")
     public MessageBroadcast processMessageFromClient(SimpleMessage message,
             Principal principal) throws Exception {
@@ -77,6 +82,12 @@ public class SimpleDemoController {
         Thread.sleep(3000);
         LOG.info("Sending server side response '{}' for user: {}", message,
                 principal.getName());
+        if (message.getMessage() != null
+                && message.getMessage().toUpperCase().contains("BOZO")) {
+            LOG.error("@@@@ throwing bozo exception");
+            throw new BozoException("you cannot be a bozo");
+        }
+
         return new MessageBroadcast("Server response: Did you send &lt;b&gt;'"
                 + message.getMessage() + "'&lt;/b&gt;? (Server Response at: "
                 + Util.getSimpleDate() + ")");
@@ -85,11 +96,13 @@ public class SimpleDemoController {
     /**
      * If there are any exceptions thrown by any of the messaging infrastructure
      * then they can be sent to the end user on the <code>/queue/errors</code>
-     * destination.
-     * 
+     * destination. javascript client will be looking for /user/queue/errors
+     *
+     * SendToUser will be specific to the user,and will NOT be broadcast
      * @param exception
      * @return
      */
+    //http://www.theotherian.com/2014_03_01_archive.html
     @MessageExceptionHandler
     @SendToUser("/queue/errors")
     public String handleException(Throwable exception) {
