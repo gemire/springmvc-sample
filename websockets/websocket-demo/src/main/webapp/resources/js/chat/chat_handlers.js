@@ -25,6 +25,16 @@ chat_handlers = {
        chat.isConnected = true;
        $("#disconnectButton").prop('disabled', !chat.isConnected);
        $("#connectButton").prop('disabled', chat.isConnected);
+       var headers = {};
+       
+       
+       var messageBody = 
+       JSON.stringify({
+        'userName': whoami
+        });
+       
+       
+       chat.stompClient.send('/app/registerUser',headers,messageBody);
     },
     
     onActiveMembers: function(activeMembers)
