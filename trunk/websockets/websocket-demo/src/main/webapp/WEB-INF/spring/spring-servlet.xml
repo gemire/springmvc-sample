@@ -13,6 +13,14 @@
            <!-- <websocket:handshake-handler ref="myHandler"/> -->
             <websocket:sockjs/>
         </websocket:stomp-endpoint>
+        <websocket:stomp-endpoint path="/chat">
+           <!-- <websocket:handshake-handler ref="myHandler"/> -->
+            <websocket:sockjs/>
+        </websocket:stomp-endpoint>
+        <websocket:stomp-endpoint path="/activeUsers">
+           <!-- <websocket:handshake-handler ref="myHandler"/> -->
+            <websocket:sockjs/>
+        </websocket:stomp-endpoint>
         <websocket:stomp-broker-relay  
             heartbeat-receive-interval="5000"
             heartbeat-send-interval="5000" prefix="/topic,/queue"
@@ -45,6 +53,8 @@
         <websocket:simple-broker prefix="/queue, /topic"/>
     </websocket:message-broker>
     -->
+ 
+
 
     <bean id="messageSource"   
     class="org.springframework.context.support.ResourceBundleMessageSource">  

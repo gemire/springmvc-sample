@@ -34,5 +34,8 @@
                                value="/WEB-INF/views/pages/secured/jsexp/xml_test_body.jsp" />
         </definition>
     
-    
+     <definition extends="tiles.base.definition" name="tiles.chat">
+        <put-attribute name="title" value="Chat"/>
+        <put-attribute name="body" value="/WEB-INF/views/pages/secured/jsexp/chat_body.jsp"/>
+    </definition>
 </tiles-definitions> 
