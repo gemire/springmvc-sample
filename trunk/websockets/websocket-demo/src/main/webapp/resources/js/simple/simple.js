@@ -139,6 +139,18 @@
                         $("#txtSendMessage").focus();
                         $("#txtSendMessage").select();
                     });
+                    
+                    
+                    stompClient.subscribe("/user/queue/errors", function(message) {
+                        showServerBroadcast("Error " + message.body);
+                        $("#formInfoAlert").slideUp(400);
+                        //Also all text in server message input field should be empty
+                        $("#txtSendMessage").val("");
+                        $("#txtSendMessage").focus();
+                        $("#txtSendMessage").select();
+                     });
+                    
+                    
                 });
             }
 
