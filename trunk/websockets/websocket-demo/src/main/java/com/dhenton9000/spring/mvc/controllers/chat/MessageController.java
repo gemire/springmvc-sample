@@ -8,7 +8,11 @@
 package com.dhenton9000.spring.mvc.controllers.chat;
 
 import com.dhenton9000.chat.model.ChatMessage;
+import com.dhenton9000.chat.model.RegisteredUser;
+import com.dhenton9000.spring.mvc.controllers.HomePageController;
 import java.security.Principal;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.messaging.Message;
 import org.springframework.messaging.handler.annotation.MessageMapping;
@@ -21,6 +25,7 @@ import org.springframework.stereotype.Controller;
 public class MessageController {
 
     private final SimpMessagingTemplate template;
+	private static Logger log = LoggerFactory.getLogger(MessageController.class);
 
     // provided by the websocket namespace in spring-servlet.xml
     @Autowired
@@ -41,4 +46,13 @@ public class MessageController {
         template.convertAndSendToUser(recipient, "/queue/messages", chatMessage);
     }
 
+    @MessageMapping("/registerUser")
+    public void registerUser(Message<Object> message,  @Payload RegisteredUser user) throws Exception {
+        Principal principal = message.getHeaders().get(SimpMessageHeaderAccessor.USER_HEADER, Principal.class);
+        String authedSender = principal.getName();
+        log.debug("authedSender "+authedSender);
+        log.debug("userName "+user.getUserName());
+    }
+    
+    
 }
