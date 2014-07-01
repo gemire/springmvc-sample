@@ -74,7 +74,11 @@ public class HomePageController {
         
         return "tiles.xmlTest";
     }
-    
+     @RequestMapping(value = "/secured/jsexp/chat", method = RequestMethod.GET)
+     public String securedChat() {
+        
+        return "tiles.chat";
+    }
      @RequestMapping(value = "/secured/echoHandlerDemo", method = RequestMethod.GET)
      public String secureEchoHandlerDemo() {
         log.info("Request for secure page home url processed");

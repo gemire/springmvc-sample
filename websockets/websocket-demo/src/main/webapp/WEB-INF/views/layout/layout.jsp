@@ -64,10 +64,10 @@
 					 <a href="#" data-toggle="dropdown" class="dropdown-toggle">JS Experimental<strong class="caret"></strong></a>
 					<ul class="dropdown-menu">
 						<li>
-							<a href="<c:out value="${baseURL}/secured/jsexp/xmlTest"/>">Xml Test</a>
+							<a href="<c:out value="${baseURL}secured/jsexp/xmlTest"/>">Xml Test</a>
 						</li>
 						<li>
-							<a href="#">Another action</a>
+							<a href="<c:out value="${baseURL}secured/jsexp/chat"/>">Chat</a>
 						</li>
 						<li>
 							<a href="#">Something else here</a>
