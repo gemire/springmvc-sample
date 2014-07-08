@@ -7,6 +7,7 @@
 package com.dhenton9000.chat.services;
 
 import com.dhenton9000.chat.model.RegisteredUser;
+import com.dhenton9000.chat.model.RegisteredUserList;
 import java.util.List;
 
 /**
@@ -22,5 +23,9 @@ public interface ChatUsersService {
      * @return the registered user;
      */
     public RegisteredUser get(String username);
-    public List<RegisteredUser> getAllUsers();
+    public RegisteredUserList getAllUsers();
+    public long getUserCount();
+    public void remove(String key);
+
+     
 }

@@ -42,12 +42,16 @@ public class ChatUsersServiceTest {
 
     
     @Test
-    public void testCache()
+    public void testCacheAdd()
     {
         RegisteredUser u= usersService.get("bonzo");
-        assertEquals(1,usersService.getAllUsers().size());
+        assertEquals(1,usersService.getAllUsers().getUserList().size());
         assertNotNull(u);
         assertEquals("bonzo",u.getUserName());
+        
+        
+        usersService.remove("bonzo");
+        assertEquals(0,usersService.getAllUsers().getUserList().size());
         
     }
    

@@ -80,7 +80,7 @@
 <script>
 $(document).ready(function() {
     var contextPath= "<%= path %>";
-     chat.init(contextPath);
+     chat.init(contextPath,userName);
 });
 </script>
  
