@@ -57,11 +57,11 @@ public class MessageController {
         // template.convertAndSendToUser(recipient, "/queue/messages", chatMessage);
     }
 
-    @MessageMapping("/registerUser")
+    @MessageMapping("/registerUserEndpoint")
     @SendTo("/topic/registerUser")
-    public RegisteredUserList registerUser(Principal principal, @Payload RegisteredUser user)
+    public RegisteredUserList registerUser( RegisteredUser user,Principal principal)
             throws Exception {
-
+        
         String authedSender = principal.getName();
         log.debug("authedSender " + authedSender);
         log.debug("userName " + user.getUserName());
@@ -76,7 +76,9 @@ public class MessageController {
             chatUsersService.get(user.getUserName());
             // userList.getUserList().add(user);
         }
-        return chatUsersService.getAllUsers();
+        RegisteredUserList userList = chatUsersService.getAllUsers();
+        log.debug("in register User "+userList.getUserList());
+        return userList ;
 
     }
 
