@@ -51,7 +51,7 @@ var chat = {
     close: function()
     {
         MESSAGE_PUMP.raiseEvent(null, chat.events.ON_CLOSE);
-        this.stompClient.disconnect();
+        //this.stompClient.disconnect();
         
     }
 };

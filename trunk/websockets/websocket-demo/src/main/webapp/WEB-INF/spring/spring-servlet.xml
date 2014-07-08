@@ -17,7 +17,7 @@
            <!-- <websocket:handshake-handler ref="myHandler"/> -->
             <websocket:sockjs/>
         </websocket:stomp-endpoint>
-        <websocket:stomp-endpoint path="/activeUsers">
+        <websocket:stomp-endpoint path="/registerUser">
            <!-- <websocket:handshake-handler ref="myHandler"/> -->
             <websocket:sockjs/>
         </websocket:stomp-endpoint>

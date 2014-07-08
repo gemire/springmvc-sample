@@ -20,7 +20,7 @@ chat_handlers = {
                 });
 
 
-        chat.stompClient.send('/app/registerUser', headers, messageBody);
+        chat.stompClient.send('/app/registerUserEndpoint', headers, messageBody);
         chat.isConnected = false;
         $("#disconnectButton").prop('disabled', !chat.isConnected);
         $("#connectButton").prop('disabled', chat.isConnected);
@@ -42,11 +42,27 @@ chat_handlers = {
                 });
 
 
-        chat.stompClient.send('/app/registerUser', headers, messageBody);
+        chat.stompClient.send('/app/registerUserEndpoint', headers, messageBody);
     },
     onActiveMembers: function(activeMembers)
     {
-        console.log("on activeMembers \n" + activeMembers + "\n");
+        var imLoggedIn = false;
+        var userN = null;
+        for (i=0;i<activeMembers.userList.length;i++)
+        {
+            userN = activeMembers.userList[i].userName;
+            console.log(userN);
+            if (userN == chat.userName)
+            {
+                imLoggedIn = true;
+            }
+        }
+        console.log("on activeMembers \n" + activeMembers.userList + "\n");
+        if (imLoggedIn == false)
+        {
+            chat.stompClient.disconnect();
+            console.log("stomp disconnect for "+chat.userName);
+        }
     },
     onMessage: function(data)
     {
