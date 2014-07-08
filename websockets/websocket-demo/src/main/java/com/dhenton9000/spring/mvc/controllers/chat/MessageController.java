@@ -25,7 +25,7 @@ import org.springframework.stereotype.Controller;
 public class MessageController {
 
     private final SimpMessagingTemplate template;
-	private static Logger log = LoggerFactory.getLogger(MessageController.class);
+    private static Logger log = LoggerFactory.getLogger(MessageController.class);
 
     // provided by the websocket namespace in spring-servlet.xml
     @Autowired
@@ -47,7 +47,8 @@ public class MessageController {
     }
 
     @MessageMapping("/registerUser")
-    public void registerUser(Message<Object> message,  @Payload RegisteredUser user) throws Exception {
+    public void registerUser(Message<Object> message,  @Payload RegisteredUser user) 
+            throws Exception {
         Principal principal = message.getHeaders().get(SimpMessageHeaderAccessor.USER_HEADER, Principal.class);
         String authedSender = principal.getName();
         log.debug("authedSender "+authedSender);
