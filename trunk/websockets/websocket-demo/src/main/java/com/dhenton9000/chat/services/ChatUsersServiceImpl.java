@@ -4,21 +4,26 @@
  * and open the template in the editor.
  */
 package com.dhenton9000.chat.services;
-
+ 
 import com.dhenton9000.chat.model.RegisteredUser;
+import com.dhenton9000.chat.model.RegisteredUserList;
 import com.google.common.cache.CacheBuilder;
 import com.google.common.cache.CacheLoader;
 import com.google.common.cache.LoadingCache;
-import java.util.ArrayList;
-import java.util.List;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.stereotype.Service;
 
+@Service
 public class ChatUsersServiceImpl implements ChatUsersService {
 
+    private static Logger log = LoggerFactory.getLogger(ChatUsersServiceImpl.class);
     private final LoadingCache<String, RegisteredUser> activeUsers
             = CacheBuilder.newBuilder().build(new CacheLoader<String, RegisteredUser>() {
 
                 @Override
                 public RegisteredUser load(String key) throws Exception {
+                    log.debug("registering a user ["+key+"]");
                     return new RegisteredUser(key);
                 }
 
@@ -26,17 +31,32 @@ public class ChatUsersServiceImpl implements ChatUsersService {
  
     @Override
     public RegisteredUser get(String username) {
+        log.debug("get "+username);
         return activeUsers.getUnchecked(username);
     }
 
     @Override
-    public List<RegisteredUser> getAllUsers() {
-        ArrayList<RegisteredUser> users = new ArrayList<>();
+    public RegisteredUserList  getAllUsers() {
+        RegisteredUserList  usersList = new RegisteredUserList();
         for (String user : activeUsers.asMap().keySet()) {
-            users.add(activeUsers.getUnchecked(user));
+            usersList.getUserList().add(activeUsers.getUnchecked(user));
 
         }
-        return users;
+         
+        return usersList;
+    }
+    
+    @Override
+    public long getUserCount()
+    {
+        return activeUsers.size();
+         
+    }
+
+    @Override
+    public void remove(String key) {
+         log.debug("remove "+key);
+         activeUsers.invalidate(key);
     }
 
 }

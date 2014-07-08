@@ -1,6 +1,7 @@
 var chat = {
     socketDest: null,
     isConnected: false,
+    userName: null,
     activeMembers: [],
     stompClient: null,
     events: {
@@ -12,9 +13,10 @@ var chat = {
 
 
     },
-    init: function(contextPath)
+    init: function(contextPath,userName)
     {
         this.socketDest = contextPath + "/chat";
+        this.userName = userName;
     },
     connect: function() {
         if ('WebSocket' in window) {
@@ -23,16 +25,21 @@ var chat = {
             console.log("socket dest '" + this.socketDest + "'");
             var socket = new SockJS(this.socketDest);
             this.stompClient = Stomp.over(socket);
-
             this.stompClient.connect('', '', function(frame) {
-               
+                
                 MESSAGE_PUMP.raiseEvent(frame, chat.events.ON_CONNECT);
-                chat.stompClient.subscribe('/user/queue/messages', function(message) {
-                    MESSAGE_PUMP.raiseEvent(JSON.parse(message.body), chat.events.ON_MESSAGE);
-                });
-                chat.stompClient.subscribe('/topic/active', function(activeMembers) {
+                
+                
+//                chat.stompClient.subscribe('/user/queue/messages', function(message) {
+//                    MESSAGE_PUMP.raiseEvent(JSON.parse(message.body), chat.events.ON_MESSAGE);
+//                });
+                chat.stompClient.subscribe('/topic/registerUser', function(activeMembersMessage) {
+                     console.log("xxx "+activeMembersMessage);
+                     var activeMembers = JSON.parse(activeMembersMessage.body);
+                     console.log("got something on topic registerUser "+activeMembers);
                      MESSAGE_PUMP.raiseEvent(activeMembers, chat.events.ON_ACTIVE_MEMBERS);
                 });
+                 
             });
 
 
@@ -43,8 +50,9 @@ var chat = {
     },
     close: function()
     {
-        this.stompClient.disconnect();
         MESSAGE_PUMP.raiseEvent(null, chat.events.ON_CLOSE);
+        this.stompClient.disconnect();
+        
     }
 };
 

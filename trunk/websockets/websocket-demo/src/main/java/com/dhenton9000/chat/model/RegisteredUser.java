@@ -16,6 +16,7 @@ public class RegisteredUser {
     
     
     private String userName;
+    private boolean requestRemoval = false;
 
     public RegisteredUser(String u)
     {
@@ -64,6 +65,20 @@ public class RegisteredUser {
     @Override
     public String toString() {
         return "RegisteredUser{" + "userName=" + userName + '}';
+    }
+
+    /**
+     * @return the requestRemoval
+     */
+    public boolean isRequestRemoval() {
+        return requestRemoval;
+    }
+
+    /**
+     * @param requestRemoval the requestRemoval to set
+     */
+    public void setRequestRemoval(boolean requestRemoval) {
+        this.requestRemoval = requestRemoval;
     }
     
 }
