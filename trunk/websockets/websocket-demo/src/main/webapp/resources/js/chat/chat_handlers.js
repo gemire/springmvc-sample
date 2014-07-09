@@ -11,19 +11,18 @@ chat_handlers = {
     },
     onClose: function(evt)
     {
-        var whoami = chat.userName;
-        var headers = {};
-        console.log("close occurred ", whoami);
-        var messageBody =
-                JSON.stringify({
-                    'userName': chat.userName, 'requestRemoval': true
-                });
-
-
-        chat.stompClient.send('/app/registerUserEndpoint', headers, messageBody);
-        chat.isConnected = false;
+        
         $("#disconnectButton").prop('disabled', !chat.isConnected);
         $("#connectButton").prop('disabled', chat.isConnected);
+        console.log("onClose");
+    },
+    
+    onCloseRequested: function(evt)
+    {
+        
+        $("#disconnectButton").prop('disabled', true);
+        $("#connectButton").prop('disabled', true);
+        console.log("onCloseRequested");
     },
     onConnect: function(frame)
     {
@@ -33,7 +32,7 @@ chat_handlers = {
         chat.isConnected = true;
         $("#disconnectButton").prop('disabled', !chat.isConnected);
         $("#connectButton").prop('disabled', chat.isConnected);
-        var headers = {};
+        var headers = {'requestRemoval': false};
 
 
         var messageBody =
@@ -51,17 +50,19 @@ chat_handlers = {
         for (i=0;i<activeMembers.userList.length;i++)
         {
             userN = activeMembers.userList[i].userName;
-            console.log(userN);
+            console.log("onActiveMembers --> "+ userN);
             if (userN == chat.userName)
             {
                 imLoggedIn = true;
+                break;
             }
         }
-        console.log("on activeMembers \n" + activeMembers.userList + "\n");
+
         if (imLoggedIn == false)
         {
             chat.stompClient.disconnect();
             console.log("stomp disconnect for "+chat.userName);
+            chat_handlers.onClose(null);
         }
     },
     onMessage: function(data)
@@ -74,6 +75,7 @@ chat_handlers = {
 
 MESSAGE_PUMP.subscribe(chat_handlers.onError, chat.events.ON_ERROR);
 MESSAGE_PUMP.subscribe(chat_handlers.onClose, chat.events.ON_CLOSE);
+MESSAGE_PUMP.subscribe(chat_handlers.onCloseRequested, chat.events.ON_CLOSE_REQUESTED);
 MESSAGE_PUMP.subscribe(chat_handlers.onMessage, chat.events.ON_MESSAGE);
 MESSAGE_PUMP.subscribe(chat_handlers.onConnect, chat.events.ON_CONNECT);
 MESSAGE_PUMP.subscribe(chat_handlers.onActiveMembers, chat.events.ON_ACTIVE_MEMBERS);
