@@ -6,13 +6,16 @@
 
 package com.dhenton9000.chat.model;
  
+import java.io.Serializable;
 
-public class ChatMessage {
+
+public class ChatMessage implements Serializable{
   
-  private String recipient;
-  
-  public String getRecipient() { return recipient; }
-  public void setRecipient(String recipient) { this.recipient = recipient; }
+    
+//  private String recipient;
+//  
+//  public String getRecipient() { return recipient; }
+//  public void setRecipient(String recipient) { this.recipient = recipient; }
   
   private String sender;
   

@@ -9,7 +9,7 @@ var chat = {
         ON_CLOSE: "ON_CLOSE",
         ON_CLOSE_REQUESTED: "ON_CLOSE_REQUESTED",
         ON_ERROR: "ON_ERROR",
-        ON_MESSAGE: "ON_MESSAGE",
+        ON_PUBLIC_MESSAGE: "ON_PUBLIC_MESSAGE",
         ON_ACTIVE_MEMBERS: "ON_ACTIVE_MEMBERS"
 
 
@@ -18,6 +18,7 @@ var chat = {
     {
         this.socketDest = contextPath + "/chat";
         this.userName = userName;
+       
     },
     connect: function() {
         if ('WebSocket' in window) {
@@ -30,11 +31,11 @@ var chat = {
                 
                 MESSAGE_PUMP.raiseEvent(frame, chat.events.ON_CONNECT);
                 
-                
-//                chat.stompClient.subscribe('/user/queue/messages', function(message) {
-//                    MESSAGE_PUMP.raiseEvent(JSON.parse(message.body), chat.events.ON_MESSAGE);
-//                    MESSAGE_PUMP.raiseEvent(message, chat.events.ON_MESSAGE);
-//                });
+                 
+                chat.stompClient.subscribe('/queue/public/chatMessages', function(message) {
+                    
+                    MESSAGE_PUMP.raiseEvent(message, chat.events.ON_PUBLIC_MESSAGE);
+                });
                 chat.stompClient.subscribe('/topic/registerUser', function(activeMembersMessage) {
                      console.log("xxx "+activeMembersMessage);
                      var activeMembers = JSON.parse(activeMembersMessage.body);
@@ -66,6 +67,22 @@ var chat = {
         chat.isConnected = false;
         MESSAGE_PUMP.raiseEvent(null, chat.events.ON_CLOSE_REQUESTED);
         
+    },
+    
+    sendMessage: function()
+    {
+         
+        var textToSend = $('#sendMessageTextBox').val();
+        console.log("sending "+textToSend);
+         var messageBody =
+                JSON.stringify({
+                    'sender': chat.userName,
+                    'message': textToSend
+            
+                });
+
+        var headers = {};
+        chat.stompClient.send('/app/public/chat', headers, messageBody);
     }
 };
 

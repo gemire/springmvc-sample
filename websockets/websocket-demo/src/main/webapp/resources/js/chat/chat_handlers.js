@@ -16,6 +16,7 @@ chat_handlers = {
         
         $("#disconnectButton").prop('disabled', !chat.isConnected);
         $("#connectButton").prop('disabled', chat.isConnected);
+        $("#sendMessageButton").prop('disabled', !chat.isConnected); 
         console.log("onClose");
         chat_handlers.usersList.empty();
     },
@@ -25,6 +26,7 @@ chat_handlers = {
         
         $("#disconnectButton").prop('disabled', true);
         $("#connectButton").prop('disabled', true);
+        $("#sendMessageButton").prop('disabled', true); 
         console.log("onCloseRequested");
     },
     onConnect: function(frame)
@@ -35,6 +37,7 @@ chat_handlers = {
         chat.isConnected = true;
         $("#disconnectButton").prop('disabled', !chat.isConnected);
         $("#connectButton").prop('disabled', chat.isConnected);
+        $("#sendMessageButton").prop('disabled', !chat.isConnected); 
         var headers = {'requestRemoval': false};
 
 
@@ -73,9 +76,19 @@ chat_handlers = {
             chat_handlers.onClose(null);
         }
     },
-    onMessage: function(data)
+    onPublicMessage: function(message)
     {
-        console.log("message event\n" + data + "\n");
+        // the parameter is the complete message  
+        // JSON.parse(message.body) is the body of the message as JSON
+        //console.log(message);
+        //console.log("message event\n" + message + "\n");
+        //sender, message
+        var messageObj = JSON.parse(message.body);
+        var template = "<div><span class=\"label label-primary\">{{sender}}</span> <span class=\"messageClass\">{{message}}</span></div> ";
+        var messageAppendObj = Mustache.to_html(template,messageObj);
+        $('#chatArea').append(messageAppendObj);
+        
+        
     }
 
 
@@ -84,7 +97,7 @@ chat_handlers = {
 MESSAGE_PUMP.subscribe(chat_handlers.onError, chat.events.ON_ERROR);
 MESSAGE_PUMP.subscribe(chat_handlers.onClose, chat.events.ON_CLOSE);
 MESSAGE_PUMP.subscribe(chat_handlers.onCloseRequested, chat.events.ON_CLOSE_REQUESTED);
-MESSAGE_PUMP.subscribe(chat_handlers.onMessage, chat.events.ON_MESSAGE);
+MESSAGE_PUMP.subscribe(chat_handlers.onPublicMessage, chat.events.ON_PUBLIC_MESSAGE);
 MESSAGE_PUMP.subscribe(chat_handlers.onConnect, chat.events.ON_CONNECT);
 MESSAGE_PUMP.subscribe(chat_handlers.onActiveMembers, chat.events.ON_ACTIVE_MEMBERS);
   
