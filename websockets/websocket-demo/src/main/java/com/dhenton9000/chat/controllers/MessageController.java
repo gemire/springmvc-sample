@@ -61,6 +61,21 @@ public class MessageController {
         // template.convertAndSendToUser(recipient, "/queue/messages", chatMessage);
     }
 
+    /**
+     * This endpoint processes requests for users logging onto chat or
+     * logging off.
+     * 
+     * The client sends a header called requestRemoval (true|false) which 
+     * determines adding or removing a user the stomp js client send its to
+     * registerUserEndpoint and the results are broadcast to topic/registerUser
+     * 
+     * 
+     * @param message
+     * @param user
+     * @param principal
+     * @return
+     * @throws Exception if the requestRemoval Header is not present
+     */
     @MessageMapping("/registerUserEndpoint")
     @SendTo("/topic/registerUser")
     public RegisteredUserList registerUser(Message<Object> message, RegisteredUser user,Principal principal)

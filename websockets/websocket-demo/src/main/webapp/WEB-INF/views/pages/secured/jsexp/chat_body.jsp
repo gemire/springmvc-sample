@@ -55,7 +55,7 @@
         <h4 class="list-group-item-heading">Logged In Users</h4>
         <div class="list-group" id="usersList">
 
-            <!--  <div class="list-group-item">Mannie</div> -->
+            
 
 
         </div>

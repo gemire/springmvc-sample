@@ -5,6 +5,8 @@
  */
 
 chat_handlers = {
+    
+    usersList: $('#usersList'),
     onError: function(evt)
     {
         console.log("error event ", evt);
@@ -15,6 +17,7 @@ chat_handlers = {
         $("#disconnectButton").prop('disabled', !chat.isConnected);
         $("#connectButton").prop('disabled', chat.isConnected);
         console.log("onClose");
+        chat_handlers.usersList.empty();
     },
     
     onCloseRequested: function(evt)
@@ -37,7 +40,7 @@ chat_handlers = {
 
         var messageBody =
                 JSON.stringify({
-                    'userName': whoami, 'requestRemoval': false
+                    'userName': whoami
                 });
 
 
@@ -45,18 +48,23 @@ chat_handlers = {
     },
     onActiveMembers: function(activeMembers)
     {
+         
+        chat_handlers.usersList.empty();
         var imLoggedIn = false;
         var userN = null;
         for (i=0;i<activeMembers.userList.length;i++)
         {
             userN = activeMembers.userList[i].userName;
             console.log("onActiveMembers --> "+ userN);
+            var d = $("<div></div>").text(userN);
+            d.addClass("list-group-item-success");
+            chat_handlers.usersList.append(d);
             if (userN == chat.userName)
             {
-                imLoggedIn = true;
-                break;
+                imLoggedIn = true;             
             }
         }
+        
 
         if (imLoggedIn == false)
         {
