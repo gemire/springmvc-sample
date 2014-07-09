@@ -33,6 +33,7 @@ var chat = {
                 
 //                chat.stompClient.subscribe('/user/queue/messages', function(message) {
 //                    MESSAGE_PUMP.raiseEvent(JSON.parse(message.body), chat.events.ON_MESSAGE);
+//                    MESSAGE_PUMP.raiseEvent(message, chat.events.ON_MESSAGE);
 //                });
                 chat.stompClient.subscribe('/topic/registerUser', function(activeMembersMessage) {
                      console.log("xxx "+activeMembersMessage);
@@ -57,7 +58,7 @@ var chat = {
         console.log("close occurred ", whoami);
         var messageBody =
                 JSON.stringify({
-                    'userName': chat.userName, 'requestRemoval': true
+                    'userName': chat.userName
                 });
 
 
