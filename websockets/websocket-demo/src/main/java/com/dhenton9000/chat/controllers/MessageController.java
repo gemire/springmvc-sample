@@ -12,10 +12,13 @@ import com.dhenton9000.chat.model.RegisteredUser;
 import com.dhenton9000.chat.model.RegisteredUserList;
 import com.dhenton9000.chat.services.ChatUsersService;
 import java.security.Principal;
+import java.util.List;
+import java.util.Map;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.messaging.Message;
+import org.springframework.messaging.MessageHeaders;
 import org.springframework.messaging.handler.annotation.MessageMapping;
 import org.springframework.messaging.handler.annotation.Payload;
 import org.springframework.messaging.handler.annotation.SendTo;
@@ -27,6 +30,7 @@ import org.springframework.stereotype.Controller;
 public class MessageController {
 
     private final SimpMessagingTemplate template;
+    public static final String REQUEST_REMOVAL_HEADER = "requestRemoval";
     private final ChatUsersService chatUsersService;
     private static Logger log = LoggerFactory.getLogger(MessageController.class);
 
@@ -59,27 +63,39 @@ public class MessageController {
 
     @MessageMapping("/registerUserEndpoint")
     @SendTo("/topic/registerUser")
-    public RegisteredUserList registerUser( RegisteredUser user,Principal principal)
+    public RegisteredUserList registerUser(Message<Object> message, RegisteredUser user,Principal principal)
             throws Exception {
+        Boolean requestRemoval = null;
+        Map<String, List<String>> nativeHeaders = 
+                message.getHeaders().get(SimpMessageHeaderAccessor.NATIVE_HEADERS,Map.class);
         
+        List<String> removalHeaders = nativeHeaders.get(REQUEST_REMOVAL_HEADER);
+        if (removalHeaders != null)
+        {
+            requestRemoval =  Boolean.parseBoolean(removalHeaders.get(0));
+        }
+        else
+        {
+            throw new RuntimeException("requestRemoval header not present");
+        }
+            
+ 
         String authedSender = principal.getName();
         log.debug("authedSender " + authedSender);
         log.debug("userName " + user.getUserName());
-        log.debug("requested "+user.isRequestRemoval());
-        //user.setUserName(user.getUserName()+"zzz");
-
-        //user = chatUsersService.get(user.getUserName());
-        if (user.isRequestRemoval()) {
+        log.debug("request removal header "+requestRemoval);
+        
+        if (requestRemoval) {
             chatUsersService.remove(user.getUserName());
-            // userList.getUserList().remove(user);
         } else {
             chatUsersService.get(user.getUserName());
-            // userList.getUserList().add(user);
+
         }
         RegisteredUserList userList = chatUsersService.getAllUsers();
         log.debug("in register User "+userList.getUserList());
         return userList ;
 
     }
+    
 
 }

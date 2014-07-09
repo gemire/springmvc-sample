@@ -22,7 +22,7 @@
 <div class="panel">
     <div class="panel-body">
               <button id="connectButton" onclick="chat.connect()" class="btn btn-success btn-sm">Connect</button>
-              <button id="disconnectButton" onclick="chat.close()"  disabled="true"  class=" btn btn-danger btn-sm">Disconnect</button>
+              <button id="disconnectButton" onclick="chat.closeRequested()"  disabled="true"  class=" btn btn-danger btn-sm">Disconnect</button>
    
         
     </div> 

@@ -7,6 +7,7 @@ var chat = {
     events: {
         ON_CONNECT: "ON_CONNECT",
         ON_CLOSE: "ON_CLOSE",
+        ON_CLOSE_REQUESTED: "ON_CLOSE_REQUESTED",
         ON_ERROR: "ON_ERROR",
         ON_MESSAGE: "ON_MESSAGE",
         ON_ACTIVE_MEMBERS: "ON_ACTIVE_MEMBERS"
@@ -48,10 +49,21 @@ var chat = {
             console.log('Websocket not supported');
         }
     },
-    close: function()
+    closeRequested: function()
     {
-        MESSAGE_PUMP.raiseEvent(null, chat.events.ON_CLOSE);
-        //this.stompClient.disconnect();
+       
+        var whoami = chat.userName;
+        var headers = {'requestRemoval': true};
+        console.log("close occurred ", whoami);
+        var messageBody =
+                JSON.stringify({
+                    'userName': chat.userName, 'requestRemoval': true
+                });
+
+
+        chat.stompClient.send('/app/registerUserEndpoint', headers, messageBody);
+        chat.isConnected = false;
+        MESSAGE_PUMP.raiseEvent(null, chat.events.ON_CLOSE_REQUESTED);
         
     }
 };
