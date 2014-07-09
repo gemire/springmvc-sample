@@ -18,10 +18,9 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.messaging.Message;
-import org.springframework.messaging.MessageHeaders;
 import org.springframework.messaging.handler.annotation.MessageMapping;
-import org.springframework.messaging.handler.annotation.Payload;
 import org.springframework.messaging.handler.annotation.SendTo;
+      
 import org.springframework.messaging.simp.SimpMessageHeaderAccessor;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.stereotype.Controller;
@@ -46,19 +45,22 @@ public class MessageController {
      *
      * @param message
      * @param chatMessage
+     * @param principal
+     * @return 
      * @throws Exception
      */
-    @MessageMapping("/chat")
-    public void handleChatMessage(Message<Object> message, @Payload ChatMessage chatMessage) throws Exception {
-        Principal principal = message.getHeaders().get(SimpMessageHeaderAccessor.USER_HEADER, Principal.class);
-        String authedSender = principal.getName();
-        chatMessage.setSender(authedSender);
-        String recipient = chatMessage.getRecipient();
-        if (!authedSender.equals(recipient)) {
+    @MessageMapping("/public/chat")
+    @SendTo("/queue/public/chatMessages") 
+    public ChatMessage handleChatMessage(Message<Object> message,ChatMessage chatMessage, Principal principal) 
+            throws Exception {
+        
+        log.debug("chat message received "+chatMessage.getMessage());
+       // if (!authedSender.equals(recipient)) {
             // template.convertAndSendToUser(authedSender, "/queue/messages", chatMessage);
-        }
+       // }
 
         // template.convertAndSendToUser(recipient, "/queue/messages", chatMessage);
+        return chatMessage;
     }
 
     /**
@@ -112,5 +114,16 @@ public class MessageController {
 
     }
     
-
+// subscribe mapping works for js client subscribing to /app/fred its used
+// to talk to this controller at the time of subscription, without sending a 
+// message
+    
+//    @SubscribeMapping("/fred")
+//    public void actionForUserTopicSubscription(Principal principal)
+//    {
+//       if (principal != null) 
+//          log.debug("actionForUserTopicSubscription "+principal.getName());
+//       else
+//          log.debug("actionForUserTopicSubscription null");
+//    }
 }
