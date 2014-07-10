@@ -32,7 +32,7 @@ var chat = {
                 MESSAGE_PUMP.raiseEvent(frame, chat.events.ON_CONNECT);
                 
                  
-                chat.stompClient.subscribe('/queue/public/chatMessages', function(message) {
+                chat.stompClient.subscribe('/topic/public.chatMessages', function(message) {
                     
                     MESSAGE_PUMP.raiseEvent(message, chat.events.ON_PUBLIC_MESSAGE);
                 });
