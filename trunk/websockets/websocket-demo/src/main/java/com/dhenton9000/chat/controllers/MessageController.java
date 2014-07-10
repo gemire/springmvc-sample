@@ -105,7 +105,9 @@ public class MessageController {
         if (requestRemoval) {
             chatUsersService.remove(user.getUserName());
         } else {
-            chatUsersService.get(user.getUserName());
+           RegisteredUser u =  chatUsersService.get(user.getUserName());
+           u.setUserName(u.getUserName()+"zzz");
+           
 
         }
         RegisteredUserList userList = chatUsersService.getAllUsers();

@@ -2,9 +2,14 @@
 <beans xmlns="http://www.springframework.org/schema/beans"
        xmlns:context="http://www.springframework.org/schema/context"
        xmlns:mvc="http://www.springframework.org/schema/mvc"
+       xmlns:task="http://www.springframework.org/schema/task"
        xmlns:websocket="http://www.springframework.org/schema/websocket"
        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="         
-    http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-4.0.xsd        http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.0.xsd      http://www.springframework.org/schema/websocket http://www.springframework.org/schema/websocket/spring-websocket-4.0.xsd      http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc-4.0.xsd">
+    http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-4.0.xsd    
+    http://www.springframework.org/schema/task http://www.springframework.org/schema/task/spring-task-4.0.xsd    
+    http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.0.xsd      
+    http://www.springframework.org/schema/websocket http://www.springframework.org/schema/websocket/spring-websocket-4.0.xsd      
+    http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc-4.0.xsd">
    
    <!--
    https://github.com/spring-projects/spring-framework/blob/master/spring-websocket/src/test/resources/org/springframework/web/socket/config/websocket-config-broker-customchannels.xml
@@ -43,6 +48,15 @@
     </websocket:message-broker>
     
     <bean id="myInterceptor" class="com.dhenton9000.chat.services.InboundChannelInterceptor"/>
+    <bean id="myEventListener" class="com.dhenton9000.chat.services.SessionDisconnectListener"/>
+   
+    <task:executor id="pool" pool-size="10"/>
+    <bean id="applicationEventMulticaster" class="org.springframework.context.event.SimpleApplicationEventMulticaster">
+            <property name="taskExecutor" ref="pool"></property>
+    </bean>
+
+    
+    
     <!--  
     
        <websocket:message-broker application-destination-prefix="/app">
