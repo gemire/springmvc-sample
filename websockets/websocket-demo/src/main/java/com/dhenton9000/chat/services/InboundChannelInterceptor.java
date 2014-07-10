@@ -29,33 +29,36 @@ package com.dhenton9000.chat.services;
  * limitations under the License.
  */
 
+import com.dhenton9000.chat.model.RegisteredUser;
+import java.security.Principal;
 import java.util.Map;
 import java.util.concurrent.atomic.AtomicInteger;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.messaging.Message;
 import org.springframework.messaging.MessageChannel;
 import org.springframework.messaging.simp.SimpMessageHeaderAccessor;
-import org.springframework.messaging.support.ChannelInterceptorAdapter;
 import org.springframework.messaging.simp.SimpMessageType;
-import java.security.Principal;
+import org.springframework.messaging.support.ChannelInterceptorAdapter;
 
 /**
  * @author Mark Fisher
  */
 public class InboundChannelInterceptor  extends ChannelInterceptorAdapter {
 
-	private final AtomicInteger sendCount = new AtomicInteger();
-        private static Logger log = LoggerFactory.getLogger(InboundChannelInterceptor.class);
-	private final AtomicInteger receiveCount = new AtomicInteger();
-
-
+	 
+       private static Logger log = LoggerFactory.getLogger(InboundChannelInterceptor.class);
+       private   ChatSessionService chatSessionService;
+        
+        
 	@Override
 	public Message<?> preSend(Message<?> message, MessageChannel channel) {
-		sendCount.incrementAndGet();
+		 
                 SimpMessageType type = message.getHeaders().get(SimpMessageHeaderAccessor.MESSAGE_TYPE_HEADER,SimpMessageType.class);
                 log.debug("preSend "+type.toString());
+                String sessionIdObj = message.getHeaders().get(SimpMessageHeaderAccessor.SESSION_ID_HEADER,String.class);
+                log.debug("preSend session id "+sessionIdObj);
                 Principal p = message.getHeaders().get(SimpMessageHeaderAccessor.USER_HEADER,Principal.class);
                 if (p != null)
                 {
@@ -66,23 +69,55 @@ public class InboundChannelInterceptor  extends ChannelInterceptorAdapter {
                     log.debug("principal null");
                 }
                 
+                
+                switch (type)
+                {
+                    case CONNECT:
+                        if (p != null)
+                            chatSessionService.put(sessionIdObj,new RegisteredUser(p.getName()));
+                        break;
+                    case MESSAGE:
+                        break;
+                    case DISCONNECT:
+                        chatSessionService.invalidate(sessionIdObj);
+                        break;
+                    case SUBSCRIBE:
+                        break;
+                        
+                    case HEARTBEAT:
+                        break;
+                }
+                
+                
+                
 		return message;
 	}
 
 	@Override
 	public Message<?> postReceive(Message<?> message, MessageChannel channel) {
-		receiveCount.incrementAndGet();
+		 
                 SimpMessageType type = message.getHeaders().get(SimpMessageHeaderAccessor.MESSAGE_TYPE_HEADER,SimpMessageType.class);
                 log.debug("postRecieve "+type.toString());
 		return message;
 	}
 
-	public int getSendCount() {
-		return this.sendCount.get();
-	}
+	 
 
-	public int getReceiveCount() {
-		return this.receiveCount.get();
-	}
+	 
+
+    /**
+     * @return the chatSessionService
+     */
+    public ChatSessionService getChatSessionService() {
+        return chatSessionService;
+    }
+
+    /**
+     * @param chatSessionService the chatSessionService to set
+     */
+     @Autowired
+    public void setChatSessionService(ChatSessionService chatSessionService) {
+        this.chatSessionService = chatSessionService;
+    }
 
 }

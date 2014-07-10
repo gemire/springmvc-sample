@@ -30,9 +30,10 @@ public class ChatUsersServiceImpl implements ChatUsersService {
             });
  
     @Override
-    public RegisteredUser get(String username) {
-        log.debug("get "+username);
-        return activeUsers.getUnchecked(username);
+    public RegisteredUser get(String key) {
+        log.debug("get "+key);
+        
+        return activeUsers.getUnchecked(key);
     }
 
     @Override
