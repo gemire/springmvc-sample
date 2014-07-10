@@ -84,8 +84,11 @@ chat_handlers = {
         //console.log("message event\n" + message + "\n");
         //sender, message
         var messageObj = JSON.parse(message.body);
+        console.log("onPublicMessage: message: '"+messageObj.message+"'");
+        
         var template = "<div><span class=\"label label-primary\">{{sender}}</span> <span class=\"messageClass\">{{message}}</span></div> ";
         var messageAppendObj = Mustache.to_html(template,messageObj);
+        console.log("onPublicMessage "+messageAppendObj);
         $('#chatArea').append(messageAppendObj);
         
         

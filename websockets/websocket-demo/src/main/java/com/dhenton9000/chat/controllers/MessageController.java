@@ -50,7 +50,7 @@ public class MessageController {
      * @throws Exception
      */
     @MessageMapping("/public/chat")
-    @SendTo("/queue/public/chatMessages") 
+    @SendTo("/topic/public.chatMessages") 
     public ChatMessage handleChatMessage(Message<Object> message,ChatMessage chatMessage, Principal principal) 
             throws Exception {
         

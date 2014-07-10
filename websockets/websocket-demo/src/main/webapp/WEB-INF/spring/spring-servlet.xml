@@ -6,9 +6,12 @@
        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="         
     http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-4.0.xsd        http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.0.xsd      http://www.springframework.org/schema/websocket http://www.springframework.org/schema/websocket/spring-websocket-4.0.xsd      http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc-4.0.xsd">
    
-   
+   <!--
+   https://github.com/spring-projects/spring-framework/blob/master/spring-websocket/src/test/resources/org/springframework/web/socket/config/websocket-config-broker-customchannels.xml
+   -->
      
     <websocket:message-broker application-destination-prefix="/app">
+      
         <websocket:stomp-endpoint path="/simplemessages">
            <!-- <websocket:handshake-handler ref="myHandler"/> -->
             <websocket:sockjs/>
@@ -21,14 +24,25 @@
            <!-- <websocket:handshake-handler ref="myHandler"/> -->
             <websocket:sockjs/>
         </websocket:stomp-endpoint>
+        
         <websocket:stomp-broker-relay  
             heartbeat-receive-interval="5000"
             heartbeat-send-interval="5000" prefix="/topic,/queue"
             relay-host="localhost" relay-port="61613"
             system-login="syslogin" system-passcode="syspass" virtual-host="example.org"/>
+  
+         <websocket:client-inbound-channel>
+            <websocket:executor core-pool-size="100" max-pool-size="200" keep-alive-seconds="600"/>
+            <websocket:interceptors>
+                <ref bean="myInterceptor"/>
+            </websocket:interceptors>
+            
+        </websocket:client-inbound-channel>
+        
+        
     </websocket:message-broker>
     
-    
+    <bean id="myInterceptor" class="com.dhenton9000.chat.services.InboundChannelInterceptor"/>
     <!--  
     
        <websocket:message-broker application-destination-prefix="/app">
@@ -57,12 +71,12 @@
 
 
     <bean id="messageSource"   
-    class="org.springframework.context.support.ResourceBundleMessageSource">  
-    <property name="basenames">  
-        <list>
-            <value>appMessages</value>
-        </list>
-    </property>
+          class="org.springframework.context.support.ResourceBundleMessageSource">  
+        <property name="basenames">  
+            <list>
+                <value>appMessages</value>
+            </list>
+        </property>
     </bean>
     
     <websocket:handlers>
