@@ -17,22 +17,26 @@
      
     <websocket:message-broker application-destination-prefix="/app">
       
+        
+        <!-- these are the endpoints for websocket/sockjs and represent
+             the initial connection they have nothing to due with topics,
+             queues, or app destination  spring uses these to make a web
+             socket based on a url -->
+             
+             
         <websocket:stomp-endpoint path="/simplemessages">
            <!-- <websocket:handshake-handler ref="myHandler"/> -->
             <websocket:sockjs/>
         </websocket:stomp-endpoint>
         <websocket:stomp-endpoint path="/chat">
-           <!-- <websocket:handshake-handler ref="myHandler"/> -->
-            <websocket:sockjs/>
-        </websocket:stomp-endpoint>
-        <websocket:stomp-endpoint path="/registerUser">
-           <!-- <websocket:handshake-handler ref="myHandler"/> -->
+           
             <websocket:sockjs/>
         </websocket:stomp-endpoint>
         
+        
         <websocket:stomp-broker-relay  
             heartbeat-receive-interval="5000"
-            heartbeat-send-interval="5000" prefix="/topic,/queue"
+            heartbeat-send-interval="5000" prefix="/topic/,/queue/"
             relay-host="localhost" relay-port="61613"
             system-login="syslogin" system-passcode="syspass" virtual-host="example.org"/>
   

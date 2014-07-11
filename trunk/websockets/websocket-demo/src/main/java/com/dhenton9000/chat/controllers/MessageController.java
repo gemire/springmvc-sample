@@ -106,7 +106,7 @@ public class MessageController {
             chatUsersService.remove(user.getUserName());
         } else {
            RegisteredUser u =  chatUsersService.get(user.getUserName());
-           u.setUserName(u.getUserName()+"zzz");
+          // u.setUserName(u.getUserName()+"zzz");
            
 
         }
