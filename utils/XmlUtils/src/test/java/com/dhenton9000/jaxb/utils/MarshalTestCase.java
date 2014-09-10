@@ -62,7 +62,8 @@ public class MarshalTestCase {
         Obj2JSON = MarshallUtils.Obj2JSON("com.dhenton9000.jaxb.utils", k);
         log.debug("\nyyy\n"+Obj2JSON);
         
-        
+        Groups z = (Groups) MarshallUtils.JSON2Obj("com.dhenton9000.jaxb.utils",Obj2JSON,Groups.class);
+        assertEquals(45,z.getId());
     }
    
 }///////////////////////////////////////////////////////////////////////
