@@ -10,6 +10,7 @@ package com.dhenton9000.jaxb.utils;
 import com.sun.jersey.api.json.JSONConfiguration;
 import com.sun.jersey.api.json.JSONJAXBContext;
 import com.sun.jersey.api.json.JSONMarshaller;
+import com.sun.jersey.api.json.JSONUnmarshaller;
 import java.io.ByteArrayOutputStream;
 import java.io.StringReader;
 import java.io.UnsupportedEncodingException;
@@ -99,6 +100,16 @@ public class MarshallUtils {
         return o;
     }
     
+    public static Object JSON2Obj(String contextPath,String jsonString, Class targetClass) throws JAXBException
+    {
+        Map props = new HashMap<>();
+        JSONJAXBContext context   = new JSONJAXBContext(contextPath);
+        JSONUnmarshaller m = context.createJSONUnmarshaller();
+        StringReader sReader = new StringReader(jsonString);
+        Object r = m.unmarshalFromJSON(sReader, targetClass);
+        return r;
+    }
+    
     
   /**
      * generates xml string from a appropriately marked jaxb object
@@ -132,7 +143,9 @@ public class MarshallUtils {
     }
     /**
      * this requires a jaxb.index file in the contextPath, which is a collection
-     * of packages that contain classes with jaxb annotations, it should be
+     * of simple class names. The file resides in the same folder as the annotated
+     * classes see com/dhenton9000/jaxb/utils/jaxb.index
+     * 
      * the individual class names
      * @param contextPath
      * @param ob
