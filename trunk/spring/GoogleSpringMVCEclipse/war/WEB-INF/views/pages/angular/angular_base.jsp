@@ -69,7 +69,8 @@ body {
 </style>
 
   <script src="http://code.jquery.com/jquery.js"></script> 
-
+<script src="js/bootstrap.min.js"
+	type="text/javascript"></script>
 <script src="js/angular/restaurant/libs/angular.js/angular.js"
 	type="text/javascript"></script>
 <link href="css/angular/angular_restaurant.css" rel="stylesheet"
