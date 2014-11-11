@@ -68,7 +68,7 @@ body {
 }
 </style>
 
-<!-- <script src="http://code.jquery.com/jquery.js"></script>-->
+  <script src="http://code.jquery.com/jquery.js"></script> 
 
 <script src="js/angular/restaurant/libs/angular.js/angular.js"
 	type="text/javascript"></script>
