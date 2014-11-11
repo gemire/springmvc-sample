@@ -106,6 +106,7 @@
                 <value>/WEB-INF/tiles/tiles-defs-jquery.xml</value>
                 <value>/WEB-INF/tiles/tiles-defs-bootstrap.xml</value>
                 <value>/WEB-INF/tiles/tiles-defs-backbone.xml</value>
+                <value>/WEB-INF/tiles/tiles-defs-angular.xml</value>
                 <value>/WEB-INF/tiles/tiles-defs-d3.xml</value>
                 <value>/WEB-INF/tiles/tiles-defs-database.xml</value>
                 <!-- white space sensitive reformatting screws this up!! -->

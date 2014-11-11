@@ -110,7 +110,7 @@
                         <ul class="dropdown-menu">
                           
                            <li><a href="<c:out value="${baseURL}backbone/demos/js/model" />">Javascript Model/View</a></li>
-                            	
+                           <li><a href="<c:out value="${baseURL}angular/restaurant" />">Angular Restaurant App</a></li> 	
                          	<li class="dropdown-submenu"><a tabindex="-1" href="#">Backbone</a>
                             <ul  class="dropdown-menu">
 	                             <li><a href="<c:out value="${baseURL}backbone/demos/localstorage" />">Backbone Local Storage</a></li>
