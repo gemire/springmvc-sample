@@ -8,7 +8,7 @@
 %>
 
 
- 
+ <div ng-app="restaurantApp">
       <div class="container  restaurantContainer span12">
 
 
@@ -216,5 +216,5 @@
 
         </div>    
 
-       
+ </div>      
        

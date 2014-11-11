@@ -106,7 +106,7 @@
 
                 <ul class="nav pull-left">
                     <li class="dropdown">
-                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">Framework Demos<b class="caret"></b></a>
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">Javascript Framework Demos<b class="caret"></b></a>
                         <ul class="dropdown-menu">
                           
                            <li><a href="<c:out value="${baseURL}backbone/demos/js/model" />">Javascript Model/View</a></li>
