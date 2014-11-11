@@ -202,7 +202,7 @@ public class RestaurantServiceImpl implements RestaurantService {
 	@Override
 	public Review saveReview(Long restaurantId, Review newReview) {
 		Restaurant parent = getRestaurant(restaurantId);
-		log.debug("hit saveReview "+restaurantId+" "+newReview.getId().getId());
+		//log.debug("hit saveReview "+restaurantId+" "+newReview.getId().getId());
 		 
 		
 		

@@ -114,6 +114,7 @@
   
          				   <li class="divider"></li>
          				   <li><a href="<c:out value="${baseURL}database/restaurant/load/main" />">Load Restaurants</a></li>
+         				   <li><a href="<c:out value="${baseURL}/backbone/demos/restservice/docs" />">Restaurant REST Service Docs</a></li>
                          	<li class="divider"></li>
                          	 <li class="dropdown-submenu"><a tabindex="-1" href="#">D3 Demos</a>
                             <ul  class="dropdown-menu">

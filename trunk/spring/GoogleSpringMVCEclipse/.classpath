@@ -60,6 +60,6 @@
 	<classpathentry exported="true" kind="lib" path="war/WEB-INF/lib/transaction-api-1.1.jar"/>
 	<classpathentry exported="true" kind="lib" path="war/WEB-INF/lib/validation-api-1.0.0.GA.jar"/>
 	<classpathentry kind="lib" path="extra jars/appengine-testing-1.8.2.jar"/>
-	<classpathentry kind="con" path="com.google.appengine.eclipse.core.GAE_CONTAINER"/>
+	<classpathentry kind="con" path="com.google.appengine.eclipse.core.GAE_CONTAINER/App Engine"/>
 	<classpathentry kind="output" path="war/WEB-INF/classes"/>
 </classpath>

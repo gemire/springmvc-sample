@@ -203,6 +203,10 @@ public class Restaurant implements Serializable {
 
 
 	public List<Review> getReviews() {
+		if (reviews == null)
+		{
+			reviews = new ArrayList<Review>();
+		}
 		return reviews;
 	}
 
