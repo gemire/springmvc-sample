@@ -1,1 +1,0 @@
-http://www.javacodegeeks.com/2012/08/observer-pattern-with-spring-events.html
