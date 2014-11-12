@@ -16,10 +16,10 @@
 
                 <div class="row scrollHeader container span12">
                     <span class="tableHeader" style="position: relative; left:20px">Name</span>
-                    <span class="tableHeader" style="position: relative; left:380px">City</span>
-                    <span class="tableHeader" style="position: relative; left:460px">St.</span>
-                    <span class="tableHeader" style="position: relative; left:480px">Zip</span>
-                    <span class="tableHeader" style="position: relative; left:485px">Ver.</span>
+                    <span class="tableHeader" style="position: relative; left:280px">City</span>
+                    <span class="tableHeader" style="position: relative; left:360px">St.</span>
+                    <span class="tableHeader" style="position: relative; left:370px">Zip</span>
+                    <span class="tableHeader" style="position: relative; left:375px">Ver.</span>
 
                 </div>
 
