@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<tree>
+	<level1 id="1" name="Clothing" checked="no" folder="open"
+		visible="yes">
+		<level2 id="201" name="Mens" checked="no" folder="closed"
+			visible="yes" />
+		<level2 id="202" name="Womens" checked="no" folder="open"
+			visible="yes">
+			<level3 id="303" name="Evening Wear" checked="yes" folder="closed"
+				visible="yes" />
+			<level3 id="304" name="Shoes" checked="yes" folder="closed"
+				visible="yes" />
+			<level3 id="306" name="Coats" checked="no" folder="closed"
+				visible="yes" />
+			<level3 id="305" name="Jewelry" checked="no" folder="closed"
+				visible="yes" />
+		</level2>
+		<level2 id="203" name="Childrens" checked="no" folder="open"
+			visible="yes">
+			<level3 id="307" name="Boys" checked="no" folder="closed"
+				visible="yes" />
+			<level3 id="308" name="Girls" checked="no" folder="closed"
+				visible="yes" />
+			<level3 id="309" name="Infants" checked="no" folder="closed"
+				visible="yes" />
+			<level3 id="310" name="Toddlers" checked="no" folder="closed"
+				visible="yes" />
+		</level2>
+	</level1>
+	<level1 id="2" name="Electronic Data" checked="no" folder="open"
+		visible="yes">
+		<level2 id="204" name="Cellphones" checked="no" folder="open"
+			visible="yes">
+			<level3 id="314" name="IPhone" checked="yes" folder="closed"
+				visible="yes" />
+			<level3 id="315" name="Galaxy" checked="yes" folder="closed"
+				visible="yes" />
+		</level2>
+		<level2 id="205" name="Cameras" checked="no" folder="closed"
+			visible="yes" />
+		<level2 id="206" name="TV/Home Entertainment" checked="no"
+			folder="closed" visible="yes" />
+	</level1>
+	<level1 id="3" name="Games" checked="no" folder="open" visible="yes" />
+	<level1 id="4" name="Home Improvement" checked="no" folder="closed"
+		visible="yes" />
+</tree>

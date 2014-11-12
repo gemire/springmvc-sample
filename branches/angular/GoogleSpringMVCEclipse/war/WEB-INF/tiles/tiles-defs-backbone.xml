@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8" ?> <!DOCTYPE tiles-definitions PUBLIC        "-//Apache Software Foundation//DTD Tiles Configuration 2.0//EN"        "http://tiles.apache.org/dtds/tiles-config_2_0.dtd">
+<tiles-definitions>
+
+    <!-- bootstrap -->
+	
+    <definition name="tiles.base.backbone.definition" extends="tiles.base.definition">
+
+        <put-attribute name="jsscripts" value="/WEB-INF/views/layout/backbone_scripts.jsp" />
+    </definition>
+ 
+    <definition name="tiles.backbone.demos.localstorage" extends="tiles.base.backbone.definition">
+        <put-attribute name="title" value="Backbone Local Storage" />
+        <put-attribute name="body"
+                       value="/WEB-INF/views/pages/backbone/localstorage_body.jsp" />
+        <put-attribute name="subTitle" value="Backbone Local Storage" />
+        <put-attribute name="jsscripts_app_specific" value="/WEB-INF/views/pages/backbone/localstorage_js.jsp" />
+        <put-attribute name="explainPanel" value="/WEB-INF/views/explain/backbone/localstorage.jsp" />
+        <put-attribute name="jsscripts" value="/WEB-INF/views/layout/backbone_scripts.jsp" />
+    </definition>
+    
+    <definition name="tiles.backbone.restservice" extends="tiles.base.backbone.definition">
+        <put-attribute name="title" value="Restaurant REST Service" />
+        <put-attribute name="body"
+                       value="/WEB-INF/views/pages/backbone/restservice_body.jsp" />
+        <put-attribute name="subTitle" value="Restaurant REST Service" />
+        
+        <put-attribute name="explainPanel" value="/WEB-INF/views/explain/backbone/restservice.jsp" />
+        
+    </definition>
+    
+      <definition name="tiles.backbone.demos.js.model" extends="tiles.base.definition">
+        <put-attribute name="title" value="Javascript Model/Message Demonstration" />
+        <put-attribute name="body"
+                       value="/WEB-INF/views/pages/backbone/js_model_body.jsp" />
+        <put-attribute name="subTitle" value="Javascript Model/Message Demonstration" />
+        <put-attribute name="jsscripts_app_specific" value="/WEB-INF/views/pages/backbone/js_model_scripts.jsp" />
+        <put-attribute name="explainPanel" value="/WEB-INF/views/explain/backbone/js_model_body.jsp" />
+       <!--    <put-attribute name="jsscripts" value="/WEB-INF/views/layout/tree_scripts.jsp" /> -->
+    </definition>
+    
+     <definition name="tiles.backbone.restaurant" extends="tiles.base.definition">
+        <put-attribute name="title" value="Backbone Restaurant Application" />
+        <put-attribute name="body"
+                       value="/WEB-INF/views/pages/backbone/backbone_restaurant_body.jsp" />
+        <put-attribute name="subTitle" value="Backbone Restaurant Application" />
+        <put-attribute name="jsscripts_app_specific" value="/WEB-INF/views/pages/backbone/backbone_restaurant_scripts.jsp" />
+        <put-attribute name="explainPanel" value="/WEB-INF/views/explain/backbone/backbone_restaurant_body.jsp" />
+       <!--    <put-attribute name="jsscripts" value="/WEB-INF/views/layout/tree_scripts.jsp" /> -->
+    </definition>
+	
+</tiles-definitions>

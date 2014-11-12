@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<tree>
+   
+    <level1 name="beta1" id="1001" checked="no" folder="open">
+        <level2 name="gamma1" id="2000" folder="closed" visible="yes" checked="yes"  />
+        <level2 name="gamma'2" id="2001" folder="closed"  visible="yes"  checked="no"  />
+        <level2 name="gamma3" id="2002" folder="closed"  visible="yes"  checked="no" />
+    </level1>
+    <level1 name="beta1" id="1002" folder="closed"  checked="no">
+         <level2 name="omega" id="8002" folder="closed"  visible="no"  checked="no" />
+    </level1>
+    <level1 name="omega" id="4001"  folder="open" checked="no">
+        <level2 name="manny" id="6000" folder="open" visible="yes" checked="yes">
+            <level3 name="level3" id="1000"   visible="yes"   checked="no"  />
+        </level2>
+        <level2 name="moe" id="6001"  folder="closed" visible="yes" checked="no"  />
+        <level2 name="jack" id="6002" folder="closed" visible="yes"  checked="no"  />
+    </level1>
+
+
+</tree>

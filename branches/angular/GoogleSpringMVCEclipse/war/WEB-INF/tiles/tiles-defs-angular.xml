@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8" ?> <!DOCTYPE tiles-definitions PUBLIC        "-//Apache Software Foundation//DTD Tiles Configuration 2.0//EN"        "http://tiles.apache.org/dtds/tiles-config_2_0.dtd">
+<tiles-definitions>
+
+    <!-- angular -->
+	
+    
+   <definition name="tiles.base.angular" template="/WEB-INF/views/pages/angular/angular_base.jsp">
+        <put-attribute name="title" value="" />
+        <put-attribute name="header" value="/WEB-INF/views/layout/header.jsp" />
+        <put-attribute name="menu" value="/WEB-INF/views/layout/menu.jsp" />
+        <put-attribute name="subTitle" value="Generic" />
+        <put-attribute name="body" value="" />
+        <put-attribute name="explainPanel" value="/WEB-INF/views/explain/default.jsp" />
+        <put-attribute name="footer" value="/WEB-INF/views/layout/footer.jsp" />
+    </definition>
+ 
+    
+    
+     <definition name="tiles.angular.restaurant" extends="tiles.base.angular">
+        <put-attribute name="title" value="Angular Restaurant Application" />
+        <put-attribute name="body"
+                       value="/WEB-INF/views/pages/angular/angular_restaurant_body.jsp" />
+        <put-attribute name="subTitle" value="Angular Restaurant Application" />
+        <put-attribute name="explainPanel" value="/WEB-INF/views/explain/angular/restaurant.jsp" />
+        
+    </definition>
+	
+</tiles-definitions>
