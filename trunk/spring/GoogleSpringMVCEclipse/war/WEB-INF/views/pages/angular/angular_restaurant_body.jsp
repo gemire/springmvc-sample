@@ -12,7 +12,7 @@
       <div class="container  restaurantContainer span12">
 
 
-            <div  class="row" ng-controller="listRestaurantController">
+            <div ng-controller="listRestaurantController">
 
                 <div class="row scrollHeader container span12">
                     <span class="tableHeader" style="position: relative; left:20px">Name</span>
@@ -103,7 +103,7 @@
 
                     </div><!-- end editRestaurantController -->
 
-                    <div id="reviewController" ng-controller="reviewController" class="span6 pull-right">
+                    <div id="reviewController" ng-controller="reviewController">
 
                         <h4 style="display: inline">Ratings</h4> 
 

@@ -26,9 +26,10 @@
 
 
 <link rel="stylesheet" href="css/bootstrap.min.css" media="screen">
+<!--  
 <link rel="stylesheet" href="css/bootstrap-responsive.min.css"
 	media="screen">
-
+-->
 
 <style type='text/css'>
 .row-separate {
@@ -111,10 +112,10 @@ body {
 				<tiles:insertAttribute name="menu" />
 			</div>
 
-			<div id='content' class='row-fluid'>
-				<div class='span12 main'>
+			<div id='content' class='row'>
+				 
 					<tiles:insertAttribute name="body" />
-				</div>
+				 
 			</div>
 
 			<div id="explainModal" class="modal hide fade" tabindex="-1"

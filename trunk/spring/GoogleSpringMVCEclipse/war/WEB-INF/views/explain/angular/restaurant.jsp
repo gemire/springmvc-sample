@@ -2,7 +2,7 @@
 
 
 <div>
-	This demonstration illustrates using <a href="http://angular.org">Angular</a>
+	This demonstration illustrates using <a href="http://angularjs.org">Angular</a>
 	for a client side editing application.
 
 
