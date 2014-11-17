@@ -1,39 +1,27 @@
 (function () {
 
-    var restaurantDAOService = function ($log,$resource) {
+    var restaurantDAOService = function ($log, $http) {
 
         var daoService = {};
         var localRestaurantCopy = null;
         var restaurantListIndex = {};
+        //@
         var setUpRestaurantList = function ()
-        
+
         {
             restaurantListIndex = {}
             daoService.getAllRestaurants().forEach(function (restaurant)
             {
                 restaurantListIndex[restaurant.id] = restaurant;
-                if (typeof restaurant.reviewDTOS == 'undefined')
+                if (typeof restaurant.reviewDTOs == 'undefined')
                 {
-                    restaurant.reviewDTOS = []; 
+                    restaurant.reviewDTOs = [];
                 }
             });
 
         };
 
-        /**
-         * the service will return either {id: XXXX} on success 
-         * or {{message: "XXX" errorClass: "XXX}
-         * @param {type} newRestaurant
-         * @returns a string with error message or null
-         */
-        daoService.saveRestaurant = function (newRestaurant)
-        {
-            var errorMessage = null;
-            var lookup = daoService.getRestaurantById(newRestaurant.id);
-            daoService.loadRestaurant(lookup, newRestaurant);
-            return errorMessage;
-        };
-
+        //@
         daoService.loadRestaurant = function (destRestaurant, sourceRestaurant)
         {
             destRestaurant.name = sourceRestaurant.name;
@@ -44,57 +32,104 @@
             destRestaurant.is_current = sourceRestaurant.is_current;
             destRestaurant.id = sourceRestaurant.id;
         }
-
+        //@
         daoService.getRestaurantById = function (id)
         {
-            return restaurantListIndex[id];
+            
+            var r =  restaurantListIndex[id];
+            if (typeof r ==='undefined' || r ===null)
+            {
+                console.log("lookup fail "+id + '    '+restaurantListIndex.length);
+            }
+            return r;
         };
+
+        //@
         daoService.getAllRestaurants = function ()
         {
-            return g_restaurantData;
+            return localRestaurantCopy;
+
         };
+
+        daoService.init = function ()
+        {
+            return  $http.get(g_restaurantUrlBase).
+                    success(function (data, status, headers, config) {
+                        console.log("dao init")
+                        localRestaurantCopy = data;
+                        setUpRestaurantList();
+                    }).
+                    error(function (data, status, headers, config) {
+
+                    });
+        }
+        
+         /** //@
+         * the service will return either {id: XXXX} on success 
+         * or {{message: "XXX" errorClass: "XXX}
+         * @param {type} newRestaurant
+         * @returns a string with error message or null
+         */
+        daoService.saveRestaurant = function (newRestaurant)
+        {
+            return $http.put(g_restaurantUrlBase  + newRestaurant.id, newRestaurant).
+                    success(function (data, status, headers, config) {
+                        var lookup = daoService.getRestaurantById(newRestaurant.id);
+                        console.log("save lookup "+lookup.id);
+                        daoService.loadRestaurant(lookup, newRestaurant);
+                    }) ;
+
+        };
+        
         /**
-         * 
+         * //@
          * @param {type} newRestaurant
          * @returns a string with error message or null
          */
         daoService.addRestaurant = function (r)
         {
-            var errorMessage = null;
-            this.getAllRestaurants().unshift(r);
-            r.reviewDTOs = [];
-            return errorMessage;
+            
+            return  $http.post(g_restaurantUrlBase, r).
+                    success(function (data, status, headers, config) {
+                        daoService.getAllRestaurants().unshift(r);
+                        r.reviewDTOs = [];
+                        r.id = data.id;
+                    }) ;
+             
         }
-
+        //@
         daoService.deleteRestaurant = function (restaurant)
         {
-            //locate the restaurant by walking the array
-            //
-            //splice it out
-            //setUpRestaurantList();
-            var errorMessage = null;
-            var idx = -1;
-            var resCollection = this.getAllRestaurants();
-            for (i = 0; i < resCollection.length; i++)
-            {
-                if (resCollection[i].id === restaurant.id)
-                {
-                    idx = i;
-                    break;
-                }
-            }
-            if (idx > -1)
-            {
-                resCollection.splice(idx, 1);
-                setUpRestaurantList();
-            }
 
+            console.log("delete restaurant daoService");
+            return  $http.delete(g_restaurantUrlBase  + restaurant.id).
+                    success(function (data, status, headers, config) {
+                        console.log("delete restaurant daoService 2");
+                        var idx = -1;
+                        var resCollection = daoService.getAllRestaurants();
+                        for (var i = 0; i < resCollection.length; i++)
+                        {
+                            if (resCollection[i].id === restaurant.id)
+                            {
+                                idx = i;
+                                break;
+                            }
+                        }
+                        if (idx > -1)
+                        {
+                            resCollection.splice(idx, 1);
+                            setUpRestaurantList();
+                        }
+
+                    }).error(function (data, status, headers, config) {
+                        console.log("dao delete error "+status);
+                    } )
 
         }
-        setUpRestaurantList();
+
         return daoService;
     };
-    restaurantDAOService.$inject = ['$log','$http'];
+    restaurantDAOService.$inject = ['$log', '$http'];
 
     angular.module('restaurantApp').factory('restaurantDAOService', restaurantDAOService);
 

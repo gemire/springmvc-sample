@@ -68,7 +68,10 @@ body {
 	margin: -20px -20px 20px;
 }
 </style>
-
+  <script>
+            
+            g_restaurantUrlBase = "<%= basePath %>"+"app/backbone/restaurant/";
+        </script>
   <script src="http://code.jquery.com/jquery.js"></script> 
 <script src="js/bootstrap.min.js"
 	type="text/javascript"></script>
@@ -138,12 +141,11 @@ body {
 
 
 			<tiles:insertAttribute name="footer" />
-
-
+			
 		</div>
 		<!-- end content -->
 	</div>
- <script src="js/angular/restaurant/app/mock/MockData.js" type="text/javascript"></script>
+        
         <script src="js/angular/restaurant/libs/angular.js/angular-resource.js" type="text/javascript"></script>
         <script src="js/angular/restaurant/app/app.js" type="text/javascript"></script>
         <script src="js/angular/restaurant/app/messagePump.js" type="text/javascript"></script>
