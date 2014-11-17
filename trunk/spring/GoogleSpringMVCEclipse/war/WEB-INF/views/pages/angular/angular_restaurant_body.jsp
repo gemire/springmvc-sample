@@ -53,22 +53,14 @@
 
             <div class="row">
                 <div class="span12">
-                    <div  id="editRestaurantController"  ng-controller="editRestaurantController" class="span5 pull-left">
+                    <div  id="editRestaurantController"  ng-controller="editRestaurantController" class="well well-large span5 pull-left">
                         <h4 style="display: inline-block">Restaurants</h4>
                         <div class="form-group">
 
                             <button  ng-show="canAdd" ng-click="addNewRestaurant()"   class="btn btn-small btn-primary"><i class="icon-pencil icon-white"></i> Add New Restaurant</button>
 
                         </div>
-                        <!-- form validation http://www.ng-newsletter.com/posts/validations.html 
-                        <div id="formError" style="border: thin solid red">
-                            {{editRestaurantForm.name.$error}}
-                            {{editRestaurantForm.name.$invalid}}
-                            <span class="error" ng-show="editRestaurantForm.name.$invalid">Name Required!</span><br>
-
-                        </div>
-                        -->
- 
+                      
 
                         <form class="form-inline" name="editRestaurantForm"  role="form" novalidate ng-show="recordPresent">
                             <label class="control-label" for="name"></label>
@@ -103,7 +95,7 @@
 
                     </div><!-- end editRestaurantController -->
 
-                    <div id="reviewController" ng-controller="reviewController">
+                    <div id="reviewController" class="span6" ng-controller="reviewController">
 
                         <h4 style="display: inline">Ratings</h4> 
 
