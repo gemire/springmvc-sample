@@ -107,7 +107,7 @@
 
 	</li>
 	<li>
-		<h3>remove(RestaurantDTO)</h3>
+		<h3>removeReview(String restaurantId, String reviewId)</h3>
 		<ul>
 			<li><b>description: </b> remove a review</li>
 			<li><b>path: </b> /review/{restaurantId}/{reviewId}</li>
