@@ -52,7 +52,7 @@
             <!-- https://docs.angularjs.org/api/ng/directive/input -->
 
             <div class="row">
-                <div class="span12">
+                <div class="span11">
                     <div  id="editRestaurantController"  ng-controller="editRestaurantController" class="well well-large span5 pull-left">
                         <h4 style="display: inline-block">Restaurants</h4>
                         <div class="form-group">
@@ -95,7 +95,7 @@
 
                     </div><!-- end editRestaurantController -->
 
-                    <div id="reviewController" class="span6" ng-controller="reviewController">
+                    <div id="reviewController" class="span5" ng-controller="reviewController">
 
                         <h4 style="display: inline">Ratings</h4> 
 
@@ -105,7 +105,7 @@
                             <form name="addReviewForm" role="form" novalidate>
                                 <div ng-switch-when="true" style="margin-bottom:5px">
 
-                                    <input required style="margin-right:3px"  ng-model="addNewReviewBuffer.reviewListing" name="reviewListing" id="reviewListing"  class="input-xlarge"  type="text">  
+                                    <input required style="margin-right:3px"  ng-model="addNewReviewBuffer.reviewListing" name="reviewListing" id="reviewListing"  class="input-large"  type="text">  
 
 
                                     <select  style="margin-right:2px" ng-model="addNewReviewBuffer.starRating"  class="input-mini">  
@@ -123,7 +123,7 @@
                                         <option>12</option>
                                         <option>13</option>
 
-                                    </select>    <span class="icon-star"></span> s
+                                    </select>    <span class="icon-star"></span> s 
                                     <div>
                                         <button  ng-click="saveNewReview()" class="btn btn-small btn-primary"> 
                                             <i class="icon-edit icon-white"></i> Save 
@@ -148,7 +148,7 @@
                                         <div ng-switch="review.isEditing">
                                             <div ng-switch-when="true" class="reviewRow" ng-class= "{true: 'editingReview', false: ''}[review.isEditing]">
 
-                                                <input style="margin-right:3px" required class="input-xlarge" ng-model="review.reviewListing" type="text">    
+                                                <input style="margin-right:3px" required class="input-large" ng-model="review.reviewListing" type="text">    
 
 
                                                 <select  style="margin-right:2px" required class="input-mini" ng-model="review.starRating" type="text">  
@@ -167,12 +167,14 @@
                                                     <option>13</option>
 
                                                 </select>    <span class="icon-star"></span> s
+                                                <div>
                                                 <button  ng-click="saveReviewEdit(review)" class="btn btn-mini btn-primary"> 
                                                     <i class="icon-edit icon-white"></i> 
                                                 </button>
                                                 <button ng-click="cancelReviewEdit(review)" class="btn btn-mini btn-danger">
                                                     <i class="icon-refresh  icon-white"></i>  
                                                 </button>
+                                                </div>
 
                                             </div>
                                             <div ng-switch-default  class="reviewRow">
