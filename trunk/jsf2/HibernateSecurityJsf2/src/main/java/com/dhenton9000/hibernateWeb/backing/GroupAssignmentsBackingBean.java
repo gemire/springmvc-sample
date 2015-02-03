@@ -10,7 +10,7 @@ import com.dhenton9000.hibernatesecurity.Groups;
 import com.dhenton9000.hibernatesecurity.Users;
 import com.dhenton9000.hibernatesecurity.Utils;
 import com.dhenton9000.hibernatesecurity.dao.DataAccessLayerException;
-import com.dhenton9000.hibernatesecurity.dao.SecurityDAO;
+ 
 import java.util.List;
 import javax.faces.event.ActionEvent;
 import javax.faces.event.ValueChangeEvent;
@@ -38,9 +38,9 @@ public class GroupAssignmentsBackingBean extends BaseBean {
 
     public GroupAssignmentsBackingBean() {
         if (groupItems == null) {
-            SecurityDAO dInfo = SecurityDAO.getInstance();
+             
             try {
-                List list = dInfo.findAll(Groups.class);
+                List list = this.getSecurityService().findAll(Groups.class);
                 groupItems = new SelectItem[list.size() + 1];
                 groupItems[0] = new SelectItem("0", "--Select  Group--");
                 for (int j = 0; j < list.size(); j++) {
@@ -72,14 +72,14 @@ public class GroupAssignmentsBackingBean extends BaseBean {
     }
 
     private void recalcAvailableUsers() {
-        SecurityDAO dInfo = SecurityDAO.getInstance();
+         
         List userData = null;
         if (selectedGroup == 0) {
             return;
         }
 
         try {
-            userData = dInfo.getAvailableUsersForGroups(selectedGroup);
+            userData = this.getSecurityService().getAvailableUsersForGroups(selectedGroup);
         } catch (DataAccessLayerException ex) {
 
             log.error("getAvailableUsers() " + Utils.createErrorMessage(ex));
@@ -92,13 +92,13 @@ public class GroupAssignmentsBackingBean extends BaseBean {
     }
 
     public void recalcUsers() {
-        SecurityDAO dInfo = SecurityDAO.getInstance();
+        
         List userData = null;
         if (selectedGroup == 0) {
             return;
         }
         try {
-            userData = dInfo.getUsersForGroups(selectedGroup);
+            userData = this.getSecurityService().getUsersForGroups(selectedGroup);
         } catch (DataAccessLayerException ex) {
 
             log.error("getUsers() " + Utils.createErrorMessage(ex));
@@ -154,13 +154,13 @@ public class GroupAssignmentsBackingBean extends BaseBean {
             return;
         }
 
-        SecurityDAO dInfo = SecurityDAO.getInstance();
+        
         u = (Users) uModel.getRowData();
         try {
-            gg = (Groups) dInfo.find(Groups.class, new Integer(this.getSelectedGroup()));
+            gg = (Groups) this.getSecurityService().find(Groups.class, new Integer(this.getSelectedGroup()));
             String uId = u.getUserId();
             int gId = gg.getId();
-            dInfo.deleteGroupAssignment(gId, uId);
+            this.getSecurityService().deleteGroupAssignment(gId, uId);
             recalcAvailableUsers();
             recalcUsers();
         } catch (DataAccessLayerException ex) {
@@ -181,14 +181,14 @@ public class GroupAssignmentsBackingBean extends BaseBean {
             return;
         }
         if (gModel != null) {
-            SecurityDAO dInfo = SecurityDAO.getInstance();
+            
             g = (Users) gModel.getRowData();
             GroupAssignments aG = new GroupAssignments();
             try {
-                aa = (Groups) dInfo.find(Groups.class, new Integer(this.getSelectedGroup()));
+                aa = (Groups) this.getSecurityService().find(Groups.class, new Integer(this.getSelectedGroup()));
                 aG.setGroups(aa);
                 aG.setUsers(g);
-                dInfo.saveOrUpdate(aG);
+                this.getSecurityService().saveOrUpdate(aG);
                 recalcAvailableUsers();
                 recalcUsers();
             } catch (DataAccessLayerException ex) {
