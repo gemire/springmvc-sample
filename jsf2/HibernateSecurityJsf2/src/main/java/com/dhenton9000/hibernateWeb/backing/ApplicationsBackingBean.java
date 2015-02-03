@@ -5,7 +5,7 @@ import com.dhenton9000.hibernatesecurity.Applications;
 import com.dhenton9000.hibernatesecurity.Utils;
 import com.dhenton9000.hibernatesecurity.dao.DataAccessLayerException;
 import com.dhenton9000.hibernatesecurity.dao.Page;
-import com.dhenton9000.hibernatesecurity.dao.SecurityDAO;
+ 
 import org.apache.log4j.LogManager;
 import org.apache.log4j.Logger;
 
@@ -122,9 +122,9 @@ public class ApplicationsBackingBean extends BaseBean {
     }
 
     private void recalcData() {
-        SecurityDAO dInfo = SecurityDAO.getInstance();
+        
         try {
-            currentPage = dInfo.getPageOfDataForClass(Applications.class, getGroupCount(), getBatchSize());
+            currentPage = this.getSecurityService().getPageOfDataForClass(Applications.class, getGroupCount(), getBatchSize());
         } catch (DataAccessLayerException ex) {
 
             log.error("recalcData() " + Utils.createErrorMessage(ex));
@@ -165,10 +165,10 @@ public class ApplicationsBackingBean extends BaseBean {
      * @return the itemCount
      */
     public int getApplicationsCount() {
-        SecurityDAO dInfo = SecurityDAO.getInstance();
+        
         Long itemCount = null;
         try {
-            itemCount = dInfo.getCountForClass(Applications.class);
+            itemCount = this.getSecurityService().getCountForClass(Applications.class);
         } catch (DataAccessLayerException ex) {
             log.error("getAllApplications() " + Utils.createErrorMessage(ex));
             addFacesErrorMessage(ex);
@@ -289,9 +289,9 @@ public class ApplicationsBackingBean extends BaseBean {
     }
 
     public void performDelete() {
-        SecurityDAO dInfo = SecurityDAO.getInstance();
+        
         try {
-            dInfo.delete(currentApp);
+            this.getSecurityService().delete(currentApp);
             resetToAddMode();
         } catch (DataAccessLayerException e) {
             String t = "Application " + currentApp.getApplicationName() + " has child records. Delete those first";
@@ -309,7 +309,7 @@ public class ApplicationsBackingBean extends BaseBean {
     public void performAdd() {
 
 
-        SecurityDAO dInfo = SecurityDAO.getInstance();
+        
         try {
             Integer q = currentApp.getId();
             if (currentApp.getApplicationName() == null
@@ -318,7 +318,7 @@ public class ApplicationsBackingBean extends BaseBean {
                 return;
             }
 
-            dInfo.saveOrUpdate(currentApp);
+            this.getSecurityService().saveOrUpdate(currentApp);
         } catch (DataAccessLayerException ex) {
             log.error("performAdd() " + Utils.createErrorMessage(ex));
             addFacesErrorMessage(ex);

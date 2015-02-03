@@ -5,7 +5,7 @@ import com.dhenton9000.hibernatesecurity.Groups;
 import com.dhenton9000.hibernatesecurity.Utils;
 import com.dhenton9000.hibernatesecurity.dao.DataAccessLayerException;
 import com.dhenton9000.hibernatesecurity.dao.Page;
-import com.dhenton9000.hibernatesecurity.dao.SecurityDAO;
+ 
 import org.apache.log4j.LogManager;
 import org.apache.log4j.Logger;
 
@@ -123,9 +123,9 @@ public class GroupsBackingBean extends BaseBean {
     }
 
     private void recalcData() {
-        SecurityDAO dInfo = SecurityDAO.getInstance();
+         
         try {
-            currentPage = dInfo.getPageOfDataForClass(Groups.class, getGroupCount(), getBatchSize());
+            currentPage = this.getSecurityService().getPageOfDataForClass(Groups.class, getGroupCount(), getBatchSize());
         } catch (DataAccessLayerException ex) {
 
             log.error("recalcData() " + Utils.createErrorMessage(ex));
@@ -166,11 +166,11 @@ public class GroupsBackingBean extends BaseBean {
      * @return the itemCount
      */
     public int getGroupsCount() {
-        SecurityDAO dInfo = SecurityDAO.getInstance();
+        
         Long itemCount = null;
         try {
             log.debug("in getGroupsCount");
-            itemCount = dInfo.getCountForClass(Groups.class);
+            itemCount = this.getSecurityService().getCountForClass(Groups.class);
         } catch (DataAccessLayerException ex) {
             log.error("getAllGroups() " + Utils.createErrorMessage(ex));
             addFacesErrorMessage(ex);
@@ -291,9 +291,9 @@ public class GroupsBackingBean extends BaseBean {
     }
 
     public void performDelete() {
-        SecurityDAO dInfo = SecurityDAO.getInstance();
+         
         try {
-            dInfo.delete(currentGroup);
+            this.getSecurityService().delete(currentGroup);
             resetToAddMode();
         } catch (DataAccessLayerException e) {
             String t = "Group " + currentGroup.getGroupName() + " has child records. Delete those first";
@@ -311,7 +311,7 @@ public class GroupsBackingBean extends BaseBean {
     public void performAdd() {
 
 
-        SecurityDAO dInfo = SecurityDAO.getInstance();
+        
         try {
             Integer q = currentGroup.getId();
             if (currentGroup.getGroupName() == null
@@ -320,7 +320,7 @@ public class GroupsBackingBean extends BaseBean {
                 return;
             }
 
-            dInfo.saveOrUpdate(currentGroup);
+            this.getSecurityService().saveOrUpdate(currentGroup);
         } catch (DataAccessLayerException ex) {
             log.error("performAdd() " + Utils.createErrorMessage(ex));
             addFacesErrorMessage(ex);

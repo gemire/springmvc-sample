@@ -9,7 +9,6 @@ import com.dhenton9000.hibernatesecurity.Applications;
 import com.dhenton9000.hibernatesecurity.Groups;
 import com.dhenton9000.hibernatesecurity.Utils;
 import com.dhenton9000.hibernatesecurity.dao.DataAccessLayerException;
-import com.dhenton9000.hibernatesecurity.dao.SecurityDAO;
 import java.util.List;
 import javax.faces.event.ActionEvent;
 import javax.faces.event.ValueChangeEvent;
@@ -26,22 +25,26 @@ import org.apache.log4j.Logger;
 public class ApplicationGroupsBackingBean extends BaseBean {
 
     /**
-	 * 
-	 */
-	private static final long serialVersionUID = -6891686668597709112L;
-	private static Logger log = LogManager.getLogger(ApplicationGroupsBackingBean.class);
+     *
+     */
+    private static final long serialVersionUID = -6891686668597709112L;
+    private static Logger log = LogManager.getLogger(ApplicationGroupsBackingBean.class);
+ 
     private int selectedApplication = 0;
     private SelectItem[] applicationItems = null;
     private DataModel currentAvailableGroups = null;
     private DataModel currentGroups = null;
 
-    /** Creates a new instance of ApplicationGroupsBackingBean */
+    /**
+     * Creates a new instance of ApplicationGroupsBackingBean
+     */
     public ApplicationGroupsBackingBean() {
 
+        
         if (applicationItems == null) {
-            SecurityDAO dInfo = SecurityDAO.getInstance();
+             
             try {
-                List list = dInfo.findAll(Applications.class);
+                List list = this.getSecurityService() .findAll(Applications.class);
                 applicationItems = new SelectItem[list.size() + 1];
                 applicationItems[0] = new SelectItem("0", "--Select Application--");
                 for (int j = 0; j < list.size(); j++) {
@@ -66,14 +69,14 @@ public class ApplicationGroupsBackingBean extends BaseBean {
     }
 
     private void recalcAvailableGroups() {
-        SecurityDAO dInfo = SecurityDAO.getInstance();
+ 
         List groupData = null;
         if (selectedApplication == 0) {
             return;
         }
 
         try {
-            groupData = dInfo.getAvailableGroupsForApplication(selectedApplication);
+            groupData = this.getSecurityService() .getAvailableGroupsForApplication(selectedApplication);
         } catch (DataAccessLayerException ex) {
 
             log.error("getAvailableGroups() " + Utils.createErrorMessage(ex));
@@ -82,17 +85,16 @@ public class ApplicationGroupsBackingBean extends BaseBean {
         }
         currentAvailableGroups = new ListDataModel(groupData);
 
-
     }
 
     public void recalcGroups() {
-        SecurityDAO dInfo = SecurityDAO.getInstance();
+
         List groupData = null;
         if (selectedApplication == 0) {
             return;
         }
         try {
-            groupData = dInfo.getGroupsForApplication(selectedApplication);
+            groupData = this.getSecurityService() .getGroupsForApplication(selectedApplication);
         } catch (DataAccessLayerException ex) {
 
             log.error("getGroups() " + Utils.createErrorMessage(ex));
@@ -101,14 +103,11 @@ public class ApplicationGroupsBackingBean extends BaseBean {
         }
         currentGroups = new ListDataModel(groupData);
 
-
-
     }
 
     public DataModel getGroups() {
 
         return currentGroups;
-
 
     }
 
@@ -164,13 +163,12 @@ public class ApplicationGroupsBackingBean extends BaseBean {
             return;
         }
 
-        SecurityDAO dInfo = SecurityDAO.getInstance();
         g = (Groups) gModel.getRowData();
         try {
-            aa = (Applications) dInfo.find(Applications.class, new Integer(this.getSelectedApplication()));
+            aa = (Applications) this.getSecurityService() .find(Applications.class, new Integer(this.getSelectedApplication()));
             int gId = g.getId();
             int aId = aa.getId();
-            dInfo.deleteApplicationGroup(aId, gId);
+            this.getSecurityService() .deleteApplicationGroup(aId, gId);
             recalcAvailableGroups();
             recalcGroups();
         } catch (DataAccessLayerException ex) {
@@ -183,8 +181,6 @@ public class ApplicationGroupsBackingBean extends BaseBean {
 
     }
 
- 
-
     public void doAssign() {
         DataModel gModel = getAvailableGroups();
         Groups g = null;
@@ -193,14 +189,14 @@ public class ApplicationGroupsBackingBean extends BaseBean {
             return;
         }
         if (gModel != null) {
-            SecurityDAO dInfo = SecurityDAO.getInstance();
+
             g = (Groups) gModel.getRowData();
             ApplicationGroups aG = new ApplicationGroups();
             try {
-                aa = (Applications) dInfo.find(Applications.class, new Integer(this.getSelectedApplication()));
+                aa = (Applications) this.getSecurityService() .find(Applications.class, new Integer(this.getSelectedApplication()));
                 aG.setApplications(aa);
                 aG.setGroups(g);
-                dInfo.saveOrUpdate(aG);
+                this.getSecurityService() .saveOrUpdate(aG);
                 recalcAvailableGroups();
                 recalcGroups();
             } catch (DataAccessLayerException ex) {
@@ -210,7 +206,6 @@ public class ApplicationGroupsBackingBean extends BaseBean {
                 return;
 
             }
-
 
         }
 

@@ -5,7 +5,7 @@ import com.dhenton9000.hibernatesecurity.Users;
 import com.dhenton9000.hibernatesecurity.Utils;
 import com.dhenton9000.hibernatesecurity.dao.DataAccessLayerException;
 import com.dhenton9000.hibernatesecurity.dao.Page;
-import com.dhenton9000.hibernatesecurity.dao.SecurityDAO;
+ 
 import org.apache.log4j.LogManager;
 import org.apache.log4j.Logger;
 
@@ -123,9 +123,9 @@ public class UsersBackingBean extends BaseBean {
     }
 
     private void recalcData() {
-        SecurityDAO dInfo = SecurityDAO.getInstance();
+         
         try {
-            currentPage = dInfo.getPageOfDataForClass(Users.class, getUserCount(), getBatchSize());
+            currentPage = this.getSecurityService().getPageOfDataForClass(Users.class, getUserCount(), getBatchSize());
         } catch (DataAccessLayerException ex) {
 
             log.error("recalcData() " + Utils.createErrorMessage(ex));
@@ -166,11 +166,11 @@ public class UsersBackingBean extends BaseBean {
      * @return the itemCount
      */
     public int getUsersCount() {
-        SecurityDAO dInfo = SecurityDAO.getInstance();
+        
         Long itemCount = null;
         try {
             log.debug("in getUsersCount");
-            itemCount = dInfo.getCountForClass(Users.class);
+            itemCount = this.getSecurityService().getCountForClass(Users.class);
         } catch (DataAccessLayerException ex) {
             log.error("getAllUsers() " + Utils.createErrorMessage(ex));
             addFacesErrorMessage(ex);
@@ -291,9 +291,9 @@ public class UsersBackingBean extends BaseBean {
     }
 
     public void performDelete() {
-        SecurityDAO dInfo = SecurityDAO.getInstance();
+        
         try {
-            dInfo.delete(currentUser);
+            this.getSecurityService().delete(currentUser);
             resetToAddMode();
         } catch (DataAccessLayerException e) {
             String t = "User " + currentUser.getUsername() + " has child records. Delete those first";
@@ -314,7 +314,7 @@ public class UsersBackingBean extends BaseBean {
     private void performAddUpdate(boolean isUpdate) {
 
 
-        SecurityDAO dInfo = SecurityDAO.getInstance();
+         
         try {
             String uId = currentUser.getUserId();
             if (currentUser.getUsername() == null
@@ -331,9 +331,9 @@ public class UsersBackingBean extends BaseBean {
 
 
             if (isUpdate)
-                dInfo.saveOrUpdate(currentUser);
+                this.getSecurityService().saveOrUpdate(currentUser);
             else
-                dInfo.save(currentUser);
+                this.getSecurityService().save(currentUser);
         } catch (DataAccessLayerException ex) {
             log.error("performAdd() " + Utils.createErrorMessage(ex));
             addFacesErrorMessage(ex);
