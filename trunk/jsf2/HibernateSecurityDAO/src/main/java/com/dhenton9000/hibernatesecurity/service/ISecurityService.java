@@ -45,8 +45,10 @@ public interface ISecurityService {
      * Method description TODO
      *
      *
-     * @param aId
+     * @param gId
      * @param uId
+     * @return 
+     * @throws com.dhenton9000.hibernatesecurity.dao.DataAccessLayerException
      */
     GroupAssignments deleteGroupAssignment(int gId, String uId) throws DataAccessLayerException;
 
