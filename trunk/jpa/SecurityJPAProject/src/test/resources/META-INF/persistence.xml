@@ -12,14 +12,13 @@
       <property name="hibernate.connection.url" value="jdbc:derby://localhost:1527/sec"/>
       <property name="hibernate.cache.provider_class" value="org.hibernate.cache.NoCacheProvider"/>
       <property name="hibernate.dialect" value="org.hibernate.dialect.DerbyDialect"/>
-      <property name="hibernate.current_session_context_class" value="thread" />
-      <property name="hibernate.format_sql" value="true" />
-      <property name="hibernate.show_sql" value="true" />
-      <property name="use_sql_comments" value="true" />
+      <property name="hibernate.current_session_context_class" value="thread"/>
+      <property name="hibernate.format_sql" value="true"/>
+      <property name="hibernate.show_sql" value="true"/>
+      <property name="use_sql_comments" value="true"/>
     </properties>
   </persistence-unit>
-  
-   <persistence-unit name="Eat_PU" transaction-type="RESOURCE_LOCAL">
+  <persistence-unit name="Eat_PU" transaction-type="RESOURCE_LOCAL">
     <provider>org.hibernate.ejb.HibernatePersistence</provider>
     <class>com.dhenton9000.jpa.eat.model.Language</class>
     <properties>
@@ -30,8 +29,7 @@
       <property name="hibernate.cache.provider_class" value="org.hibernate.cache.NoCacheProvider"/>
     </properties>
   </persistence-unit>
-  
-   <persistence-unit name="Inheritance_PU" transaction-type="RESOURCE_LOCAL">
+  <persistence-unit name="Inheritance_PU" transaction-type="RESOURCE_LOCAL">
     <provider>org.hibernate.ejb.HibernatePersistence</provider>
     <class>com.dhenton9000.jpa.entities.inheritance.Person</class>
     <class>com.dhenton9000.jpa.entities.inheritance.PersonAddress</class>
@@ -44,14 +42,30 @@
       <property name="hibernate.connection.url" value="jdbc:derby://localhost:1527/sec"/>
       <property name="hibernate.cache.provider_class" value="org.hibernate.cache.NoCacheProvider"/>
       <property name="hibernate.dialect" value="org.hibernate.dialect.DerbyDialect"/>
-      <property name="hibernate.current_session_context_class" value="thread" />
-      <property name="hibernate.format_sql" value="true" />
-      <property name="hibernate.show_sql" value="true" />
-      <property name="use_sql_comments" value="true" />
+      <property name="hibernate.current_session_context_class" value="thread"/>
+      <property name="hibernate.format_sql" value="true"/>
+      <property name="hibernate.show_sql" value="true"/>
+      <property name="use_sql_comments" value="true"/>
     </properties>
   </persistence-unit>
-  
-  
-  
+  <persistence-unit name="PARENT_CHILD_PU" transaction-type="RESOURCE_LOCAL">
+    <provider>org.hibernate.ejb.HibernatePersistence</provider>
+    <class>com.dhenton9000.jpa.entities.Child</class>
+    <class>com.dhenton9000.jpa.entities.Parent</class>
+    <properties>
+      <!--
+      <property name="hibernate.connection.username" value="sec"/>
+      <property name="hibernate.connection.driver_class" value="org.apache.derby.jdbc.ClientDriver"/>
+      <property name="hibernate.connection.password" value="sec"/>
+      <property name="hibernate.connection.url" value="jdbc:derby://localhost:1527/sec"/>
+       <property name="hibernate.dialect" value="org.hibernate.dialect.DerbyDialect"/>
+      -->
+      <property name="hibernate.cache.provider_class" value="org.hibernate.cache.NoCacheProvider"/>
+      <property name="hibernate.dialect" value="org.hibernate.dialect.PostgreSQLDialect"/>
+      <property name="hibernate.current_session_context_class" value="thread"/>
+      <property name="hibernate.format_sql" value="true"/>
+      <property name="hibernate.show_sql" value="true"/>
+      <property name="use_sql_comments" value="true"/>
+    </properties>
+  </persistence-unit>
 </persistence>
-
