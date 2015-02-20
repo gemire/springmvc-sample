@@ -59,10 +59,10 @@ public class MarshalTestCase {
         log.debug("\nxxx\n"+Obj2JSON);
         
         //the jaxb.index file is in src/test/resources
-        Obj2JSON = MarshallUtils.Obj2JSON("com.dhenton9000.jaxb.utils", k);
+        Obj2JSON = MarshallUtils.Obj2JSON( k );
         log.debug("\nyyy\n"+Obj2JSON);
         
-        Groups z = (Groups) MarshallUtils.JSON2Obj("com.dhenton9000.jaxb.utils",Obj2JSON,Groups.class);
+        Groups z = MarshallUtils.JSON2Obj( Obj2JSON,Groups.class);
         assertEquals(45,z.getId());
     }
    
