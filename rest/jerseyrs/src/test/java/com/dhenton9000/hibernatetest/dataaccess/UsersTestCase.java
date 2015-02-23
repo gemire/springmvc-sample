@@ -1,19 +1,11 @@
 package com.dhenton9000.hibernatetest.dataaccess;
 
-import com.dhenton9000.hibernatesecurity.ApplicationGroups;
-import com.dhenton9000.hibernatesecurity.GroupAssignments;
-import com.dhenton9000.hibernatesecurity.Groups;
 import com.dhenton9000.hibernatesecurity.Users;
 import com.dhenton9000.hibernatesecurity.converters.UsersConverter;
-import com.dhenton9000.hibernatesecurity.dao.ApplicationGroupsDAO;
 import com.dhenton9000.hibernatesecurity.dao.UsersDAO;
 import com.dhenton9000.jaxb.utils.MarshallUtil;
-import com.sun.jersey.api.json.JSONJAXBContext;
 import java.util.Arrays;
-import java.util.Iterator;
 import java.util.List;
-import java.util.Set;
-import javax.xml.bind.JAXBContext;
 import static org.junit.Assert.*;
 
 import org.apache.log4j.LogManager;

@@ -24,4 +24,8 @@ public class WireClass {
         this.message = message;
     }
     
+    public WireClass()
+    {
+       System.out.println("creating wireclass");
+    }
 }
