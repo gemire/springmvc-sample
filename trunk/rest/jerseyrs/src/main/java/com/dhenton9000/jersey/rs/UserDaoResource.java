@@ -7,8 +7,9 @@ package com.dhenton9000.jersey.rs;
 import com.dhenton9000.hibernatesecurity.Users;
 import com.dhenton9000.hibernatesecurity.converters.UsersConverter;
 import com.dhenton9000.hibernatesecurity.dao.UsersDAO;
-import com.sun.jersey.api.core.ResourceContext;
+ 
 import javax.ws.rs.*;
+import javax.ws.rs.container.ResourceContext;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;

@@ -6,10 +6,18 @@ import javax.ws.rs.GET;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 import com.dhenton9000.hibernatesecurity.dao.ApplicationsDAO;
+import javax.annotation.Resource;
+ 
 import javax.ws.rs.PathParam;
+import javax.ws.rs.container.ResourceContext;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.UriInfo;
-import com.sun.jersey.api.core.ResourceContext;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.stereotype.Component;
+import com.fasterxml.jackson.annotation.ObjectIdResolver;
+
+ 
 
 /**
  * In this case the root is :
@@ -21,9 +29,14 @@ import com.sun.jersey.api.core.ResourceContext;
  * @author dhenton
  */
 @Path("spring/myresource/")
+@Component 
 public class MySpringResource {
 
-    private WireClass wireClass = null;
+    //use this to resolve ambigous resources
+    @Resource(name="jobBean")
+    private WireClass wireClass ;
+    //you can use this as long as there is only one defined
+    @Autowired
     private ApplicationsDAO appDAO = null;
     @Context
     protected UriInfo uriInfo;
@@ -54,7 +67,19 @@ public class MySpringResource {
     @GET
     @Path("xml/{id}/")
     @Produces("application/xml")
-    public ApplicationsConverter getApp(@PathParam("id") Integer id) {
+    public ApplicationsConverter getAppAsXML(@PathParam("id") Integer id) {
+        return appDAO.findApplicationsWithGroupsAndUsers(id);
+    }
+    
+    /**
+     * http://localhost:9090/jerseyrs/resources/spring/myresource/json/2
+     * @param id
+     * @return 
+     */
+    @GET
+    @Path("json/{id}/")
+    @Produces("application/json")
+    public ApplicationsConverter getAppAsJSON(@PathParam("id") Integer id) {
         return appDAO.findApplicationsWithGroupsAndUsers(id);
     }
 
